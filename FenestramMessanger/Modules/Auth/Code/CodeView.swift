@@ -7,9 +7,10 @@
 
 import SwiftUI
 import Introspect
+import Combine
 
 struct CodeView: View {
-    
+    @State private var keyboardHeight: CGFloat = 0
     let maskCode = "XXXXX"
     
     @Environment(\.presentationMode) var presentationMode
@@ -173,9 +174,11 @@ struct CodeView: View {
             .disabled(viewModel.textCode.count != 5 || viewModel.errorCode)
             
         }
-        .padding(.top, 100.0)
         .padding()
-        .keyboardAdaptive()
+        .ignoresSafeArea(.keyboard, edges: .bottom)
+        //.padding(.bottom, -100)
+                // 3.
+                .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
     }
     
     

@@ -7,11 +7,10 @@
 
 import SwiftUI
 import Introspect
-
+import Combine
 
 struct Contact {
     let id = UUID()
-    
     var name = ""
     var dob: Date? = nil
     var hiredDate: Date? = nil
@@ -19,7 +18,7 @@ struct Contact {
 
 struct AccountView: View {
     //@State var text = ""
-    
+    @State private var keyboardHeight: CGFloat = 0
     @State private var contact = Contact()
     @State private var image: UIImage?
     @State private var sourceType: UIImagePickerController.SourceType = .camera
@@ -63,11 +62,16 @@ struct AccountView: View {
                 
                 getButton()
             }.padding()
+               
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+                .padding(.bottom, keyboardHeight/4)
+                        // 3.
+                        .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
                 
                 
                 
-        }.ignoresSafeArea(.keyboard, edges: [.top, .bottom])
-       // .keyboardAdaptive()
+        }
+        
     }
     
     private func getHeader() -> some View {

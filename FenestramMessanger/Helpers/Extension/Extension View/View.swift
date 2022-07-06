@@ -26,16 +26,24 @@ extension View {
         var i = 0
         var index = numbers.startIndex
         if numbers.count < mask.count  {
-        for ch in mask where index < numbers.endIndex {
-            if ch == "X" {
-               
-                result.append(numbers[index])
-                index = numbers.index(after: index)
-                
-            } else {
-                result.append(ch)
+            for ch in mask where index < numbers.endIndex {
+                if ch == "X" {
+                    if i == 0 && mask.count == 18 {
+                        result.append("7")
+                        if numbers[index] == "9" {
+                            result.append(numbers[index])
+                        }
+                        index = numbers.index(after: index)
+                        i = i + 1
+                    } else {
+                        result.append(numbers[index])
+                        index = numbers.index(after: index)
+                    }
+                } else {
+                    result.append(ch)
+                }
             }
-        }
+            
         } else {
             //numbers.remove(at: numbers.index(before: numbers.endIndex))
             var i = 0
@@ -44,7 +52,7 @@ extension View {
                     if ch == "X" {
                         result.append(numbers[index])
                         index = numbers.index(after: index)
-
+                        
                     } else {
                         result.append(ch)
                     }
@@ -52,11 +60,7 @@ extension View {
                 }
             }
         }
-//        if mask.count == 5 {
-//            if result.count == 5 {
-//                self.buttonColor = .blue
-//            }
-//        }
+ 
         return result
     }
 }

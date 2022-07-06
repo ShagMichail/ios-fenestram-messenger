@@ -23,9 +23,7 @@
 		FC177889287592DB00B0D979 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC177888287592DB00B0D979 /* TextField.swift */; };
 		FC17788B2875933200B0D979 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC17788A2875933200B0D979 /* View.swift */; };
 		FC1778902875A1B900B0D979 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC17788F2875A1B900B0D979 /* Screen.swift */; };
-		FC1778952875A8C100B0D979 /* KeyboardAdaptive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778942875A8C100B0D979 /* KeyboardAdaptive.swift */; };
 		FC1778982875A8D400B0D979 /* KeyboardHeightPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778962875A8D400B0D979 /* KeyboardHeightPublisher.swift */; };
-		FC1778992875A8D400B0D979 /* UIResponder+Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778972875A8D400B0D979 /* UIResponder+Current.swift */; };
 		FCEE882428743FFD00268971 /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE882328743FFC00268971 /* PhoneView.swift */; };
 		FCEE88262874400700268971 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE88252874400700268971 /* CodeView.swift */; };
 		FCEE88292874409B00268971 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = FCEE88282874409B00268971 /* iPhoneNumberField */; };
@@ -48,9 +46,7 @@
 		FC177888287592DB00B0D979 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		FC17788A2875933200B0D979 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		FC17788F2875A1B900B0D979 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
-		FC1778942875A8C100B0D979 /* KeyboardAdaptive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardAdaptive.swift; sourceTree = "<group>"; };
 		FC1778962875A8D400B0D979 /* KeyboardHeightPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardHeightPublisher.swift; sourceTree = "<group>"; };
-		FC1778972875A8D400B0D979 /* UIResponder+Current.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+Current.swift"; sourceTree = "<group>"; };
 		FCEE882328743FFC00268971 /* PhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
 		FCEE88252874400700268971 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -232,9 +228,7 @@
 		FC1778932875A7B400B0D979 /* Extension Keyboard */ = {
 			isa = PBXGroup;
 			children = (
-				FC1778942875A8C100B0D979 /* KeyboardAdaptive.swift */,
 				FC1778962875A8D400B0D979 /* KeyboardHeightPublisher.swift */,
-				FC1778972875A8D400B0D979 /* UIResponder+Current.swift */,
 			);
 			path = "Extension Keyboard";
 			sourceTree = "<group>";
@@ -319,8 +313,6 @@
 			files = (
 				FC177882287591FE00B0D979 /* AccountViewModel.swift in Sources */,
 				FC177875287583D000B0D979 /* DatePickerTextField.swift in Sources */,
-				FC1778952875A8C100B0D979 /* KeyboardAdaptive.swift in Sources */,
-				FC1778992875A8D400B0D979 /* UIResponder+Current.swift in Sources */,
 				FC177889287592DB00B0D979 /* TextField.swift in Sources */,
 				FC17788B2875933200B0D979 /* View.swift in Sources */,
 				BD7783AA2872EBB50023032D /* FenestramMessangerApp.swift in Sources */,

@@ -17,7 +17,7 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             if viewModel.isSignIn {
-                AccountView().navigationBarHidden(true)
+                PhoneView().navigationBarHidden(true)
             } else {
                 Text("Not implemented")
             }
