@@ -15,10 +15,12 @@ struct MainView: View {
     }
     
     var body: some View {
-        if viewModel.isSignIn {
-            AuthView()
-        } else {
-            Text("Not implemented")
+        NavigationView {
+            if viewModel.isSignIn {
+                AccountView().navigationBarHidden(true)
+            } else {
+                Text("Not implemented")
+            }
         }
     }
 }
