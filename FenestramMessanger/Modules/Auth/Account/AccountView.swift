@@ -100,7 +100,7 @@ struct AccountView: View {
                 }
                 .padding(.all, 5.0)
                 .foregroundColor(.white)
-                .background(LinearGradient(gradient: Gradient(colors: [Color.blue]), startPoint: .leading, endPoint: .trailing))
+                .background(LinearGradient(gradient: Gradient(colors: [Color("blue")]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(40)
                 .frame(width: 50.0, height: 100.0, alignment: .center)
                 .actionSheet(isPresented: $viewModel.showSheet) {
@@ -161,12 +161,12 @@ struct AccountView: View {
                         Button(action: {
                             print("ddd")
                         }, label: {
-                            Image(systemName: "checkmark")
+                            Image(systemName: "checkmark").foregroundColor(Color("blue"))
                         })
                         
                         .padding(.trailing, 10.0)
                         .disabled(true)
-                        .foregroundColor(Color.blue)
+                        
                         
                     } else {
                         
@@ -213,11 +213,12 @@ struct AccountView: View {
                             print("ddd")
                         }, label: {
                             Image(systemName: "checkmark")
+                                .foregroundColor(Color("blue"))
                         })
                         //.frame(width: 40.0)
                         .padding(.trailing, 10.0)
                         .disabled(true)
-                        .foregroundColor(Color.blue)
+                        
                     }
                 }
             }.background(border)
@@ -248,11 +249,12 @@ struct AccountView: View {
                             print("ddd")
                         }, label: {
                             Image(systemName: "checkmark")
+                                .foregroundColor(Color("blue"))
                         })
                         //.frame(width: 40.0)
                         .padding(.trailing, 10.0)
                         .disabled(true)
-                        .foregroundColor(Color.blue)
+                        
                     }
                 }
             }.background(border)
@@ -301,11 +303,12 @@ struct AccountView: View {
                             print("ddd")
                         }, label: {
                             Image(systemName: "checkmark")
+                                .foregroundColor(Color("blue"))
                         })
                         //.frame(width: 40.0)
                         .padding(.trailing, 10.0)
                         .disabled(true)
-                        .foregroundColor(Color.blue)
+                        
                     }
                 }
                 
@@ -333,7 +336,7 @@ struct AccountView: View {
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     
                         .foregroundColor(.white)
-                        .background( (viewModel.name.count != 0 && viewModel.nicName.count != 0 && self.contact.dob != nil && viewModel.textEmailOk) ? Color.blue : Color("buttonDis"))
+                        .background( (viewModel.name.count != 0 && viewModel.nicName.count != 0 && self.contact.dob != nil && viewModel.textEmailOk) ? Color("blue") : Color("buttonDis"))
                         .cornerRadius(6)
                 }
             }.disabled((viewModel.name.count == 0 || viewModel.nicName.count == 0 || self.contact.dob == nil || viewModel.textEmailOk == false))

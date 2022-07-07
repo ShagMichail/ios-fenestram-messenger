@@ -28,7 +28,7 @@ struct PhoneView: View {
             getBase()
             
         }
-
+        
     }
     
     var border: some View {
@@ -80,37 +80,37 @@ struct PhoneView: View {
                     textField.inputAccessoryView = toolBar
                 }
                 
-//                iPhoneNumberField(nil, text: $viewModel.textPhone)
-//                    .flagHidden(true)
-//                    .prefixHidden(false)
-//                    .placeholderColor(Color("thema"))
-//                    .font(UIFont(size: 18))
-//                    .maximumDigits(10)
-//                    .foregroundColor(Color("text"))
-//                //.formatted(true)
-//                    .accentColor(Color("text"))
-//                    .padding(.vertical, 12)
-//                    .padding(.horizontal, 16)
-//                    .background(border)
-                    
-                    .introspectTextField { (textField) in
-                        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
-                        let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-                        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
-                        doneButton.tintColor = .black
-                        toolBar.items = [flexButton, doneButton]
-                        toolBar.setItems([flexButton, doneButton], animated: true)
-                        textField.inputAccessoryView = toolBar
-                    }
+                //                iPhoneNumberField(nil, text: $viewModel.textPhone)
+                //                    .flagHidden(true)
+                //                    .prefixHidden(false)
+                //                    .placeholderColor(Color("thema"))
+                //                    .font(UIFont(size: 18))
+                //                    .maximumDigits(10)
+                //                    .foregroundColor(Color("text"))
+                //                //.formatted(true)
+                //                    .accentColor(Color("text"))
+                //                    .padding(.vertical, 12)
+                //                    .padding(.horizontal, 16)
+                //                    .background(border)
+                
+                //                    .introspectTextField { (textField) in
+                //                        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
+                //                        let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+                //                        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
+                //                        doneButton.tintColor = .black
+                //                        toolBar.items = [flexButton, doneButton]
+                //                        toolBar.setItems([flexButton, doneButton], animated: true)
+                //                        textField.inputAccessoryView = toolBar
+                //                    }
                 
                 //не настраивается цвет
             }
             Spacer()
                 .frame(height: 83.0)
             
-//            NavigationLink(destination: CodeView().navigationBarHidden(true)) {
-//                SendButtonView()
-//            }
+            //            NavigationLink(destination: CodeView().navigationBarHidden(true)) {
+            //                SendButtonView()
+            //            }
             
             NavigationLink(isActive: $viewModel.flag) {
                 CodeView().navigationBarHidden(true)
@@ -124,19 +124,19 @@ struct PhoneView: View {
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     
                         .foregroundColor(.white)
-                        .background((viewModel.textPhone.count == 18 ) ? Color.blue : Color("buttonDis"))
+                        .background((viewModel.textPhone.count == 18 ) ? Color("blue") : Color("buttonDis"))
                         .cornerRadius(6)
                     
                 }
             }
             
             .disabled(viewModel.textPhone.count != 18)
-
+            
         }
         .padding()
         .ignoresSafeArea(.keyboard, edges: .bottom)
         //.padding(.bottom, -100)
-                // 3.
+        // 3.
         .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
     }
     

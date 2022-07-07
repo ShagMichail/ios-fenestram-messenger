@@ -141,7 +141,7 @@ struct CodeView: View {
                             Text("Отправить заново?")
                                 .font(.system(size: 15))
                             
-                                .foregroundColor(Color.blue)
+                                .foregroundColor(Color("blue"))
                             
                             
                         }
@@ -165,7 +165,7 @@ struct CodeView: View {
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     
                         .foregroundColor(.white)
-                        .background((viewModel.textCode.count == 5 && viewModel.errorCode == false) ? Color.blue : Color("buttonDis"))
+                        .background((viewModel.textCode.count == 5 && viewModel.errorCode == false) ? Color("blue") : Color("buttonDis"))
                         .cornerRadius(6)
                     
                 }

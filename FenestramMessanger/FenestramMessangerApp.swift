@@ -9,9 +9,16 @@ import SwiftUI
 
 @main
 struct FenestramMessangerApp: App {
+    @AppStorage("isOnboarding") var isOnboarding = true
     var body: some Scene {
         WindowGroup {
-            MainView()
+            NavigationView{
+                if isOnboarding {
+                    OnboardingFirstView()
+                } else {
+                    MainView()
+                }
+            }
         }
     }
 }

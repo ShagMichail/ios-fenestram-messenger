@@ -24,6 +24,10 @@
 		FC17788B2875933200B0D979 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC17788A2875933200B0D979 /* View.swift */; };
 		FC1778902875A1B900B0D979 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC17788F2875A1B900B0D979 /* Screen.swift */; };
 		FC1778982875A8D400B0D979 /* KeyboardHeightPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778962875A8D400B0D979 /* KeyboardHeightPublisher.swift */; };
+		FC1778AF2876E23F00B0D979 /* OnboardingSecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778AC2876E23F00B0D979 /* OnboardingSecondView.swift */; };
+		FC1778B02876E23F00B0D979 /* OnboardingThirdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778AD2876E23F00B0D979 /* OnboardingThirdView.swift */; };
+		FC1778B12876E23F00B0D979 /* OnboardingFirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778AE2876E23F00B0D979 /* OnboardingFirstView.swift */; };
+		FC1778B42876E25C00B0D979 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778B32876E25C00B0D979 /* Feature.swift */; };
 		FCEE882428743FFD00268971 /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE882328743FFC00268971 /* PhoneView.swift */; };
 		FCEE88262874400700268971 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE88252874400700268971 /* CodeView.swift */; };
 		FCEE88292874409B00268971 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = FCEE88282874409B00268971 /* iPhoneNumberField */; };
@@ -47,6 +51,10 @@
 		FC17788A2875933200B0D979 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		FC17788F2875A1B900B0D979 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		FC1778962875A8D400B0D979 /* KeyboardHeightPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardHeightPublisher.swift; sourceTree = "<group>"; };
+		FC1778AC2876E23F00B0D979 /* OnboardingSecondView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingSecondView.swift; sourceTree = "<group>"; };
+		FC1778AD2876E23F00B0D979 /* OnboardingThirdView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingThirdView.swift; sourceTree = "<group>"; };
+		FC1778AE2876E23F00B0D979 /* OnboardingFirstView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingFirstView.swift; sourceTree = "<group>"; };
+		FC1778B32876E25C00B0D979 /* Feature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
 		FCEE882328743FFC00268971 /* PhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
 		FCEE88252874400700268971 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,6 +111,7 @@
 		BDDB5ADD2872ECAA002BF418 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				FC1778AA2876E21800B0D979 /* Onboarding */,
 				BDDB5AE72872EDCF002BF418 /* Main */,
 				BDDB5AE22872ECEC002BF418 /* Auth */,
 			);
@@ -233,6 +242,33 @@
 			path = "Extension Keyboard";
 			sourceTree = "<group>";
 		};
+		FC1778AA2876E21800B0D979 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				FC1778B22876E24B00B0D979 /* OnbordingExtension */,
+				FC1778AB2876E22300B0D979 /* OnboardingView */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		FC1778AB2876E22300B0D979 /* OnboardingView */ = {
+			isa = PBXGroup;
+			children = (
+				FC1778AE2876E23F00B0D979 /* OnboardingFirstView.swift */,
+				FC1778AC2876E23F00B0D979 /* OnboardingSecondView.swift */,
+				FC1778AD2876E23F00B0D979 /* OnboardingThirdView.swift */,
+			);
+			path = OnboardingView;
+			sourceTree = "<group>";
+		};
+		FC1778B22876E24B00B0D979 /* OnbordingExtension */ = {
+			isa = PBXGroup;
+			children = (
+				FC1778B32876E25C00B0D979 /* Feature.swift */,
+			);
+			path = OnbordingExtension;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -316,11 +352,15 @@
 				FC177889287592DB00B0D979 /* TextField.swift in Sources */,
 				FC17788B2875933200B0D979 /* View.swift in Sources */,
 				BD7783AA2872EBB50023032D /* FenestramMessangerApp.swift in Sources */,
+				FC1778B02876E23F00B0D979 /* OnboardingThirdView.swift in Sources */,
 				FC1778902875A1B900B0D979 /* Screen.swift in Sources */,
 				FC17787F2875919200B0D979 /* CodeViewModel.swift in Sources */,
 				BDDB5ADF2872ECBC002BF418 /* MainView.swift in Sources */,
 				FC17786E2875837300B0D979 /* AccountView.swift in Sources */,
+				FC1778AF2876E23F00B0D979 /* OnboardingSecondView.swift in Sources */,
 				FCEE882428743FFD00268971 /* PhoneView.swift in Sources */,
+				FC1778B42876E25C00B0D979 /* Feature.swift in Sources */,
+				FC1778B12876E23F00B0D979 /* OnboardingFirstView.swift in Sources */,
 				FC177877287583D100B0D979 /* Globals.swift in Sources */,
 				FC177873287583BA00B0D979 /* ImagePicker.swift in Sources */,
 				FC17787C2875913F00B0D979 /* PhoneViewModel.swift in Sources */,

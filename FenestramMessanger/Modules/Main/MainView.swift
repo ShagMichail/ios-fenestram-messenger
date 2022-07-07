@@ -15,14 +15,14 @@ struct MainView: View {
     }
     
     var body: some View {
-        NavigationView {
+        
             if viewModel.isSignIn {
                 PhoneView().navigationBarHidden(true)
             } else {
                 Text("Not implemented")
             }
-        }
-    }
+        
+    }//
 }
 
 struct MainView_Previews: PreviewProvider {
