@@ -31,6 +31,10 @@ struct OnboardingThirdView: View {
                 
                 Spacer()
                 
+                getPage()
+                
+                Spacer()
+                
                 getButton()
                 
                 Spacer()
@@ -46,6 +50,30 @@ struct OnboardingThirdView: View {
                 .font(.system(size: 14))
                 .foregroundColor(Color("photoBack"))
                 .multilineTextAlignment(.center)
+        }
+        .padding()
+    }
+    
+    private func getPage() -> some View {
+        HStack(spacing: 20) {
+            
+            Text("")
+                .frame(width: 6.0, height: 6.0)
+                .background(Color("page"))
+                .cornerRadius(6)
+            
+                //.multilineTextAlignment(.center)
+            
+                //.multilineTextAlignment(.center)
+            Text("")
+                .frame(width: 6.0, height: 6.0)
+                .background(Color("page"))
+                .cornerRadius(6)
+                //.multilineTextAlignment(.center)
+            Text("")
+                .frame(width: 38.0, height: 6.0)
+                .background(Color("page"))
+                .cornerRadius(6)
         }
         .padding()
     }
@@ -68,6 +96,13 @@ struct OnboardingThirdView: View {
                     .cornerRadius(6)
             })
             
+            Button(action: { isOnboarding = false }, label: {
+                
+                Text("Пропустить")
+                //.padding()
+                    .foregroundColor(Color("thema"))
+                    
+            }).disabled(true)
             
         }
     }

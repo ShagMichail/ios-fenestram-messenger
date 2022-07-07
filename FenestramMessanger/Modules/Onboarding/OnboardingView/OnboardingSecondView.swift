@@ -32,6 +32,10 @@ struct OnboardingSecondView: View {
                 
                 Spacer()
                 
+                getPage()
+                
+                Spacer()
+                
                 getButton()
                 
                 Spacer()
@@ -53,6 +57,31 @@ struct OnboardingSecondView: View {
         .padding()
     }
     
+    private func getPage() -> some View {
+        HStack(spacing: 20) {
+            
+            Text("")
+                .frame(width: 6.0, height: 6.0)
+                .background(Color("page"))
+                .cornerRadius(6)
+            
+            Text("")
+                .frame(width: 38.0, height: 6.0)
+                .background(Color("page"))
+                .cornerRadius(6)
+                //.multilineTextAlignment(.center)
+            
+                //.multilineTextAlignment(.center)
+            Text("")
+                .frame(width: 6.0, height: 6.0)
+                .background(Color("page"))
+                .cornerRadius(6)
+                //.multilineTextAlignment(.center)
+        }
+        .padding()
+    }
+
+    
     private func getButton() -> some View {
         VStack {
             
@@ -69,19 +98,6 @@ struct OnboardingSecondView: View {
                 
             }
             
-            //                        Button(action: {
-            //                            NavigationLink(
-            //                            OnboardingSecondView()
-            //                        }, label: {
-            //
-            //                            Text("Далее")
-            //
-            //                                .frame(width: 355.0, height: 45.0)
-            //
-            //                                .foregroundColor(.white)
-            //                                .background(Color.blue)
-            //                                .cornerRadius(6)
-            //                        })
             
             Button(action: { isOnboarding = false }, label: {
                 

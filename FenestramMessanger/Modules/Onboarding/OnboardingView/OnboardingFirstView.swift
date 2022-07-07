@@ -31,7 +31,8 @@ struct OnboardingFirstView: View {
                 getTitle()
                 
                 Spacer()
-                
+                getPage()
+                Spacer()
                 getButton()
                 
                 Spacer()
@@ -47,6 +48,29 @@ struct OnboardingFirstView: View {
                 .font(.system(size: 14))
                 .foregroundColor(Color("photoBack"))
                 .multilineTextAlignment(.center)
+                
+        }
+        .padding()
+    }
+    
+    private func getPage() -> some View {
+        HStack(spacing: 20) {
+            
+            Text("")
+                .frame(width: 38.0, height: 6.0)
+                .background(Color("page"))
+                .cornerRadius(6)
+                //.multilineTextAlignment(.center)
+            Text("")
+                .frame(width: 6.0, height: 6.0)
+                .background(Color("page"))
+                .cornerRadius(6)
+                //.multilineTextAlignment(.center)
+            Text("")
+                .frame(width: 6.0, height: 6.0)
+                .background(Color("page"))
+                .cornerRadius(6)
+                //.multilineTextAlignment(.center)
         }
         .padding()
     }
@@ -67,19 +91,6 @@ struct OnboardingFirstView: View {
                 
             }
             
-            //                        Button(action: {
-            //                            NavigationLink(
-            //                            OnboardingSecondView()
-            //                        }, label: {
-            //
-            //                            Text("Далее")
-            //
-            //                                .frame(width: 355.0, height: 45.0)
-            //
-            //                                .foregroundColor(.white)
-            //                                .background(Color.blue)
-            //                                .cornerRadius(6)
-            //                        })
             
             Button(action: { isOnboarding = false }, label: {
                 

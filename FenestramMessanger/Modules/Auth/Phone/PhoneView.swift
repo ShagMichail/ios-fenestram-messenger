@@ -142,18 +142,6 @@ struct PhoneView: View {
     
 }
 
-//struct SendButtonView: View {
-//    var body: some View {
-//        Text("Отправить код")
-//            .frame(width: UIScreen.screenWidth - 30, height: 45.0)
-//
-//            .background(RoundedRectangle(cornerRadius: 6).foregroundColor(Color.blue))
-//            .foregroundColor(Color.white)
-//        //.foregroundColor(Color.blue)
-//
-//    }
-//}
-
 struct PhoneView_Previews: PreviewProvider {
     static var previews: some View {
         PhoneView()
