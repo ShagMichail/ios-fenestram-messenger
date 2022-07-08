@@ -10,6 +10,6 @@ import SwiftUI
 extension MainView {
     @MainActor
     final class ViewModel: ObservableObject {
-        @Published var isSignIn: Bool = true
+        @Published var isSignIn: Bool = false
     }
 }

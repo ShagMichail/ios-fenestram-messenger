@@ -17,25 +17,18 @@ struct MainTabView: View {
     }
     
     var body: some View {
-        
         TabView(selection: $selectionTabView) {
-            //            Text("Home Tab")
-            //                .font(.system(size: 30, weight: .bold, design: .rounded))
-            ContactsView()
-                .tabItem {
-                    
-                    if selectionTabView == 0 {
-                        Image("contacts_selected").frame(width: 20, height: 20)
-                    } else {
-                        Image("contacts").frame(width: 20, height: 20)
-                    }
-                    Text("Контакты")
+            ContactsView().tabItem {
+                if selectionTabView == 0 {
+                    Image("contacts_selected").frame(width: 20, height: 20)
+                } else {
+                    Image("contacts").frame(width: 20, height: 20)
                 }
-                .tag(0)
-
-            ChatView()
-                .tabItem {
-                    
+                Text("Контакты")
+            }
+            .tag(0)
+            
+            ChatView().tabItem {
                     if selectionTabView == 1 {
                         Image("chat_selected").frame(width: 20, height: 20)
                     } else {
@@ -44,9 +37,8 @@ struct MainTabView: View {
                     Text("Чат")
                 }
                 .tag(1)
-
-            ProfileView()
-                .tabItem {
+            
+            ProfileView().tabItem {
                     if selectionTabView == 2 {
                         Image("profile_selected").frame(width: 20, height: 20)
                     } else {
@@ -55,14 +47,11 @@ struct MainTabView: View {
                     Text("Профиль")
                 }
                 .tag(2)
-            
-            
         }
         .accentColor(.white)
         .ignoresSafeArea()
     }
 }
-
 
 struct MainTabView_Previews: PreviewProvider {
     static var previews: some View {

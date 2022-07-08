@@ -21,13 +21,11 @@ extension CodeView {
         
         func checkCode () {
             if textCode == code {
-                
                 flag = true
             } else {
                 flag = false
                 errorCode = true
             }
-            
         }
         
         func changeIncorrect()  {
@@ -37,6 +35,5 @@ extension CodeView {
             }
             self.textCode = ""
         }
-        
     }
 }

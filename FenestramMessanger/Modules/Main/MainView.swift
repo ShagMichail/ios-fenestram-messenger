@@ -15,14 +15,12 @@ struct MainView: View {
     }
     
     var body: some View {
-        
             if viewModel.isSignIn {
-                PhoneView().navigationBarHidden(true)
-            } else {
                 MainTabView().navigationBarHidden(true)
+            } else {
+                PhoneView().navigationBarHidden(true)
             }
-        
-    }//
+    }
 }
 
 struct MainView_Previews: PreviewProvider {

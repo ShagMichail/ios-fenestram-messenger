@@ -12,9 +12,7 @@ import Combine
 struct CodeView: View {
     @State private var keyboardHeight: CGFloat = 0
     let maskCode = "XXXXX"
-    
     @Environment(\.presentationMode) var presentationMode
-    
     @StateObject private var viewModel: ViewModel
     
     init() {
@@ -26,6 +24,9 @@ struct CodeView: View {
         ZStack {
             Color("thema").ignoresSafeArea()
             getBase()
+        }
+        .onTapGesture {
+            UIApplication.shared.endEditing()
         }
     }
     
@@ -56,7 +57,6 @@ struct CodeView: View {
                     Spacer().frame(height: 3.0 )
                     
                     if viewModel.errorCode {
-                        
                         TextField("", text: Binding<String>(get: {
                             format(with: self.maskCode, phone: viewModel.textCode)
                         }, set: {
@@ -64,30 +64,26 @@ struct CodeView: View {
                         }))
                         .placeholder(when: viewModel.textCode.isEmpty) {
                             Text("").foregroundColor(Color.red)
-                            
                         }
                         .onChange(of: viewModel.textCode) { newValue in viewModel.changeIncorrect() }
                         .textFieldStyle(PlainTextFieldStyle())
                         .padding(.vertical, 12)
                         .padding(.horizontal, 16)
-                        
                         .foregroundColor(Color.red)
                         .multilineTextAlignment(.center)
                         .background(borderError)
                         .multilineTextAlignment(.leading)
                         .accentColor(Color("text"))
                         .keyboardType(.numberPad)
-                        .introspectTextField { (textField) in
-                            let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
-                            let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-                            let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
-                            doneButton.tintColor = .black
-                            toolBar.items = [flexButton, doneButton]
-                            toolBar.setItems([flexButton, doneButton], animated: true)
-                            textField.inputAccessoryView = toolBar
-                        }
-                        
-                        //.cornerRadius(6)
+//                        .introspectTextField { (textField) in
+//                            let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
+//                            let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+//                            let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
+//                            doneButton.tintColor = .black
+//                            toolBar.items = [flexButton, doneButton]
+//                            toolBar.setItems([flexButton, doneButton], animated: true)
+//                            textField.inputAccessoryView = toolBar
+//                        }
                     } else {
                         TextField("", text: Binding<String>(get: {
                             format(with: self.maskCode, phone: viewModel.textCode)
@@ -96,7 +92,6 @@ struct CodeView: View {
                         }))
                         .placeholder(when: viewModel.textCode.isEmpty) {
                             Text("").foregroundColor(Color("text"))
-                            
                         }
                         .textFieldStyle(PlainTextFieldStyle())
                         .padding(.vertical, 12)
@@ -108,16 +103,16 @@ struct CodeView: View {
                         .multilineTextAlignment(.leading)
                         .accentColor(Color("text"))
                         .keyboardType(.numberPad)
-
-                        .introspectTextField { (textField) in
-                            let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
-                            let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-                            let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
-                            doneButton.tintColor = .black
-                            toolBar.items = [flexButton, doneButton]
-                            toolBar.setItems([flexButton, doneButton], animated: true)
-                            textField.inputAccessoryView = toolBar
-                        }
+//
+//                        .introspectTextField { (textField) in
+//                            let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
+//                            let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+//                            let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
+//                            doneButton.tintColor = .black
+//                            toolBar.items = [flexButton, doneButton]
+//                            toolBar.setItems([flexButton, doneButton], animated: true)
+//                            textField.inputAccessoryView = toolBar
+//                        }
                     }
                 }
                 HStack {
@@ -131,25 +126,19 @@ struct CodeView: View {
                             Text("Отправить заново?")
                                 .font(.system(size: 15))
                                 .foregroundColor(Color.red)
-                            
                         }
                     } else {
-                        
                         Button(action: {
                             self.presentationMode.wrappedValue.dismiss()
                         }) {
                             Text("Отправить заново?")
                                 .font(.system(size: 15))
-                            
                                 .foregroundColor(Color("blue"))
-                            
-                            
                         }
                     }
                 }
             }
-            
-            
+
             Spacer()
                 .frame(height: 50.0)
             
@@ -159,30 +148,19 @@ struct CodeView: View {
                 Button(action: {
                     viewModel.checkCode()
                 }) {
-                    
                     Text("Готово")
-                    
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
-                    
                         .foregroundColor(.white)
                         .background((viewModel.textCode.count == 5 && viewModel.errorCode == false) ? Color("blue") : Color("buttonDis"))
                         .cornerRadius(6)
-                    
                 }
             }
-            
             .disabled(viewModel.textCode.count != 5 || viewModel.errorCode)
-            
         }
         .padding()
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        //.padding(.bottom, -100)
-                // 3.
                 .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
     }
-    
-    
-    
 }
 
 struct CodeView_Previews: PreviewProvider {

@@ -67,6 +67,5 @@ struct DatePickerTextField: UIViewRepresentable {
             onDoneButtonTapped?()
         }
     }
-    
     class Coordinator {}
 }

@@ -11,8 +11,6 @@ extension AccountView {
     @MainActor
     final class ViewModel: ObservableObject {
         
-        //@Published var flag = false
-        
         @Published var name = ""
         @Published var nicName = ""
         @Published var textEmail = ""
@@ -30,10 +28,7 @@ extension AccountView {
         @Published var nameOk = false
         @Published var nicNameOk = false
         @Published var textEmailOk = false
-        
-        
-        
-        
+
         func textFieldValidatorEmail(_ string: String) -> Bool {
             if string.count > 100 {
                 return false
@@ -43,6 +38,5 @@ extension AccountView {
             let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailFormat)
             return emailPredicate.evaluate(with: string)
         }
-        
     }
 }

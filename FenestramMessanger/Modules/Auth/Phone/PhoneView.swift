@@ -14,7 +14,6 @@ struct PhoneView: View {
     @State private var keyboardHeight: CGFloat = 0
     let maskPhone = "+X (XXX) XXX-XX-XX"
     @StateObject private var viewModel: ViewModel
-    //@State private var characterLimit = 18
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
     }
@@ -22,13 +21,12 @@ struct PhoneView: View {
     var body: some View {
         
         ZStack {
-            
             Color("thema").ignoresSafeArea()
-            
             getBase()
-            
         }
-        
+        .onTapGesture {
+            UIApplication.shared.endEditing()
+        }
     }
     
     var border: some View {
@@ -60,96 +58,47 @@ struct PhoneView: View {
                     Text("+7").foregroundColor(Color("text"))
                     
                 }
-                //.limitText($viewModel.textPhone, to: 18)
-//                .onChange(of: viewModel.textPhone, perform: { _ in
-//                            //  Every time a character is typed, onChange is triggered and the last character is removed from the
-//                            if viewModel.textPhone.count > characterLimit {
-//                                let limitedText = viewModel.textPhone.dropLast()
-//                                viewModel.textPhone = String(limitedText)
-//                            }
-//                        })
-                //.limitInputLength(value: $viewModel.textPhone, length: 18)
-                //.onChange(of: viewModel.textCode) { newValue in viewModel.changeIncorrect() }
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding(.vertical, 12)
                 .padding(.horizontal, 16)
-                
                 .foregroundColor(Color("text"))
                 .background(border)
                 .multilineTextAlignment(.leading)
                 .accentColor(Color("text"))
                 .keyboardType(.phonePad)
-                .introspectTextField { (textField) in
-                    let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
-                    let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-                    let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
-                    doneButton.tintColor = .black
-                    toolBar.items = [flexButton, doneButton]
-                    toolBar.setItems([flexButton, doneButton], animated: true)
-                    textField.inputAccessoryView = toolBar
-                }
-                
-                //                iPhoneNumberField(nil, text: $viewModel.textPhone)
-                //                    .flagHidden(true)
-                //                    .prefixHidden(false)
-                //                    .placeholderColor(Color("thema"))
-                //                    .font(UIFont(size: 18))
-                //                    .maximumDigits(10)
-                //                    .foregroundColor(Color("text"))
-                //                //.formatted(true)
-                //                    .accentColor(Color("text"))
-                //                    .padding(.vertical, 12)
-                //                    .padding(.horizontal, 16)
-                //                    .background(border)
-                
-                //                    .introspectTextField { (textField) in
-                //                        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
-                //                        let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-                //                        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
-                //                        doneButton.tintColor = .black
-                //                        toolBar.items = [flexButton, doneButton]
-                //                        toolBar.setItems([flexButton, doneButton], animated: true)
-                //                        textField.inputAccessoryView = toolBar
-                //                    }
-                
-                //не настраивается цвет
+//                .introspectTextField { (textField) in
+//                    let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
+//                    let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+//                    let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
+//                    doneButton.tintColor = .black
+//                    toolBar.items = [flexButton, doneButton]
+//                    toolBar.setItems([flexButton, doneButton], animated: true)
+//                    textField.inputAccessoryView = toolBar
+//                }
             }
             
             Spacer()
                 .frame(height: 83.0)
-            
-            //            NavigationLink(destination: CodeView().navigationBarHidden(true)) {
-            //                SendButtonView()
-            //            }
-            
+
             NavigationLink(isActive: $viewModel.flag) {
                 CodeView().navigationBarHidden(true)
             } label: {
                 Button(action: {
                     viewModel.checkCode()
                 }) {
-                    
                     Text("Отправить код")
-                    
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
-                    
                         .foregroundColor(.white)
                         .background((viewModel.textPhone.count == 18 ) ? Color("blue") : Color("buttonDis"))
                         .cornerRadius(6)
-                    
                 }
             }
-            
             .disabled(viewModel.textPhone.count != 18)
-            
         }
         .padding()
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        //.padding(.bottom, -100)
-        // 3.
         .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
     }
-    
 }
 
 struct PhoneView_Previews: PreviewProvider {

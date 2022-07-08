@@ -19,9 +19,7 @@ extension View {
         }
     
     func format(with mask: String, phone: String) -> String {
-        
         var numbers = phone.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
-        
         var result = ""
         var i = 0
         var index = numbers.startIndex
@@ -43,7 +41,6 @@ extension View {
                     result.append(ch)
                 }
             }
-            
         } else {
             //numbers.remove(at: numbers.index(before: numbers.endIndex))
             var i = 0
@@ -60,9 +57,6 @@ extension View {
                 }
             }
         }
- 
         return result
     }
-
-    
 }

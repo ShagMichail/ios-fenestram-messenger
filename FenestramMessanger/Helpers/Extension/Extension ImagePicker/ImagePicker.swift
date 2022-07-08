@@ -24,13 +24,11 @@ class ImagePickerCoordinator: NSObject, UINavigationControllerDelegate, UIImageP
             image = uiImage
             isShown = false
         }
-        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         isShown = false
     }
-    
 }
 
 
@@ -56,7 +54,5 @@ struct ImagePicker: UIViewControllerRepresentable {
         picker.sourceType = sourceType
         picker.delegate = context.coordinator
         return picker
-        
     }
-    
 }
