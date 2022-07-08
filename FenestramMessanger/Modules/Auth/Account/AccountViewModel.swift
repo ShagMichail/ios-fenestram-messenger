@@ -11,7 +11,7 @@ extension AccountView {
     @MainActor
     final class ViewModel: ObservableObject {
         
-        @Published var flag = false
+        //@Published var flag = false
         
         @Published var name = ""
         @Published var nicName = ""

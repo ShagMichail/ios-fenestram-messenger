@@ -14,7 +14,7 @@ struct PhoneView: View {
     @State private var keyboardHeight: CGFloat = 0
     let maskPhone = "+X (XXX) XXX-XX-XX"
     @StateObject private var viewModel: ViewModel
-    
+    //@State private var characterLimit = 18
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
     }
@@ -60,6 +60,15 @@ struct PhoneView: View {
                     Text("+7").foregroundColor(Color("text"))
                     
                 }
+                //.limitText($viewModel.textPhone, to: 18)
+//                .onChange(of: viewModel.textPhone, perform: { _ in
+//                            //  Every time a character is typed, onChange is triggered and the last character is removed from the
+//                            if viewModel.textPhone.count > characterLimit {
+//                                let limitedText = viewModel.textPhone.dropLast()
+//                                viewModel.textPhone = String(limitedText)
+//                            }
+//                        })
+                //.limitInputLength(value: $viewModel.textPhone, length: 18)
                 //.onChange(of: viewModel.textCode) { newValue in viewModel.changeIncorrect() }
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding(.vertical, 12)
@@ -105,6 +114,7 @@ struct PhoneView: View {
                 
                 //не настраивается цвет
             }
+            
             Spacer()
                 .frame(height: 83.0)
             

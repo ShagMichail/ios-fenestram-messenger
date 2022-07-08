@@ -18,6 +18,9 @@ struct Contact {
 
 struct AccountView: View {
     //@State var text = ""
+    @State var flag = false
+    @State private var selection: String? = nil
+    
     @State private var keyboardHeight: CGFloat = 0
     @State private var contact = Contact()
     @State private var image: UIImage?
@@ -296,7 +299,7 @@ struct AccountView: View {
                     .foregroundColor(Color("text"))
                     .multilineTextAlignment(.leading)
                     .accentColor(Color("text"))
-                    .keyboardType(.default)
+                    .keyboardType(.emailAddress)
                     .ignoresSafeArea(.keyboard)
                     if viewModel.isEmailValid && !viewModel.isTappedEmail  {
                         Button(action: {
@@ -324,11 +327,14 @@ struct AccountView: View {
     private func getButton() -> some View {
         
         VStack {
-            NavigationLink(isActive: $viewModel.flag) {
-                CodeView()
+//            NavigationLink(isActive: $viewModel.flag) {
+//                MainTabView().navigationBarHidden(true)
+//            } label: {
+            NavigationLink(isActive: $flag) {
+                MainTabView().navigationBarHidden(true)
             } label: {
                 Button(action: {
-                    print("cfcc")
+                    selection = "A"
                 }) {
                     
                     Text("Готово")
@@ -340,8 +346,9 @@ struct AccountView: View {
                         .cornerRadius(6)
                 }
             }.disabled((viewModel.name.count == 0 || viewModel.nicName.count == 0 || self.contact.dob == nil || viewModel.textEmailOk == false))
-            NavigationLink(isActive: $viewModel.flag) {
-                CodeView()
+            
+            NavigationLink(isActive: $flag) {
+                MainTabView().navigationBarHidden(true)
             } label: {
                 Text("Пропустить")
                 //.padding()

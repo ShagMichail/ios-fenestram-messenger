@@ -28,6 +28,10 @@
 		FC1778B02876E23F00B0D979 /* OnboardingThirdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778AD2876E23F00B0D979 /* OnboardingThirdView.swift */; };
 		FC1778B12876E23F00B0D979 /* OnboardingFirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778AE2876E23F00B0D979 /* OnboardingFirstView.swift */; };
 		FC1778B42876E25C00B0D979 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778B32876E25C00B0D979 /* Feature.swift */; };
+		FC1778D728774BA300B0D979 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778D428774BA300B0D979 /* ProfileView.swift */; };
+		FC1778D828774BA300B0D979 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778D528774BA300B0D979 /* ChatView.swift */; };
+		FC1778D928774BA300B0D979 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778D628774BA300B0D979 /* ContactsView.swift */; };
+		FC1778E12877639800B0D979 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778E02877639800B0D979 /* MainTabView.swift */; };
 		FCEE882428743FFD00268971 /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE882328743FFC00268971 /* PhoneView.swift */; };
 		FCEE88262874400700268971 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE88252874400700268971 /* CodeView.swift */; };
 		FCEE88292874409B00268971 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = FCEE88282874409B00268971 /* iPhoneNumberField */; };
@@ -55,6 +59,10 @@
 		FC1778AD2876E23F00B0D979 /* OnboardingThirdView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingThirdView.swift; sourceTree = "<group>"; };
 		FC1778AE2876E23F00B0D979 /* OnboardingFirstView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingFirstView.swift; sourceTree = "<group>"; };
 		FC1778B32876E25C00B0D979 /* Feature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
+		FC1778D428774BA300B0D979 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		FC1778D528774BA300B0D979 /* ChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		FC1778D628774BA300B0D979 /* ContactsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
+		FC1778E02877639800B0D979 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		FCEE882328743FFC00268971 /* PhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
 		FCEE88252874400700268971 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +119,7 @@
 		BDDB5ADD2872ECAA002BF418 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				FC1778C628774B0300B0D979 /* TabBar */,
 				FC1778AA2876E21800B0D979 /* Onboarding */,
 				BDDB5AE72872EDCF002BF418 /* Main */,
 				BDDB5AE22872ECEC002BF418 /* Auth */,
@@ -269,6 +278,25 @@
 			path = OnbordingExtension;
 			sourceTree = "<group>";
 		};
+		FC1778C628774B0300B0D979 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				FC1778D128774B4F00B0D979 /* ViewTabBar */,
+				FC1778E02877639800B0D979 /* MainTabView.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		FC1778D128774B4F00B0D979 /* ViewTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				FC1778D528774BA300B0D979 /* ChatView.swift */,
+				FC1778D628774BA300B0D979 /* ContactsView.swift */,
+				FC1778D428774BA300B0D979 /* ProfileView.swift */,
+			);
+			path = ViewTabBar;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -353,13 +381,17 @@
 				FC17788B2875933200B0D979 /* View.swift in Sources */,
 				BD7783AA2872EBB50023032D /* FenestramMessangerApp.swift in Sources */,
 				FC1778B02876E23F00B0D979 /* OnboardingThirdView.swift in Sources */,
+				FC1778D828774BA300B0D979 /* ChatView.swift in Sources */,
 				FC1778902875A1B900B0D979 /* Screen.swift in Sources */,
+				FC1778D728774BA300B0D979 /* ProfileView.swift in Sources */,
 				FC17787F2875919200B0D979 /* CodeViewModel.swift in Sources */,
 				BDDB5ADF2872ECBC002BF418 /* MainView.swift in Sources */,
 				FC17786E2875837300B0D979 /* AccountView.swift in Sources */,
 				FC1778AF2876E23F00B0D979 /* OnboardingSecondView.swift in Sources */,
+				FC1778D928774BA300B0D979 /* ContactsView.swift in Sources */,
 				FCEE882428743FFD00268971 /* PhoneView.swift in Sources */,
 				FC1778B42876E25C00B0D979 /* Feature.swift in Sources */,
+				FC1778E12877639800B0D979 /* MainTabView.swift in Sources */,
 				FC1778B12876E23F00B0D979 /* OnboardingFirstView.swift in Sources */,
 				FC177877287583D100B0D979 /* Globals.swift in Sources */,
 				FC177873287583BA00B0D979 /* ImagePicker.swift in Sources */,

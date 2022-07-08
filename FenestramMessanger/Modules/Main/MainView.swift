@@ -19,7 +19,7 @@ struct MainView: View {
             if viewModel.isSignIn {
                 PhoneView().navigationBarHidden(true)
             } else {
-                Text("Not implemented")
+                MainTabView().navigationBarHidden(true)
             }
         
     }//
