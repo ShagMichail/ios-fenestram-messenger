@@ -1,19 +1,20 @@
 //
 //  ChatView.swift
-//  TFN
+//  FenestramMessanger
 //
-//  Created by Михаил Шаговитов on 07.07.2022.
+//  Created by Михаил Шаговитов on 09.07.2022.
 //
 
 import SwiftUI
 
 struct ChatView: View {
+    
     var body: some View {
         ZStack {
             
             Color("thema").ignoresSafeArea()
-            Text("Chat").foregroundColor(Color.white)
-        }
+            Text("chat").foregroundColor(Color.white)
+        }.navigationBarHidden(true)
     }
 }
 
@@ -22,3 +23,4 @@ struct ChatView_Previews: PreviewProvider {
         ChatView()
     }
 }
+

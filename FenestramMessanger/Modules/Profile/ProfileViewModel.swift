@@ -1,18 +1,15 @@
 //
-//  AccountViewModel.swift
+//  ProfileViewModel.swift
 //  FenestramMessanger
 //
-//  Created by Михаил Шаговитов on 06.07.2022.
+//  Created by Михаил Шаговитов on 08.07.2022.
 //
 
-import Foundation
 import SwiftUI
 
-extension AccountView {
+extension ProfileView {
     @MainActor
     final class ViewModel: ObservableObject {
-        
-        //let str = String(decoding: contact.dob, as: UTF8.self)
         
         //@Published var contact = Contact()
         
@@ -20,9 +17,9 @@ extension AccountView {
         
         @Published var image: UIImage?
         
-        @Published var name = ""
-        @Published var nicName = ""
-        @Published var textEmail = ""
+        @Published var name = "Ирина Иванова"
+        @Published var nicName = "Irish"
+        @Published var textEmail = "irish@mail.ru"
         
         @Published var isTappedName = false
         @Published var isTappedNicName = false

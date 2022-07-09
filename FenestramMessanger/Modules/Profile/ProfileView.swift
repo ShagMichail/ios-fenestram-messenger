@@ -1,21 +1,19 @@
 //
-//  Account.swift
+//  ProfileView.swift
 //  TFN
 //
-//  Created by Михаил Шаговитов on 05.07.2022.
+//  Created by Михаил Шаговитов on 07.07.2022.
 //
 
 import SwiftUI
-import Introspect
 import Combine
 
-
-
-struct AccountView: View {
+struct ProfileView: View {
     @State var flag = false
     @State private var selection: String? = nil
     @State private var keyboardHeight: CGFloat = 0
     
+    //@State private var image: UIImage?
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     @StateObject private var viewModel: ViewModel
     
@@ -32,35 +30,62 @@ struct AccountView: View {
     var body: some View {
         ZStack {
             Color("thema").ignoresSafeArea()
-            VStack  {
-                getHeader()
+            VStack {
+                VStack {
+                    getHeader()
+                }.padding(.top, 10)
+                VStack  {
+                    
+                    getImage()
+                    Spacer()
+                        .frame(height: 30.0)
+                    getName()
+                    Spacer()
+                        .frame(height: 30.0)
+                    getNicName()
+                    getBirthday()
+                    getEmail()
+                    Spacer()
+                        .frame(height: 40.0)
+                    getButton()
+                }
+                .padding()
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+                .padding(.bottom, keyboardHeight/4)
+                .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
+                
                 Spacer()
-                    .frame(height: 40.0)
-                getImage()
-                Spacer()
-                    .frame(height: 30.0)
-                getName()
-                getNicName()
-                getBirthday()
-                getEmail()
-                Spacer()
-                getButton()
             }
-            .padding()
-            .ignoresSafeArea(.keyboard, edges: .bottom)
-            .padding(.bottom, keyboardHeight/4)
-            .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
+            
         }
         .onTapGesture {
             UIApplication.shared.endEditing()
         }
+        .navigationBarHidden(true)
+        
     }
     
+//    private func getHeader() -> some View {
+//        Text("Добро пожаловать в FENESTRAM!")
+//            .font(.title)
+//            .foregroundColor(.white)
+//            .multilineTextAlignment(.center)
+//    }
     private func getHeader() -> some View {
-        Text("Добро пожаловать в FENESTRAM!")
-            .font(.title)
-            .foregroundColor(.white)
-            .multilineTextAlignment(.center)
+        VStack(alignment: .trailing){
+            NavigationLink() {
+                SettingsView()
+            } label: {
+                Image(systemName: "gearshape").foregroundColor(Color("blue"))
+            }
+//            Button(action: {
+//                selection = "A"
+//            }) {
+//                Image(systemName: "gearshape")
+//
+//            }
+        }//.frame(width: UIScreen.screenWidth - 30)
+            .padding(.leading, UIScreen.screenWidth - 60)
     }
     
     private func getImage() -> some View {
@@ -103,43 +128,12 @@ struct AccountView: View {
     }
     
     private func getName() -> some View {
-        VStack(alignment: .leading){
-            Text("Имя")
-                .font(.headline)
-                .foregroundColor(Color("text"))
+        VStack(alignment: .center) {
+            Text(viewModel.name)
+                .font(.system(size: 28))
+                .foregroundColor(Color.white)
+                .bold()
             Spacer().frame(height: 3.0 )
-            
-            ZStack {
-                HStack (spacing: 5){
-                    TextField("", text: $viewModel.name) { (status) in
-                        if status {
-                            viewModel.isTappedName = true
-                        } else {
-                            viewModel.isTappedName = false
-                        }
-                    } onCommit: {
-                        viewModel.isTappedName = false
-                    }
-                    .textFieldStyle(PlainTextFieldStyle())
-                    .padding(.vertical, 12)
-                    .padding(.leading, 10)
-                    .padding(.trailing, 5)
-                    .foregroundColor(Color("text"))
-                    .multilineTextAlignment(.leading)
-                    .accentColor(Color("text"))
-                    .keyboardType(.default)
-                    
-                    if viewModel.isTappedName == false && viewModel.name.count != 0 {
-                        Button(action: {
-                            print("ddd")
-                        }, label: {
-                            Image(systemName: "checkmark").foregroundColor(Color("blue"))
-                        })
-                        .padding(.trailing, 10.0)
-                        .disabled(true)
-                    }
-                }
-            }.background(border)
         }
     }
     
@@ -168,17 +162,6 @@ struct AccountView: View {
                     .multilineTextAlignment(.leading)
                     .accentColor(Color("text"))
                     .keyboardType(.default)
-                    
-                    if viewModel.isTappedNicName == false && viewModel.nicName.count != 0 {
-                        Button(action: {
-                            print("ddd")
-                        }, label: {
-                            Image(systemName: "checkmark")
-                                .foregroundColor(Color("blue"))
-                        })
-                        .padding(.trailing, 10.0)
-                        .disabled(true)
-                    }
                 }
             }.background(border)
         }
@@ -198,17 +181,6 @@ struct AccountView: View {
                         .padding(.trailing, 5)
                         .frame( height: 46.0)
                         .font(.system(size: 20))
-                    
-                    if viewModel.birthday != nil {
-                        Button(action: {
-                            print("ddd")
-                        }, label: {
-                            Image(systemName: "checkmark")
-                                .foregroundColor(Color("blue"))
-                        })
-                        .padding(.trailing, 10.0)
-                        .disabled(true)
-                    }
                 }
             }.background(border)
         }
@@ -248,16 +220,6 @@ struct AccountView: View {
                     .accentColor(Color("text"))
                     .keyboardType(.emailAddress)
                     .ignoresSafeArea(.keyboard)
-                    if viewModel.isEmailValid && !viewModel.isTappedEmail  {
-                        Button(action: {
-                            print("ddd")
-                        }, label: {
-                            Image(systemName: "checkmark")
-                                .foregroundColor(Color("blue"))
-                        })
-                        .padding(.trailing, 10.0)
-                        .disabled(true)
-                    }
                 }
             }.background(border)
         }
@@ -265,29 +227,34 @@ struct AccountView: View {
     
     private func getButton() -> some View {
         
-        VStack {
+        HStack {
             Button(action: {
                 selection = "A"
             }) {
-                Text("Готово")
-                    .frame(width: UIScreen.screenWidth - 30, height: 45.0)
+                Text("Отменить")
+                    .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)
                     .foregroundColor(.white)
-                    .background( (viewModel.name.count != 0 && viewModel.nicName.count != 0 && viewModel.birthday != nil && viewModel.textEmailOk) ? Color("blue") : Color("buttonDis"))
+                    .background(Color("blue"))
                     .cornerRadius(6)
-            }.disabled((viewModel.name.count == 0 || viewModel.nicName.count == 0 || viewModel.birthday == nil || viewModel.textEmailOk == false))
+            }
+            
+            Spacer()
 
             Button(action: {
                 selection = "A"
             }) {
-                Text("Пропустить")
-                    .foregroundColor(Color("next"))
+                Text("Готово")
+                .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)
+                .foregroundColor(.white)
+                .background(Color("blue") )
+                .cornerRadius(6)
             }
         }
     }
 }
 
-struct AccountView_Previews: PreviewProvider {
+struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountView()
+        ProfileView()
     }
 }
