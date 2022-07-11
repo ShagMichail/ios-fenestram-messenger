@@ -24,37 +24,38 @@ struct ContactsView: View {
     }
     
     var body: some View {
-        NavigationView {
-            ZStack{
-                Color("thema").ignoresSafeArea()
+        //NavigationView {
+        ZStack{
+            Color("thema").ignoresSafeArea()
+            
+            VStack(alignment: .leading) {
+                Text("Контакты").font(.system(size: 23)).foregroundColor(Color.white).padding(.horizontal)
+                //.padding()
                 
                 VStack(alignment: .leading) {
-                    Text("Контакты").font(.system(size: 23)).foregroundColor(Color.white).padding(.horizontal)
-                    //.padding()
+                    TextField("", text: $viewModel.searchText)
+                        .placeholder(when: viewModel.searchText.isEmpty) {
+                            Text("Поиск контакта").foregroundColor(Color("text"))
+                        }
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .padding(.vertical, 12)
+                        .padding(.leading, 10)
+                        .padding(.trailing, 5)
+                        .foregroundColor(Color("text"))
                     
-                    VStack(alignment: .leading) {
-                        TextField("", text: $viewModel.searchText)
-                            .placeholder(when: viewModel.searchText.isEmpty) {
-                                Text("Поиск контакта").foregroundColor(Color("text"))
-                            }
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .padding(.vertical, 12)
-                            .padding(.leading, 10)
-                            .padding(.trailing, 5)
-                            .foregroundColor(Color("text"))
-                        
-                            .multilineTextAlignment(.leading)
-                            .accentColor(Color("text"))
-                            .keyboardType(.default)
-                            .onChange(of: viewModel.searchText) { text in
-                                viewModel.filterContent()
-                            }
-                    }
-                    .background(border)
-                    .padding(.horizontal, 30.0)
-                    
-                    Spacer().frame(height: 20.0)
-                    
+                        .multilineTextAlignment(.leading)
+                        .accentColor(Color("text"))
+                        .keyboardType(.default)
+                        .onChange(of: viewModel.searchText) { text in
+                            viewModel.filterContent()
+                        }
+                }
+                .background(border)
+                .padding(.horizontal, 30.0)
+                
+                Spacer().frame(height: 20.0)
+                
+                ZStack (alignment: .trailing) {
                     ScrollView {
                         if viewModel.filteredContacts.count > 0 {
                             ForEach(viewModel.filteredContacts) { contact in
@@ -65,14 +66,33 @@ struct ContactsView: View {
                             Text("Данного контака не существует").font(.system(size: 15)).foregroundColor(Color.white).padding(.horizontal)
                         }
                     }
-                    //.padding(.horizontal)
+                    Button(action: {
+                        print("dfs")
+                    }) {
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 40)
+                                .frame(width: 60, height: 60)
+                                .foregroundColor(Color("blue"))
+                            Image(systemName: "plus")
+                                .foregroundColor(Color.white)
+                                .font(.system(size: 25))
+                        }.padding(.leading, UIScreen.screenWidth - 75)
+                            .padding(.bottom, 20)
+                            .padding(.top, 20)
+                            .padding(.trailing, 10)
+                            //.padding(.top, UIScreen.screenHeight/2)
+                    }
                 }
-            }.onTapGesture {
-                UIApplication.shared.endEditing()
+                
+                
             }
-            .navigationBarHidden(true)
+
+        }.onTapGesture {
+            UIApplication.shared.endEditing()
         }
+        .navigationBarHidden(true)
     }
+    
 }
 
 struct ContactsView_Previews: PreviewProvider {

@@ -24,7 +24,7 @@ struct ContactsRow: View {
                 .font(.system(size: 20))
             Spacer()
             
-            NavigationLink(destination: CorrespondenceView(person: name)) {
+            NavigationLink(destination: CorrespondenceView(person: name, personImage: "\(image)")) {
                 Image("chat")
                     .padding(.horizontal)
             }
