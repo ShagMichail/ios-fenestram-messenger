@@ -31,7 +31,7 @@ struct ContactsView: View {
                 Text("Контакты").font(.system(size: 23)).foregroundColor(Color.white).padding(.horizontal)
                     .padding(.top)
                 
-                if viewModel.filteredContacts.count != 0 {
+                if viewModel.allContacts.count == 0 {
                     
                     VStack(alignment: .leading) {
                         TextField("", text: $viewModel.searchText)
@@ -74,9 +74,9 @@ struct ContactsView: View {
                             
                             HStack (alignment: .bottom){
                                 
-                                Button(action: {
-                                    print("dfs")
-                                }) {
+                                NavigationLink() {
+                                    NewContactView()
+                                } label: {
                                     ZStack{
                                         RoundedRectangle(cornerRadius: 40)
                                             .frame(width: 60, height: 60)

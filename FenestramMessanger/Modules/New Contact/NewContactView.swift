@@ -64,6 +64,14 @@ struct NewContactView: View {
             
             Color("thema").ignoresSafeArea()
             VStack {
+                RoundedRectangle(cornerRadius: 0)
+                    //.background(Color("buttonDis"))
+                    .foregroundColor(Color("buttonDis"))
+                    .frame(width: UIScreen.screenWidth, height: 100.0)
+                    .ignoresSafeArea()
+                Spacer()
+            }
+            VStack {
                 getName()
                 getLastName()
                 getPhone()

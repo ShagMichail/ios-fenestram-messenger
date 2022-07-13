@@ -11,6 +11,7 @@ struct CorrespondenceView: View {
     
     
     let contact: Contact
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     
@@ -76,17 +77,20 @@ struct CorrespondenceView: View {
         ZStack {
             
             Color("thema").ignoresSafeArea()
-            
+            VStack {
+                RoundedRectangle(cornerRadius: 0)
+                    //.background(Color("buttonDis"))
+                    .foregroundColor(Color("buttonDis"))
+                    .frame(width: UIScreen.screenWidth, height: 100.0)
+                    .ignoresSafeArea()
+                Spacer()
+            }
             Text("Переписка!").foregroundColor(Color.white)
         }
         .navigationBarBackButtonHidden(true)
         navigationBarItems(leading: title)
         .navigationBarItems(leading: btnBack)
         .navigationBarItems(trailing: btnBell)
-        .background(NavigationConfigurator { nc in
-            nc.navigationBar.backgroundColor = UIColor(named: "page")
-            //nc.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.white]
-        })
     }
 }
 //
