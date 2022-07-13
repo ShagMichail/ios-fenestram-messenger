@@ -14,6 +14,28 @@
 		BDDB5AE12872ECE2002BF418 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDB5AE02872ECE2002BF418 /* MainViewModel.swift */; };
 		BDDB5AE42872ED73002BF418 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDB5AE32872ED73002BF418 /* AuthView.swift */; };
 		BDDB5AE62872ED85002BF418 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDB5AE52872ED85002BF418 /* AuthViewModel.swift */; };
+		BDF2E2CF287F1B1200B7E182 /* AbstractRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2BF287F1B1200B7E182 /* AbstractRequestRouter.swift */; };
+		BDF2E2D0287F1B1200B7E182 /* AuthRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2C0287F1B1200B7E182 /* AuthRequestRouter.swift */; };
+		BDF2E2D1287F1B1200B7E182 /* ProfileRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2C1287F1B1200B7E182 /* ProfileRequestRouter.swift */; };
+		BDF2E2D2287F1B1200B7E182 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2C2287F1B1200B7E182 /* AuthService.swift */; };
+		BDF2E2D3287F1B1200B7E182 /* AbstractRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2C4287F1B1200B7E182 /* AbstractRequestFactory.swift */; };
+		BDF2E2D4287F1B1200B7E182 /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2C5287F1B1200B7E182 /* RequestFactory.swift */; };
+		BDF2E2D5287F1B1200B7E182 /* AuthRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2C6287F1B1200B7E182 /* AuthRequestFactory.swift */; };
+		BDF2E2D6287F1B1200B7E182 /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2C8287F1B1200B7E182 /* UserEntity.swift */; };
+		BDF2E2D7287F1B1200B7E182 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2CA287F1B1200B7E182 /* Constants.swift */; };
+		BDF2E2D8287F1B1200B7E182 /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2CB287F1B1200B7E182 /* KeychainPasswordItem.swift */; };
+		BDF2E2D9287F1B1200B7E182 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2CC287F1B1200B7E182 /* Settings.swift */; };
+		BDF2E2DA287F1B1200B7E182 /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2CD287F1B1200B7E182 /* AuthController.swift */; };
+		BDF2E2DB287F1B1200B7E182 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2CE287F1B1200B7E182 /* NetworkError.swift */; };
+		BDF2E2DD287F1C0600B7E182 /* ProfileRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2DC287F1C0600B7E182 /* ProfileRequestFactory.swift */; };
+		BDF2E2E0287F1C1C00B7E182 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BDF2E2DF287F1C1C00B7E182 /* Alamofire */; };
+		BDF2E2E2287F1CC400B7E182 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2E1287F1CC400B7E182 /* ProfileService.swift */; };
+		BDF2E2E4287F207000B7E182 /* ChatRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2E3287F207000B7E182 /* ChatRequestRouter.swift */; };
+		BDF2E2E6287F217D00B7E182 /* ChatRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2E5287F217D00B7E182 /* ChatRequestFactory.swift */; };
+		BDF2E2E8287F225F00B7E182 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2E7287F225F00B7E182 /* ChatService.swift */; };
+		BDF2E2EA287F26E300B7E182 /* ChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2E9287F26E300B7E182 /* ChatEntity.swift */; };
+		BDF2E2ED287F286A00B7E182 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2EC287F286A00B7E182 /* Date+Extensions.swift */; };
+		BDF2E2EF287F29F800B7E182 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2EE287F29F800B7E182 /* MessageEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +47,27 @@
 		BDDB5AE02872ECE2002BF418 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		BDDB5AE32872ED73002BF418 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		BDDB5AE52872ED85002BF418 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		BDF2E2BF287F1B1200B7E182 /* AbstractRequestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractRequestRouter.swift; sourceTree = "<group>"; };
+		BDF2E2C0287F1B1200B7E182 /* AuthRequestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthRequestRouter.swift; sourceTree = "<group>"; };
+		BDF2E2C1287F1B1200B7E182 /* ProfileRequestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileRequestRouter.swift; sourceTree = "<group>"; };
+		BDF2E2C2287F1B1200B7E182 /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		BDF2E2C4287F1B1200B7E182 /* AbstractRequestFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractRequestFactory.swift; sourceTree = "<group>"; };
+		BDF2E2C5287F1B1200B7E182 /* RequestFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
+		BDF2E2C6287F1B1200B7E182 /* AuthRequestFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthRequestFactory.swift; sourceTree = "<group>"; };
+		BDF2E2C8287F1B1200B7E182 /* UserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
+		BDF2E2CA287F1B1200B7E182 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		BDF2E2CB287F1B1200B7E182 /* KeychainPasswordItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainPasswordItem.swift; sourceTree = "<group>"; };
+		BDF2E2CC287F1B1200B7E182 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		BDF2E2CD287F1B1200B7E182 /* AuthController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
+		BDF2E2CE287F1B1200B7E182 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		BDF2E2DC287F1C0600B7E182 /* ProfileRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequestFactory.swift; sourceTree = "<group>"; };
+		BDF2E2E1287F1CC400B7E182 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		BDF2E2E3287F207000B7E182 /* ChatRequestRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRequestRouter.swift; sourceTree = "<group>"; };
+		BDF2E2E5287F217D00B7E182 /* ChatRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRequestFactory.swift; sourceTree = "<group>"; };
+		BDF2E2E7287F225F00B7E182 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
+		BDF2E2E9287F26E300B7E182 /* ChatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatEntity.swift; sourceTree = "<group>"; };
+		BDF2E2EC287F286A00B7E182 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
+		BDF2E2EE287F29F800B7E182 /* MessageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDF2E2E0287F1C1C00B7E182 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +101,7 @@
 		BD7783A82872EBB50023032D /* FenestramMessanger */ = {
 			isa = PBXGroup;
 			children = (
+				BDF2E2BC287F1B1200B7E182 /* Core */,
 				BDDB5ADD2872ECAA002BF418 /* Modules */,
 				BD7783A92872EBB50023032D /* FenestramMessangerApp.swift */,
 				BD7783AD2872EBB70023032D /* Assets.xcassets */,
@@ -100,6 +145,82 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		BDF2E2BC287F1B1200B7E182 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				BDF2E2EB287F285400B7E182 /* Extensions */,
+				BDF2E2BD287F1B1200B7E182 /* Network */,
+				BDF2E2C7287F1B1200B7E182 /* Models */,
+				BDF2E2C9287F1B1200B7E182 /* Helpers */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		BDF2E2BD287F1B1200B7E182 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				BDF2E2BE287F1B1200B7E182 /* RequestRouter */,
+				BDF2E2C3287F1B1200B7E182 /* Factory */,
+				BDF2E2C2287F1B1200B7E182 /* AuthService.swift */,
+				BDF2E2E1287F1CC400B7E182 /* ProfileService.swift */,
+				BDF2E2E7287F225F00B7E182 /* ChatService.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		BDF2E2BE287F1B1200B7E182 /* RequestRouter */ = {
+			isa = PBXGroup;
+			children = (
+				BDF2E2BF287F1B1200B7E182 /* AbstractRequestRouter.swift */,
+				BDF2E2C0287F1B1200B7E182 /* AuthRequestRouter.swift */,
+				BDF2E2C1287F1B1200B7E182 /* ProfileRequestRouter.swift */,
+				BDF2E2E3287F207000B7E182 /* ChatRequestRouter.swift */,
+			);
+			path = RequestRouter;
+			sourceTree = "<group>";
+		};
+		BDF2E2C3287F1B1200B7E182 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				BDF2E2C5287F1B1200B7E182 /* RequestFactory.swift */,
+				BDF2E2C4287F1B1200B7E182 /* AbstractRequestFactory.swift */,
+				BDF2E2C6287F1B1200B7E182 /* AuthRequestFactory.swift */,
+				BDF2E2DC287F1C0600B7E182 /* ProfileRequestFactory.swift */,
+				BDF2E2E5287F217D00B7E182 /* ChatRequestFactory.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		BDF2E2C7287F1B1200B7E182 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BDF2E2C8287F1B1200B7E182 /* UserEntity.swift */,
+				BDF2E2E9287F26E300B7E182 /* ChatEntity.swift */,
+				BDF2E2EE287F29F800B7E182 /* MessageEntity.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BDF2E2C9287F1B1200B7E182 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				BDF2E2CA287F1B1200B7E182 /* Constants.swift */,
+				BDF2E2CB287F1B1200B7E182 /* KeychainPasswordItem.swift */,
+				BDF2E2CC287F1B1200B7E182 /* Settings.swift */,
+				BDF2E2CD287F1B1200B7E182 /* AuthController.swift */,
+				BDF2E2CE287F1B1200B7E182 /* NetworkError.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		BDF2E2EB287F285400B7E182 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BDF2E2EC287F286A00B7E182 /* Date+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -116,6 +237,9 @@
 			dependencies = (
 			);
 			name = FenestramMessanger;
+			packageProductDependencies = (
+				BDF2E2DF287F1C1C00B7E182 /* Alamofire */,
+			);
 			productName = FenestramMessanger;
 			productReference = BD7783A62872EBB50023032D /* FenestramMessanger.app */;
 			productType = "com.apple.product-type.application";
@@ -129,6 +253,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
 				LastUpgradeCheck = 1340;
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					BD7783A52872EBB50023032D = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -144,6 +269,9 @@
 				Base,
 			);
 			mainGroup = BD77839D2872EBB50023032D;
+			packageReferences = (
+				BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = BD7783A72872EBB50023032D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -170,11 +298,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDF2E2EA287F26E300B7E182 /* ChatEntity.swift in Sources */,
+				BDF2E2D4287F1B1200B7E182 /* RequestFactory.swift in Sources */,
+				BDF2E2D3287F1B1200B7E182 /* AbstractRequestFactory.swift in Sources */,
+				BDF2E2E6287F217D00B7E182 /* ChatRequestFactory.swift in Sources */,
+				BDF2E2D5287F1B1200B7E182 /* AuthRequestFactory.swift in Sources */,
+				BDF2E2D1287F1B1200B7E182 /* ProfileRequestRouter.swift in Sources */,
 				BDDB5AE62872ED85002BF418 /* AuthViewModel.swift in Sources */,
+				BDF2E2DD287F1C0600B7E182 /* ProfileRequestFactory.swift in Sources */,
+				BDF2E2D8287F1B1200B7E182 /* KeychainPasswordItem.swift in Sources */,
 				BD7783AA2872EBB50023032D /* FenestramMessangerApp.swift in Sources */,
+				BDF2E2D2287F1B1200B7E182 /* AuthService.swift in Sources */,
+				BDF2E2E2287F1CC400B7E182 /* ProfileService.swift in Sources */,
 				BDDB5ADF2872ECBC002BF418 /* MainView.swift in Sources */,
+				BDF2E2D6287F1B1200B7E182 /* UserEntity.swift in Sources */,
+				BDF2E2EF287F29F800B7E182 /* MessageEntity.swift in Sources */,
+				BDF2E2D9287F1B1200B7E182 /* Settings.swift in Sources */,
 				BDDB5AE42872ED73002BF418 /* AuthView.swift in Sources */,
+				BDF2E2E4287F207000B7E182 /* ChatRequestRouter.swift in Sources */,
+				BDF2E2E8287F225F00B7E182 /* ChatService.swift in Sources */,
+				BDF2E2ED287F286A00B7E182 /* Date+Extensions.swift in Sources */,
+				BDF2E2CF287F1B1200B7E182 /* AbstractRequestRouter.swift in Sources */,
+				BDF2E2DA287F1B1200B7E182 /* AuthController.swift in Sources */,
+				BDF2E2D7287F1B1200B7E182 /* Constants.swift in Sources */,
+				BDF2E2DB287F1B1200B7E182 /* NetworkError.swift in Sources */,
 				BDDB5AE12872ECE2002BF418 /* MainViewModel.swift in Sources */,
+				BDF2E2D0287F1B1200B7E182 /* AuthRequestRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +524,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BDF2E2DF287F1C1C00B7E182 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BD77839E2872EBB50023032D /* Project object */;
 }
