@@ -14,9 +14,9 @@ struct FenestramMessangerApp: App {
         WindowGroup {
             NavigationView{
                 if isOnboarding {
-                    OnboardingFirstView()
+                    ContentOnboarding().navigationBarHidden(true)
                 } else {
-                    MainView()
+                    MainView().navigationBarHidden(true)
                 }
             }
         }

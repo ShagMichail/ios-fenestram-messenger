@@ -9,15 +9,15 @@ import SwiftUI
 
 struct CorrespondenceView: View {
     
-    @State var person: String
-    @State var personImage: String
+    
+    let contact: Contact
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     
-    //    init() {
-    //
-    //        UINavigationBar.appearance().backgroundColor = UIColor(named: "page")
-    //    }
+//        init() {
+//    
+//            UINavigationBar.appearance().backgroundColor = UIColor(named: "page")
+//        }
     
     
     var btnBack : some View {
@@ -27,14 +27,20 @@ struct CorrespondenceView: View {
             HStack {
                 Image(systemName: "chevron.left")
                     .foregroundColor(Color.white)
-                Image("\(personImage)")
-                    .resizable()
-                    .frame(width: 40.0, height: 40.0)
-                Text("\(person)")
-                    .foregroundColor(Color.white)
-                    .font(.system(size: 20))
             }
         }
+    }
+    
+    var title : some View {
+        HStack {
+            Image(contact.imageName)
+                .resizable()
+            .frame(width: 40.0, height: 40.0)
+            Text(contact.name)
+                .foregroundColor(Color.white)
+                .font(.system(size: 20))
+        }
+
     }
     
     var btnBell : some View {
@@ -74,6 +80,7 @@ struct CorrespondenceView: View {
             Text("Переписка!").foregroundColor(Color.white)
         }
         .navigationBarBackButtonHidden(true)
+        navigationBarItems(leading: title)
         .navigationBarItems(leading: btnBack)
         .navigationBarItems(trailing: btnBell)
         .background(NavigationConfigurator { nc in

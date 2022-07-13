@@ -9,22 +9,21 @@ import SwiftUI
 
 struct ContactsRow: View {
     
-    @State var name: String
-    @State var image: String
+    let contact: Contact
     
     var body: some View {
         
         HStack(){
-            Image("\(image)")
+            Image(contact.imageName)
                 .resizable()
                 .frame(width: 40.0, height: 40.0)
                 .padding(.horizontal)
-            Text(name)
+            Text(contact.name)
                 .foregroundColor(.white)
                 .font(.system(size: 20))
             Spacer()
             
-            NavigationLink(destination: CorrespondenceView(person: name, personImage: "\(image)")) {
+            NavigationLink(destination: CorrespondenceView(contact: contact)) {
                 Image("chat")
                     .padding(.horizontal)
             }
@@ -33,8 +32,8 @@ struct ContactsRow: View {
     }
 }
 
-struct ContactsRow_Previews: PreviewProvider {
-    static var previews: some View {
-        ContactsRow(name: "dfddfddfdf", image: "photo")
-    }
-}
+//struct ContactsRow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContactsRow(name: "dfddfddfdf", image: "photo")
+//    }
+//}

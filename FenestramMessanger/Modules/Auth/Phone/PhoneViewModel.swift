@@ -18,7 +18,7 @@ extension PhoneView {
         @Published public var flag = false
         
         func checkCode () {
-            if textPhone.count == 18 {
+            if textPhone.count == 16 {
 
                 flag = true
             } else {

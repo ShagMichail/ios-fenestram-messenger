@@ -19,14 +19,14 @@ extension View {
         }
     
     func format(with mask: String, phone: String) -> String {
-        var numbers = phone.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
+        let numbers = phone.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
         var result = ""
         var i = 0
         var index = numbers.startIndex
         if numbers.count < mask.count  {
             for ch in mask where index < numbers.endIndex {
                 if ch == "X" {
-                    if i == 0 && mask.count == 18 {
+                    if i == 0 && mask.count == 16 {
                         result.append("7")
                         if numbers[index] == "9" {
                             result.append(numbers[index])

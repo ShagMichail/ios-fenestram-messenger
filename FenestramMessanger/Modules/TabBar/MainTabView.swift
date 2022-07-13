@@ -18,7 +18,9 @@ struct MainTabView: View {
     
     var body: some View {
         TabView(selection: $selectionTabView) {
-            ContactsView().tabItem {
+            ContactsView()
+                .navigationBarHidden(true)
+                .tabItem {
                 if selectionTabView == 0 {
                     Image("contacts_selected").frame(width: 20, height: 20)
                 } else {
@@ -28,7 +30,9 @@ struct MainTabView: View {
             }
             .tag(0)
             
-            ChatView().tabItem {
+            ChatView()
+                .navigationBarHidden(true)
+                .tabItem {
                     if selectionTabView == 1 {
                         Image("chat_selected").frame(width: 20, height: 20)
                     } else {
@@ -38,7 +42,9 @@ struct MainTabView: View {
                 }
                 .tag(1)
             
-            ProfileView().tabItem {
+            ProfileView()
+                .navigationBarHidden(true)
+                .tabItem {
                     if selectionTabView == 2 {
                         Image("profile_selected").frame(width: 20, height: 20)
                     } else {
