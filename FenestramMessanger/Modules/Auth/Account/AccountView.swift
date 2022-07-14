@@ -26,12 +26,14 @@ struct AccountView: View {
     var border: some View {
         RoundedRectangle(cornerRadius: 6)
             .strokeBorder(
-                LinearGradient(colors: [Color("border")] , startPoint: .topLeading, endPoint: .bottomTrailing))
+                LinearGradient(colors: [Asset.border.swiftUIColor] , startPoint: .topLeading, endPoint: .bottomTrailing))
     }
     
     var body: some View {
         ZStack {
-            Color("thema").ignoresSafeArea()
+            Asset.thema.swiftUIColor
+                .ignoresSafeArea()
+            
             VStack  {
                 getHeader()
                 Spacer()
@@ -65,7 +67,7 @@ struct AccountView: View {
     
     private func getImage() -> some View {
         ZStack (alignment: .trailing){
-            Image(uiImage: viewModel.image ?? UIImage(named: "photo")!)
+            Image(uiImage: viewModel.image ?? Asset.photo.image)
                 .resizable()
                 .frame(width: 120, height: 120)
                 .clipShape(Circle())
@@ -78,7 +80,7 @@ struct AccountView: View {
                 }
                 .padding(.all, 5.0)
                 .foregroundColor(.white)
-                .background(LinearGradient(gradient: Gradient(colors: [Color("blue")]), startPoint: .leading, endPoint: .trailing))
+                .background(LinearGradient(gradient: Gradient(colors: [Asset.blue.swiftUIColor]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(40)
                 .frame(width: 50.0, height: 100.0, alignment: .center)
                 .actionSheet(isPresented: $viewModel.showSheet) {
@@ -106,7 +108,7 @@ struct AccountView: View {
         VStack(alignment: .leading){
             Text("Имя")
                 .font(.headline)
-                .foregroundColor(Color("text"))
+                .foregroundColor(Asset.text.swiftUIColor)
             Spacer().frame(height: 3.0 )
             
             ZStack {
@@ -124,16 +126,16 @@ struct AccountView: View {
                     .padding(.vertical, 12)
                     .padding(.leading, 10)
                     .padding(.trailing, 5)
-                    .foregroundColor(Color("text"))
+                    .foregroundColor(Asset.text.swiftUIColor)
                     .multilineTextAlignment(.leading)
-                    .accentColor(Color("text"))
+                    .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
                     
                     if viewModel.isTappedName == false && viewModel.name.count != 0 {
                         Button(action: {
                             print("ddd")
                         }, label: {
-                            Image(systemName: "checkmark").foregroundColor(Color("blue"))
+                            Image(systemName: "checkmark").foregroundColor(Asset.blue.swiftUIColor)
                         })
                         .padding(.trailing, 10.0)
                         .disabled(true)
@@ -147,7 +149,7 @@ struct AccountView: View {
         VStack(alignment: .leading){
             Text("Никнейм")
                 .font(.headline)
-                .foregroundColor(Color("text"))
+                .foregroundColor(Asset.text.swiftUIColor)
             Spacer().frame(height: 3.0 )
             ZStack {
                 HStack (spacing: 5) {
@@ -164,9 +166,9 @@ struct AccountView: View {
                     .padding(.vertical, 12)
                     .padding(.leading, 10)
                     .padding(.trailing, 5)
-                    .foregroundColor(Color("text"))
+                    .foregroundColor(Asset.text.swiftUIColor)
                     .multilineTextAlignment(.leading)
-                    .accentColor(Color("text"))
+                    .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
                     
                     if viewModel.isTappedNicName == false && viewModel.nicName.count != 0 {
@@ -174,7 +176,7 @@ struct AccountView: View {
                             print("ddd")
                         }, label: {
                             Image(systemName: "checkmark")
-                                .foregroundColor(Color("blue"))
+                                .foregroundColor(Asset.blue.swiftUIColor)
                         })
                         .padding(.trailing, 10.0)
                         .disabled(true)
@@ -188,7 +190,7 @@ struct AccountView: View {
         VStack(alignment: .leading){
             Text("Дата рождения")
                 .font(.headline)
-                .foregroundColor(Color("text"))
+                .foregroundColor(Asset.text.swiftUIColor)
             Spacer().frame(height: 3.0 )
             ZStack {
                 HStack (spacing: 5) {
@@ -204,7 +206,7 @@ struct AccountView: View {
                             print("ddd")
                         }, label: {
                             Image(systemName: "checkmark")
-                                .foregroundColor(Color("blue"))
+                                .foregroundColor(Asset.blue.swiftUIColor)
                         })
                         .padding(.trailing, 10.0)
                         .disabled(true)
@@ -218,7 +220,7 @@ struct AccountView: View {
         VStack(alignment: .leading){
             Text("Email")
                 .font(.headline)
-                .foregroundColor(Color("text"))
+                .foregroundColor(Asset.text.swiftUIColor)
             Spacer().frame(height: 3.0 )
             ZStack {
                 HStack (spacing: 5) {
@@ -243,9 +245,9 @@ struct AccountView: View {
                     .padding(.vertical, 12)
                     .padding(.leading, 10)
                     .padding(.trailing, 5)
-                    .foregroundColor(Color("text"))
+                    .foregroundColor(Asset.text.swiftUIColor)
                     .multilineTextAlignment(.leading)
-                    .accentColor(Color("text"))
+                    .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.emailAddress)
                     .ignoresSafeArea(.keyboard)
                     if viewModel.isEmailValid && !viewModel.isTappedEmail  {
@@ -253,7 +255,7 @@ struct AccountView: View {
                             print("ddd")
                         }, label: {
                             Image(systemName: "checkmark")
-                                .foregroundColor(Color("blue"))
+                                .foregroundColor(Asset.blue.swiftUIColor)
                         })
                         .padding(.trailing, 10.0)
                         .disabled(true)
@@ -272,7 +274,7 @@ struct AccountView: View {
                 Text("Готово")
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .foregroundColor(.white)
-                    .background( (viewModel.name.count != 0 && viewModel.nicName.count != 0 && viewModel.birthday != nil && viewModel.textEmailOk) ? Color("blue") : Color("buttonDis"))
+                    .background( (viewModel.name.count != 0 && viewModel.nicName.count != 0 && viewModel.birthday != nil && viewModel.textEmailOk) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
                     .cornerRadius(6)
             }.disabled((viewModel.name.count == 0 || viewModel.nicName.count == 0 || viewModel.birthday == nil || viewModel.textEmailOk == false))
 
@@ -280,7 +282,7 @@ struct AccountView: View {
                 selection = "A"
             }) {
                 Text("Пропустить")
-                    .foregroundColor(Color("next"))
+                    .foregroundColor(Asset.next.swiftUIColor)
             }
         }
     }

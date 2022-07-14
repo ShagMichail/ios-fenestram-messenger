@@ -24,12 +24,14 @@ struct ProfileView: View {
     var border: some View {
         RoundedRectangle(cornerRadius: 6)
             .strokeBorder(
-                LinearGradient(colors: [Color("border")] , startPoint: .topLeading, endPoint: .bottomTrailing))
+                LinearGradient(colors: [Asset.border.swiftUIColor] , startPoint: .topLeading, endPoint: .bottomTrailing))
     }
     
     var body: some View {
         ZStack {
-            Color("thema").ignoresSafeArea()
+            Asset.thema.swiftUIColor
+                .ignoresSafeArea()
+            
             VStack {
                 VStack {
                     getHeader()
@@ -76,7 +78,7 @@ struct ProfileView: View {
             NavigationLink() {
                 SettingsView()
             } label: {
-                Image(systemName: "gearshape").foregroundColor(Color("blue"))
+                Image(systemName: "gearshape").foregroundColor(Asset.blue.swiftUIColor)
             }
 //            Button(action: {
 //                selection = "A"
@@ -90,7 +92,7 @@ struct ProfileView: View {
     
     private func getImage() -> some View {
         ZStack (alignment: .trailing){
-            Image(uiImage: viewModel.image ?? UIImage(named: "photo")!)
+            Image(uiImage: viewModel.image ?? Asset.photo.image)
                 .resizable()
                 .frame(width: 120, height: 120)
                 .clipShape(Circle())
@@ -103,7 +105,7 @@ struct ProfileView: View {
                 }
                 .padding(.all, 5.0)
                 .foregroundColor(.white)
-                .background(LinearGradient(gradient: Gradient(colors: [Color("blue")]), startPoint: .leading, endPoint: .trailing))
+                .background(LinearGradient(gradient: Gradient(colors: [Asset.blue.swiftUIColor]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(40)
                 .frame(width: 50.0, height: 100.0, alignment: .center)
                 .actionSheet(isPresented: $viewModel.showSheet) {
@@ -141,7 +143,7 @@ struct ProfileView: View {
         VStack(alignment: .leading){
             Text("Никнейм")
                 .font(.headline)
-                .foregroundColor(Color("text"))
+                .foregroundColor(Asset.text.swiftUIColor)
             Spacer().frame(height: 3.0 )
             ZStack {
                 HStack (spacing: 5) {
@@ -158,9 +160,9 @@ struct ProfileView: View {
                     .padding(.vertical, 12)
                     .padding(.leading, 10)
                     .padding(.trailing, 5)
-                    .foregroundColor(Color("text"))
+                    .foregroundColor(Asset.text.swiftUIColor)
                     .multilineTextAlignment(.leading)
-                    .accentColor(Color("text"))
+                    .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
                 }
             }.background(border)
@@ -171,7 +173,7 @@ struct ProfileView: View {
         VStack(alignment: .leading){
             Text("Дата рождения")
                 .font(.headline)
-                .foregroundColor(Color("text"))
+                .foregroundColor(Asset.text.swiftUIColor)
             Spacer().frame(height: 3.0 )
             ZStack {
                 HStack (spacing: 5) {
@@ -190,7 +192,7 @@ struct ProfileView: View {
         VStack(alignment: .leading){
             Text("Email")
                 .font(.headline)
-                .foregroundColor(Color("text"))
+                .foregroundColor(Asset.text.swiftUIColor)
             Spacer().frame(height: 3.0 )
             ZStack {
                 HStack (spacing: 5) {
@@ -215,9 +217,9 @@ struct ProfileView: View {
                     .padding(.vertical, 12)
                     .padding(.leading, 10)
                     .padding(.trailing, 5)
-                    .foregroundColor(Color("text"))
+                    .foregroundColor(Asset.text.swiftUIColor)
                     .multilineTextAlignment(.leading)
-                    .accentColor(Color("text"))
+                    .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.emailAddress)
                     .ignoresSafeArea(.keyboard)
                 }
@@ -234,7 +236,7 @@ struct ProfileView: View {
                 Text("Отменить")
                     .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)
                     .foregroundColor(.white)
-                    .background(Color("blue"))
+                    .background(Asset.blue.swiftUIColor)
                     .cornerRadius(6)
             }
             
@@ -246,7 +248,7 @@ struct ProfileView: View {
                 Text("Готово")
                 .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)
                 .foregroundColor(.white)
-                .background(Color("blue") )
+                .background(Asset.blue.swiftUIColor)
                 .cornerRadius(6)
             }
         }

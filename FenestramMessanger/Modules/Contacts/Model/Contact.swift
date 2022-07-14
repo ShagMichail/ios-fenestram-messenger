@@ -10,8 +10,5 @@ import SwiftUI
 struct Contact: Identifiable {
     var id: Int
     var name: String
-    var imageName: String
-    
+    var image: Image
 }
-
-

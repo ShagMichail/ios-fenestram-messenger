@@ -14,13 +14,15 @@ struct OnboardingContainerView: View {
     var body: some View {
         
         ZStack {
-            Color("thema").ignoresSafeArea()
+            Asset.thema.swiftUIColor
+                .ignoresSafeArea()
+            
             VStack{
                 TabView(selection: $selectedPage){
                     ForEach(0..<features.count) { it in
                         VStack {
                             Spacer()
-                            Image(features[it].image)
+                            features[it].image
                                 .resizable()
                                 .scaledToFit()
                             Spacer().frame(height: 53)
@@ -28,7 +30,7 @@ struct OnboardingContainerView: View {
                             VStack(spacing: 20) {
                                 Text(features[it].title)
                                     .font(.system(size: 14))
-                                    .foregroundColor(Color("photoBack"))
+                                    .foregroundColor(Asset.photoBack.swiftUIColor)
                                     .multilineTextAlignment(.center)
                             }.padding()
                             
@@ -44,12 +46,12 @@ struct OnboardingContainerView: View {
                 HStack(spacing: 15) {
                     ForEach(0..<features.count) { it in
                         if it == selectedPage {
-                        Capsule()
-                            .fill(Color("page"))
-                            .frame(width: 38 , height: 7)
+                            Capsule()
+                                .fill(Asset.page.swiftUIColor)
+                                .frame(width: 38 , height: 7)
                         } else {
                             Capsule()
-                                .fill(Color("page"))
+                                .fill(Asset.page.swiftUIColor)
                                 .frame(width: 7 , height: 7)
                         }
                     }
@@ -76,13 +78,13 @@ struct OnboardingContainerView: View {
                 Text(selectedPage < features.count - 1 ? "Далее" : "Готово")
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .foregroundColor(.white)
-                    .background(Color("blue"))
+                    .background(Asset.blue.swiftUIColor)
                     .cornerRadius(6)
             })
             
             Button(action: { isOnboarding = false }, label: {
                 Text("Пропустить")
-                    .foregroundColor(!(selectedPage < features.count - 1) ? Color("thema") : Color("next"))
+                    .foregroundColor(!(selectedPage < features.count - 1) ? Asset.thema.swiftUIColor : Asset.next.swiftUIColor)
             }).disabled(!(selectedPage < features.count - 1))
         }
     }

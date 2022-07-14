@@ -12,8 +12,8 @@ struct MainTabView: View {
     @State var selectionTabView = 0
     
     init() {
-        UITabBar.appearance().backgroundColor = UIColor(named: "tabBar")
-        UITabBar.appearance().unselectedItemTintColor = UIColor(named: "photoBack")
+        UITabBar.appearance().backgroundColor = Asset.tabBar.color
+        UITabBar.appearance().unselectedItemTintColor = Asset.photoBack.color
     }
     
     var body: some View {
@@ -22,9 +22,11 @@ struct MainTabView: View {
                 .navigationBarHidden(true)
                 .tabItem {
                 if selectionTabView == 0 {
-                    Image("contacts_selected").frame(width: 20, height: 20)
+                    Asset.contactsSelected.swiftUIImage
+                        .frame(width: 20, height: 20)
                 } else {
-                    Image("contacts").frame(width: 20, height: 20)
+                    Asset.contacts.swiftUIImage
+                        .frame(width: 20, height: 20)
                 }
                 Text("Контакты")
             }
@@ -34,9 +36,11 @@ struct MainTabView: View {
                 .navigationBarHidden(true)
                 .tabItem {
                     if selectionTabView == 1 {
-                        Image("chat_selected").frame(width: 20, height: 20)
+                        Asset.chatSelected.swiftUIImage
+                            .frame(width: 20, height: 20)
                     } else {
-                        Image("chat").frame(width: 20, height: 20)
+                        Asset.chat.swiftUIImage
+                            .frame(width: 20, height: 20)
                     }
                     Text("Чат")
                 }
@@ -46,9 +50,11 @@ struct MainTabView: View {
                 .navigationBarHidden(true)
                 .tabItem {
                     if selectionTabView == 2 {
-                        Image("profile_selected").frame(width: 20, height: 20)
+                        Asset.profileSelected.swiftUIImage
+                            .frame(width: 20, height: 20)
                     } else {
-                        Image("profile").frame(width: 20, height: 20)
+                        Asset.profile.swiftUIImage
+                            .frame(width: 20, height: 20)
                     }
                     Text("Профиль")
                 }

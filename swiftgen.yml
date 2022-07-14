@@ -1,0 +1,18 @@
+input_dir: ${PROJECT_DIR}/${TARGET_NAME}/Resources
+output_dir: ${PROJECT_DIR}/${TARGET_NAME}/Resources/Generated/
+strings:
+  inputs: ru.lproj
+  filter: .+\.strings$
+  outputs:
+    - templateName: structured-swift5
+      output: Localizable.swift
+xcassets:
+  inputs: Assets.xcassets
+  outputs:
+    templateName: swift5
+    output: Assets.swift
+fonts:
+  inputs: Poppins/
+  outputs:
+    templateName: swift5
+    output: Fonts.swift

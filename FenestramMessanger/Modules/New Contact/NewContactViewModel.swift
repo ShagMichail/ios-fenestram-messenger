@@ -16,31 +16,16 @@ extension NewContactView {
         
         @Published var name = ""
         @Published var lastName = ""
-        @Published var textEmail = ""
+        @Published var textPhone = ""
         
         @Published var isTappedName = false
         @Published var isTappedLastName = false
-        @Published var isTappedEmail = false
+        @Published var isTappedPhoneNumber = false
         
-        @Published var showSheet: Bool = false
-        @Published var showImagePicker: Bool = false
-        
-        @Published var emailString  : String = ""
-        @Published var isEmailValid : Bool   = false
-        
-        @Published var nameOk = false
-        @Published var lastNameOk = false
-        @Published var textEmailOk = false
-        
-        @Published var contact: Contact? = nil
-        @Published var searchText = ""
-        
-        @Published var textPhone = ""
         @Published public var flag = false
         //@Published var isEditing: Bool = false
         
         @Published var isTappedGlobal = false
-        
         
         func checkCode () {
             if textPhone.count == 16 {

@@ -16,33 +16,14 @@ struct ChatView: View {
     
     var body: some View {
         ZStack {
-            Color("thema").ignoresSafeArea()
+            Asset.thema.swiftUIColor
+                .ignoresSafeArea()
             
             VStack {
-                VStack (alignment: .center){
-                    getHeader()
-                }
-                VStack  {
- 
-                    Image("onboardingFirst")
-                        .resizable()
-                        .scaledToFit()
-                    Spacer()
-                        .frame(height: 22)
-                    
-                    VStack(spacing: 20) {
-                        Text("Здесь будет отображаться список ваших чатов")
-                            .font(.system(size: 16))
-                            .foregroundColor(Color("photoBack"))
-                            .multilineTextAlignment(.center)
-                    }.padding()
-                }
-                .padding()
-                .ignoresSafeArea(.keyboard, edges: .bottom)
+                getHeader()
                 
-                Spacer()
+                getEmptyView()
             }
-            
         }
         .onTapGesture {
             UIApplication.shared.endEditing()
@@ -60,10 +41,35 @@ struct ChatView: View {
             NavigationLink() {
                 SettingsView()
             } label: {
-                Image(systemName: "gearshape").foregroundColor(Color("blue"))
+                Image(systemName: "gearshape").foregroundColor(Asset.blue.swiftUIColor)
             }
         }
             .padding()
+    }
+    
+    private func getEmptyView() -> some View {
+        VStack {
+            Spacer()
+            
+            Asset.onboardingFirst.swiftUIImage
+                .resizable()
+                .scaledToFit()
+            
+            Spacer()
+                .frame(height: 22)
+            
+            VStack(spacing: 20) {
+                Text(L10n.ChatView.emptyText)
+                    .font(.system(size: 16))
+                    .foregroundColor(Asset.photoBack.swiftUIColor)
+                    .multilineTextAlignment(.center)
+            }
+            .padding()
+            
+            Spacer()
+        }
+        .padding()
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 

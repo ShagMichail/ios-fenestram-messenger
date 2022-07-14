@@ -22,7 +22,9 @@ struct CodeView: View {
     var body: some View {
         
         ZStack {
-            Color("thema").ignoresSafeArea()
+            Asset.thema.swiftUIColor
+                .ignoresSafeArea()
+            
             getBase()
         }
         .onTapGesture {
@@ -33,7 +35,7 @@ struct CodeView: View {
     var border: some View {
         RoundedRectangle(cornerRadius: 6)
             .strokeBorder(
-                LinearGradient(colors: [Color("border")], startPoint: .topLeading, endPoint: .bottomTrailing))
+                LinearGradient(colors: [Asset.border.swiftUIColor], startPoint: .topLeading, endPoint: .bottomTrailing))
     }
     
     var borderError: some View {
@@ -53,7 +55,7 @@ struct CodeView: View {
                 VStack(alignment: .leading){
                     Text("Введите код из СМС")
                         .font(.headline)
-                        .foregroundColor(Color("text"))
+                        .foregroundColor(Asset.text.swiftUIColor)
                     Spacer().frame(height: 3.0 )
                     
                     if viewModel.errorCode {
@@ -73,7 +75,7 @@ struct CodeView: View {
                         .multilineTextAlignment(.center)
                         .background(borderError)
                         .multilineTextAlignment(.leading)
-                        .accentColor(Color("text"))
+                        .accentColor(Asset.text.swiftUIColor)
                         .keyboardType(.numberPad)
 //                        .introspectTextField { (textField) in
 //                            let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
@@ -91,17 +93,17 @@ struct CodeView: View {
                             viewModel.textCode = $0
                         }))
                         .placeholder(when: viewModel.textCode.isEmpty) {
-                            Text("").foregroundColor(Color("text"))
+                            Text("").foregroundColor(Asset.text.swiftUIColor)
                         }
                         .textFieldStyle(PlainTextFieldStyle())
                         .padding(.vertical, 12)
                         .padding(.horizontal, 16)
                         
-                        .foregroundColor(Color("text"))
+                        .foregroundColor(Asset.text.swiftUIColor)
                         .multilineTextAlignment(.center)
                         .background(border)
                         .multilineTextAlignment(.leading)
-                        .accentColor(Color("text"))
+                        .accentColor(Asset.text.swiftUIColor)
                         .keyboardType(.numberPad)
 //
 //                        .introspectTextField { (textField) in
@@ -133,7 +135,7 @@ struct CodeView: View {
                         }) {
                             Text("Отправить заново?")
                                 .font(.system(size: 15))
-                                .foregroundColor(Color("blue"))
+                                .foregroundColor(Asset.blue.swiftUIColor)
                         }
                     }
                 }
@@ -151,7 +153,7 @@ struct CodeView: View {
                     Text("Готово")
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                         .foregroundColor(.white)
-                        .background((viewModel.textCode.count == 5 && viewModel.errorCode == false) ? Color("blue") : Color("buttonDis"))
+                        .background((viewModel.textCode.count == 5 && viewModel.errorCode == false) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
                         .cornerRadius(6)
                 }
             }

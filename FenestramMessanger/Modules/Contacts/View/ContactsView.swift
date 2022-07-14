@@ -19,13 +19,14 @@ struct ContactsView: View {
     var border: some View {
         RoundedRectangle(cornerRadius: 6)
             .strokeBorder(
-                LinearGradient(colors: [Color("border")] , startPoint: .topLeading, endPoint: .bottomTrailing))
+                LinearGradient(colors: [Asset.border.swiftUIColor] , startPoint: .topLeading, endPoint: .bottomTrailing))
     }
     
     var body: some View {
         //NavigationView {
         ZStack{
-            Color("thema").ignoresSafeArea()
+            Asset.thema.swiftUIColor
+                .ignoresSafeArea()
             
             VStack(alignment: .leading) {
                 Text("Контакты").font(.system(size: 23)).foregroundColor(Color.white).padding(.horizontal)
@@ -36,16 +37,16 @@ struct ContactsView: View {
                     VStack(alignment: .leading) {
                         TextField("", text: $viewModel.searchText)
                             .placeholder(when: viewModel.searchText.isEmpty) {
-                                Text("Поиск контакта").foregroundColor(Color("text"))
+                                Text("Поиск контакта").foregroundColor(Asset.text.swiftUIColor)
                             }
                             .textFieldStyle(PlainTextFieldStyle())
                             .padding(.vertical, 12)
                             .padding(.leading, 10)
                             .padding(.trailing, 5)
-                            .foregroundColor(Color("text"))
+                            .foregroundColor(Asset.text.swiftUIColor)
                         
                             .multilineTextAlignment(.leading)
-                            .accentColor(Color("text"))
+                            .accentColor(Asset.text.swiftUIColor)
                             .keyboardType(.default)
                             .onChange(of: viewModel.searchText) { text in
                                 viewModel.filterContent()
@@ -80,7 +81,7 @@ struct ContactsView: View {
                                     ZStack{
                                         RoundedRectangle(cornerRadius: 40)
                                             .frame(width: 60, height: 60)
-                                            .foregroundColor(Color("blue"))
+                                            .foregroundColor(Asset.blue.swiftUIColor)
                                         Image(systemName: "plus")
                                             .foregroundColor(Color.white)
                                             .font(.system(size: 25))
@@ -97,12 +98,12 @@ struct ContactsView: View {
                 } else {
                     VStack(alignment: .center) {
                         Spacer()
-                        Image("newContact")
+                        Asset.newContact.swiftUIImage
                             .resizable()
                             .frame(width: 300, height: 300)
                         
                         Text("Телефонная книга пуста. Хотите добавить контакты?")
-                            .foregroundColor(Color("photoBack"))
+                            .foregroundColor(Asset.photoBack.swiftUIColor)
                             .multilineTextAlignment(.center)
                         Spacer()
                         NavigationLink() {
@@ -111,7 +112,7 @@ struct ContactsView: View {
                             Text("Добавить контакт")
                                 .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                                 .foregroundColor(.white)
-                                .background(Color("blue"))
+                                .background(Asset.blue.swiftUIColor)
                                 .cornerRadius(6)
                         }
                         .padding(.bottom, 50)

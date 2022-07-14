@@ -21,7 +21,9 @@ struct PhoneView: View {
     var body: some View {
         
         ZStack {
-            Color("thema").ignoresSafeArea()
+            Asset.thema.swiftUIColor
+                .ignoresSafeArea()
+            
             getBase()
         }
         .onTapGesture {
@@ -32,7 +34,7 @@ struct PhoneView: View {
     var border: some View {
         RoundedRectangle(cornerRadius: 6)
             .strokeBorder(
-                LinearGradient(colors: [Color("border")] , startPoint: .topLeading, endPoint: .bottomTrailing))
+                LinearGradient(colors: [Asset.border.swiftUIColor] , startPoint: .topLeading, endPoint: .bottomTrailing))
     }
     
     private func getBase() -> some View {
@@ -45,7 +47,7 @@ struct PhoneView: View {
             VStack(alignment: .leading){
                 Text("Номер телефона")
                     .font(.headline)
-                    .foregroundColor(Color("text"))
+                    .foregroundColor(Asset.text.swiftUIColor)
                 
                 Spacer().frame(height: 3.0 )
                 
@@ -55,16 +57,16 @@ struct PhoneView: View {
                     viewModel.textPhone = $0
                 }))
                 .placeholder(when: viewModel.textPhone.isEmpty) {
-                    Text("+7").foregroundColor(Color("text"))
+                    Text("+7").foregroundColor(Asset.text.swiftUIColor)
                     
                 }
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding(.vertical, 12)
                 .padding(.horizontal, 16)
-                .foregroundColor(Color("text"))
+                .foregroundColor(Asset.text.swiftUIColor)
                 .background(border)
                 .multilineTextAlignment(.leading)
-                .accentColor(Color("text"))
+                .accentColor(Asset.text.swiftUIColor)
                 .keyboardType(.phonePad)
 
             }
@@ -81,7 +83,7 @@ struct PhoneView: View {
                     Text("Отправить код")
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                         .foregroundColor(.white)
-                        .background((viewModel.textPhone.count == 18 ) ? Color("blue") : Color("buttonDis"))
+                        .background((viewModel.textPhone.count == 18 ) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
                         .cornerRadius(6)
                 }
             }

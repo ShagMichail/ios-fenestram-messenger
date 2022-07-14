@@ -17,8 +17,8 @@ struct DatePickerTextField: UIViewRepresentable {
         
         textField.placeholder = placeholder
         textField.inputView = datePicker
-        textField.tintColor = UIColor(named: "text")
-        textField.textColor = UIColor(named: "text")
+        textField.tintColor = Asset.text.color
+        textField.textColor = Asset.text.color
         //textField.borderStyle = .roundedRect
         
         let toolbar = UIToolbar()

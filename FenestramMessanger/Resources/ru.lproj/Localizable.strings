@@ -1,0 +1,28 @@
+/* 
+  Localizable.strings
+  FenestramMessanger
+
+  Created by Михаил Беленко on 14.07.2022.
+  
+*/
+
+// MARK: - General
+"general.done" = "Готово";
+
+// MARK: - ChatView
+"chat_view.empty_text" = "Здесь будет отображаться список ваших чатов";
+
+// MARK: - NewContactView
+"new_contact_view.title" = "Добавить контакт";
+
+"new_contact_view.name.title" = "Имя";
+"new_contact_view.name.placeholder" = "(обязательно)";
+"new_contact_view.name.error" = "Не добавлено имя";
+
+"new_contact_view.last_name.title" = "Фамилия";
+"new_contact_view.last_name.placeholder" = "(необязательно)";
+
+"new_contact_view.phone_number.title" = "Номер телефона";
+"new_contact_view.phone_number.placeholder" = "+7 _ _ _  _ _ _ - _ _ - _ _";
+"new_contact_view.phone_number.empty_error" = "Нe добавлен номер телефона";
+"new_contact_view.phone_number.incorrect_error" = "Нeкорректный номер телефона";

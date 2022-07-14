@@ -14,7 +14,7 @@ struct ContactsRow: View {
     var body: some View {
         
         HStack(){
-            Image(contact.imageName)
+            contact.image
                 .resizable()
                 .frame(width: 40.0, height: 40.0)
                 .padding(.horizontal)
@@ -24,7 +24,7 @@ struct ContactsRow: View {
             Spacer()
             
             NavigationLink(destination: CorrespondenceView(contact: contact)) {
-                Image("chat")
+                Asset.chat.swiftUIImage
                     .padding(.horizontal)
             }
             

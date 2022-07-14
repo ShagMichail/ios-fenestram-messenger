@@ -38,12 +38,13 @@ struct SettingsView: View {
     
     var body: some View {
         ZStack {
+            Asset.thema.swiftUIColor
+                .ignoresSafeArea()
             
-            Color("thema").ignoresSafeArea()
             VStack {
                 RoundedRectangle(cornerRadius: 0)
                     //.background(Color("buttonDis"))
-                    .foregroundColor(Color("buttonDis"))
+                    .foregroundColor(Asset.buttonDis.swiftUIColor)
                     .frame(width: UIScreen.screenWidth, height: 100.0)
                     .ignoresSafeArea()
                 Spacer()

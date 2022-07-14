@@ -15,10 +15,10 @@ struct CorrespondenceView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     
-//        init() {
-//    
-//            UINavigationBar.appearance().backgroundColor = UIColor(named: "page")
-//        }
+    //        init() {
+    //
+    //            UINavigationBar.appearance().backgroundColor = UIColor(named: "page")
+    //        }
     
     
     var btnBack : some View {
@@ -34,14 +34,14 @@ struct CorrespondenceView: View {
     
     var title : some View {
         HStack {
-            Image(contact.imageName)
+            contact.image
                 .resizable()
-            .frame(width: 40.0, height: 40.0)
+                .frame(width: 40.0, height: 40.0)
             Text(contact.name)
                 .foregroundColor(Color.white)
                 .font(.system(size: 20))
         }
-
+        
     }
     
     var btnBell : some View {
@@ -53,7 +53,7 @@ struct CorrespondenceView: View {
                 //self.presentationMode.wrappedValue.dismiss()
             }) {
                 HStack {
-                    Image("video")
+                    Asset.video.swiftUIImage
                         .resizable()
                         .frame(width: 40.0, height: 40.0)
                 }
@@ -63,7 +63,7 @@ struct CorrespondenceView: View {
                 //self.presentationMode.wrappedValue.dismiss()
             }) {
                 HStack {
-                    Image("phone")
+                    Asset.phone.swiftUIImage
                         .resizable()
                         .frame(width: 40.0, height: 40.0)
                 }
@@ -75,12 +75,13 @@ struct CorrespondenceView: View {
     
     var body: some View {
         ZStack {
+            Asset.thema.swiftUIColor
+                .ignoresSafeArea()
             
-            Color("thema").ignoresSafeArea()
             VStack {
                 RoundedRectangle(cornerRadius: 0)
-                    //.background(Color("buttonDis"))
-                    .foregroundColor(Color("buttonDis"))
+                //.background(Color("buttonDis"))
+                    .foregroundColor(Asset.buttonDis.swiftUIColor)
                     .frame(width: UIScreen.screenWidth, height: 100.0)
                     .ignoresSafeArea()
                 Spacer()
@@ -89,8 +90,8 @@ struct CorrespondenceView: View {
         }
         .navigationBarBackButtonHidden(true)
         navigationBarItems(leading: title)
-        .navigationBarItems(leading: btnBack)
-        .navigationBarItems(trailing: btnBell)
+            .navigationBarItems(leading: btnBack)
+            .navigationBarItems(trailing: btnBell)
     }
 }
 //
