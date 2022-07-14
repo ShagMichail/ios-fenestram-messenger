@@ -15,17 +15,14 @@ extension PhoneView {
         @Published var text = ""
         
         @Published var isEditing: Bool = false
-        @Published public var flag = false
+        @Published public var numberCount = false
         
         func checkCode () {
             if textPhone.count == 16 {
-
-                flag = true
+                numberCount = true
             } else {
-                flag = false
-
+                numberCount = false
             }
-
         }
     }
 }

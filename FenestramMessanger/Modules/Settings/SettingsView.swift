@@ -28,12 +28,9 @@ struct SettingsView: View {
     }
     
     var title : some View {
-        
-            Text("Настройки")
-                .foregroundColor(Color.white)
-                .font(.system(size: 20))
-            
-        
+        Text("Настройки")
+            .foregroundColor(Color.white)
+            .font(.system(size: 20))
     }
     
     var body: some View {
@@ -43,13 +40,11 @@ struct SettingsView: View {
             
             VStack {
                 RoundedRectangle(cornerRadius: 0)
-                    //.background(Color("buttonDis"))
                     .foregroundColor(Asset.buttonDis.swiftUIColor)
                     .frame(width: UIScreen.screenWidth, height: 100.0)
                     .ignoresSafeArea()
                 Spacer()
             }
-            
             Text("Settings!").foregroundColor(Color.white)
         }
         .navigationBarBackButtonHidden(true)

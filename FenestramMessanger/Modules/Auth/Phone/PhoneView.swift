@@ -68,13 +68,12 @@ struct PhoneView: View {
                 .multilineTextAlignment(.leading)
                 .accentColor(Asset.text.swiftUIColor)
                 .keyboardType(.phonePad)
-
             }
             
             Spacer()
                 .frame(height: 83.0)
-
-            NavigationLink(isActive: $viewModel.flag) {
+            
+            NavigationLink(isActive: $viewModel.numberCount) {
                 CodeView().navigationBarHidden(true)
             } label: {
                 Button(action: {

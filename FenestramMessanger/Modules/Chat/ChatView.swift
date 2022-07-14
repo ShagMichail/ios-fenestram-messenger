@@ -29,7 +29,6 @@ struct ChatView: View {
             UIApplication.shared.endEditing()
         }
         .navigationBarHidden(true)
-        
     }
     
     private func getHeader() -> some View {
@@ -44,7 +43,7 @@ struct ChatView: View {
                 Image(systemName: "gearshape").foregroundColor(Asset.blue.swiftUIColor)
             }
         }
-            .padding()
+        .padding()
     }
     
     private func getEmptyView() -> some View {

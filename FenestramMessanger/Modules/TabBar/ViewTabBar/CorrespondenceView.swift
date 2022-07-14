@@ -8,19 +8,11 @@
 import SwiftUI
 
 struct CorrespondenceView: View {
-    
-    
+
     let contact: Contact
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
-    
-    //        init() {
-    //
-    //            UINavigationBar.appearance().backgroundColor = UIColor(named: "page")
-    //        }
-    
-    
+
     var btnBack : some View {
         Button(action: {
             self.presentationMode.wrappedValue.dismiss()
@@ -41,16 +33,12 @@ struct CorrespondenceView: View {
                 .foregroundColor(Color.white)
                 .font(.system(size: 20))
         }
-        
     }
     
     var btnBell : some View {
-        
-        
-        
         HStack {
             Button(action: {
-                //self.presentationMode.wrappedValue.dismiss()
+              
             }) {
                 HStack {
                     Asset.video.swiftUIImage
@@ -60,7 +48,7 @@ struct CorrespondenceView: View {
             }
             
             Button(action: {
-                //self.presentationMode.wrappedValue.dismiss()
+              
             }) {
                 HStack {
                     Asset.phone.swiftUIImage
@@ -68,8 +56,6 @@ struct CorrespondenceView: View {
                         .frame(width: 40.0, height: 40.0)
                 }
             }
-            
-            
         }
     }
     
@@ -80,7 +66,6 @@ struct CorrespondenceView: View {
             
             VStack {
                 RoundedRectangle(cornerRadius: 0)
-                //.background(Color("buttonDis"))
                     .foregroundColor(Asset.buttonDis.swiftUIColor)
                     .frame(width: UIScreen.screenWidth, height: 100.0)
                     .ignoresSafeArea()
@@ -94,13 +79,6 @@ struct CorrespondenceView: View {
             .navigationBarItems(trailing: btnBell)
     }
 }
-//
-//struct CorrespondenceView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CorrespondenceView()
-//    }
-//}
-
 
 struct NavigationConfigurator: UIViewControllerRepresentable {
     var configure: (UINavigationController) -> Void = { _ in }

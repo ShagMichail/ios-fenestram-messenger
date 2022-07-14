@@ -42,7 +42,6 @@ extension View {
                 }
             }
         } else {
-            //numbers.remove(at: numbers.index(before: numbers.endIndex))
             var i = 0
             for ch in mask where index < numbers.endIndex {
                 if i < mask.count {

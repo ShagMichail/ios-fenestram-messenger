@@ -14,16 +14,16 @@ extension CodeView {
         
         @Published public var text = ""
         @Published public var textCode = ""
-        @Published public var flag = false
+        @Published public var codeCount = false
         @Published public var errorCode = false
         
         let code = "12345"
         
         func checkCode () {
             if textCode == code {
-                flag = true
+                codeCount = true
             } else {
-                flag = false
+                codeCount = false
                 errorCode = true
             }
         }
@@ -31,7 +31,6 @@ extension CodeView {
         func changeIncorrect()  {
             if textCode.count < 5 {
                 errorCode = false
-                //return ""
             }
             self.textCode = ""
         }

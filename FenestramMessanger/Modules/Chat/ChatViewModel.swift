@@ -10,7 +10,6 @@ import SwiftUI
 extension ChatView {
     @MainActor
     final class ViewModel: ObservableObject {
-        //        @Published var isEditing: Bool = false
-        //        @Published public var flag = false
+
     }
 }

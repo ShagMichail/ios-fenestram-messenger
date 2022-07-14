@@ -9,12 +9,8 @@ import SwiftUI
 
 struct NewContactView: View {
     
-    //@State var contact: Contact
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
     @StateObject private var viewModel: ViewModel
-    
     let maskPhone = "+X XXX XXX-XX-XX"
     
     init() {
@@ -65,8 +61,7 @@ struct NewContactView: View {
                 .ignoresSafeArea()
             
             VStack {
-                RoundedRectangle(cornerRadius: 0)
-                //.background(Color("buttonDis"))
+                Rectangle()
                     .foregroundColor(Asset.buttonDis.swiftUIColor)
                     .frame(width: UIScreen.screenWidth, height: 100.0)
                     .ignoresSafeArea()
@@ -81,13 +76,10 @@ struct NewContactView: View {
                 Spacer()
             }
             .padding()
-            
-            //getNicName()
         }
         .onTapGesture {
             UIApplication.shared.endEditing()
         }
-        
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: title)
         .navigationBarItems(leading: btnBack)
@@ -133,10 +125,8 @@ struct NewContactView: View {
                     Text(L10n.NewContactView.Name.error)
                         .foregroundColor(Color.red)
                         .font(.system(size: 15))
-                    
                 }
             }
-            
         }
     }
     
@@ -159,7 +149,6 @@ struct NewContactView: View {
                     }
                     .placeholder(when: viewModel.lastName.isEmpty) {
                         Text(L10n.NewContactView.LastName.placeholder).foregroundColor(Asset.text.swiftUIColor).contrast(0)
-                        
                     }
                     .textFieldStyle(PlainTextFieldStyle())
                     .padding(.vertical, 12)
@@ -169,7 +158,6 @@ struct NewContactView: View {
                     .multilineTextAlignment(.leading)
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
-                    
                 }
             }.background(borderLastName)
         }
@@ -210,7 +198,6 @@ struct NewContactView: View {
                 .multilineTextAlignment(.leading)
                 .accentColor(Asset.text.swiftUIColor)
                 .keyboardType(.phonePad)
-                
             }
             
             if viewModel.textPhone.count == 0 && viewModel.isTappedGlobal == true {
@@ -218,7 +205,6 @@ struct NewContactView: View {
                     Text(L10n.NewContactView.PhoneNumber.emptyError)
                         .foregroundColor(Color.red)
                         .font(.system(size: 15))
-                    
                 }
             }
             
@@ -227,17 +213,15 @@ struct NewContactView: View {
                     Text(L10n.NewContactView.PhoneNumber.incorrectError)
                         .foregroundColor(Color.red)
                         .font(.system(size: 15))
-                    
                 }
             }
         }
-        
     }
     
     private func getButton() -> some View {
         VStack {
             Button(action: {
-                //selection = "A"
+              
             }) {
                 Text(L10n.General.done)
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
@@ -248,7 +232,6 @@ struct NewContactView: View {
         }
     }
 }
-
 
 struct NewContactView_Previews: PreviewProvider {
     static var previews: some View {

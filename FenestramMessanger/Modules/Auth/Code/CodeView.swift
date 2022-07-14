@@ -77,15 +77,6 @@ struct CodeView: View {
                         .multilineTextAlignment(.leading)
                         .accentColor(Asset.text.swiftUIColor)
                         .keyboardType(.numberPad)
-//                        .introspectTextField { (textField) in
-//                            let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
-//                            let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-//                            let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
-//                            doneButton.tintColor = .black
-//                            toolBar.items = [flexButton, doneButton]
-//                            toolBar.setItems([flexButton, doneButton], animated: true)
-//                            textField.inputAccessoryView = toolBar
-//                        }
                     } else {
                         TextField("", text: Binding<String>(get: {
                             format(with: self.maskCode, phone: viewModel.textCode)
@@ -105,16 +96,6 @@ struct CodeView: View {
                         .multilineTextAlignment(.leading)
                         .accentColor(Asset.text.swiftUIColor)
                         .keyboardType(.numberPad)
-//
-//                        .introspectTextField { (textField) in
-//                            let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
-//                            let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-//                            let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
-//                            doneButton.tintColor = .black
-//                            toolBar.items = [flexButton, doneButton]
-//                            toolBar.setItems([flexButton, doneButton], animated: true)
-//                            textField.inputAccessoryView = toolBar
-//                        }
                     }
                 }
                 HStack {
@@ -140,11 +121,11 @@ struct CodeView: View {
                     }
                 }
             }
-
+            
             Spacer()
                 .frame(height: 50.0)
             
-            NavigationLink(isActive: $viewModel.flag) {
+            NavigationLink(isActive: $viewModel.codeCount) {
                 AccountView().navigationBarHidden(true)
             } label: {
                 Button(action: {
@@ -161,7 +142,7 @@ struct CodeView: View {
         }
         .padding()
         .ignoresSafeArea(.keyboard, edges: .bottom)
-                .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
+        .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
     }
 }
 
