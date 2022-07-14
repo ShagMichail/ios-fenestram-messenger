@@ -51,7 +51,7 @@ struct NewContactView: View {
     var title : some View {
         Text(L10n.NewContactView.title)
             .foregroundColor(Color.white)
-            .font(.system(size: 18))
+            .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
     }
     
     
@@ -124,7 +124,7 @@ struct NewContactView: View {
                 HStack {
                     Text(L10n.NewContactView.Name.error)
                         .foregroundColor(Color.red)
-                        .font(.system(size: 15))
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
                 }
             }
         }
@@ -204,7 +204,7 @@ struct NewContactView: View {
                 HStack {
                     Text(L10n.NewContactView.PhoneNumber.emptyError)
                         .foregroundColor(Color.red)
-                        .font(.system(size: 15))
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
                 }
             }
             
@@ -212,7 +212,7 @@ struct NewContactView: View {
                 HStack {
                     Text(L10n.NewContactView.PhoneNumber.incorrectError)
                         .foregroundColor(Color.red)
-                        .font(.system(size: 15))
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
                 }
             }
         }

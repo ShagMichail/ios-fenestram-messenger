@@ -23,6 +23,5 @@ extension NewContactView {
         @Published var contact: Contact? = nil
         
         @Published var isTappedGlobal = false
-        
     }
 }

@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct ContactsView: View {
-    
-    @State var searchText = ""
     @StateObject private var viewModel: ViewModel
     
     init() {
@@ -19,106 +17,123 @@ struct ContactsView: View {
     var border: some View {
         RoundedRectangle(cornerRadius: 6)
             .strokeBorder(
-                LinearGradient(colors: [Asset.border.swiftUIColor] , startPoint: .topLeading, endPoint: .bottomTrailing))
+                LinearGradient(colors: [Asset.border.swiftUIColor],
+                               startPoint: .topLeading,
+                               endPoint: .bottomTrailing))
     }
     
     var body: some View {
-
         ZStack{
             Asset.thema.swiftUIColor
                 .ignoresSafeArea()
             
             VStack(alignment: .leading) {
-                Text("Контакты").font(.system(size: 23)).foregroundColor(Color.white).padding(.horizontal)
-                    .padding(.top)
+                getHeaderView()
                 
-                if viewModel.allContacts.count == 0 {
-                    
-                    VStack(alignment: .leading) {
-                        TextField("", text: $viewModel.searchText)
-                            .placeholder(when: viewModel.searchText.isEmpty) {
-                                Text("Поиск контакта").foregroundColor(Asset.text.swiftUIColor)
-                            }
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .padding(.vertical, 12)
-                            .padding(.leading, 10)
-                            .padding(.trailing, 5)
-                            .foregroundColor(Asset.text.swiftUIColor)
-                        
-                            .multilineTextAlignment(.leading)
-                            .accentColor(Asset.text.swiftUIColor)
-                            .keyboardType(.default)
-                            .onChange(of: viewModel.searchText) { text in
-                                viewModel.filterContent()
-                            }
-                    }
-                    .background(border)
-                    .padding(.horizontal, 30.0)
+                if viewModel.allContacts.count != 0 {
+                    getSearchView()
                     
                     Spacer().frame(height: 20.0)
                     
-                    ZStack () {
-                        VStack (alignment: .trailing) {
-                            
-                            ScrollView {
-                                if viewModel.filteredContacts.count > 0 {
-                                    ForEach(viewModel.filteredContacts) { contact in
-                                        ContactsRow(contact: contact)
-                                            .padding(.horizontal)
-                                    }
-                                } else {
-                                    Text("Данного контака не существует").font(.system(size: 15)).foregroundColor(Color.white).padding(.horizontal)
-                                }
-                            }
-                            .padding(.bottom, -70)
-                            
-                            HStack (alignment: .bottom){
-                                
-                                NavigationLink() {
-                                    NewContactView()
-                                } label: {
-                                    ZStack{
-                                        RoundedRectangle(cornerRadius: 40)
-                                            .frame(width: 60, height: 60)
-                                            .foregroundColor(Asset.blue.swiftUIColor)
-                                        Image(systemName: "plus")
-                                            .foregroundColor(Color.white)
-                                            .font(.system(size: 25))
-                                    }
-                                    .padding(.bottom, 10)
-                                    .padding(.trailing, 10)
-                                }
-                            }
-                        }
-                    }
+                    getContentView()
                 } else {
-                    VStack(alignment: .center) {
-                        Spacer()
-                        Asset.newContact.swiftUIImage
-                            .resizable()
-                            .frame(width: 300, height: 300)
-                        
-                        Text("Телефонная книга пуста. Хотите добавить контакты?")
-                            .foregroundColor(Asset.photoBack.swiftUIColor)
-                            .multilineTextAlignment(.center)
-                        Spacer()
-                        NavigationLink() {
-                            NewContactView()
-                        } label: {
-                            Text("Добавить контакт")
-                                .frame(width: UIScreen.screenWidth - 30, height: 45.0)
-                                .foregroundColor(.white)
-                                .background(Asset.blue.swiftUIColor)
-                                .cornerRadius(6)
-                        }
-                        .padding(.bottom, 50)
-                    }
+                    getEmptyView()
                 }
             }
         }.onTapGesture {
             UIApplication.shared.endEditing()
         }
         .navigationBarHidden(true)
+    }
+    
+    private func getHeaderView() -> some View {
+        Text(L10n.ContactView.title)
+            .font(FontFamily.Poppins.bold.swiftUIFont(size: 18))
+            .foregroundColor(Color.white)
+            .padding(.horizontal)
+            .padding(.top)
+    }
+    
+    private func getSearchView() -> some View {
+        VStack(alignment: .leading) {
+            TextField("", text: $viewModel.searchText)
+                .placeholder(when: viewModel.searchText.isEmpty) {
+                    Text(L10n.ContactView.Search.placeholder)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                        .foregroundColor(Asset.text.swiftUIColor)
+                }
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                .textFieldStyle(PlainTextFieldStyle())
+                .padding(.vertical, 12)
+                .padding(.leading, 10)
+                .padding(.trailing, 5)
+                .foregroundColor(Color.white)
+            
+                .multilineTextAlignment(.leading)
+                .accentColor(Asset.text.swiftUIColor)
+                .keyboardType(.default)
+                .onChange(of: viewModel.searchText) { text in
+                    viewModel.filterContent()
+                }
+        }
+        .background(border)
+        .padding(.horizontal, 30.0)
+    }
+    
+    private func getContentView() -> some View {
+        ZStack {
+            VStack (alignment: .trailing) {
+                ScrollView {
+                    if viewModel.filteredContacts.count > 0 {
+                        ForEach(viewModel.filteredContacts) { contact in
+                            ContactsRow(contact: contact)
+                                .padding(.horizontal)
+                        }
+                    } else {
+                        Text(L10n.ContactView.contactDontExist)
+                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
+                            .foregroundColor(Color.white)
+                            .padding(.horizontal)
+                    }
+                }
+                .padding(.bottom, -70)
+                
+                NavigationLink() {
+                    NewContactView()
+                        .navigationBarHidden(true)
+                } label: {
+                    Asset.addButtonIcon.swiftUIImage
+                        .padding(.bottom, 10)
+                        .padding(.trailing, 10)
+                }
+            }
+        }
+    }
+    
+    private func getEmptyView() -> some View {
+        VStack(alignment: .center) {
+            Spacer()
+            Asset.newContact.swiftUIImage
+                .resizable()
+                .frame(width: 300, height: 300)
+            
+            Text(L10n.ContactView.emptyText)
+                .foregroundColor(Asset.photoBack.swiftUIColor)
+                .multilineTextAlignment(.center)
+            
+            Spacer()
+            
+            NavigationLink() {
+                NewContactView()
+            } label: {
+                Text(L10n.ContactView.addContact)
+                    .frame(width: UIScreen.screenWidth - 30, height: 45.0)
+                    .foregroundColor(.white)
+                    .background(Asset.blue.swiftUIColor)
+                    .cornerRadius(6)
+            }
+            .padding(.bottom, 50)
+        }
     }
 }
 

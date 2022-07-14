@@ -25,7 +25,7 @@ internal enum Asset {
   internal static let onboardingFirst = ImageAsset(name: "onboardingFirst")
   internal static let onboardingSecond = ImageAsset(name: "onboardingSecond")
   internal static let onboardingThird = ImageAsset(name: "onboardingThird")
-  internal static let backButton = ImageAsset(name: "backButton")
+  internal static let addButtonIcon = ImageAsset(name: "add_button_icon")
   internal static let blue = ColorAsset(name: "blue")
   internal static let border = ColorAsset(name: "border")
   internal static let buttonDis = ColorAsset(name: "buttonDis")

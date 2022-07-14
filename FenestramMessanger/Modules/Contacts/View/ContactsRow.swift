@@ -20,7 +20,7 @@ struct ContactsRow: View {
                 .padding(.horizontal)
             Text(contact.name)
                 .foregroundColor(.white)
-                .font(.system(size: 20))
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
             Spacer()
             
             NavigationLink(destination: CorrespondenceView(contact: contact)) {

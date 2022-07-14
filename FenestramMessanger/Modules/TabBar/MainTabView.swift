@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MainTabView: View {
-    
     @State var selectionTabView = 0
     
     init() {
@@ -21,16 +20,16 @@ struct MainTabView: View {
             ContactsView()
                 .navigationBarHidden(true)
                 .tabItem {
-                if selectionTabView == 0 {
-                    Asset.contactsSelected.swiftUIImage
-                        .frame(width: 20, height: 20)
-                } else {
-                    Asset.contacts.swiftUIImage
-                        .frame(width: 20, height: 20)
+                    if selectionTabView == 0 {
+                        Asset.contactsSelected.swiftUIImage
+                            .frame(width: 20, height: 20)
+                    } else {
+                        Asset.contacts.swiftUIImage
+                            .frame(width: 20, height: 20)
+                    }
+                    Text(L10n.MainTabView.contacts)
                 }
-                Text("Контакты")
-            }
-            .tag(0)
+                .tag(0)
             
             ChatView()
                 .navigationBarHidden(true)
@@ -42,7 +41,7 @@ struct MainTabView: View {
                         Asset.chat.swiftUIImage
                             .frame(width: 20, height: 20)
                     }
-                    Text("Чат")
+                    Text(L10n.MainTabView.chat)
                 }
                 .tag(1)
             
@@ -56,7 +55,7 @@ struct MainTabView: View {
                         Asset.profile.swiftUIImage
                             .frame(width: 20, height: 20)
                     }
-                    Text("Профиль")
+                    Text(L10n.MainTabView.profile)
                 }
                 .tag(2)
         }

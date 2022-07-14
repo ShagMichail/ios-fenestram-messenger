@@ -12,7 +12,7 @@ xcassets:
     templateName: swift5
     output: Assets.swift
 fonts:
-  inputs: Poppins/
+  inputs: Fonts/
   outputs:
     templateName: swift5
     output: Fonts.swift

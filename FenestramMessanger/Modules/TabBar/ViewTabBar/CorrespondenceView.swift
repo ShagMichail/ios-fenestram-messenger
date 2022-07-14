@@ -31,7 +31,7 @@ struct CorrespondenceView: View {
                 .frame(width: 40.0, height: 40.0)
             Text(contact.name)
                 .foregroundColor(Color.white)
-                .font(.system(size: 20))
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
         }
     }
     

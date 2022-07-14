@@ -35,7 +35,7 @@ struct ChatView: View {
         HStack(alignment: .center){
             Text("FENESTRAM")
                 .foregroundColor(Color.white)
-                .font(.system(size: 22))
+                .font(FontFamily.Montserrat.semiBold.swiftUIFont(size: 22))
             Spacer()
             NavigationLink() {
                 SettingsView()
@@ -59,7 +59,7 @@ struct ChatView: View {
             
             VStack(spacing: 20) {
                 Text(L10n.ChatView.emptyText)
-                    .font(.system(size: 16))
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                     .foregroundColor(Asset.photoBack.swiftUIColor)
                     .multilineTextAlignment(.center)
             }

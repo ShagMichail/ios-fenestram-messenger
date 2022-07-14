@@ -20,7 +20,6 @@ struct CodeView: View {
     }
     
     var body: some View {
-        
         ZStack {
             Asset.thema.swiftUIColor
                 .ignoresSafeArea()
@@ -32,90 +31,77 @@ struct CodeView: View {
         }
     }
     
-    var border: some View {
-        RoundedRectangle(cornerRadius: 6)
-            .strokeBorder(
-                LinearGradient(colors: [Asset.border.swiftUIColor], startPoint: .topLeading, endPoint: .bottomTrailing))
-    }
-    
-    var borderError: some View {
-        RoundedRectangle(cornerRadius: 6)
-            .strokeBorder(
-                LinearGradient(colors: [Color.red], startPoint: .topLeading, endPoint: .bottomTrailing))
-    }
-    
     private func getBase() -> some View {
         VStack(alignment: .center) {
             Text("FENESTRAM")
-                .font(.title)
+                .font(FontFamily.Montserrat.semiBold.swiftUIFont(size: 18))
                 .foregroundColor(.white)
             Spacer()
                 .frame(height: 100.0)
             VStack (alignment: .trailing){
                 VStack(alignment: .leading){
-                    Text("Введите код из СМС")
-                        .font(.headline)
+                    Text(L10n.CodeView.enterCode)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                         .foregroundColor(Asset.text.swiftUIColor)
+                    
                     Spacer().frame(height: 3.0 )
                     
-                    if viewModel.errorCode {
-                        TextField("", text: Binding<String>(get: {
-                            format(with: self.maskCode, phone: viewModel.textCode)
-                        }, set: {
-                            viewModel.textCode = $0
-                        }))
-                        .placeholder(when: viewModel.textCode.isEmpty) {
-                            Text("").foregroundColor(Color.red)
+                    VStack {
+                        if viewModel.errorCode {
+                            TextField("", text: Binding<String>(get: {
+                                format(with: self.maskCode, phone: viewModel.textCode)
+                            }, set: {
+                                viewModel.textCode = $0
+                            }))
+                            .placeholder(when: viewModel.textCode.isEmpty) {
+                                Text("").foregroundColor(Color.red)
+                            }
+                            .onChange(of: viewModel.textCode) {
+                                newValue in viewModel.changeIncorrect()
+                            }
+                            .foregroundColor(Color.red)
+                        } else {
+                            TextField("", text: Binding<String>(get: {
+                                format(with: self.maskCode, phone: viewModel.textCode)
+                            }, set: {
+                                viewModel.textCode = $0
+                            }))
+                            .placeholder(when: viewModel.textCode.isEmpty) {
+                                Text("").foregroundColor(Asset.text.swiftUIColor)
+                            }
+                            .foregroundColor(Asset.text.swiftUIColor)
                         }
-                        .onChange(of: viewModel.textCode) { newValue in viewModel.changeIncorrect() }
-                        .textFieldStyle(PlainTextFieldStyle())
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 16)
-                        .foregroundColor(Color.red)
-                        .multilineTextAlignment(.center)
-                        .background(borderError)
-                        .multilineTextAlignment(.leading)
-                        .accentColor(Asset.text.swiftUIColor)
-                        .keyboardType(.numberPad)
-                    } else {
-                        TextField("", text: Binding<String>(get: {
-                            format(with: self.maskCode, phone: viewModel.textCode)
-                        }, set: {
-                            viewModel.textCode = $0
-                        }))
-                        .placeholder(when: viewModel.textCode.isEmpty) {
-                            Text("").foregroundColor(Asset.text.swiftUIColor)
-                        }
-                        .textFieldStyle(PlainTextFieldStyle())
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 16)
-                        
-                        .foregroundColor(Asset.text.swiftUIColor)
-                        .multilineTextAlignment(.center)
-                        .background(border)
-                        .multilineTextAlignment(.leading)
-                        .accentColor(Asset.text.swiftUIColor)
-                        .keyboardType(.numberPad)
                     }
+                    .frame(height: 48)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(viewModel.errorCode ? Color.red : Asset.border.swiftUIColor, lineWidth: 1)
+                    )
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
+                    .padding(.vertical, 12)
+                    .multilineTextAlignment(.center)
+                    .accentColor(Asset.text.swiftUIColor)
+                    .keyboardType(.numberPad)
+                    .textContentType(.oneTimeCode)
                 }
                 HStack {
                     if viewModel.errorCode {
-                        Text("Неверный код")
+                        Text(L10n.CodeView.incorrectPassword)
                             .foregroundColor(Color.red)
-                            .font(.system(size: 15))
+                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
                         Button(action: {
                             self.presentationMode.wrappedValue.dismiss()
                         }) {
-                            Text("Отправить заново?")
-                                .font(.system(size: 15))
+                            Text(L10n.CodeView.sendAgain)
+                                .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
                                 .foregroundColor(Color.red)
                         }
                     } else {
                         Button(action: {
                             self.presentationMode.wrappedValue.dismiss()
                         }) {
-                            Text("Отправить заново?")
-                                .font(.system(size: 15))
+                            Text(L10n.CodeView.sendAgain)
+                                .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
                                 .foregroundColor(Asset.blue.swiftUIColor)
                         }
                     }
@@ -131,7 +117,7 @@ struct CodeView: View {
                 Button(action: {
                     viewModel.checkCode()
                 }) {
-                    Text("Готово")
+                    Text(L10n.General.done)
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                         .foregroundColor(.white)
                         .background((viewModel.textCode.count == 5 && viewModel.errorCode == false) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)

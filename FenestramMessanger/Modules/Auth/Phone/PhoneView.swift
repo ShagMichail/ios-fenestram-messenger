@@ -31,43 +31,45 @@ struct PhoneView: View {
         }
     }
     
-    var border: some View {
-        RoundedRectangle(cornerRadius: 6)
-            .strokeBorder(
-                LinearGradient(colors: [Asset.border.swiftUIColor] , startPoint: .topLeading, endPoint: .bottomTrailing))
-    }
-    
     private func getBase() -> some View {
         VStack(alignment: .center) {
             Text("FENESTRAM")
-                .font(.title)
+                .font(FontFamily.Montserrat.semiBold.swiftUIFont(size: 18))
                 .foregroundColor(.white)
+            
             Spacer()
                 .frame(height: 100.0)
+            
             VStack(alignment: .leading){
-                Text("Номер телефона")
-                    .font(.headline)
+                Text(L10n.PhoneView.phoneNumber)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                     .foregroundColor(Asset.text.swiftUIColor)
                 
                 Spacer().frame(height: 3.0 )
                 
-                TextField("", text: Binding<String>(get: {
-                    format(with: self.maskPhone, phone: viewModel.textPhone)
-                }, set: {
-                    viewModel.textPhone = $0
-                }))
-                .placeholder(when: viewModel.textPhone.isEmpty) {
-                    Text("+7").foregroundColor(Asset.text.swiftUIColor)
-                    
+                VStack {
+                    TextField("", text: Binding<String>(get: {
+                        format(with: self.maskPhone, phone: viewModel.textPhone)
+                    }, set: {
+                        viewModel.textPhone = $0
+                    }))
+                    .placeholder(when: viewModel.textPhone.isEmpty) {
+                        Text("+7").foregroundColor(Asset.text.swiftUIColor)
+                    }
+                    .foregroundColor(Asset.text.swiftUIColor)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                    .multilineTextAlignment(.leading)
+                    .accentColor(Asset.text.swiftUIColor)
+                    .keyboardType(.phonePad)
+                    .textContentType(.telephoneNumber)
+                    .padding(.horizontal, 16)
                 }
-                .textFieldStyle(PlainTextFieldStyle())
+                .frame(height: 48)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Asset.border.swiftUIColor, lineWidth: 1)
+                )
                 .padding(.vertical, 12)
-                .padding(.horizontal, 16)
-                .foregroundColor(Asset.text.swiftUIColor)
-                .background(border)
-                .multilineTextAlignment(.leading)
-                .accentColor(Asset.text.swiftUIColor)
-                .keyboardType(.phonePad)
             }
             
             Spacer()
@@ -79,7 +81,7 @@ struct PhoneView: View {
                 Button(action: {
                     viewModel.checkCode()
                 }) {
-                    Text("Отправить код")
+                    Text(L10n.PhoneView.sendCode)
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                         .foregroundColor(.white)
                         .background((viewModel.textPhone.count == 18 ) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)

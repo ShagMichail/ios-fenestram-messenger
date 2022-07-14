@@ -54,7 +54,6 @@ extension ContactsView {
                     }
                 }
                 self.filteredContacts = matchingCoffees
-
             } else {
                 filteredContacts = values
             }

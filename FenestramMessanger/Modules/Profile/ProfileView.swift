@@ -81,6 +81,7 @@ struct ProfileView: View {
                 .resizable()
                 .frame(width: 120, height: 120)
                 .clipShape(Circle())
+            
             Button(action: {
                 viewModel.showSheet = true
             }) {
@@ -94,12 +95,12 @@ struct ProfileView: View {
                 .cornerRadius(40)
                 .frame(width: 50.0, height: 100.0, alignment: .center)
                 .actionSheet(isPresented: $viewModel.showSheet) {
-                    ActionSheet(title: Text("Select Photo"), message: Text("Choose"), buttons: [
-                        .default(Text("Photo Library")) {
+                    ActionSheet(title: Text(L10n.ProfileView.SelectPhoto.title), message: Text(L10n.ProfileView.SelectPhoto.message), buttons: [
+                        .default(Text(L10n.ProfileView.SelectPhoto.photoLibrary)) {
                             viewModel.showImagePicker = true
                             self.sourceType = .photoLibrary
                         },
-                        .default(Text("Camera")) {
+                        .default(Text(L10n.ProfileView.SelectPhoto.camera)) {
                             viewModel.showImagePicker = true
                             self.sourceType = .camera
                         },
@@ -110,14 +111,15 @@ struct ProfileView: View {
             .padding(.bottom, -84)
             .padding(.trailing, -7)
             
-        }.sheet(isPresented: $viewModel.showImagePicker) {
+        }
+        .sheet(isPresented: $viewModel.showImagePicker) {
             ImagePicker(image: $viewModel.image, isShown: $viewModel.showImagePicker, sourceType: self.sourceType)}
     }
     
     private func getName() -> some View {
         VStack(alignment: .center) {
             Text(viewModel.name)
-                .font(.system(size: 28))
+                .font(FontFamily.Poppins.bold.swiftUIFont(size: 22))
                 .foregroundColor(Color.white)
                 .bold()
             Spacer().frame(height: 3.0 )
@@ -126,7 +128,7 @@ struct ProfileView: View {
     
     private func getNicName() -> some View {
         VStack(alignment: .leading){
-            Text("Никнейм")
+            Text(L10n.ProfileView.nickname)
                 .font(.headline)
                 .foregroundColor(Asset.text.swiftUIColor)
             Spacer().frame(height: 3.0 )
@@ -156,10 +158,12 @@ struct ProfileView: View {
     
     private func getBirthday() -> some View {
         VStack(alignment: .leading){
-            Text("Дата рождения")
+            Text(L10n.ProfileView.birthday)
                 .font(.headline)
                 .foregroundColor(Asset.text.swiftUIColor)
+            
             Spacer().frame(height: 3.0 )
+            
             ZStack {
                 HStack (spacing: 5) {
                     DatePickerTextField(placeholder: "", date: $viewModel.birthday)
@@ -167,7 +171,7 @@ struct ProfileView: View {
                         .padding(.leading, 10)
                         .padding(.trailing, 5)
                         .frame( height: 46.0)
-                        .font(.system(size: 20))
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
                 }
             }.background(border)
         }
@@ -175,10 +179,12 @@ struct ProfileView: View {
     
     private func getEmail() -> some View {
         VStack(alignment: .leading){
-            Text("Email")
+            Text(L10n.ProfileView.email)
                 .font(.headline)
                 .foregroundColor(Asset.text.swiftUIColor)
-            Spacer().frame(height: 3.0 )
+            
+            Spacer().frame(height: 3.0)
+            
             ZStack {
                 HStack (spacing: 5) {
                     TextField("", text: $viewModel.textEmail) { (status) in
@@ -213,12 +219,11 @@ struct ProfileView: View {
     }
     
     private func getButton() -> some View {
-        
         HStack {
             Button(action: {
                 selection = "A"
             }) {
-                Text("Отменить")
+                Text(L10n.General.cancel)
                     .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)
                     .foregroundColor(.white)
                     .background(Asset.blue.swiftUIColor)
@@ -230,7 +235,7 @@ struct ProfileView: View {
             Button(action: {
                 selection = "A"
             }) {
-                Text("Готово")
+                Text(L10n.General.done)
                     .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)
                     .foregroundColor(.white)
                     .background(Asset.blue.swiftUIColor)

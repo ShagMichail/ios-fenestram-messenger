@@ -8,6 +8,9 @@
 
 // MARK: - General
 "general.done" = "Готово";
+"general.cancel" = "Отмена";
+"general.next" = "Далее";
+"general.skip" = "Пропустить";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "Здесь будет отображаться список ваших чатов";
@@ -26,3 +29,49 @@
 "new_contact_view.phone_number.placeholder" = "+7 _ _ _  _ _ _ - _ _ - _ _";
 "new_contact_view.phone_number.empty_error" = "Нe добавлен номер телефона";
 "new_contact_view.phone_number.incorrect_error" = "Нeкорректный номер телефона";
+
+// MARK: - ContactsView
+"contact_view.title" = "Контакты";
+"contact_view.search.placeholder" = "Поиск контакта";
+"contact_view.contact_dont_exist" = "Данного контакта не существует";
+"contact_view.add_contact" = "Добавить контакт";
+"contact_view.empty_text" = "Телефонная книга пуста. Хотите добавить контакты?";
+
+// MARK: - SettingsView
+"settings_view.title" = "Настройки";
+
+// MARK: - ProfileView
+"profile_view.select_photo.title" = "Выбрать фотографию";
+"profile_view.select_photo.message" = "Вы можете сделать снимок с камеры, либо выбрать одно фото из галереи телефона";
+"profile_view.select_photo.photo_library" = "Галерея телефона";
+"profile_view.select_photo.camera" = "Камера";
+
+"profile_view.nickname" = "Никнейм";
+"profile_view.birthday" = "Дата рождения";
+"profile_view.email" = "Эл. почта";
+
+// MARK: - MainTabView
+"main_tab_view.contacts" = "Контакты";
+"main_tab_view.chat" = "Чат";
+"main_tab_view.profile" = "Профиль";
+
+// MARK: - OnboardingView
+"onboarding_view.first_description" = "Разнообразный и богатый опыт рамки и место обучения кадров обеспечивает широкому кругу (специалистов) участие в формировании существенных финансовых и административных условий.";
+"onboarding_view.second_description" = "Задача организации, в особенности же рамки и место обучения кадров способствует подготовки и реализации позиций, занимаемых участниками в отношении поставленных задач.";
+"onboarding_view.third_description" = "С другой стороны укрепление и развитие структуры играет важную роль в формировании существенных финансовых и административных условий.";
+
+// MARK: - AccountView
+"account_view.title" = "Добро пожаловать в FENESTRAM!";
+"account_view.name" = "Имя";
+"account_view.nickname" = "Никнейм";
+"account_view.birthday" = "Дата рождения";
+"account_view.email" = "Эл. почта";
+
+// MARK: - CodeView
+"code_view.enter_code" = "Введите код из СМС";
+"code_view.incorrect_password" = "Неверный код";
+"code_view.send_again" = "Отправить заново?";
+
+// MARK: - PhoneView
+"phone_view.phone_number" = "Номер телефона";
+"phone_view.send_code" = "Отправить код";

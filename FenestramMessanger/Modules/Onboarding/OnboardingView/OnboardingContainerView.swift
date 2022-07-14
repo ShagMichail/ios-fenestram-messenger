@@ -29,7 +29,7 @@ struct OnboardingContainerView: View {
                             
                             VStack(spacing: 20) {
                                 Text(features[it].title)
-                                    .font(.system(size: 14))
+                                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                                     .foregroundColor(Asset.photoBack.swiftUIColor)
                                     .multilineTextAlignment(.center)
                             }.padding()
@@ -70,7 +70,7 @@ struct OnboardingContainerView: View {
                 }
                 
             }, label: {
-                Text(selectedPage < features.count - 1 ? "Далее" : "Готово")
+                Text(selectedPage < features.count - 1 ? L10n.General.next : L10n.General.done)
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .foregroundColor(.white)
                     .background(Asset.blue.swiftUIColor)
@@ -78,7 +78,7 @@ struct OnboardingContainerView: View {
             })
             
             Button(action: { isOnboarding = false }, label: {
-                Text("Пропустить")
+                Text(L10n.General.skip)
                     .foregroundColor(!(selectedPage < features.count - 1) ? Asset.thema.swiftUIColor : Asset.next.swiftUIColor)
             }).disabled(!(selectedPage < features.count - 1))
         }

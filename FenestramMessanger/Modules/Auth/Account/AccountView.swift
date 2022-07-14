@@ -9,10 +9,7 @@ import SwiftUI
 import Introspect
 import Combine
 
-
-
 struct AccountView: View {
-    @State var flag = false
     @State private var selection: String? = nil
     @State private var keyboardHeight: CGFloat = 0
     
@@ -59,8 +56,9 @@ struct AccountView: View {
     }
     
     private func getHeader() -> some View {
-        Text("Добро пожаловать в FENESTRAM!")
-            .font(.title)
+        Text(L10n.AccountView.title)
+            .frame(width: UIScreen.screenWidth / 2)
+            .font(FontFamily.Montserrat.semiBold.swiftUIFont(size: 18))
             .foregroundColor(.white)
             .multilineTextAlignment(.center)
     }
@@ -84,12 +82,12 @@ struct AccountView: View {
                 .cornerRadius(40)
                 .frame(width: 50.0, height: 100.0, alignment: .center)
                 .actionSheet(isPresented: $viewModel.showSheet) {
-                    ActionSheet(title: Text("Select Photo"), message: Text("Choose"), buttons: [
-                        .default(Text("Photo Library")) {
+                    ActionSheet(title: Text(L10n.ProfileView.SelectPhoto.title), message: Text(L10n.ProfileView.SelectPhoto.message), buttons: [
+                        .default(Text(L10n.ProfileView.SelectPhoto.photoLibrary)) {
                             viewModel.showImagePicker = true
                             self.sourceType = .photoLibrary
                         },
-                        .default(Text("Camera")) {
+                        .default(Text(L10n.ProfileView.SelectPhoto.camera)) {
                             viewModel.showImagePicker = true
                             self.sourceType = .camera
                         },
@@ -106,10 +104,10 @@ struct AccountView: View {
     
     private func getName() -> some View {
         VStack(alignment: .leading){
-            Text("Имя")
-                .font(.headline)
+            Text(L10n.AccountView.name)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                 .foregroundColor(Asset.text.swiftUIColor)
-            Spacer().frame(height: 3.0 )
+            Spacer().frame(height: 3.0)
             
             ZStack {
                 HStack (spacing: 5){
@@ -127,6 +125,7 @@ struct AccountView: View {
                     .padding(.leading, 10)
                     .padding(.trailing, 5)
                     .foregroundColor(Asset.text.swiftUIColor)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                     .multilineTextAlignment(.leading)
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
@@ -147,8 +146,8 @@ struct AccountView: View {
     
     private func getNicName() -> some View {
         VStack(alignment: .leading){
-            Text("Никнейм")
-                .font(.headline)
+            Text(L10n.AccountView.nickname)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                 .foregroundColor(Asset.text.swiftUIColor)
             Spacer().frame(height: 3.0 )
             ZStack {
@@ -167,6 +166,7 @@ struct AccountView: View {
                     .padding(.leading, 10)
                     .padding(.trailing, 5)
                     .foregroundColor(Asset.text.swiftUIColor)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                     .multilineTextAlignment(.leading)
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
@@ -188,8 +188,8 @@ struct AccountView: View {
     
     private func getBirthday() -> some View {
         VStack(alignment: .leading){
-            Text("Дата рождения")
-                .font(.headline)
+            Text(L10n.AccountView.birthday)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                 .foregroundColor(Asset.text.swiftUIColor)
             Spacer().frame(height: 3.0 )
             ZStack {
@@ -198,8 +198,8 @@ struct AccountView: View {
                         .padding(.vertical, 12)
                         .padding(.leading, 10)
                         .padding(.trailing, 5)
-                        .frame( height: 46.0)
-                        .font(.system(size: 20))
+                        .frame(height: 46.0)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                     
                     if viewModel.birthday != nil {
                         Button(action: {
@@ -217,9 +217,9 @@ struct AccountView: View {
     }
     
     private func getEmail() -> some View {
-        VStack(alignment: .leading){
-            Text("Email")
-                .font(.headline)
+        VStack(alignment: .leading) {
+            Text(L10n.AccountView.email)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                 .foregroundColor(Asset.text.swiftUIColor)
             Spacer().frame(height: 3.0 )
             ZStack {
@@ -246,10 +246,12 @@ struct AccountView: View {
                     .padding(.leading, 10)
                     .padding(.trailing, 5)
                     .foregroundColor(Asset.text.swiftUIColor)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                     .multilineTextAlignment(.leading)
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.emailAddress)
                     .ignoresSafeArea(.keyboard)
+                    
                     if viewModel.isEmailValid && !viewModel.isTappedEmail  {
                         Button(action: {
                             print("ddd")
@@ -266,22 +268,21 @@ struct AccountView: View {
     }
     
     private func getButton() -> some View {
-        
         VStack {
             Button(action: {
                 selection = "A"
             }) {
-                Text("Готово")
+                Text(L10n.General.done)
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .foregroundColor(.white)
                     .background( (viewModel.name.count != 0 && viewModel.nicName.count != 0 && viewModel.birthday != nil && viewModel.textEmailOk) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
                     .cornerRadius(6)
             }.disabled((viewModel.name.count == 0 || viewModel.nicName.count == 0 || viewModel.birthday == nil || viewModel.textEmailOk == false))
-
+            
             Button(action: {
                 selection = "A"
             }) {
-                Text("Пропустить")
+                Text(L10n.General.skip)
                     .foregroundColor(Asset.next.swiftUIColor)
             }
         }

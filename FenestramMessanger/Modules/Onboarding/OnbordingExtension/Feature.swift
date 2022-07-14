@@ -15,7 +15,7 @@ struct Feature: Identifiable {
 }
 
 let features = [
-    Feature(title: "Разнообразный и богатый опыт рамки и место обучения кадров обеспечивает широкому кругу (специалистов) участие в формировании существенных финансовых и административных условий.", subtitle: "next" , image: Asset.onboardingFirst.swiftUIImage),
-    Feature(title: "Задача организации, в особенности же рамки и место обучения кадров способствует подготовки и реализации позиций, занимаемых участниками в отношении поставленных задач.",subtitle: "next", image: Asset.onboardingSecond.swiftUIImage),
-    Feature(title: "С другой стороны укрепление и развитие структуры играет важную роль в формировании существенных финансовых и административных условий.", subtitle: "out", image: Asset.onboardingThird.swiftUIImage)
+    Feature(title: L10n.OnboardingView.firstDescription, subtitle: "next" , image: Asset.onboardingFirst.swiftUIImage),
+    Feature(title: L10n.OnboardingView.secondDescription,subtitle: "next", image: Asset.onboardingSecond.swiftUIImage),
+    Feature(title: L10n.OnboardingView.thirdDescription, subtitle: "out", image: Asset.onboardingThird.swiftUIImage)
 ]
