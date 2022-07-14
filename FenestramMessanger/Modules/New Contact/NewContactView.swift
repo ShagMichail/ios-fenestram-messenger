@@ -225,6 +225,7 @@ struct NewContactView: View {
             }) {
                 Text(L10n.General.done)
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
+                    .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
                     .background( (viewModel.name.count != 0 && (viewModel.textPhone.count != 0 && viewModel.textPhone.count == 16 ) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor))
                     .cornerRadius(6)

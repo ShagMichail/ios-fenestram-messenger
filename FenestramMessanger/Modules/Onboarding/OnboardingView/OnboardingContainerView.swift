@@ -72,6 +72,7 @@ struct OnboardingContainerView: View {
             }, label: {
                 Text(selectedPage < features.count - 1 ? L10n.General.next : L10n.General.done)
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
+                    .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
                     .background(Asset.blue.swiftUIColor)
                     .cornerRadius(6)
@@ -79,6 +80,7 @@ struct OnboardingContainerView: View {
             
             Button(action: { isOnboarding = false }, label: {
                 Text(L10n.General.skip)
+                    .font(FontFamily.Poppins.medium.swiftUIFont(size: 16))
                     .foregroundColor(!(selectedPage < features.count - 1) ? Asset.thema.swiftUIColor : Asset.next.swiftUIColor)
             }).disabled(!(selectedPage < features.count - 1))
         }

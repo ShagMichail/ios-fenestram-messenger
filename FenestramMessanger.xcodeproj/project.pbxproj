@@ -26,6 +26,7 @@
 		BD74D89328805A880004C961 /* Montserrat-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD74D88128805A870004C961 /* Montserrat-BoldItalic.ttf */; };
 		BD74D89428805A880004C961 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD74D88228805A870004C961 /* Montserrat-Regular.ttf */; };
 		BD74D89528805A880004C961 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD74D88328805A870004C961 /* Montserrat-Medium.ttf */; };
+		BD74D89928806F860004C961 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD74D89828806F860004C961 /* AppDelegate.swift */; };
 		BD7783AA2872EBB50023032D /* FenestramMessangerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7783A92872EBB50023032D /* FenestramMessangerApp.swift */; };
 		BD7783AE2872EBB70023032D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD7783AD2872EBB70023032D /* Assets.xcassets */; };
 		BD7783B12872EBB70023032D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD7783B02872EBB70023032D /* Preview Assets.xcassets */; };
@@ -55,7 +56,6 @@
 		BDE74BC2288030A400F4A775 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BDE74BAF288030A400F4A775 /* Poppins-MediumItalic.ttf */; };
 		BDE74BC4288030DE00F4A775 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE74BC3288030DE00F4A775 /* Fonts.swift */; };
 		FC13AF3D287EC42600784E35 /* NewContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC13AF3C287EC42600784E35 /* NewContactView.swift */; };
-		FC13AF3F287EC8E300784E35 /* BackNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC13AF3E287EC8E300784E35 /* BackNav.swift */; };
 		FC13AF42287ECEE100784E35 /* NewContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC13AF41287ECEE100784E35 /* NewContactViewModel.swift */; };
 		FC13AF45287EE78B00784E35 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC13AF44287EE78A00784E35 /* ChatViewModel.swift */; };
 		FC17786C2875831700B0D979 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = FC17786B2875831700B0D979 /* Introspect */; };
@@ -111,6 +111,7 @@
 		BD74D88228805A870004C961 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		BD74D88328805A870004C961 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		BD74D89628805A970004C961 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		BD74D89828806F860004C961 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD7783A62872EBB50023032D /* FenestramMessanger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FenestramMessanger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD7783A92872EBB50023032D /* FenestramMessangerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FenestramMessangerApp.swift; sourceTree = "<group>"; };
 		BD7783AD2872EBB70023032D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -145,7 +146,6 @@
 		BDE74BC52880314D00F4A775 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F33D57429665AA5A47D624DD /* Pods_FenestramMessanger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FenestramMessanger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC13AF3C287EC42600784E35 /* NewContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContactView.swift; sourceTree = "<group>"; };
-		FC13AF3E287EC8E300784E35 /* BackNav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackNav.swift; sourceTree = "<group>"; };
 		FC13AF41287ECEE100784E35 /* NewContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContactViewModel.swift; sourceTree = "<group>"; };
 		FC13AF44287EE78A00784E35 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		FC17786D2875837300B0D979 /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
@@ -261,6 +261,7 @@
 				BDDB5ADD2872ECAA002BF418 /* Modules */,
 				BDE74B8C28801CA000F4A775 /* Resources */,
 				BD7783A92872EBB50023032D /* FenestramMessangerApp.swift */,
+				BD74D89828806F860004C961 /* AppDelegate.swift */,
 				BD7783AF2872EBB70023032D /* Preview Content */,
 			);
 			path = FenestramMessanger;
@@ -563,7 +564,6 @@
 			children = (
 				FC1778D628774BA300B0D979 /* ContactsView.swift */,
 				FCF5A42F28789CC90028FBD3 /* ContactsRow.swift */,
-				FC13AF3E287EC8E300784E35 /* BackNav.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -739,6 +739,7 @@
 			files = (
 				FC177882287591FE00B0D979 /* AccountViewModel.swift in Sources */,
 				FC177875287583D000B0D979 /* DatePickerTextField.swift in Sources */,
+				BD74D89928806F860004C961 /* AppDelegate.swift in Sources */,
 				FC177889287592DB00B0D979 /* TextField.swift in Sources */,
 				FC17788B2875933200B0D979 /* View.swift in Sources */,
 				BD7783AA2872EBB50023032D /* FenestramMessangerApp.swift in Sources */,
@@ -755,7 +756,6 @@
 				FCF5A43028789CC90028FBD3 /* ContactsRow.swift in Sources */,
 				FC13AF42287ECEE100784E35 /* NewContactViewModel.swift in Sources */,
 				FC600B2728788E87001CA2BD /* SettingsViewModel.swift in Sources */,
-				FC13AF3F287EC8E300784E35 /* BackNav.swift in Sources */,
 				FC17786E2875837300B0D979 /* AccountView.swift in Sources */,
 				FC1778D928774BA300B0D979 /* ContactsView.swift in Sources */,
 				FC600B2228787E74001CA2BD /* ProfileViewModel.swift in Sources */,

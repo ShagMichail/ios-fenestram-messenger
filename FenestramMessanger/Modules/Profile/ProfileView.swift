@@ -27,41 +27,43 @@ struct ProfileView: View {
     }
     
     var body: some View {
-        ZStack {
-            Asset.thema.swiftUIColor
-                .ignoresSafeArea()
-            
-            VStack {
-                VStack {
-                    getHeader()
-                }.padding(.top, 10)
-                VStack  {
-                    
-                    getImage()
-                    Spacer()
-                        .frame(height: 30.0)
-                    getName()
-                    Spacer()
-                        .frame(height: 30.0)
-                    getNicName()
-                    getBirthday()
-                    getEmail()
-                    Spacer()
-                        .frame(height: 40.0)
-                    getButton()
-                }
-                .padding()
-                .ignoresSafeArea(.keyboard, edges: .bottom)
-                .padding(.bottom, keyboardHeight/4)
-                .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
+        NavigationView {
+            ZStack {
+                Asset.thema.swiftUIColor
+                    .ignoresSafeArea()
                 
-                Spacer()
+                VStack {
+                    VStack {
+                        getHeader()
+                    }.padding(.top, 10)
+                    VStack  {
+                        
+                        getImage()
+                        Spacer()
+                            .frame(height: 30.0)
+                        getName()
+                        Spacer()
+                            .frame(height: 30.0)
+                        getNicName()
+                        getBirthday()
+                        getEmail()
+                        Spacer()
+                            .frame(height: 40.0)
+                        getButton()
+                    }
+                    .padding()
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
+                    .padding(.bottom, keyboardHeight/4)
+                    .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
+                    
+                    Spacer()
+                }
             }
+            .onTapGesture {
+                UIApplication.shared.endEditing()
+            }
+            .navigationBarHidden(true)
         }
-        .onTapGesture {
-            UIApplication.shared.endEditing()
-        }
-        .navigationBarHidden(true)
     }
     
     private func getHeader() -> some View {
@@ -225,8 +227,9 @@ struct ProfileView: View {
             }) {
                 Text(L10n.General.cancel)
                     .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)
-                    .foregroundColor(.white)
-                    .background(Asset.blue.swiftUIColor)
+                    .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
+                    .foregroundColor(Asset.text.swiftUIColor)
+                    .background(Asset.navBar.swiftUIColor)
                     .cornerRadius(6)
             }
             
@@ -237,6 +240,7 @@ struct ProfileView: View {
             }) {
                 Text(L10n.General.done)
                     .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)
+                    .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
                     .background(Asset.blue.swiftUIColor)
                     .cornerRadius(6)

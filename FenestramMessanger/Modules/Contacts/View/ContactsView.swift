@@ -23,27 +23,29 @@ struct ContactsView: View {
     }
     
     var body: some View {
-        ZStack{
-            Asset.thema.swiftUIColor
-                .ignoresSafeArea()
-            
-            VStack(alignment: .leading) {
-                getHeaderView()
+        NavigationView {
+            ZStack{
+                Asset.thema.swiftUIColor
+                    .ignoresSafeArea()
                 
-                if viewModel.allContacts.count != 0 {
-                    getSearchView()
+                VStack(alignment: .leading) {
+                    getHeaderView()
                     
-                    Spacer().frame(height: 20.0)
-                    
-                    getContentView()
-                } else {
-                    getEmptyView()
+                    if viewModel.allContacts.count != 0 {
+                        getSearchView()
+                        
+                        Spacer().frame(height: 20.0)
+                        
+                        getContentView()
+                    } else {
+                        getEmptyView()
+                    }
                 }
+            }.onTapGesture {
+                UIApplication.shared.endEditing()
             }
-        }.onTapGesture {
-            UIApplication.shared.endEditing()
+            .navigationBarHidden(true)
         }
-        .navigationBarHidden(true)
     }
     
     private func getHeaderView() -> some View {
@@ -128,6 +130,7 @@ struct ContactsView: View {
             } label: {
                 Text(L10n.ContactView.addContact)
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
+                    .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
                     .background(Asset.blue.swiftUIColor)
                     .cornerRadius(6)

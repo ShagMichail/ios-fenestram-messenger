@@ -274,6 +274,7 @@ struct AccountView: View {
             }) {
                 Text(L10n.General.done)
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
+                    .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
                     .background( (viewModel.name.count != 0 && viewModel.nicName.count != 0 && viewModel.birthday != nil && viewModel.textEmailOk) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
                     .cornerRadius(6)
@@ -283,6 +284,7 @@ struct AccountView: View {
                 selection = "A"
             }) {
                 Text(L10n.General.skip)
+                    .font(FontFamily.Poppins.medium.swiftUIFont(size: 16))
                     .foregroundColor(Asset.next.swiftUIColor)
             }
         }

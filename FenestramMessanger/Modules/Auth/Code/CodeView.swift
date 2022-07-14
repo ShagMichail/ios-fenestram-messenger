@@ -119,6 +119,7 @@ struct CodeView: View {
                 }) {
                     Text(L10n.General.done)
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
+                        .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                         .foregroundColor(.white)
                         .background((viewModel.textCode.count == 5 && viewModel.errorCode == false) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
                         .cornerRadius(6)

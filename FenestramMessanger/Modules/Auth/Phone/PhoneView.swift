@@ -19,15 +19,17 @@ struct PhoneView: View {
     }
     
     var body: some View {
-        
-        ZStack {
-            Asset.thema.swiftUIColor
-                .ignoresSafeArea()
-            
-            getBase()
-        }
-        .onTapGesture {
-            UIApplication.shared.endEditing()
+        NavigationView {
+            ZStack {
+                Asset.thema.swiftUIColor
+                    .ignoresSafeArea()
+                
+                getBase()
+            }
+            .onTapGesture {
+                UIApplication.shared.endEditing()
+            }
+            .navigationBarHidden(true)
         }
     }
     
@@ -83,12 +85,13 @@ struct PhoneView: View {
                 }) {
                     Text(L10n.PhoneView.sendCode)
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
+                        .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                         .foregroundColor(.white)
-                        .background((viewModel.textPhone.count == 18 ) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
+                        .background((viewModel.textPhone.count == 16) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
                         .cornerRadius(6)
                 }
             }
-            .disabled(viewModel.textPhone.count != 18)
+            .disabled(viewModel.textPhone.count != 16)
         }
         .padding()
         .ignoresSafeArea(.keyboard, edges: .bottom)

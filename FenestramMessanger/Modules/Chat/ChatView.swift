@@ -15,20 +15,22 @@ struct ChatView: View {
     }
     
     var body: some View {
-        ZStack {
-            Asset.thema.swiftUIColor
-                .ignoresSafeArea()
-            
-            VStack {
-                getHeader()
+        NavigationView {
+            ZStack {
+                Asset.thema.swiftUIColor
+                    .ignoresSafeArea()
                 
-                getEmptyView()
+                VStack {
+                    getHeader()
+                    
+                    getEmptyView()
+                }
             }
+            .onTapGesture {
+                UIApplication.shared.endEditing()
+            }
+            .navigationBarHidden(true)
         }
-        .onTapGesture {
-            UIApplication.shared.endEditing()
-        }
-        .navigationBarHidden(true)
     }
     
     private func getHeader() -> some View {
