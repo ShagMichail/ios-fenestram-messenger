@@ -13,7 +13,6 @@ struct ProfileView: View {
     @State private var selection: String? = nil
     @State private var keyboardHeight: CGFloat = 0
     
-    //@State private var image: UIImage?
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     @StateObject private var viewModel: ViewModel
     
@@ -56,21 +55,13 @@ struct ProfileView: View {
                 
                 Spacer()
             }
-            
         }
         .onTapGesture {
             UIApplication.shared.endEditing()
         }
         .navigationBarHidden(true)
-        
     }
     
-//    private func getHeader() -> some View {
-//        Text("Добро пожаловать в FENESTRAM!")
-//            .font(.title)
-//            .foregroundColor(.white)
-//            .multilineTextAlignment(.center)
-//    }
     private func getHeader() -> some View {
         VStack(alignment: .trailing){
             NavigationLink() {
@@ -78,14 +69,8 @@ struct ProfileView: View {
             } label: {
                 Image(systemName: "gearshape").foregroundColor(Color("blue"))
             }
-//            Button(action: {
-//                selection = "A"
-//            }) {
-//                Image(systemName: "gearshape")
-//
-//            }
-        }//.frame(width: UIScreen.screenWidth - 30)
-            .padding(.leading, UIScreen.screenWidth - 60)
+        }
+        .padding(.leading, UIScreen.screenWidth - 60)
     }
     
     private func getImage() -> some View {
@@ -239,15 +224,15 @@ struct ProfileView: View {
             }
             
             Spacer()
-
+            
             Button(action: {
                 selection = "A"
             }) {
                 Text("Готово")
-                .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)
-                .foregroundColor(.white)
-                .background(Color("blue") )
-                .cornerRadius(6)
+                    .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)
+                    .foregroundColor(.white)
+                    .background(Color("blue") )
+                    .cornerRadius(6)
             }
         }
     }

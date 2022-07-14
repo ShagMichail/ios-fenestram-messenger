@@ -9,17 +9,18 @@ import SwiftUI
 
 struct MainView: View {
     @StateObject private var viewModel: ViewModel
+    @AppStorage("isActiv") var isActiv: Bool?
     
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
     }
     
     var body: some View {
-            if viewModel.isSignIn {
-                MainTabView().navigationBarHidden(true)
-            } else {
-                PhoneView().navigationBarHidden(true)
-            }
+        if viewModel.isSignIn {
+            MainTabView().navigationBarHidden(true)
+        } else {
+            PhoneView().navigationBarHidden(true)
+        }
     }
 }
 

@@ -23,7 +23,7 @@ struct ContactsView: View {
     }
     
     var body: some View {
-        //NavigationView {
+
         ZStack{
             Color("thema").ignoresSafeArea()
             
@@ -56,7 +56,6 @@ struct ContactsView: View {
                     
                     Spacer().frame(height: 20.0)
                     
-                    
                     ZStack () {
                         VStack (alignment: .trailing) {
                             
@@ -85,15 +84,12 @@ struct ContactsView: View {
                                             .foregroundColor(Color.white)
                                             .font(.system(size: 25))
                                     }
-                                    
                                     .padding(.bottom, 10)
                                     .padding(.trailing, 10)
-                                    
                                 }
                             }
                         }
                     }
-                    
                 } else {
                     VStack(alignment: .center) {
                         Spacer()
@@ -117,16 +113,12 @@ struct ContactsView: View {
                         .padding(.bottom, 50)
                     }
                 }
-                
-                
             }
-            
         }.onTapGesture {
             UIApplication.shared.endEditing()
         }
         .navigationBarHidden(true)
     }
-    
 }
 
 struct ContactsView_Previews: PreviewProvider {

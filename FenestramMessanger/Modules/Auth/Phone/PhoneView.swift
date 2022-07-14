@@ -56,7 +56,6 @@ struct PhoneView: View {
                 }))
                 .placeholder(when: viewModel.textPhone.isEmpty) {
                     Text("+7").foregroundColor(Color("text"))
-                    
                 }
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding(.vertical, 12)
@@ -66,13 +65,12 @@ struct PhoneView: View {
                 .multilineTextAlignment(.leading)
                 .accentColor(Color("text"))
                 .keyboardType(.phonePad)
-
             }
             
             Spacer()
                 .frame(height: 83.0)
-
-            NavigationLink(isActive: $viewModel.flag) {
+            
+            NavigationLink(isActive: $viewModel.numberCount) {
                 CodeView().navigationBarHidden(true)
             } label: {
                 Button(action: {

@@ -9,12 +9,8 @@ import SwiftUI
 
 struct NewContactView: View {
     
-    //@State var contact: Contact
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
     @StateObject private var viewModel: ViewModel
-    
     let maskPhone = "+X XXX XXX-XX-XX"
     
     init() {
@@ -25,14 +21,12 @@ struct NewContactView: View {
         RoundedRectangle(cornerRadius: 6)
             .strokeBorder((viewModel.isTappedGlobal == true && viewModel.name.count == 0) ?
                           LinearGradient(colors: [Color.red], startPoint: .topLeading, endPoint: .bottomTrailing) : LinearGradient(colors: [Color("border")], startPoint: .topLeading, endPoint: .bottomTrailing))
-                
     }
     
     var borderPhone: some View {
         RoundedRectangle(cornerRadius: 6)
             .strokeBorder((viewModel.isTappedGlobal == true && (viewModel.textPhone.count == 0 || viewModel.textPhone.count != 16)) ?
                           LinearGradient(colors: [Color.red], startPoint: .topLeading, endPoint: .bottomTrailing) : LinearGradient(colors: [Color("border")], startPoint: .topLeading, endPoint: .bottomTrailing))
-                
     }
     
     var borderLastName: some View {
@@ -61,11 +55,9 @@ struct NewContactView: View {
     
     var body: some View {
         ZStack {
-            
             Color("thema").ignoresSafeArea()
             VStack {
-                RoundedRectangle(cornerRadius: 0)
-                    //.background(Color("buttonDis"))
+                Rectangle()
                     .foregroundColor(Color("buttonDis"))
                     .frame(width: UIScreen.screenWidth, height: 100.0)
                     .ignoresSafeArea()
@@ -80,14 +72,10 @@ struct NewContactView: View {
                 Spacer()
             }
             .padding()
-            
-            //getNicName()
-            
         }
         .onTapGesture {
             UIApplication.shared.endEditing()
         }
-        
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: title)
         .navigationBarItems(leading: btnBack)
@@ -133,10 +121,8 @@ struct NewContactView: View {
                     Text("Не добавлено имя")
                         .foregroundColor(Color.red)
                         .font(.system(size: 15))
-                    
                 }
             }
-        
         }
     }
     
@@ -159,7 +145,6 @@ struct NewContactView: View {
                     }
                     .placeholder(when: viewModel.lastName.isEmpty) {
                         Text("(необязательно)").foregroundColor(Color("text")).contrast(0)
-                        
                     }
                     .textFieldStyle(PlainTextFieldStyle())
                     .padding(.vertical, 12)
@@ -169,7 +154,6 @@ struct NewContactView: View {
                     .multilineTextAlignment(.leading)
                     .accentColor(Color("text"))
                     .keyboardType(.default)
-                    
                 }
             }.background(borderLastName)
         }
@@ -181,7 +165,7 @@ struct NewContactView: View {
                 Text("Номер телефона")
                     .font(.headline)
                     .foregroundColor(((viewModel.textPhone.count == 0 &&  viewModel.isTappedGlobal == true) || (viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0)) ? Color.red : Color("text"))
-                
+        
                 Spacer().frame(height: 3.0 )
                 
                 TextField("", text: Binding<String>(get: {
@@ -191,7 +175,6 @@ struct NewContactView: View {
                 }))
                 .placeholder(when: viewModel.textPhone.isEmpty) {
                     Text("+7 _ _ _  _ _ _ - _ _ - _ _").foregroundColor(((viewModel.textPhone.count == 0 &&  viewModel.isTappedGlobal == true) || (viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0)) ? Color.red : Color("text"))
-                    
                 }
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding(.vertical, 12)
@@ -201,14 +184,12 @@ struct NewContactView: View {
                 .multilineTextAlignment(.leading)
                 .accentColor(Color("text"))
                 .keyboardType(.phonePad)
-
             }
             if viewModel.textPhone.count == 0 && viewModel.isTappedGlobal == true {
             HStack {
                     Text("Нe добавлен номер телефона")
                         .foregroundColor(Color.red)
                         .font(.system(size: 15))
-                    
                 }
             }
             if viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0 && viewModel.isTappedGlobal == true {
@@ -216,18 +197,16 @@ struct NewContactView: View {
                     Text("Нeкорректный номер телефона")
                         .foregroundColor(Color.red)
                         .font(.system(size: 15))
-                    
                 }
             }
         }
-
     }
     
     private func getButton() -> some View {
         
         VStack {
             Button(action: {
-                //selection = "A"
+              
             }) {
                 Text("Готово")
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
@@ -235,13 +214,9 @@ struct NewContactView: View {
                     .background( (viewModel.name.count != 0 && (viewModel.textPhone.count != 0 && viewModel.textPhone.count == 16 ) ? Color("blue") : Color("buttonDis")))
                     .cornerRadius(6)
             }.disabled((viewModel.name.count == 0 || viewModel.textPhone.count != 16))
-
         }
     }
-
-
 }
-
 
 struct NewContactView_Previews: PreviewProvider {
     static var previews: some View {

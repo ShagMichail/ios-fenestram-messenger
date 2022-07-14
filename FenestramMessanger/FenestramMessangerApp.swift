@@ -10,14 +10,22 @@ import SwiftUI
 @main
 struct FenestramMessangerApp: App {
     @AppStorage("isOnboarding") var isOnboarding = true
+    @AppStorage("isActiv") var isActiv = false
+
     var body: some Scene {
         WindowGroup {
-            NavigationView{
-                if isOnboarding {
-                    OnboardingContainerView().navigationBarHidden(true)
-                } else {
-                    MainView().navigationBarHidden(true)
+            if isActiv {
+                NavigationView{
+                    if isOnboarding {
+                        OnboardingContainerView().navigationBarHidden(true)
+                    } else {
+                        MainView().navigationBarHidden(true)
+                    }
+                }.onDisappear{
+                    isActiv = false
                 }
+            } else {
+                SplashScreen()
             }
         }
     }

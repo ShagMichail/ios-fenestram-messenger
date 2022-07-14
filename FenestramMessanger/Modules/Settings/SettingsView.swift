@@ -28,27 +28,22 @@ struct SettingsView: View {
     }
     
     var title : some View {
-        
-            Text("Настройки")
-                .foregroundColor(Color.white)
-                .font(.system(size: 20))
-            
-        
+        Text("Настройки")
+            .foregroundColor(Color.white)
+            .font(.system(size: 20))
     }
     
     var body: some View {
         ZStack {
-            
             Color("thema").ignoresSafeArea()
             VStack {
                 RoundedRectangle(cornerRadius: 0)
-                    //.background(Color("buttonDis"))
+                //.background(Color("buttonDis"))
                     .foregroundColor(Color("buttonDis"))
                     .frame(width: UIScreen.screenWidth, height: 100.0)
                     .ignoresSafeArea()
                 Spacer()
             }
-            
             Text("Settings!").foregroundColor(Color.white)
         }
         .navigationBarBackButtonHidden(true)

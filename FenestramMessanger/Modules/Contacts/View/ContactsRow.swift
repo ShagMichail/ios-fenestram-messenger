@@ -31,9 +31,3 @@ struct ContactsRow: View {
         }
     }
 }
-
-//struct ContactsRow_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContactsRow(name: "dfddfddfdf", image: "photo")
-//    }
-//}

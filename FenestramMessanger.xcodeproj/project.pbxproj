@@ -33,6 +33,7 @@
 		FC1778D828774BA300B0D979 /* CorrespondenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778D528774BA300B0D979 /* CorrespondenceView.swift */; };
 		FC1778D928774BA300B0D979 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778D628774BA300B0D979 /* ContactsView.swift */; };
 		FC1778E12877639800B0D979 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778E02877639800B0D979 /* MainTabView.swift */; };
+		FC1EA8FF287F3CE10027107E /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1EA8FE287F3CE10027107E /* SplashScreen.swift */; };
 		FC600B2228787E74001CA2BD /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC600B2128787E74001CA2BD /* ProfileViewModel.swift */; };
 		FC600B2528788E7F001CA2BD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC600B2428788E7F001CA2BD /* SettingsView.swift */; };
 		FC600B2728788E87001CA2BD /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC600B2628788E87001CA2BD /* SettingsViewModel.swift */; };
@@ -73,6 +74,7 @@
 		FC1778D528774BA300B0D979 /* CorrespondenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CorrespondenceView.swift; sourceTree = "<group>"; };
 		FC1778D628774BA300B0D979 /* ContactsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		FC1778E02877639800B0D979 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		FC1EA8FE287F3CE10027107E /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		FC600B2128787E74001CA2BD /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		FC600B2428788E7F001CA2BD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FC600B2628788E87001CA2BD /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				FC1778AA2876E21800B0D979 /* Onboarding */,
 				BDDB5AE72872EDCF002BF418 /* Main */,
 				BDDB5AE22872ECEC002BF418 /* Auth */,
+				FC1EA8FE287F3CE10027107E /* SplashScreen.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 				FCF5A43728798EB70028FBD3 /* ChatView.swift in Sources */,
 				FC1778B42876E25C00B0D979 /* Feature.swift in Sources */,
 				FC1778E12877639800B0D979 /* MainTabView.swift in Sources */,
+				FC1EA8FF287F3CE10027107E /* SplashScreen.swift in Sources */,
 				FC177877287583D100B0D979 /* Globals.swift in Sources */,
 				FC177873287583BA00B0D979 /* ImagePicker.swift in Sources */,
 				FC17787C2875913F00B0D979 /* PhoneViewModel.swift in Sources */,

@@ -53,7 +53,6 @@ extension ContactsView {
                         matchingCoffees.append(contact)
                     }
                 }
-
                 self.filteredContacts = matchingCoffees
 
             } else {

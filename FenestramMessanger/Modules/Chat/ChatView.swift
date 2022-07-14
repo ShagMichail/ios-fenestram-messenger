@@ -23,7 +23,7 @@ struct ChatView: View {
                     getHeader()
                 }
                 VStack  {
- 
+                    
                     Image("onboardingFirst")
                         .resizable()
                         .scaledToFit()
@@ -42,13 +42,11 @@ struct ChatView: View {
                 
                 Spacer()
             }
-            
         }
         .onTapGesture {
             UIApplication.shared.endEditing()
         }
         .navigationBarHidden(true)
-        
     }
     
     private func getHeader() -> some View {
@@ -63,7 +61,7 @@ struct ChatView: View {
                 Image(systemName: "gearshape").foregroundColor(Color("blue"))
             }
         }
-            .padding()
+        .padding()
     }
 }
 

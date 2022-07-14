@@ -31,12 +31,8 @@ struct OnboardingContainerView: View {
                                     .foregroundColor(Color("photoBack"))
                                     .multilineTextAlignment(.center)
                             }.padding()
-                            
-                            
                         }.tag(it)
-                        
                     }
-                    
                 }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
                 Spacer().frame(height: 28)
@@ -44,9 +40,9 @@ struct OnboardingContainerView: View {
                 HStack(spacing: 15) {
                     ForEach(0..<features.count) { it in
                         if it == selectedPage {
-                        Capsule()
-                            .fill(Color("page"))
-                            .frame(width: 38 , height: 7)
+                            Capsule()
+                                .fill(Color("page"))
+                                .frame(width: 38 , height: 7)
                         } else {
                             Capsule()
                                 .fill(Color("page"))
@@ -72,7 +68,6 @@ struct OnboardingContainerView: View {
                 }
                 
             }, label: {
-                
                 Text(selectedPage < features.count - 1 ? "Далее" : "Готово")
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .foregroundColor(.white)
