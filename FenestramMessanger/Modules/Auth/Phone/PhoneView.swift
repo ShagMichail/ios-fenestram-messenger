@@ -19,52 +19,59 @@ struct PhoneView: View {
     }
     
     var body: some View {
-        
-        ZStack {
-            Color("thema").ignoresSafeArea()
-            getBase()
+        NavigationView {
+            ZStack {
+                Asset.thema.swiftUIColor
+                    .ignoresSafeArea()
+                
+                getBase()
+            }
+            .onTapGesture {
+                UIApplication.shared.endEditing()
+            }
+            .navigationBarHidden(true)
         }
-        .onTapGesture {
-            UIApplication.shared.endEditing()
-        }
-    }
-    
-    var border: some View {
-        RoundedRectangle(cornerRadius: 6)
-            .strokeBorder(
-                LinearGradient(colors: [Color("border")] , startPoint: .topLeading, endPoint: .bottomTrailing))
     }
     
     private func getBase() -> some View {
         VStack(alignment: .center) {
             Text("FENESTRAM")
-                .font(.title)
+                .font(FontFamily.Montserrat.semiBold.swiftUIFont(size: 18))
                 .foregroundColor(.white)
+            
             Spacer()
                 .frame(height: 100.0)
+            
             VStack(alignment: .leading){
-                Text("Номер телефона")
-                    .font(.headline)
-                    .foregroundColor(Color("text"))
+                Text(L10n.PhoneView.phoneNumber)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                    .foregroundColor(Asset.text.swiftUIColor)
                 
                 Spacer().frame(height: 3.0 )
                 
-                TextField("", text: Binding<String>(get: {
-                    format(with: self.maskPhone, phone: viewModel.textPhone)
-                }, set: {
-                    viewModel.textPhone = $0
-                }))
-                .placeholder(when: viewModel.textPhone.isEmpty) {
-                    Text("+7").foregroundColor(Color("text"))
+                VStack {
+                    TextField("", text: Binding<String>(get: {
+                        format(with: self.maskPhone, phone: viewModel.textPhone)
+                    }, set: {
+                        viewModel.textPhone = $0
+                    }))
+                    .placeholder(when: viewModel.textPhone.isEmpty) {
+                        Text("+7").foregroundColor(Asset.text.swiftUIColor)
+                    }
+                    .foregroundColor(Asset.text.swiftUIColor)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                    .multilineTextAlignment(.leading)
+                    .accentColor(Asset.text.swiftUIColor)
+                    .keyboardType(.phonePad)
+                    .textContentType(.telephoneNumber)
+                    .padding(.horizontal, 16)
                 }
-                .textFieldStyle(PlainTextFieldStyle())
+                .frame(height: 48)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Asset.border.swiftUIColor, lineWidth: 1)
+                )
                 .padding(.vertical, 12)
-                .padding(.horizontal, 16)
-                .foregroundColor(Color("text"))
-                .background(border)
-                .multilineTextAlignment(.leading)
-                .accentColor(Color("text"))
-                .keyboardType(.phonePad)
             }
             
             Spacer()
@@ -76,14 +83,15 @@ struct PhoneView: View {
                 Button(action: {
                     viewModel.checkCode()
                 }) {
-                    Text("Отправить код")
+                    Text(L10n.PhoneView.sendCode)
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
+                        .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                         .foregroundColor(.white)
-                        .background((viewModel.textPhone.count == 18 ) ? Color("blue") : Color("buttonDis"))
+                        .background((viewModel.textPhone.count == 16) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
                         .cornerRadius(6)
                 }
             }
-            .disabled(viewModel.textPhone.count != 18)
+            .disabled(viewModel.textPhone.count != 16)
         }
         .padding()
         .ignoresSafeArea(.keyboard, edges: .bottom)

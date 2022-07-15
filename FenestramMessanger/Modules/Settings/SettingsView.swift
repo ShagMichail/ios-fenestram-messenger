@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SettingsView: View {
-    
     @StateObject private var viewModel: ViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -28,18 +27,19 @@ struct SettingsView: View {
     }
     
     var title : some View {
-        Text("Настройки")
+        Text(L10n.SettingsView.title)
             .foregroundColor(Color.white)
-            .font(.system(size: 20))
+            .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
     }
     
     var body: some View {
         ZStack {
-            Color("thema").ignoresSafeArea()
+            Asset.thema.swiftUIColor
+                .ignoresSafeArea()
+            
             VStack {
                 RoundedRectangle(cornerRadius: 0)
-                //.background(Color("buttonDis"))
-                    .foregroundColor(Color("buttonDis"))
+                    .foregroundColor(Asset.buttonDis.swiftUIColor)
                     .frame(width: UIScreen.screenWidth, height: 100.0)
                     .ignoresSafeArea()
                 Spacer()

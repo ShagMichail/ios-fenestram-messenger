@@ -14,15 +14,14 @@ extension NewContactView {
         
         @Published var name = ""
         @Published var lastName = ""
-
+        @Published var textPhone = ""
+        
         @Published var isTappedName = false
         @Published var isTappedLastName = false
-        
+        @Published var isTappedPhoneNumber = false
+
         @Published var contact: Contact? = nil
         
-        @Published var textPhone = ""
-
         @Published var isTappedGlobal = false
-        
     }
 }

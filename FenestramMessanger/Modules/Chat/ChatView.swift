@@ -15,53 +15,62 @@ struct ChatView: View {
     }
     
     var body: some View {
-        ZStack {
-            Color("thema").ignoresSafeArea()
-            
-            VStack {
-                VStack (alignment: .center){
-                    getHeader()
-                }
-                VStack  {
-                    
-                    Image("onboardingFirst")
-                        .resizable()
-                        .scaledToFit()
-                    Spacer()
-                        .frame(height: 22)
-                    
-                    VStack(spacing: 20) {
-                        Text("Здесь будет отображаться список ваших чатов")
-                            .font(.system(size: 16))
-                            .foregroundColor(Color("photoBack"))
-                            .multilineTextAlignment(.center)
-                    }.padding()
-                }
-                .padding()
-                .ignoresSafeArea(.keyboard, edges: .bottom)
+        NavigationView {
+            ZStack {
+                Asset.thema.swiftUIColor
+                    .ignoresSafeArea()
                 
-                Spacer()
+                VStack {
+                    getHeader()
+                    
+                    getEmptyView()
+                }
             }
+            .onTapGesture {
+                UIApplication.shared.endEditing()
+            }
+            .navigationBarHidden(true)
         }
-        .onTapGesture {
-            UIApplication.shared.endEditing()
-        }
-        .navigationBarHidden(true)
     }
     
     private func getHeader() -> some View {
         HStack(alignment: .center){
             Text("FENESTRAM")
                 .foregroundColor(Color.white)
-                .font(.system(size: 22))
+                .font(FontFamily.Montserrat.semiBold.swiftUIFont(size: 22))
             Spacer()
             NavigationLink() {
                 SettingsView()
             } label: {
-                Image(systemName: "gearshape").foregroundColor(Color("blue"))
+                Image(systemName: "gearshape").foregroundColor(Asset.blue.swiftUIColor)
             }
         }
         .padding()
+    }
+    
+    private func getEmptyView() -> some View {
+        VStack {
+            Spacer()
+            
+            Asset.onboardingFirst.swiftUIImage
+                .resizable()
+                .scaledToFit()
+            
+            Spacer()
+                .frame(height: 22)
+            
+            VStack(spacing: 20) {
+                Text(L10n.ChatView.emptyText)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                    .foregroundColor(Asset.photoBack.swiftUIColor)
+                    .multilineTextAlignment(.center)
+            }
+            .padding()
+            
+            Spacer()
+        }
+        .padding()
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 

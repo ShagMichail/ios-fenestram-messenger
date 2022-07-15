@@ -26,12 +26,12 @@ struct CorrespondenceView: View {
     
     var title : some View {
         HStack {
-            Image(contact.imageName)
+            contact.image
                 .resizable()
-            .frame(width: 40.0, height: 40.0)
+                .frame(width: 40.0, height: 40.0)
             Text(contact.name)
                 .foregroundColor(Color.white)
-                .font(.system(size: 20))
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
         }
     }
     
@@ -41,7 +41,7 @@ struct CorrespondenceView: View {
               
             }) {
                 HStack {
-                    Image("video")
+                    Asset.video.swiftUIImage
                         .resizable()
                         .frame(width: 40.0, height: 40.0)
                 }
@@ -51,7 +51,7 @@ struct CorrespondenceView: View {
               
             }) {
                 HStack {
-                    Image("phone")
+                    Asset.phone.swiftUIImage
                         .resizable()
                         .frame(width: 40.0, height: 40.0)
                 }
@@ -61,10 +61,12 @@ struct CorrespondenceView: View {
     
     var body: some View {
         ZStack {
-            Color("thema").ignoresSafeArea()
+            Asset.thema.swiftUIColor
+                .ignoresSafeArea()
+            
             VStack {
                 RoundedRectangle(cornerRadius: 0)
-                    .foregroundColor(Color("buttonDis"))
+                    .foregroundColor(Asset.buttonDis.swiftUIColor)
                     .frame(width: UIScreen.screenWidth, height: 100.0)
                     .ignoresSafeArea()
                 Spacer()
@@ -73,8 +75,8 @@ struct CorrespondenceView: View {
         }
         .navigationBarBackButtonHidden(true)
         navigationBarItems(leading: title)
-        .navigationBarItems(leading: btnBack)
-        .navigationBarItems(trailing: btnBell)
+            .navigationBarItems(leading: btnBack)
+            .navigationBarItems(trailing: btnBell)
     }
 }
 

@@ -17,13 +17,13 @@ struct DatePickerTextField: UIViewRepresentable {
         
         textField.placeholder = placeholder
         textField.inputView = datePicker
-        textField.tintColor = UIColor(named: "text")
-        textField.textColor = UIColor(named: "text")
+        textField.tintColor = Asset.text.color
+        textField.textColor = Asset.text.color
         
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: helper, action: #selector(helper.doneButtonTapped))
+        let doneButton = UIBarButtonItem(title: L10n.General.done, style: .done, target: helper, action: #selector(helper.doneButtonTapped))
         doneButton.tintColor = UIColor.black
         
         toolbar.setItems([flexibleSpace, doneButton], animated: true)
