@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "309035_user_account_human_person_icon.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}
