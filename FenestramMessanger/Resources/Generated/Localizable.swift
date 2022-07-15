@@ -1,0 +1,167 @@
+// swiftlint:disable all
+// Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
+
+import Foundation
+
+// swiftlint:disable superfluous_disable_command file_length implicit_return
+
+// MARK: - Strings
+
+// swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
+// swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
+internal enum L10n {
+
+  internal enum AccountView {
+    /// Дата рождения
+    internal static let birthday = L10n.tr("Localizable", "account_view.birthday")
+    /// Эл. почта
+    internal static let email = L10n.tr("Localizable", "account_view.email")
+    /// Имя
+    internal static let name = L10n.tr("Localizable", "account_view.name")
+    /// Никнейм
+    internal static let nickname = L10n.tr("Localizable", "account_view.nickname")
+    /// Добро пожаловать в FENESTRAM!
+    internal static let title = L10n.tr("Localizable", "account_view.title")
+  }
+
+  internal enum ChatView {
+    /// Здесь будет отображаться список ваших чатов
+    internal static let emptyText = L10n.tr("Localizable", "chat_view.empty_text")
+  }
+
+  internal enum CodeView {
+    /// Введите код из СМС
+    internal static let enterCode = L10n.tr("Localizable", "code_view.enter_code")
+    /// Неверный код
+    internal static let incorrectPassword = L10n.tr("Localizable", "code_view.incorrect_password")
+    /// Отправить заново?
+    internal static let sendAgain = L10n.tr("Localizable", "code_view.send_again")
+  }
+
+  internal enum ContactView {
+    /// Добавить контакт
+    internal static let addContact = L10n.tr("Localizable", "contact_view.add_contact")
+    /// Данного контакта не существует
+    internal static let contactDontExist = L10n.tr("Localizable", "contact_view.contact_dont_exist")
+    /// Телефонная книга пуста. Хотите добавить контакты?
+    internal static let emptyText = L10n.tr("Localizable", "contact_view.empty_text")
+    /// Контакты
+    internal static let title = L10n.tr("Localizable", "contact_view.title")
+    internal enum Search {
+      /// Поиск контакта
+      internal static let placeholder = L10n.tr("Localizable", "contact_view.search.placeholder")
+    }
+  }
+
+  internal enum General {
+    /// Отмена
+    internal static let cancel = L10n.tr("Localizable", "general.cancel")
+    /// Готово
+    internal static let done = L10n.tr("Localizable", "general.done")
+    /// Далее
+    internal static let next = L10n.tr("Localizable", "general.next")
+    /// Пропустить
+    internal static let skip = L10n.tr("Localizable", "general.skip")
+  }
+
+  internal enum MainTabView {
+    /// Чат
+    internal static let chat = L10n.tr("Localizable", "main_tab_view.chat")
+    /// Контакты
+    internal static let contacts = L10n.tr("Localizable", "main_tab_view.contacts")
+    /// Профиль
+    internal static let profile = L10n.tr("Localizable", "main_tab_view.profile")
+  }
+
+  internal enum NewContactView {
+    /// Добавить контакт
+    internal static let title = L10n.tr("Localizable", "new_contact_view.title")
+    internal enum LastName {
+      /// (необязательно)
+      internal static let placeholder = L10n.tr("Localizable", "new_contact_view.last_name.placeholder")
+      /// Фамилия
+      internal static let title = L10n.tr("Localizable", "new_contact_view.last_name.title")
+    }
+    internal enum Name {
+      /// Не добавлено имя
+      internal static let error = L10n.tr("Localizable", "new_contact_view.name.error")
+      /// (обязательно)
+      internal static let placeholder = L10n.tr("Localizable", "new_contact_view.name.placeholder")
+      /// Имя
+      internal static let title = L10n.tr("Localizable", "new_contact_view.name.title")
+    }
+    internal enum PhoneNumber {
+      /// Нe добавлен номер телефона
+      internal static let emptyError = L10n.tr("Localizable", "new_contact_view.phone_number.empty_error")
+      /// Нeкорректный номер телефона
+      internal static let incorrectError = L10n.tr("Localizable", "new_contact_view.phone_number.incorrect_error")
+      /// +7 _ _ _  _ _ _ - _ _ - _ _
+      internal static let placeholder = L10n.tr("Localizable", "new_contact_view.phone_number.placeholder")
+      /// Номер телефона
+      internal static let title = L10n.tr("Localizable", "new_contact_view.phone_number.title")
+    }
+  }
+
+  internal enum OnboardingView {
+    /// Разнообразный и богатый опыт рамки и место обучения кадров обеспечивает широкому кругу (специалистов) участие в формировании существенных финансовых и административных условий.
+    internal static let firstDescription = L10n.tr("Localizable", "onboarding_view.first_description")
+    /// Задача организации, в особенности же рамки и место обучения кадров способствует подготовки и реализации позиций, занимаемых участниками в отношении поставленных задач.
+    internal static let secondDescription = L10n.tr("Localizable", "onboarding_view.second_description")
+    /// С другой стороны укрепление и развитие структуры играет важную роль в формировании существенных финансовых и административных условий.
+    internal static let thirdDescription = L10n.tr("Localizable", "onboarding_view.third_description")
+  }
+
+  internal enum PhoneView {
+    /// Номер телефона
+    internal static let phoneNumber = L10n.tr("Localizable", "phone_view.phone_number")
+    /// Отправить код
+    internal static let sendCode = L10n.tr("Localizable", "phone_view.send_code")
+  }
+
+  internal enum ProfileView {
+    /// Дата рождения
+    internal static let birthday = L10n.tr("Localizable", "profile_view.birthday")
+    /// Эл. почта
+    internal static let email = L10n.tr("Localizable", "profile_view.email")
+    /// Никнейм
+    internal static let nickname = L10n.tr("Localizable", "profile_view.nickname")
+    internal enum SelectPhoto {
+      /// Камера
+      internal static let camera = L10n.tr("Localizable", "profile_view.select_photo.camera")
+      /// Вы можете сделать снимок с камеры, либо выбрать одно фото из галереи телефона
+      internal static let message = L10n.tr("Localizable", "profile_view.select_photo.message")
+      /// Галерея телефона
+      internal static let photoLibrary = L10n.tr("Localizable", "profile_view.select_photo.photo_library")
+      /// Выбрать фотографию
+      internal static let title = L10n.tr("Localizable", "profile_view.select_photo.title")
+    }
+  }
+
+  internal enum SettingsView {
+    /// Настройки
+    internal static let title = L10n.tr("Localizable", "settings_view.title")
+  }
+}
+// swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
+// swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces
+
+// MARK: - Implementation Details
+
+extension L10n {
+  private static func tr(_ table: String, _ key: String, _ args: CVarArg...) -> String {
+    let format = BundleToken.bundle.localizedString(forKey: key, value: nil, table: table)
+    return String(format: format, locale: Locale.current, arguments: args)
+  }
+}
+
+// swiftlint:disable convenience_type
+private final class BundleToken {
+  static let bundle: Bundle = {
+    #if SWIFT_PACKAGE
+    return Bundle.module
+    #else
+    return Bundle(for: BundleToken.self)
+    #endif
+  }()
+}
+// swiftlint:enable convenience_type

@@ -1,0 +1,33 @@
+//
+//  ContactsRow.swift
+//  FenestramMessanger
+//
+//  Created by Михаил Шаговитов on 08.07.2022.
+//
+
+import SwiftUI
+
+struct ContactsRow: View {
+    
+    let contact: Contact
+    
+    var body: some View {
+        
+        HStack(){
+            contact.image
+                .resizable()
+                .frame(width: 40.0, height: 40.0)
+                .padding(.horizontal)
+            Text(contact.name)
+                .foregroundColor(.white)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
+            Spacer()
+            
+            NavigationLink(destination: CorrespondenceView(contact: contact)) {
+                Asset.chat.swiftUIImage
+                    .padding(.horizontal)
+            }
+            
+        }
+    }
+}

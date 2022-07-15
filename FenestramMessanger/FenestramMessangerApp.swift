@@ -9,9 +9,27 @@ import SwiftUI
 
 @main
 struct FenestramMessangerApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    @AppStorage("isOnboarding") var isOnboarding = true
+    @AppStorage("isActiv") var isActiv = false
+
     var body: some Scene {
         WindowGroup {
-            MainView()
+            if isActiv {
+                VStack {
+                    if isOnboarding {
+                        OnboardingContainerView()
+                    } else {
+                        MainView()
+                    }
+                }
+                .onDisappear{
+                    isActiv = false
+                }
+            } else {
+                SplashScreen()
+            }
         }
     }
 }

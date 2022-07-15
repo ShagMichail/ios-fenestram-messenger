@@ -1,0 +1,77 @@
+/* 
+  Localizable.strings
+  FenestramMessanger
+
+  Created by Михаил Беленко on 14.07.2022.
+  
+*/
+
+// MARK: - General
+"general.done" = "Done";
+"general.cancel" = "Cancel";
+"general.next" = "Next";
+"general.skip" = "Skip";
+
+// MARK: - ChatView
+"chat_view.empty_text" = "A list of your chats will be displayed here";
+
+// MARK: - NewContactView
+"new_contact_view.title" = "Add Contact";
+
+"new_contact_view.name.title" = "Name";
+"new_contact_view.name.placeholder" = "(required)";
+"new_contact_view.name.error" = "No name added";
+
+"new_contact_view.last_name.title" = "Last Name";
+"new_contact_view.last_name.placeholder" = "(optional)";
+
+"new_contact_view.phone_number.title" = "Phone Number";
+"new_contact_view.phone_number.placeholder" = "+7 _ _ _ _ _ _ - _ _ - _ _";
+"new_contact_view.phone_number.empty_error" = "No phone number added";
+"new_contact_view.phone_number.incorrect_error" = "Invalid phone number";
+
+// MARK: - ContactsView
+"contact_view.title" = "Contacts";
+"contact_view.search.placeholder" = "Search for a contact";
+"contact_view.contact_dont_exist" = "This contact does not exist";
+"contact_view.add_contact" = "Add Contact";
+"contact_view.empty_text" = "The phonebook is empty. Would you like to add contacts?";
+
+// MARK: - SettingsView
+"settings_view.title" = "Settings";
+
+// MARK: - ProfileView
+"profile_view.select_photo.title" = "Select Photo";
+"profile_view.select_photo.message" = "You can take a photo from the camera, or select one photo from the phone's gallery";
+"profile_view.select_photo.photo_library" = "Photo Library";
+"profile_view.select_photo.camera" = "Camera";
+
+"profile_view.nickname" = "Nickname";
+"profile_view.birthday" = "Birthday";
+"profile_view.email" = "Email";
+
+// MARK: - MainTabView
+"main_tab_view.contacts" = "Contacts";
+"main_tab_view.chat" = "Chat";
+"main_tab_view.profile" = "Profile";
+
+// MARK: - OnboardingView
+"onboarding_view.first_description" = "The diverse and rich experience of the frame and the place of training of personnel provides a wide range of (specialist) participation in the formation of significant financial and administrative conditions.";
+"onboarding_view.second_description" = "The task of the organization, in particular the framework and place of training of personnel, contributes to the preparation and implementation of the positions taken by the participants in relation to the tasks set.";
+"onboarding_view.third_description" = "On the other hand, the strengthening and development of the structure plays an important role in creating significant financial and administrative conditions.";
+
+// MARK: - AccountView
+"account_view.title" = "Welcome to FENESTRAM!";
+"account_view.name" = "Name";
+"account_view.nickname" = "Nickname";
+"account_view.birthday" = "Birthdate";
+"account_view.email" = "Email";
+
+// MARK: - CodeView
+"code_view.enter_code" = "Enter code from SMS";
+"code_view.incorrect_password" = "Invalid code";
+"code_view.send_again" = "Send again?";
+
+// MARK: - PhoneView
+"phone_view.phone_number" = "Phone number";
+"phone_view.send_code" = "Send code";
