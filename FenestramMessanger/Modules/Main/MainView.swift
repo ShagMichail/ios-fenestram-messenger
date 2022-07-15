@@ -18,7 +18,7 @@ struct MainView: View {
     
     var body: some View {
         if viewModel.isSignIn {
-            if isAlreadySetProfile ?? false {
+            if (isAlreadySetProfile ?? false) || !(Settings.currentUser?.isInfoEmpty ?? true) {
                 MainTabView()
                     .navigationBarHidden(true)
             } else {

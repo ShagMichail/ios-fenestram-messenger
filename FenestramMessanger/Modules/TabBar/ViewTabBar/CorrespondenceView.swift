@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct CorrespondenceView: View {
-
-    let contact: Contact
+    
+    let contact: UserEntity
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
+    
     var btnBack : some View {
         Button(action: {
             self.presentationMode.wrappedValue.dismiss()
@@ -26,10 +26,11 @@ struct CorrespondenceView: View {
     
     var title : some View {
         HStack {
-            contact.image
+            Asset.photo.swiftUIImage
                 .resizable()
                 .frame(width: 40.0, height: 40.0)
-            Text(contact.name)
+            
+            Text(contact.name ?? L10n.General.unknown)
                 .foregroundColor(Color.white)
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
         }
@@ -38,7 +39,7 @@ struct CorrespondenceView: View {
     var btnBell : some View {
         HStack {
             Button(action: {
-              
+                
             }) {
                 HStack {
                     Asset.video.swiftUIImage
@@ -48,7 +49,7 @@ struct CorrespondenceView: View {
             }
             
             Button(action: {
-              
+                
             }) {
                 HStack {
                     Asset.phone.swiftUIImage
@@ -74,9 +75,9 @@ struct CorrespondenceView: View {
             Text("Переписка!").foregroundColor(Color.white)
         }
         .navigationBarBackButtonHidden(true)
-        navigationBarItems(leading: title)
-            .navigationBarItems(leading: btnBack)
-            .navigationBarItems(trailing: btnBell)
+        .navigationBarItems(leading: title)
+        .navigationBarItems(leading: btnBack)
+        .navigationBarItems(trailing: btnBell)
     }
 }
 

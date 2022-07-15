@@ -51,7 +51,7 @@ public class ChatService {
         }
     }
     
-    public static func getChats(chatId: Int, completion: @escaping (Result<ChatEntity, Error>) -> Void) {
+    public static func getChat(chatId: Int, completion: @escaping (Result<ChatEntity, Error>) -> Void) {
         sendRequest(modelType: ChatEntity.self, requestOptions: .getChat(chatId: chatId)) { result in
             completion(result)
         }

@@ -54,4 +54,10 @@ public class ProfileService {
             completion(result)
         }
     }
+    
+    public static func getContacts(completion: @escaping (Result<[UserEntity],Error>) -> Void) {
+        sendRequest(modelType: [UserEntity].self, requestOptions: .getContacts) { result in
+            completion(result)
+        }
+    }
 }

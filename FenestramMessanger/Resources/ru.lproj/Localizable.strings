@@ -11,6 +11,8 @@
 "general.cancel" = "Отмена";
 "general.next" = "Далее";
 "general.skip" = "Пропустить";
+"general.unknown" = "Неизвестно";
+"general.loading" = "Идет загрузка...";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "Здесь будет отображаться список ваших чатов";

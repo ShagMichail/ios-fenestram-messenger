@@ -64,7 +64,7 @@ extension AccountView {
                     }
                     
                     userWithInfo.name = self.name
-                    userWithInfo.login = self.nicName
+                    userWithInfo.nickname = self.nicName
                     userWithInfo.email = self.textEmail
                     userWithInfo.birthdate = birthdateTimeInterval.description
                     

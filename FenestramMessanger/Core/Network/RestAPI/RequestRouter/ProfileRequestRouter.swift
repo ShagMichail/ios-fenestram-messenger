@@ -11,10 +11,11 @@ import Alamofire
 public enum ProfileRequestRouter: AbstractRequestRouter {
     case getProfile
     case updateProfile(parameters: Parameters)
+    case getContacts
     
     var method: HTTPMethod {
         switch self {
-        case .getProfile:
+        case .getProfile, .getContacts:
             return .get
         case .updateProfile:
             return .patch
@@ -25,6 +26,8 @@ public enum ProfileRequestRouter: AbstractRequestRouter {
         switch self {
         case .getProfile, .updateProfile:
             return "api/\(Constants.apiVersion)/profile"
+        case .getContacts:
+            return "api/\(Constants.apiVersion)/users"
         }
     }
     
@@ -60,7 +63,7 @@ public enum ProfileRequestRouter: AbstractRequestRouter {
         switch self {
         case .updateProfile(let parameters):
             urlRequest = try CustomPatchEncding().encode(urlRequest, with: parameters)
-        case .getProfile:
+        case .getProfile, .getContacts:
             urlRequest = try URLEncoding.default.encode(urlRequest, with: nil)
         }
         return urlRequest

@@ -58,10 +58,14 @@ internal enum L10n {
     internal static let cancel = L10n.tr("Localizable", "general.cancel")
     /// Готово
     internal static let done = L10n.tr("Localizable", "general.done")
+    /// Идет загрузка...
+    internal static let loading = L10n.tr("Localizable", "general.loading")
     /// Далее
     internal static let next = L10n.tr("Localizable", "general.next")
     /// Пропустить
     internal static let skip = L10n.tr("Localizable", "general.skip")
+    /// Неизвестно
+    internal static let unknown = L10n.tr("Localizable", "general.unknown")
   }
 
   internal enum MainTabView {
