@@ -10,7 +10,6 @@ import Introspect
 import Combine
 
 struct AccountView: View {
-    @State private var selection: String? = nil
     @State private var keyboardHeight: CGFloat = 0
     
     @State private var sourceType: UIImagePickerController.SourceType = .camera
@@ -129,6 +128,7 @@ struct AccountView: View {
                     .multilineTextAlignment(.leading)
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
+                    .textContentType(.name)
                     
                     if viewModel.isTappedName == false && viewModel.name.count != 0 {
                         Button(action: {
@@ -170,6 +170,7 @@ struct AccountView: View {
                     .multilineTextAlignment(.leading)
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
+                    .textContentType(.nickname)
                     
                     if viewModel.isTappedNicName == false && viewModel.nicName.count != 0 {
                         Button(action: {
@@ -250,6 +251,7 @@ struct AccountView: View {
                     .multilineTextAlignment(.leading)
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.emailAddress)
+                    .textContentType(.emailAddress)
                     .ignoresSafeArea(.keyboard)
                     
                     if viewModel.isEmailValid && !viewModel.isTappedEmail  {
@@ -270,7 +272,7 @@ struct AccountView: View {
     private func getButton() -> some View {
         VStack {
             Button(action: {
-                selection = "A"
+                viewModel.saveInfo()
             }) {
                 Text(L10n.General.done)
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
@@ -281,7 +283,7 @@ struct AccountView: View {
             }.disabled((viewModel.name.count == 0 || viewModel.nicName.count == 0 || viewModel.birthday == nil || viewModel.textEmailOk == false))
             
             Button(action: {
-                selection = "A"
+                viewModel.isAlreadySetProfile = true
             }) {
                 Text(L10n.General.skip)
                     .font(FontFamily.Poppins.medium.swiftUIFont(size: 16))

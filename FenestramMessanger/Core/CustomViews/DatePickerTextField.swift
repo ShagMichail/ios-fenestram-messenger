@@ -46,7 +46,7 @@ struct DatePickerTextField: UIViewRepresentable {
     
     func updateUIView(_ uiView: UITextField, context: Context) {
         if let selectedDate = date {
-            uiView.text = Globals.dateFormatter.string(from: selectedDate)
+            uiView.text = Date.dateFormatter.string(from: selectedDate)
         }
     }
     

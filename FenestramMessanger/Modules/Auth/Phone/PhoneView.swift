@@ -78,7 +78,7 @@ struct PhoneView: View {
                 .frame(height: 83.0)
             
             NavigationLink(isActive: $viewModel.numberCount) {
-                CodeView().navigationBarHidden(true)
+                CodeView(phoneNumber: viewModel.textPhone).navigationBarHidden(true)
             } label: {
                 Button(action: {
                     viewModel.checkCode()

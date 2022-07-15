@@ -10,6 +10,5 @@ import SwiftUI
 extension ChatView {
     @MainActor
     final class ViewModel: ObservableObject {
-
     }
 }

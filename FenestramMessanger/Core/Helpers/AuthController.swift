@@ -7,10 +7,6 @@
 
 import Foundation
 
-extension Notification.Name {
-    public static let loginStatusChanged = Notification.Name("io.fasthome.FenestramMessanger.auth.changed")
-}
-
 public final class AuthController {
     static let serviceTokenName = "FenestramMessangerTokenService"
     
@@ -22,11 +18,11 @@ public final class AuthController {
         guard let currentUser = Settings.currentUser else {
             return ""
         }
-        return try KeychainPasswordItem(service: serviceTokenName, account: currentUser.email).readPassword()
+        return try KeychainPasswordItem(service: serviceTokenName, account: currentUser.phoneNumber).readPassword()
     }
     
     public class func signIn(_ user: UserEntity, token: String) throws {
-        try KeychainPasswordItem(service: serviceTokenName, account: user.email).savePassword(token)
+        try KeychainPasswordItem(service: serviceTokenName, account: user.phoneNumber).savePassword(token)
         
         Settings.currentUser = user
         
@@ -38,7 +34,7 @@ public final class AuthController {
             return
         }
         
-        try KeychainPasswordItem(service: serviceTokenName, account: currentUser.email).deleteItem()
+        try KeychainPasswordItem(service: serviceTokenName, account: currentUser.phoneNumber).deleteItem()
         
         Settings.currentUser = nil
         NotificationCenter.default.post(name: .loginStatusChanged, object: nil)

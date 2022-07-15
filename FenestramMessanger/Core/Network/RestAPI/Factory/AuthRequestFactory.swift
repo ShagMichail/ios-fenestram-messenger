@@ -37,13 +37,6 @@ final class AuthRequestFactory: AbstractRequestFactory {
                     }
                 }
             case 400...499:
-                if let error = response.value as? [String: Any] {
-                    guard let errors = error["errors"] as? [String: [String]], let msg = errors.first?.value.first, msg == NetworkError.userAlreadyExists.errorMessage else {
-                        return completion(.failure(NetworkError.responseError))
-                    }
-                    completion(.failure(NetworkError.userAlreadyExists))
-                    return
-                }
                 completion(.failure(NetworkError.responseError))
             case 500...599:
                 completion(.failure(NetworkError.serverError))

@@ -13,11 +13,10 @@ public struct UserWithTokenEntity: Codable, Identifiable {
     
     public let phoneNumber: String
     
-    public let name: String
-    public let login: String
-    public let email: String
-    public let birthdate: String
-    public let playerId: String
+    public let name: String?
+    public let login: String?
+    public let email: String?
+    public let birthdate: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -27,7 +26,6 @@ public struct UserWithTokenEntity: Codable, Identifiable {
         case login
         case email
         case birthdate = "birth"
-        case playerId = "player_id"
     }
 }
 
@@ -36,11 +34,10 @@ public struct UserEntity: Codable, Identifiable {
     
     public let phoneNumber: String
     
-    public let name: String
-    public let login: String
-    public let email: String
-    public let birthdate: String
-    public let playerId: String
+    public var name: String?
+    public var login: String?
+    public var email: String?
+    public var birthdate: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -49,7 +46,6 @@ public struct UserEntity: Codable, Identifiable {
         case login
         case email
         case birthdate = "birth"
-        case playerId = "player_id"
     }
     
     init(from userWithToken: UserWithTokenEntity) {
@@ -59,6 +55,5 @@ public struct UserEntity: Codable, Identifiable {
         self.login = userWithToken.login
         self.email = userWithToken.email
         self.birthdate = userWithToken.birthdate
-        self.playerId = userWithToken.playerId
     }
 }
