@@ -23,7 +23,11 @@ struct ChatView: View {
                 VStack {
                     getHeader()
                     
-                    getEmptyView()
+                    if viewModel.isLoading {
+                        LoadingView()
+                    } else {
+                        getEmptyView()
+                    }
                 }
             }
             .onTapGesture {

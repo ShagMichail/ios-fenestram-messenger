@@ -1,9 +1,8 @@
 //
-//  KeyboardHeightPublisher.swift
-//  KeyboardAvoidanceSwiftUI
+//  Publishers+Extensions.swift
+//  FenestramMessanger
 //
-//  Created by Vadim Bulavin on 3/27/20.
-//  Copyright © 2020 Vadim Bulavin. All rights reserved.
+//  Created by Михаил Беленко on 15.07.2022.
 //
 
 import Combine
@@ -23,10 +22,3 @@ extension Publishers {
             .eraseToAnyPublisher()
     }
 }
-
-extension Notification {
-    var keyboardHeight: CGFloat {
-        return (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height ?? 0
-    }
-}
-

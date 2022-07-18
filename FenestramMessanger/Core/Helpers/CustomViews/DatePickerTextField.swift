@@ -12,6 +12,9 @@ struct DatePickerTextField: UIViewRepresentable {
     func makeUIView(context: Context) -> UITextField {
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .wheels
+        if let date = date {
+            datePicker.date = date
+        }
         datePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -10, to: Date())
         datePicker.addTarget(self.helper, action: #selector(self.helper.dateValueChanged), for: .valueChanged)
         
@@ -46,7 +49,7 @@ struct DatePickerTextField: UIViewRepresentable {
     
     func updateUIView(_ uiView: UITextField, context: Context) {
         if let selectedDate = date {
-            uiView.text = Globals.dateFormatter.string(from: selectedDate)
+            uiView.text = Date.dateFormatter.string(from: selectedDate)
         }
     }
     
@@ -66,5 +69,6 @@ struct DatePickerTextField: UIViewRepresentable {
             onDoneButtonTapped?()
         }
     }
+    
     class Coordinator {}
 }

@@ -9,25 +9,25 @@ import SwiftUI
 
 struct ContactsRow: View {
     
-    let contact: Contact
+    let contact: UserEntity
     
     var body: some View {
-        
-        HStack(){
-            contact.image
+        HStack() {
+            Asset.photo.swiftUIImage
                 .resizable()
                 .frame(width: 40.0, height: 40.0)
                 .padding(.horizontal)
-            Text(contact.name)
+            
+            Text(contact.name ?? L10n.General.unknown)
                 .foregroundColor(.white)
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
+            
             Spacer()
             
             NavigationLink(destination: CorrespondenceView(contact: contact)) {
                 Asset.chat.swiftUIImage
                     .padding(.horizontal)
             }
-            
         }
     }
 }

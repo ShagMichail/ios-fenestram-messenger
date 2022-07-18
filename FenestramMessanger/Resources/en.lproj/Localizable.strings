@@ -11,6 +11,8 @@
 "general.cancel" = "Cancel";
 "general.next" = "Next";
 "general.skip" = "Skip";
+"general.unknown" = "Unknown";
+"general.loading" = "Loading...";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "A list of your chats will be displayed here";

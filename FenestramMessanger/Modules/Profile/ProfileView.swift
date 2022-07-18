@@ -9,8 +9,6 @@ import SwiftUI
 import Combine
 
 struct ProfileView: View {
-    @State var flag = false
-    @State private var selection: String? = nil
     @State private var keyboardHeight: CGFloat = 0
     
     @State private var sourceType: UIImagePickerController.SourceType = .camera
@@ -35,28 +33,39 @@ struct ProfileView: View {
                 VStack {
                     VStack {
                         getHeader()
-                    }.padding(.top, 10)
-                    VStack  {
-                        
-                        getImage()
-                        Spacer()
-                            .frame(height: 30.0)
-                        getName()
-                        Spacer()
-                            .frame(height: 30.0)
-                        getNicName()
-                        getBirthday()
-                        getEmail()
-                        Spacer()
-                            .frame(height: 40.0)
-                        getButton()
                     }
-                    .padding()
-                    .ignoresSafeArea(.keyboard, edges: .bottom)
-                    .padding(.bottom, keyboardHeight/4)
-                    .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
+                    .padding(.top, 10)
                     
-                    Spacer()
+                    if viewModel.isLoading {
+                        LoadingView()
+                    } else {
+                        VStack {
+                            getImage()
+                            
+                            Spacer()
+                                .frame(height: 30.0)
+                            
+                            getName()
+                            
+                            Spacer()
+                                .frame(height: 30.0)
+                            
+                            getNicName()
+                            getBirthday()
+                            getEmail()
+                            
+                            Spacer()
+                                .frame(height: 40.0)
+                            
+                            getButton()
+                        }
+                        .padding()
+                        .ignoresSafeArea(.keyboard, edges: .bottom)
+                        .padding(.bottom, keyboardHeight/4)
+                        .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
+                        
+                        Spacer()
+                    }
                 }
             }
             .onTapGesture {
@@ -223,7 +232,7 @@ struct ProfileView: View {
     private func getButton() -> some View {
         HStack {
             Button(action: {
-                selection = "A"
+                viewModel.cancelChanges()
             }) {
                 Text(L10n.General.cancel)
                     .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)
@@ -236,7 +245,7 @@ struct ProfileView: View {
             Spacer()
             
             Button(action: {
-                selection = "A"
+                viewModel.saveInfo()
             }) {
                 Text(L10n.General.done)
                     .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)

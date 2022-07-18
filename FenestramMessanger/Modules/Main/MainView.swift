@@ -10,6 +10,7 @@ import SwiftUI
 struct MainView: View {
     @StateObject private var viewModel: ViewModel
     @AppStorage("isActiv") var isActiv: Bool?
+    @AppStorage("isAlreadySetProfile") var isAlreadySetProfile: Bool?
     
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
@@ -17,9 +18,16 @@ struct MainView: View {
     
     var body: some View {
         if viewModel.isSignIn {
-            MainTabView().navigationBarHidden(true)
+            if (isAlreadySetProfile ?? false) || !(Settings.currentUser?.isInfoEmpty ?? true) {
+                MainTabView()
+                    .navigationBarHidden(true)
+            } else {
+                AccountView()
+                    .navigationBarHidden(true)
+            }
         } else {
-            PhoneView().navigationBarHidden(true)
+            PhoneView()
+                .navigationBarHidden(true)
         }
     }
 }

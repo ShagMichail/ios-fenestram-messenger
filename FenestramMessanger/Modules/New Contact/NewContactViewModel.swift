@@ -20,7 +20,7 @@ extension NewContactView {
         @Published var isTappedLastName = false
         @Published var isTappedPhoneNumber = false
 
-        @Published var contact: Contact? = nil
+        @Published var contact: UserEntity? = nil
         
         @Published var isTappedGlobal = false
     }

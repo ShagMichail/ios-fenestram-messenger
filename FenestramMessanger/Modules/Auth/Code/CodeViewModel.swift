@@ -12,26 +12,46 @@ extension CodeView {
     @MainActor
     final class ViewModel: ObservableObject {
         
-        @Published public var text = ""
         @Published public var textCode = ""
-        @Published public var codeCount = false
+        @Published public var showAccountView = false
         @Published public var errorCode = false
         
-        let code = "12345"
+        private let phoneNumber: String
         
-        func checkCode () {
-            if textCode == code {
-                codeCount = true
-            } else {
-                codeCount = false
-                errorCode = true
+        init(phoneNumber: String) {
+            let phoneNumber = phoneNumber
+                .replacingOccurrences(of: " ", with: "")
+                .replacingOccurrences(of: "-", with: "")
+            
+            print("phone number: ", phoneNumber)
+            self.phoneNumber = phoneNumber
+        }
+        
+        func login() {
+            AuthService.login(phoneNumber: phoneNumber, oneTimeCode: textCode) { [weak self] result in
+                switch result {
+                case .success(let userWithToken):
+                    print("login success")
+                    
+                    do {
+                        try AuthController.signIn(.init(from: userWithToken), token: userWithToken.accessToken)
+                        print("sign in success")
+                    }
+                    catch let error {
+                        print("sign in failure with error: ", error.localizedDescription)
+                    }
+                case .failure(let error):
+                    print("login failure with error: ", error.localizedDescription)
+                    self?.errorCode = true
+                }
             }
         }
         
         func changeIncorrect()  {
-            if textCode.count < 5 {
+            if textCode.count < 4 {
                 errorCode = false
             }
+            
             self.textCode = ""
         }
     }

@@ -11,12 +11,12 @@ import Combine
 
 struct CodeView: View {
     @State private var keyboardHeight: CGFloat = 0
-    let maskCode = "XXXXX"
+    let maskCode = "XXXX"
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel: ViewModel
     
-    init() {
-        _viewModel = StateObject(wrappedValue: ViewModel())
+    init(phoneNumber: String) {
+        _viewModel = StateObject(wrappedValue: ViewModel(phoneNumber: phoneNumber))
     }
     
     var body: some View {
@@ -111,21 +111,21 @@ struct CodeView: View {
             Spacer()
                 .frame(height: 50.0)
             
-            NavigationLink(isActive: $viewModel.codeCount) {
+            NavigationLink(isActive: $viewModel.showAccountView) {
                 AccountView().navigationBarHidden(true)
             } label: {
                 Button(action: {
-                    viewModel.checkCode()
+                    viewModel.login()
                 }) {
                     Text(L10n.General.done)
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                         .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                         .foregroundColor(.white)
-                        .background((viewModel.textCode.count == 5 && viewModel.errorCode == false) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
+                        .background((viewModel.textCode.count == 4 && viewModel.errorCode == false) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
                         .cornerRadius(6)
                 }
             }
-            .disabled(viewModel.textCode.count != 5 || viewModel.errorCode)
+            .disabled(viewModel.textCode.count != 4 || viewModel.errorCode)
         }
         .padding()
         .ignoresSafeArea(.keyboard, edges: .bottom)
@@ -135,6 +135,6 @@ struct CodeView: View {
 
 struct CodeView_Previews: PreviewProvider {
     static var previews: some View {
-        CodeView()
+        CodeView(phoneNumber: "+79999999999")
     }
 }

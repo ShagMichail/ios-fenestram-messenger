@@ -31,14 +31,18 @@ struct ContactsView: View {
                 VStack(alignment: .leading) {
                     getHeaderView()
                     
-                    if viewModel.allContacts.count != 0 {
-                        getSearchView()
-                        
-                        Spacer().frame(height: 20.0)
-                        
-                        getContentView()
+                    if viewModel.isLoading {
+                        LoadingView()
                     } else {
-                        getEmptyView()
+                        if viewModel.allContacts.count != 0 {
+                            getSearchView()
+                            
+                            Spacer().frame(height: 20.0)
+                            
+                            getContentView()
+                        } else {
+                            getEmptyView()
+                        }
                     }
                 }
             }.onTapGesture {
