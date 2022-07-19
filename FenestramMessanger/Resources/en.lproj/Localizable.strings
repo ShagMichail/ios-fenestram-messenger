@@ -42,6 +42,9 @@
 
 // MARK: - SettingsView
 "settings_view.title" = "Settings";
+"settings_view.color" = "Change the color";
+"settings_view.info" = "About the app";
+"settings_view.exit" = "Log out of your account";
 
 // MARK: - ProfileView
 "profile_view.select_photo.title" = "Select Photo";

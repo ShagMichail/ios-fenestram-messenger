@@ -76,14 +76,24 @@ struct ProfileView: View {
     }
     
     private func getHeader() -> some View {
-        VStack(alignment: .trailing){
+        HStack(){
+            
+            NavigationLink() {
+                SettingsView()
+            } label: {
+                Asset.edit.swiftUIImage
+            }
+            
+            Spacer().frame(width: 15)
+            
             NavigationLink() {
                 SettingsView()
             } label: {
                 Image(systemName: "gearshape").foregroundColor(Asset.blue.swiftUIColor)
             }
+            
         }
-        .padding(.leading, UIScreen.screenWidth - 60)
+        .padding(.leading, UIScreen.screenWidth - 90)
     }
     
     private func getImage() -> some View {

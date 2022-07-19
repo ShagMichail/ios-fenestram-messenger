@@ -11,6 +11,7 @@ import Introspect
 import Combine
 
 struct PhoneView: View {
+    @AppStorage ("isColorThema") var isColorThema: Bool?
     @State private var keyboardHeight: CGFloat = 0
     let maskPhone = "+X XXX XXX-XX-XX"
     @StateObject private var viewModel: ViewModel
@@ -87,7 +88,8 @@ struct PhoneView: View {
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                         .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                         .foregroundColor(.white)
-                        .background((viewModel.textPhone.count == 16) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
+                        .background((viewModel.textPhone.count == 16) ?
+                                    (isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor) : Asset.buttonDis.swiftUIColor)
                         .cornerRadius(6)
                 }
             }

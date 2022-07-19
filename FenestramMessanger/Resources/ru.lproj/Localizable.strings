@@ -42,6 +42,9 @@
 
 // MARK: - SettingsView
 "settings_view.title" = "Настройки";
+"settings_view.color" = "Изменить цвет";
+"settings_view.info" = "О приложении";
+"settings_view.exit" = "Выход из учетной записи";
 
 // MARK: - ProfileView
 "profile_view.select_photo.title" = "Выбрать фотографию";

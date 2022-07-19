@@ -13,6 +13,7 @@ struct FenestramMessangerApp: App {
     
     @AppStorage("isOnboarding") var isOnboarding = true
     @AppStorage("isActiv") var isActiv = false
+    @AppStorage("isColorThema") var isColorThema = false
 
     var body: some Scene {
         WindowGroup {

@@ -149,6 +149,12 @@ internal enum L10n {
   }
 
   internal enum SettingsView {
+    /// Изменить цвет
+    internal static let color = L10n.tr("Localizable", "settings_view.color")
+    /// Выход из учетной записи
+    internal static let exit = L10n.tr("Localizable", "settings_view.exit")
+    /// О приложении
+    internal static let info = L10n.tr("Localizable", "settings_view.info")
     /// Настройки
     internal static let title = L10n.tr("Localizable", "settings_view.title")
   }
