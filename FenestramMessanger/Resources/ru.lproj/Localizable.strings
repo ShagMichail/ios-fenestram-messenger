@@ -78,3 +78,6 @@
 // MARK: - PhoneView
 "phone_view.phone_number" = "Номер телефона";
 "phone_view.send_code" = "Отправить код";
+
+// MARK: - CorrespondenceView
+"correspondence_view.message" = "Здесь будет отображаться история ваших сообщениий";

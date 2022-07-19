@@ -12,7 +12,7 @@ extension CorrespondenceView {
     @MainActor
     final class ViewModel: ObservableObject {
         @Published var chatList: [ChatEntity] = []
-        
+        @Published var textMessage: String = ""
         @Published var isLoading: Bool = false
 
         init() {

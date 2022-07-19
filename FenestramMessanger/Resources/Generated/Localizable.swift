@@ -55,6 +55,11 @@ internal enum L10n {
     }
   }
 
+  internal enum CorrespondenceView {
+    /// Здесь будет отображаться история ваших сообщениий
+    internal static let message = L10n.tr("Localizable", "correspondence_view.message")
+  }
+
   internal enum General {
     /// Отмена
     internal static let cancel = L10n.tr("Localizable", "general.cancel")

@@ -6,18 +6,20 @@
 //
 
 import SwiftUI
+import Combine
 
 struct CorrespondenceView: View {
-    
-    var contact: UserEntity
+    @State private var keyboardHeight: CGFloat = 0
+    var contact: UserEntity?
+    var contactId: Int = 0
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-//    @StateObject private var viewModel: ViewModel
-//    init() {
-//        _viewModel = StateObject(wrappedValue: ViewModel())
-//        //self.contact = contact
-//    }
+    @StateObject private var viewModel: ViewModel
+    init(contact: UserEntity) {
+        _viewModel = StateObject(wrappedValue: ViewModel())
+        self.contact = contact
+    }
     
     var btnBack : some View {
         Button(action: {
@@ -36,9 +38,16 @@ struct CorrespondenceView: View {
                 .resizable()
                 .frame(width: 40.0, height: 40.0)
             
-            Text(contact.name ?? L10n.General.unknown)
-                .foregroundColor(Color.white)
-                .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
+            VStack(alignment: .leading) {
+                Text(contact?.name ?? L10n.General.unknown)
+                    .foregroundColor(Color.white)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                
+                Text("В сети")
+                    .foregroundColor(Asset.blue.swiftUIColor)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
+                
+            }
         }
     }
     
@@ -78,12 +87,83 @@ struct CorrespondenceView: View {
                     .ignoresSafeArea()
                 Spacer()
             }
-            Text("Переписка!").foregroundColor(Color.white)
+            
+            VStack {
+                VStack {
+                    Asset.helloMessage.swiftUIImage
+                        .resizable()
+                        .scaledToFit()
+                    Text(L10n.CorrespondenceView.message)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                        .foregroundColor(Asset.photoBack.swiftUIColor)
+                        .multilineTextAlignment(.center)
+                }.padding()
+                
+                
+                Spacer()
+                
+                VStack {
+                    ZStack {
+//                        RoundedRectangle(cornerRadius: 10)
+//                        //.stroke(Asset.border.swiftUIColor, lineWidth: 1)
+//                            .background(Asset.tabBar.swiftUIColor)
+//                            .frame(width: UIScreen.screenWidth - 24, height: 55)
+                        HStack{
+                            Button {
+                                print("")
+                            } label: {
+                                Asset.severicons.swiftUIImage
+                                    .resizable()
+                                    .frame(width: 24.0, height: 24.0)
+                            }.padding(.leading, 12.0)
+                            
+                            TextField("", text: $viewModel.textMessage)
+                                .placeholder(when: viewModel.textMessage.isEmpty) {
+                                    Text("Ваше сообщение").foregroundColor(Asset.text.swiftUIColor)
+                                }
+                                .foregroundColor(Asset.text.swiftUIColor)
+                                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                                .multilineTextAlignment(.leading)
+                                .accentColor(Asset.text.swiftUIColor)
+                                .keyboardType(.default)
+                            //.textContentType(.telephoneNumber)
+                                .padding(.horizontal, 4)
+                            
+                            Button {
+                                print("")
+                            } label: {
+                                Asset.send.swiftUIImage
+                                    .resizable()
+                                    .frame(width: 24.0, height: 24.0)
+                            }.padding(.trailing, 12.0)
+                        }
+                        .frame(height: 48)
+                        //                        .overlay(
+                        //                            RoundedRectangle(cornerRadius: 5)
+                        //                                //.stroke(Asset.border.swiftUIColor, lineWidth: 1)
+                        //                                //.background(Asset.tabBar.swiftUIColor)
+                        //                        )
+                            .padding(.vertical, 12)
+                            .padding(.horizontal)
+                            .background(RoundedRectangle(cornerRadius: 10)
+                                        //.stroke(Asset.border.swiftUIColor, lineWidth: 1)
+                                            .foregroundColor(Asset.tabBar.swiftUIColor)
+                                            .frame(width: UIScreen.screenWidth - 24, height: 55))
+                    }
+                    
+                }
+            }
+            
+            //Text("Переписка!").foregroundColor(Color.white)
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: title)
         .navigationBarItems(leading: btnBack)
         .navigationBarItems(trailing: btnBell)
+        //.onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
+        .onTapGesture {
+            UIApplication.shared.endEditing()
+        }
     }
 }
 
