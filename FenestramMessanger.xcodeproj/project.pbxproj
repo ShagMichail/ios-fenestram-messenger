@@ -102,9 +102,15 @@
 		FC1778D928774BA300B0D979 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778D628774BA300B0D979 /* ContactsView.swift */; };
 		FC1778E12877639800B0D979 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778E02877639800B0D979 /* MainTabView.swift */; };
 		FC1EA8FF287F3CE10027107E /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1EA8FE287F3CE10027107E /* SplashScreen.swift */; };
+		FC1EA90228855CEF0027107E /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1EA90128855CEF0027107E /* ChatRow.swift */; };
 		FC600B2228787E74001CA2BD /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC600B2128787E74001CA2BD /* ProfileViewModel.swift */; };
 		FC600B2528788E7F001CA2BD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC600B2428788E7F001CA2BD /* SettingsView.swift */; };
 		FC600B2728788E87001CA2BD /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC600B2628788E87001CA2BD /* SettingsViewModel.swift */; };
+		FCD305962885E6AB00491220 /* ChatBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD305952885E6AB00491220 /* ChatBottomSheetView.swift */; };
+		FCD305982886A1FD00491220 /* ChatBottomSheetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD305972886A1FD00491220 /* ChatBottomSheetModel.swift */; };
+		FCD3059A2886A61F00491220 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD305992886A61F00491220 /* File.swift */; };
+		FCD3059D2886ADCB00491220 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = FCD3059C2886ADCB00491220 /* BottomSheet */; };
+		FCD305A02886E68400491220 /* CorrespondenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD3059F2886E68400491220 /* CorrespondenceViewModel.swift */; };
 		FCEE882428743FFD00268971 /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE882328743FFC00268971 /* PhoneView.swift */; };
 		FCEE88262874400700268971 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE88252874400700268971 /* CodeView.swift */; };
 		FCEE88292874409B00268971 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = FCEE88282874409B00268971 /* iPhoneNumberField */; };
@@ -214,9 +220,14 @@
 		FC1778D628774BA300B0D979 /* ContactsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		FC1778E02877639800B0D979 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		FC1EA8FE287F3CE10027107E /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
+		FC1EA90128855CEF0027107E /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
 		FC600B2128787E74001CA2BD /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		FC600B2428788E7F001CA2BD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FC600B2628788E87001CA2BD /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		FCD305952885E6AB00491220 /* ChatBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBottomSheetView.swift; sourceTree = "<group>"; };
+		FCD305972886A1FD00491220 /* ChatBottomSheetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBottomSheetModel.swift; sourceTree = "<group>"; };
+		FCD305992886A61F00491220 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		FCD3059F2886E68400491220 /* CorrespondenceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrespondenceViewModel.swift; sourceTree = "<group>"; };
 		FCEE882328743FFC00268971 /* PhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
 		FCEE88252874400700268971 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 		FCF5A42F28789CC90028FBD3 /* ContactsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsRow.swift; sourceTree = "<group>"; };
@@ -231,6 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCEE88292874409B00268971 /* iPhoneNumberField in Frameworks */,
+				FCD3059D2886ADCB00491220 /* BottomSheet in Frameworks */,
 				FC17786C2875831700B0D979 /* Introspect in Frameworks */,
 				6D3B8991ABEEC255BD8A2A57 /* Pods_FenestramMessanger.framework in Frameworks */,
 				BD980FBD288176280050F8B4 /* SocketIO in Frameworks */,
@@ -358,6 +370,7 @@
 		BDDB5ADD2872ECAA002BF418 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				FCD3059E2886E66100491220 /* Correspondence */,
 				FC13AF43287EE76000784E35 /* Chat */,
 				FC13AF40287ECEC500784E35 /* New Contact */,
 				FCF5A42D287897490028FBD3 /* Contacts */,
@@ -539,8 +552,10 @@
 		FC13AF43287EE76000784E35 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				FCF5A43628798EB70028FBD3 /* ChatView.swift */,
+				FC1EA90028855CD60027107E /* View */,
 				FC13AF44287EE78A00784E35 /* ChatViewModel.swift */,
+				FCD305972886A1FD00491220 /* ChatBottomSheetModel.swift */,
+				FCD305992886A61F00491220 /* File.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -600,18 +615,19 @@
 		FC1778C628774B0300B0D979 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
-				FC1778D128774B4F00B0D979 /* ViewTabBar */,
 				FC1778E02877639800B0D979 /* MainTabView.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
 		};
-		FC1778D128774B4F00B0D979 /* ViewTabBar */ = {
+		FC1EA90028855CD60027107E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FC1778D528774BA300B0D979 /* CorrespondenceView.swift */,
+				FCF5A43628798EB70028FBD3 /* ChatView.swift */,
+				FC1EA90128855CEF0027107E /* ChatRow.swift */,
+				FCD305952885E6AB00491220 /* ChatBottomSheetView.swift */,
 			);
-			path = ViewTabBar;
+			path = View;
 			sourceTree = "<group>";
 		};
 		FC600B2028787E4F001CA2BD /* Profile */ = {
@@ -630,6 +646,15 @@
 				FC600B2628788E87001CA2BD /* SettingsViewModel.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		FCD3059E2886E66100491220 /* Correspondence */ = {
+			isa = PBXGroup;
+			children = (
+				FC1778D528774BA300B0D979 /* CorrespondenceView.swift */,
+				FCD3059F2886E68400491220 /* CorrespondenceViewModel.swift */,
+			);
+			path = Correspondence;
 			sourceTree = "<group>";
 		};
 		FCF5A42D287897490028FBD3 /* Contacts */ = {
@@ -681,6 +706,7 @@
 				FC17786B2875831700B0D979 /* Introspect */,
 				BDF2E2DF287F1C1C00B7E182 /* Alamofire */,
 				BD980FBC288176280050F8B4 /* SocketIO */,
+				FCD3059C2886ADCB00491220 /* BottomSheet */,
 			);
 			productName = FenestramMessanger;
 			productReference = BD7783A62872EBB50023032D /* FenestramMessanger.app */;
@@ -717,6 +743,7 @@
 				FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket" */,
+				FCD3059B2886ADCA00491220 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 			);
 			productRefGroup = BD7783A72872EBB50023032D /* Products */;
 			projectDirPath = "";
@@ -854,11 +881,13 @@
 				FC1778E12877639800B0D979 /* MainTabView.swift in Sources */,
 				BDE74B9B28801F8E00F4A775 /* Asset+Extensions.swift in Sources */,
 				FC1EA8FF287F3CE10027107E /* SplashScreen.swift in Sources */,
+				FCD305982886A1FD00491220 /* ChatBottomSheetModel.swift in Sources */,
 				FC177873287583BA00B0D979 /* ImagePicker.swift in Sources */,
 				FC17787C2875913F00B0D979 /* PhoneViewModel.swift in Sources */,
 				FCEE88262874400700268971 /* CodeView.swift in Sources */,
 				BDDB5AE12872ECE2002BF418 /* MainViewModel.swift in Sources */,
 				BDE74BC4288030DE00F4A775 /* Fonts.swift in Sources */,
+				FCD305962885E6AB00491220 /* ChatBottomSheetView.swift in Sources */,
 				FC600B2528788E7F001CA2BD /* SettingsView.swift in Sources */,
 				BDF2E2EA287F26E300B7E182 /* ChatEntity.swift in Sources */,
 				BDF2E2D4287F1B1200B7E182 /* RequestFactory.swift in Sources */,
@@ -866,11 +895,13 @@
 				BDF2E2E6287F217D00B7E182 /* ChatRequestFactory.swift in Sources */,
 				BDF2E2D5287F1B1200B7E182 /* AuthRequestFactory.swift in Sources */,
 				BDF2E2D1287F1B1200B7E182 /* ProfileRequestRouter.swift in Sources */,
+				FCD3059A2886A61F00491220 /* File.swift in Sources */,
 				BDF2E2DD287F1C0600B7E182 /* ProfileRequestFactory.swift in Sources */,
 				BD980FC02881767C0050F8B4 /* SocketIOManager.swift in Sources */,
 				BDF2E2D8287F1B1200B7E182 /* KeychainPasswordItem.swift in Sources */,
 				BD7783AA2872EBB50023032D /* FenestramMessangerApp.swift in Sources */,
 				BDF2E2D2287F1B1200B7E182 /* AuthService.swift in Sources */,
+				FC1EA90228855CEF0027107E /* ChatRow.swift in Sources */,
 				BDF2E2E2287F1CC400B7E182 /* ProfileService.swift in Sources */,
 				BDDB5ADF2872ECBC002BF418 /* MainView.swift in Sources */,
 				BDF2E2D6287F1B1200B7E182 /* UserEntity.swift in Sources */,
@@ -880,6 +911,7 @@
 				BDF2E2E8287F225F00B7E182 /* ChatService.swift in Sources */,
 				BDF2E2ED287F286A00B7E182 /* Date+Extensions.swift in Sources */,
 				BD980FB528816F940050F8B4 /* UIApplication+Extensions.swift in Sources */,
+				FCD305A02886E68400491220 /* CorrespondenceViewModel.swift in Sources */,
 				BDF2E2CF287F1B1200B7E182 /* AbstractRequestRouter.swift in Sources */,
 				BD980FB9288170CC0050F8B4 /* Notification+Extensions.swift in Sources */,
 				BDF2E2DA287F1B1200B7E182 /* AuthController.swift in Sources */,
@@ -956,7 +988,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1011,7 +1043,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1030,7 +1062,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FenestramMessanger/Preview Content\"";
-				DEVELOPMENT_TEAM = 829NTVC59C;
+				DEVELOPMENT_TEAM = BL67M76RZ8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenestramMessanger/Info.plist;
@@ -1062,7 +1094,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FenestramMessanger/Preview Content\"";
-				DEVELOPMENT_TEAM = 829NTVC59C;
+				DEVELOPMENT_TEAM = BL67M76RZ8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenestramMessanger/Info.plist;
@@ -1133,6 +1165,14 @@
 				kind = branch;
 			};
 		};
+		FCD3059B2886ADCA00491220 /* XCRemoteSwiftPackageReference "BottomSheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lucaszischka/BottomSheet";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MojtabaHs/iPhoneNumberField.git";
@@ -1158,6 +1198,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = Introspect;
+		};
+		FCD3059C2886ADCB00491220 /* BottomSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FCD3059B2886ADCA00491220 /* XCRemoteSwiftPackageReference "BottomSheet" */;
+			productName = BottomSheet;
 		};
 		FCEE88282874409B00268971 /* iPhoneNumberField */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -61,6 +61,7 @@ struct MainTabView: View {
         }
         .accentColor(.white)
         .ignoresSafeArea()
+        
     }
 }
 

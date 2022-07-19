@@ -9,9 +9,15 @@ import SwiftUI
 
 struct CorrespondenceView: View {
     
-    let contact: UserEntity
+    var contact: UserEntity
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+//    @StateObject private var viewModel: ViewModel
+//    init() {
+//        _viewModel = StateObject(wrappedValue: ViewModel())
+//        //self.contact = contact
+//    }
     
     var btnBack : some View {
         Button(action: {

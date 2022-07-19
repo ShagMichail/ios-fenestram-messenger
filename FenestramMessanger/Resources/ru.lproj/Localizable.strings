@@ -16,6 +16,7 @@
 
 // MARK: - ChatView
 "chat_view.empty_text" = "Здесь будет отображаться список ваших чатов";
+"chat_view.recent_files" = "Недавние файлы";
 
 // MARK: - NewContactView
 "new_contact_view.title" = "Добавить контакт";

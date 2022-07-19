@@ -96,17 +96,18 @@ struct ContactsView: View {
                                 .padding(.horizontal)
                         }
                     } else {
-                        Text(L10n.ContactView.contactDontExist)
-                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
-                            .foregroundColor(Color.white)
+                        HStack {
+                            Text(L10n.ContactView.contactDontExist)
+                                .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
+                                .foregroundColor(Color.white)
                             .padding(.horizontal)
+                        }.frame(width: UIScreen.screenWidth)
                     }
                 }
-                .padding(.bottom, -70)
+                .padding(.bottom, -85)
                 
                 NavigationLink() {
                     NewContactView()
-                        .navigationBarHidden(true)
                 } label: {
                     Asset.addButtonIcon.swiftUIImage
                         .padding(.bottom, 10)
