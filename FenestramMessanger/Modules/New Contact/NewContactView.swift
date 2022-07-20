@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NewContactView: View {
     
+    @AppStorage ("isColorThema") var isColorThema: Bool?
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject private var viewModel: ViewModel
     let maskPhone = "+X XXX XXX-XX-XX"
@@ -227,7 +228,7 @@ struct NewContactView: View {
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background( (viewModel.name.count != 0 && (viewModel.textPhone.count != 0 && viewModel.textPhone.count == 16 ) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor))
+                    .background( (viewModel.name.count != 0 && (viewModel.textPhone.count != 0 && viewModel.textPhone.count == 16 ) ? (isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor) : Asset.buttonDis.swiftUIColor))
                     .cornerRadius(6)
             }.disabled((viewModel.name.count == 0 || viewModel.textPhone.count != 16))
         }

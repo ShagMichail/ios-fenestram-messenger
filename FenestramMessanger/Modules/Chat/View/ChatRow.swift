@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChatRow: View {
-    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
     let chat: ChatEntity
     
     var body: some View {
@@ -38,7 +38,7 @@ struct ChatRow: View {
                     print("ddd")
                 }, label: {
                     Image(systemName: "checkmark")
-                        .foregroundColor(Asset.blue.swiftUIColor)
+                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                 })
                 .padding(.trailing, 0.0)
                 .disabled(true)

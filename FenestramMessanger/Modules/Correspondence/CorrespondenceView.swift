@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 
 struct CorrespondenceView: View {
+    @AppStorage ("isColorThema") var isColorThema: Bool?
     @State private var keyboardHeight: CGFloat = 0
     var contact: UserEntity?
     var contactId: Int = 0
@@ -44,7 +45,7 @@ struct CorrespondenceView: View {
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                 
                 Text("В сети")
-                    .foregroundColor(Asset.blue.swiftUIColor)
+                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
                 
             }
@@ -135,6 +136,7 @@ struct CorrespondenceView: View {
                                 Asset.send.swiftUIImage
                                     .resizable()
                                     .frame(width: 24.0, height: 24.0)
+                                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                             }.padding(.trailing, 12.0)
                         }
                         .frame(height: 48)

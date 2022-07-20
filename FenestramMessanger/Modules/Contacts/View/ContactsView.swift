@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContactsView: View {
+    @AppStorage ("isColorThema") var isColorThema: Bool?
     @StateObject private var viewModel: ViewModel
     
     init() {
@@ -112,6 +113,8 @@ struct ContactsView: View {
                     Asset.addButtonIcon.swiftUIImage
                         .padding(.bottom, 10)
                         .padding(.trailing, 10)
+                        .background((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                    
                 }
             }
         }
@@ -137,7 +140,7 @@ struct ContactsView: View {
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background(Asset.blue.swiftUIColor)
+                    .background((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                     .cornerRadius(6)
             }
             .padding(.bottom, 50)

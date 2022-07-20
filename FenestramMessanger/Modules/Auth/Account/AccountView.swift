@@ -9,8 +9,6 @@ import SwiftUI
 import Introspect
 import Combine
 
-//@AppStorage ("isColorThema") var isColorThema: Bool?
-//    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
 struct AccountView: View {
     @State private var keyboardHeight: CGFloat = 0
     @AppStorage ("isColorThema") var isColorThema: Bool?

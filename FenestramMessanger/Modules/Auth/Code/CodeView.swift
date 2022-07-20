@@ -10,6 +10,7 @@ import Introspect
 import Combine
 
 struct CodeView: View {
+    @AppStorage ("isColorThema") var isColorThema: Bool?
     @State private var keyboardHeight: CGFloat = 0
     let maskCode = "XXXX"
     @Environment(\.presentationMode) var presentationMode
@@ -102,7 +103,7 @@ struct CodeView: View {
                         }) {
                             Text(L10n.CodeView.sendAgain)
                                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
-                                .foregroundColor(Asset.blue.swiftUIColor)
+                                .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                         }
                     }
                 }
@@ -121,7 +122,7 @@ struct CodeView: View {
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                         .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                         .foregroundColor(.white)
-                        .background((viewModel.textCode.count == 4 && viewModel.errorCode == false) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
+                        .background((viewModel.textCode.count == 4 && viewModel.errorCode == false) ? (isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor) : Asset.buttonDis.swiftUIColor)
                         .cornerRadius(6)
                 }
             }

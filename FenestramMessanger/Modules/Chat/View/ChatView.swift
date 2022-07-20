@@ -14,8 +14,8 @@ enum BookBottomSheetPosition: CGFloat, CaseIterable {
 }
 
 struct ChatView: View {
-    let gradient = Gradient(colors: [.red, .orange])
-        
+    //let gradient = Gradient(colors: [.red, .orange])
+    @AppStorage ("isColorThema") var isColorThema: Bool?
     @State var bottomSheetPosition: BookBottomSheetPosition = .hidden
     @State var isShowingSheet = false
     @State var chatUser: ChatEntity?
@@ -66,7 +66,7 @@ struct ChatView: View {
             NavigationLink() {
                 SettingsView()
             } label: {
-                Image(systemName: "gearshape").foregroundColor(Asset.blue.swiftUIColor)
+                Image(systemName: "gearshape").foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
             }
         }
         .padding()
@@ -136,7 +136,7 @@ struct ChatView: View {
                             .foregroundColor(.white)
                             .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                         Text(getNicNameUsers() ?? L10n.General.unknown)
-                            .foregroundColor(Asset.blue.swiftUIColor)
+                            .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                             .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                     }
                     Spacer()
