@@ -93,7 +93,7 @@ struct ContactsView: View {
                 ScrollView {
                     if viewModel.filteredContacts.count > 0 {
                         ForEach(viewModel.filteredContacts) { contact in
-                            ContactsRow(contact: contact)
+                            ContactsRow(contact: contact, haveChat: filterHaveChat(contact: contact))
                                 .padding(.horizontal)
                         }
                     } else {
@@ -101,7 +101,7 @@ struct ContactsView: View {
                             Text(L10n.ContactView.contactDontExist)
                                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
                                 .foregroundColor(Color.white)
-                            .padding(.horizontal)
+                                .padding(.horizontal)
                         }.frame(width: UIScreen.screenWidth)
                     }
                 }
@@ -110,10 +110,17 @@ struct ContactsView: View {
                 NavigationLink() {
                     NewContactView()
                 } label: {
-                    Asset.addButtonIcon.swiftUIImage
-                        .padding(.bottom, 10)
-                        .padding(.trailing, 10)
-                        .background((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                    ZStack {
+                        Asset.addButtonIcon.swiftUIImage
+                            .padding(.bottom, 10)
+                            .padding(.trailing, 10)
+                            .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                        Image(systemName: "plus")
+                            .font(.title)
+                            .padding(.bottom, 17)
+                            .padding(.trailing, 10)
+                    }
+                    
                     
                 }
             }
@@ -145,6 +152,40 @@ struct ContactsView: View {
             }
             .padding(.bottom, 50)
         }
+    }
+    
+    //    private func filterChat(contact: UserEntity) -> ChatEntity {
+    //        let allChat = viewModel.chatList
+    //        let userId = Settings.currentUser?.id
+    //        let usetChatId = contact.id
+    //        for index in 0 ... viewModel.chatList.endIndex {
+    //            var ids = viewModel.chatList[index].usersId
+    //            if ids.count == 2 {
+    //                if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
+    //                    return viewModel.chatList[index]
+    //                }
+    //            }
+    //        }
+    //        //return ChatEntity(from: "")
+    //    }
+    
+    private func filterHaveChat(contact: UserEntity) -> Bool {
+        let allChat = viewModel.chatList
+        let userId = Settings.currentUser?.id
+        let usetChatId = contact.id
+        for index in viewModel.chatList.startIndex ... viewModel.chatList.endIndex {
+            if index < viewModel.chatList.endIndex {
+                let ids = viewModel.chatList[index].usersId  //[index].usersId
+                if ids.count == 2 {
+                    if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
+                        //viewModel.chatList[index]
+                        return true
+                        
+                    }
+                }
+            }
+        }
+        return false
     }
 }
 

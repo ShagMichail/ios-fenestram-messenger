@@ -19,10 +19,10 @@ struct ChatRow: View {
                 .padding(.horizontal)
             
             VStack(alignment: .leading) {
-                Text(chat.name ?? L10n.General.unknown)
+                Text(chat.name)
                     .foregroundColor(.white)
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
-                Text(L10n.General.unknown)
+                Text(lastMessage()) //?? L10n.General.unknown)
                     .foregroundColor(Asset.message.swiftUIColor)
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
             }
@@ -30,7 +30,7 @@ struct ChatRow: View {
             Spacer()
             
             VStack {
-                Text(chat.createdAt?.ISO8601Format() ?? "00:00")
+                Text(lastMessageTime())
                     .foregroundColor(Asset.message.swiftUIColor)
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                 
@@ -45,6 +45,16 @@ struct ChatRow: View {
                 
             }
         }
+    }
+    private func lastMessage() -> String {
+        let messege = chat.messages
+        guard let lastIndex = chat.messages?.last else { return "" }
+        return lastIndex.message ?? ""
+    }
+    private func lastMessageTime() -> String {
+        let messege = chat.messages
+        guard let lastIndex = chat.messages?.last else { return "" }
+        return  lastIndex.createdAt?.description ?? "01:09"// String(decoding: (lastIndex.createdAt)!, as: UTF8.self)
     }
 }
 

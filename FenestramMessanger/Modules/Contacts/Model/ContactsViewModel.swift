@@ -11,6 +11,7 @@ extension ContactsView {
     @MainActor
     final class ViewModel: ObservableObject {
         @Published var searchText = ""
+        @Published var chatList: [ChatEntity] = []
         @Published var allContacts: [UserEntity] = [] {
             didSet {
                 filterContent()
@@ -22,6 +23,7 @@ extension ContactsView {
         
         init() {
             getContacts()
+            getChatList()
         }
         
         func filterContent() {
@@ -59,6 +61,22 @@ extension ContactsView {
                     self?.allContacts = contacts.filter({ $0.id != currentUserId })
                 case .failure(let error):
                     print("get contacts failure with error: ", error.localizedDescription)
+                }
+                
+                self?.isLoading = false
+            }
+        }
+        
+        private func getChatList() {
+            isLoading = true
+            
+            ChatService.getChats { [weak self] result in
+                switch result {
+                case .success(let chatList):
+                    print("get chat list success")
+                    self?.chatList = chatList
+                case .failure(let error):
+                    print("get chat list failure with error:", error.localizedDescription)
                 }
                 
                 self?.isLoading = false

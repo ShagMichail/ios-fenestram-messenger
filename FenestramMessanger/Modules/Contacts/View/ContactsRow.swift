@@ -10,6 +10,8 @@ import SwiftUI
 struct ContactsRow: View {
     
     let contact: UserEntity
+    //let chat: ChatEntity
+    let haveChat: Bool
     
     var body: some View {
         HStack() {
@@ -23,10 +25,11 @@ struct ContactsRow: View {
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
             
             Spacer()
-            
+            if haveChat {
             NavigationLink(destination: CorrespondenceView(contact: contact)) {
                 Asset.chat.swiftUIImage
                     .padding(.horizontal)
+            }
             }
         }
     }

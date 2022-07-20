@@ -12,6 +12,7 @@ struct CorrespondenceView: View {
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @State private var keyboardHeight: CGFloat = 0
     var contact: UserEntity?
+    //var chat: ChatEntity?
     var contactId: Int = 0
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -20,6 +21,9 @@ struct CorrespondenceView: View {
     init(contact: UserEntity) {
         _viewModel = StateObject(wrappedValue: ViewModel())
         self.contact = contact
+        //self.chat = chat
+        filterChat()
+        
     }
     
     var btnBack : some View {
@@ -42,11 +46,11 @@ struct CorrespondenceView: View {
             VStack(alignment: .leading) {
                 Text(contact?.name ?? L10n.General.unknown)
                     .foregroundColor(Color.white)
-                .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                 
                 Text("В сети")
                     .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
                 
             }
         }
@@ -105,10 +109,10 @@ struct CorrespondenceView: View {
                 
                 VStack {
                     ZStack {
-//                        RoundedRectangle(cornerRadius: 10)
-//                        //.stroke(Asset.border.swiftUIColor, lineWidth: 1)
-//                            .background(Asset.tabBar.swiftUIColor)
-//                            .frame(width: UIScreen.screenWidth - 24, height: 55)
+                        //                        RoundedRectangle(cornerRadius: 10)
+                        //                        //.stroke(Asset.border.swiftUIColor, lineWidth: 1)
+                        //                            .background(Asset.tabBar.swiftUIColor)
+                        //                            .frame(width: UIScreen.screenWidth - 24, height: 55)
                         HStack{
                             Button {
                                 print("")
@@ -145,12 +149,12 @@ struct CorrespondenceView: View {
                         //                                //.stroke(Asset.border.swiftUIColor, lineWidth: 1)
                         //                                //.background(Asset.tabBar.swiftUIColor)
                         //                        )
-                            .padding(.vertical, 12)
-                            .padding(.horizontal)
-                            .background(RoundedRectangle(cornerRadius: 10)
-                                        //.stroke(Asset.border.swiftUIColor, lineWidth: 1)
-                                            .foregroundColor(Asset.tabBar.swiftUIColor)
-                                            .frame(width: UIScreen.screenWidth - 24, height: 55))
+                        .padding(.vertical, 12)
+                        .padding(.horizontal)
+                        .background(RoundedRectangle(cornerRadius: 10)
+                                    //.stroke(Asset.border.swiftUIColor, lineWidth: 1)
+                            .foregroundColor(Asset.tabBar.swiftUIColor)
+                            .frame(width: UIScreen.screenWidth - 24, height: 55))
                     }
                     
                 }
@@ -166,6 +170,30 @@ struct CorrespondenceView: View {
         .onTapGesture {
             UIApplication.shared.endEditing()
         }
+        
+        
+    }
+    private func filterChat() {
+        //var chat: ChatEntity = viewModel.chatList[0]  //сомнительное решение ес честно
+        let allChat = viewModel.chatList
+        var allFilterChatList: [ChatEntity] = []
+        let userId = Settings.currentUser?.id
+        let usetChatId = contact?.id
+        for index in viewModel.chatList.startIndex ... viewModel.chatList.endIndex {
+            if index < viewModel.chatList.endIndex {
+                let ids = viewModel.chatList[index].usersId  //[index].usersId
+                if ids.count == 2 {
+                    if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
+                        //viewModel.chatList[index]
+                        //var chat: ChatEntity
+                        allFilterChatList.append(viewModel.chatList[index])
+                        //chat = viewModel.chatList[index]
+                        
+                    }
+                }
+            }
+        }
+        viewModel.chatList = allFilterChatList
     }
 }
 

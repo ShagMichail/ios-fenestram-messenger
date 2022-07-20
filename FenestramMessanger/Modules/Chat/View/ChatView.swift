@@ -171,7 +171,7 @@ struct ChatView: View {
                             .frame(width: 60.0, height: 60.0)
                             .padding(.horizontal)
                     }
-//                    NavigationLink(destination: CorrespondenceView(contact: contact)) {
+//                    NavigationLink(destination: CorrespondenceView(contact: contact!)) {
 //                        Asset.messageIcon.swiftUIImage
 //                            .resizable()
 //                            .frame(width: 60.0, height: 60.0)
@@ -249,8 +249,8 @@ struct ChatView: View {
         var i = 0
         var result = ""
         for userChatId in users {
-            for userId in index ... viewModel.allContacts.endIndex {
-                if userChatId.hashValue == userId.hashValue {
+            for userId in index ... viewModel.allContacts.endIndex - 1 {
+                if userChatId.hashValue == viewModel.allContacts[userId].id.hashValue {
                     result.append("@")
                     result.append(viewModel.allContacts[userId].name ?? "")
                     result.append(" ")
