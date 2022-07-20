@@ -36,6 +36,7 @@
 		BD980FBD288176280050F8B4 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = BD980FBC288176280050F8B4 /* SocketIO */; };
 		BD980FC02881767C0050F8B4 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980FBF2881767C0050F8B4 /* SocketIOManager.swift */; };
 		BDA6EAF22881D21600C96047 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA6EAF12881D21600C96047 /* LoadingView.swift */; };
+		BDB5DAB72888129B0057966B /* BaseResponseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB5DAB62888129B0057966B /* BaseResponseEntity.swift */; };
 		BDDB5ADF2872ECBC002BF418 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDB5ADE2872ECBC002BF418 /* MainView.swift */; };
 		BDDB5AE12872ECE2002BF418 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDB5AE02872ECE2002BF418 /* MainViewModel.swift */; };
 		BDE74B9128801D9000F4A775 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BDE74B9328801D9000F4A775 /* Localizable.strings */; };
@@ -146,6 +147,7 @@
 		BD980FB8288170CC0050F8B4 /* Notification+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extensions.swift"; sourceTree = "<group>"; };
 		BD980FBF2881767C0050F8B4 /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		BDA6EAF12881D21600C96047 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		BDB5DAB62888129B0057966B /* BaseResponseEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponseEntity.swift; sourceTree = "<group>"; };
 		BDDB5ADE2872ECBC002BF418 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		BDDB5AE02872ECE2002BF418 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		BDE74B9228801D9000F4A775 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -487,6 +489,7 @@
 				BDF2E2C8287F1B1200B7E182 /* UserEntity.swift */,
 				BDF2E2E9287F26E300B7E182 /* ChatEntity.swift */,
 				BDF2E2EE287F29F800B7E182 /* MessageEntity.swift */,
+				BDB5DAB62888129B0057966B /* BaseResponseEntity.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -848,6 +851,7 @@
 				FC600B2228787E74001CA2BD /* ProfileViewModel.swift in Sources */,
 				BDE74B9928801E7900F4A775 /* Localizable.swift in Sources */,
 				FC13AF3D287EC42600784E35 /* NewContactView.swift in Sources */,
+				BDB5DAB72888129B0057966B /* BaseResponseEntity.swift in Sources */,
 				FCEE882428743FFD00268971 /* PhoneView.swift in Sources */,
 				FCF5A43728798EB70028FBD3 /* ChatView.swift in Sources */,
 				FC1778B42876E25C00B0D979 /* Feature.swift in Sources */,
