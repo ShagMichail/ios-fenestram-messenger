@@ -23,7 +23,7 @@ public struct UserWithTokenEntity: Codable, Identifiable {
         case accessToken = "access_token"
         case phoneNumber = "phone"
         case name
-        case nickname = "login"
+        case nickname // = "login"
         case email
         case birthdate = "birth"
     }
@@ -59,7 +59,7 @@ public struct UserEntity: Codable, Identifiable {
         case id
         case phoneNumber = "phone"
         case name
-        case nickname = "login"
+        case nickname //= "login"
         case email
         case birthdate = "birth"
     }

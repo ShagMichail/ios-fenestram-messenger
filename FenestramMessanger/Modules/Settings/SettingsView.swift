@@ -109,8 +109,11 @@ struct SettingsView: View {
                     Asset.info.swiftUIImage
                         .resizable()
                         .frame(width: 22.0, height: 22.0)
+                        //.renderingMode(.template)
                         .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                        .background((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                        //.background((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                        //.tint((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                        
                     Text(L10n.SettingsView.info)
                         .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
                         .foregroundColor(Color.white)

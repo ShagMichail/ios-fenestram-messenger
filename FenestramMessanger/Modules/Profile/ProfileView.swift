@@ -10,7 +10,7 @@ import Combine
 
 struct ProfileView: View {
     @State private var keyboardHeight: CGFloat = 0
-    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     @StateObject private var viewModel: ViewModel
     
@@ -82,6 +82,7 @@ struct ProfileView: View {
                 SettingsView()
             } label: {
                 Asset.edit.swiftUIImage
+                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
             }
             
             Spacer().frame(width: 15)
@@ -89,7 +90,7 @@ struct ProfileView: View {
             NavigationLink() {
                 SettingsView()
             } label: {
-                Image(systemName: "gearshape").foregroundColor(Asset.blue.swiftUIColor)
+                Image(systemName: "gearshape").foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
             }
             
         }
@@ -112,7 +113,7 @@ struct ProfileView: View {
                 }
                 .padding(.all, 5.0)
                 .foregroundColor(.white)
-                .background(LinearGradient(gradient: Gradient(colors: [Asset.blue.swiftUIColor]), startPoint: .leading, endPoint: .trailing))
+                .background(LinearGradient(gradient: Gradient(colors: [(isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(40)
                 .frame(width: 50.0, height: 100.0, alignment: .center)
                 .actionSheet(isPresented: $viewModel.showSheet) {
@@ -261,7 +262,7 @@ struct ProfileView: View {
                     .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background(Asset.blue.swiftUIColor)
+                    .background(isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
                     .cornerRadius(6)
             }
         }

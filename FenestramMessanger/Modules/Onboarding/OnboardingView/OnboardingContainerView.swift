@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct OnboardingContainerView: View {
+    @AppStorage ("isColorThema") var isColorThema: Bool?
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     @State private var selectedPage = 0
     
@@ -74,7 +75,7 @@ struct OnboardingContainerView: View {
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background(Asset.blue.swiftUIColor)
+                    .background((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                     .cornerRadius(6)
             })
             
