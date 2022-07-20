@@ -31,6 +31,10 @@ final class SocketIOManager {
         self.delegate = delegate
     }
     
+    deinit {
+        manager.disconnect()
+    }
+    
     func connect() {
         socket.on(clientEvent: .connect) { data, ack in
             print("socket connected")

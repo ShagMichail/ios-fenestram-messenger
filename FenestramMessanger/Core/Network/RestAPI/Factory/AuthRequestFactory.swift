@@ -30,8 +30,15 @@ final class AuthRequestFactory: AbstractRequestFactory {
                 if let data = response.data {
                     do {
                         let decoder = JSONDecoder()
-                        let decodedData = try decoder.decode(modelType.self, from: data)
-                        completion(.success(decodedData))
+                        let decodedData = try decoder.decode(BaseResponseEntity<T>.self, from: data)
+                        
+                        if let error = decodedData.error {
+                            completion(.failure(error))
+                        } else if let data = decodedData.data {
+                            completion(.success(data))
+                        } else {
+                            completion(.failure(NetworkError.responseError))
+                        }
                     } catch {
                         completion(.failure(error))
                     }
