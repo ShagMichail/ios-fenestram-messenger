@@ -27,6 +27,7 @@ internal enum Asset {
   internal static let onboardingThird = ImageAsset(name: "onboardingThird")
   internal static let severicons = ImageAsset(name: "Severicons")
   internal static let addButtonIcon = ImageAsset(name: "add_button_icon")
+  internal static let alert = ImageAsset(name: "alert")
   internal static let blue = ColorAsset(name: "blue")
   internal static let border = ColorAsset(name: "border")
   internal static let buttonDis = ColorAsset(name: "buttonDis")
