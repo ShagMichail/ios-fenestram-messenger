@@ -28,12 +28,12 @@ struct AlertView: View {
                     VStack(alignment: .leading) {
                         Text("Произошла ошибка")
                             .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 18))
-                            .foregroundColor(Color.red)
+                            .foregroundColor(Asset.red.swiftUIColor)
                         Spacer().frame(height: 10)
                         
                         Text(text)
                             .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
-                            .foregroundColor(Color.red)
+                            .foregroundColor(Asset.red.swiftUIColor)
                     }.padding(.leading, -50)
                     Spacer()
                     Button {
@@ -44,7 +44,7 @@ struct AlertView: View {
                             .frame(width: 252, height: 35.0)
                             .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 14))
                             .foregroundColor(Asset.text.swiftUIColor)
-                            .background(Asset.page.swiftUIColor)
+                            .background(Asset.buttonAlert.swiftUIColor)
                             .cornerRadius(6)
                     }.onTapGesture {
                         withAnimation {

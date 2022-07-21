@@ -61,12 +61,12 @@ struct CodeView: View {
                                 viewModel.textCode = $0
                             }))
                             .placeholder(when: viewModel.textCode.isEmpty) {
-                                Text("").foregroundColor(Color.red)
+                                Text("").foregroundColor(Asset.red.swiftUIColor)
                             }
                             .onChange(of: viewModel.textCode) {
                                 newValue in viewModel.changeIncorrect()
                             }
-                            .foregroundColor(Color.red)
+                            .foregroundColor(Asset.red.swiftUIColor)
                         } else {
                             TextField("", text: Binding<String>(get: {
                                 format(with: self.maskCode, phone: viewModel.textCode)
@@ -82,7 +82,7 @@ struct CodeView: View {
                     .frame(height: 48)
                     .overlay(
                         RoundedRectangle(cornerRadius: 5)
-                            .stroke(viewModel.errorCode ? Color.red : Asset.border.swiftUIColor, lineWidth: 1)
+                            .stroke(viewModel.errorCode ? Asset.red.swiftUIColor : Asset.border.swiftUIColor, lineWidth: 1)
                     )
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
                     .padding(.vertical, 12)
@@ -94,7 +94,7 @@ struct CodeView: View {
                 HStack {
                     if viewModel.errorCode {
                         Text(L10n.CodeView.incorrectPassword)
-                            .foregroundColor(Color.red)
+                            .foregroundColor(Asset.red.swiftUIColor)
                             .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
                         Button(action: {
                             self.presentationMode.wrappedValue.dismiss()

@@ -21,14 +21,14 @@ struct NewContactView: View {
     var borderName: some View {
         RoundedRectangle(cornerRadius: 6)
             .strokeBorder((viewModel.isTappedGlobal == true && viewModel.name.count == 0) ?
-                          LinearGradient(colors: [Color.red], startPoint: .topLeading, endPoint: .bottomTrailing) : LinearGradient(colors: [Asset.border.swiftUIColor], startPoint: .topLeading, endPoint: .bottomTrailing))
+                          LinearGradient(colors: [Asset.red.swiftUIColor], startPoint: .topLeading, endPoint: .bottomTrailing) : LinearGradient(colors: [Asset.border.swiftUIColor], startPoint: .topLeading, endPoint: .bottomTrailing))
         
     }
     
     var borderPhone: some View {
         RoundedRectangle(cornerRadius: 6)
             .strokeBorder((viewModel.isTappedGlobal == true && (viewModel.textPhone.count == 0 || viewModel.textPhone.count != 16)) ?
-                          LinearGradient(colors: [Color.red], startPoint: .topLeading, endPoint: .bottomTrailing) : LinearGradient(colors: [Asset.border.swiftUIColor], startPoint: .topLeading, endPoint: .bottomTrailing))
+                          LinearGradient(colors: [Asset.red.swiftUIColor], startPoint: .topLeading, endPoint: .bottomTrailing) : LinearGradient(colors: [Asset.border.swiftUIColor], startPoint: .topLeading, endPoint: .bottomTrailing))
         
     }
     
@@ -91,7 +91,7 @@ struct NewContactView: View {
             VStack(alignment: .leading){
                 Text(L10n.NewContactView.Name.title)
                     .font(.headline)
-                    .foregroundColor((viewModel.name.count == 0 && viewModel.isTappedGlobal == true) ? Color.red : Asset.text.swiftUIColor)
+                    .foregroundColor((viewModel.name.count == 0 && viewModel.isTappedGlobal == true) ? Asset.red.swiftUIColor : Asset.text.swiftUIColor)
                 Spacer().frame(height: 3.0 )
                 
                 ZStack {
@@ -124,7 +124,7 @@ struct NewContactView: View {
             if viewModel.name.count == 0 && viewModel.isTappedGlobal == true {
                 HStack {
                     Text(L10n.NewContactView.Name.error)
-                        .foregroundColor(Color.red)
+                        .foregroundColor(Asset.red.swiftUIColor)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
                 }
             }
@@ -169,7 +169,7 @@ struct NewContactView: View {
             VStack(alignment: .leading) {
                 Text(L10n.NewContactView.PhoneNumber.title)
                     .font(.headline)
-                    .foregroundColor(((viewModel.textPhone.count == 0 &&  viewModel.isTappedGlobal == true) || (viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0)) ? Color.red : Asset.text.swiftUIColor)
+                    .foregroundColor(((viewModel.textPhone.count == 0 &&  viewModel.isTappedGlobal == true) || (viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0)) ? Asset.red.swiftUIColor : Asset.text.swiftUIColor)
                 
                 Spacer().frame(height: 3.0 )
                 
@@ -188,13 +188,13 @@ struct NewContactView: View {
                     viewModel.isTappedPhoneNumber = false
                 }
                 .placeholder(when: viewModel.textPhone.isEmpty && viewModel.isTappedPhoneNumber == false) {
-                    Text(L10n.NewContactView.PhoneNumber.placeholder).foregroundColor(((viewModel.textPhone.count == 0 &&  viewModel.isTappedGlobal == true) || (viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0)) ? Color.red : Asset.text.swiftUIColor)
+                    Text(L10n.NewContactView.PhoneNumber.placeholder).foregroundColor(((viewModel.textPhone.count == 0 &&  viewModel.isTappedGlobal == true) || (viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0)) ? Asset.red.swiftUIColor : Asset.text.swiftUIColor)
                     
                 }
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding(.vertical, 12)
                 .padding(.horizontal, 16)
-                .foregroundColor(((viewModel.textPhone.count == 0 &&  viewModel.isTappedGlobal == true) || (viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0)) ? Color.red : Asset.text.swiftUIColor)
+                .foregroundColor(((viewModel.textPhone.count == 0 &&  viewModel.isTappedGlobal == true) || (viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0)) ? Asset.red.swiftUIColor : Asset.text.swiftUIColor)
                 .background(borderPhone)
                 .multilineTextAlignment(.leading)
                 .accentColor(Asset.text.swiftUIColor)
@@ -204,7 +204,7 @@ struct NewContactView: View {
             if viewModel.textPhone.count == 0 && viewModel.isTappedGlobal == true {
                 HStack {
                     Text(L10n.NewContactView.PhoneNumber.emptyError)
-                        .foregroundColor(Color.red)
+                        .foregroundColor(Asset.red.swiftUIColor)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
                 }
             }
@@ -212,7 +212,7 @@ struct NewContactView: View {
             if viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0 && viewModel.isTappedGlobal == true {
                 HStack {
                     Text(L10n.NewContactView.PhoneNumber.incorrectError)
-                        .foregroundColor(Color.red)
+                        .foregroundColor(Asset.red.swiftUIColor)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
                 }
             }

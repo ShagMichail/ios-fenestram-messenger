@@ -125,7 +125,7 @@ struct ChatView: View {
             }
             .padding(.bottom, 1)
             
-        }.bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: [.noDragIndicator, .allowContentDrag, .swipeToDismiss, .tapToDismiss, .absolutePositionValue, .background({ AnyView(Asset.navBar.swiftUIColor) }), .cornerRadius(30)], headerContent: {
+        }.bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: [.noDragIndicator, .allowContentDrag, .swipeToDismiss, .tapToDismiss, .absolutePositionValue, .background({ AnyView(Asset.buttonAlert.swiftUIColor) }), .cornerRadius(30)], headerContent: {
             //The name of the book as the heading and the author as the subtitle with a divider.
             VStack {
                 HStack {
