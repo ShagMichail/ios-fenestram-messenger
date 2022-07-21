@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 
 struct ProfileView: View {
+    //@State var customAlert = false
     @State private var keyboardHeight: CGFloat = 0
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @State private var sourceType: UIImagePickerController.SourceType = .camera
@@ -66,6 +67,9 @@ struct ProfileView: View {
                         
                         Spacer()
                     }
+                }
+                if viewModel.presentAlert {
+                    AlertView(show: $viewModel.presentAlert, textTitle: $viewModel.textTitleAlert, text: $viewModel.textAlert)
                 }
             }
             .onTapGesture {

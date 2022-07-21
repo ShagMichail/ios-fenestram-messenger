@@ -12,7 +12,7 @@ struct CorrespondenceView: View {
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @State private var keyboardHeight: CGFloat = 0
     var contact: UserEntity?
-    //var chat: ChatEntity?
+    var chat: ChatEntity?
     var contactId: Int = 0
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -175,7 +175,6 @@ struct CorrespondenceView: View {
     }
     private func filterChat() {
         //var chat: ChatEntity = viewModel.chatList[0]  //сомнительное решение ес честно
-        let allChat = viewModel.chatList
         var allFilterChatList: [ChatEntity] = []
         let userId = Settings.currentUser?.id
         let usetChatId = contact?.id

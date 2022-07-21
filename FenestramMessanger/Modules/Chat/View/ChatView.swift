@@ -48,10 +48,14 @@ struct ChatView: View {
                         }
                         
                     }
+                    if viewModel.presentAlert {
+                        AlertView(show: $viewModel.presentAlert, textTitle: $viewModel.textTitleAlert, text: $viewModel.textAlert)
+                    }
                 }
                 .onTapGesture {
                     UIApplication.shared.endEditing()
                 }
+               
                 .navigationBarHidden(true)
             }
         }

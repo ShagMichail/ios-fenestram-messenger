@@ -18,6 +18,10 @@ extension CodeView {
         
         private let phoneNumber: String
         
+        @Published var presentAlert = false
+        @Published var textTitleAlert = ""
+        @Published var textAlert = ""
+        
         init(phoneNumber: String) {
             let phoneNumber = phoneNumber
                 .replacingOccurrences(of: " ", with: "")
@@ -38,10 +42,17 @@ extension CodeView {
                         print("sign in success")
                     }
                     catch let error {
+
                         print("sign in failure with error: ", error.localizedDescription)
+                        self?.textTitleAlert = "sign in failure with error"
+                        self?.textAlert = error.localizedDescription
+                        self?.presentAlert = true
                     }
                 case .failure(let error):
                     print("login failure with error: ", error.localizedDescription)
+                    self?.textTitleAlert = "login failure with error"
+                    self?.textAlert = error.localizedDescription
+                    self?.presentAlert = true
                     self?.errorCode = true
                 }
             }

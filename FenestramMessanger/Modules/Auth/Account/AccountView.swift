@@ -48,10 +48,15 @@ struct AccountView: View {
             .ignoresSafeArea(.keyboard, edges: .bottom)
             .padding(.bottom, keyboardHeight/4)
             .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
+            
+            if viewModel.presentAlert {
+                AlertView(show: $viewModel.presentAlert, textTitle: $viewModel.textTitleAlert, text: $viewModel.textAlert)
+            }
         }
         .onTapGesture {
             UIApplication.shared.endEditing()
         }
+        
     }
     
     private func getHeader() -> some View {

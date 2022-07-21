@@ -33,6 +33,10 @@ extension AccountView {
         @Published var nicNameOk = false
         @Published var textEmailOk = false
         
+        @Published var presentAlert = false
+        @Published var textTitleAlert = ""
+        @Published var textAlert = ""
+        
         @AppStorage("isAlreadySetProfile") var isAlreadySetProfile: Bool?
 
         func textFieldValidatorEmail(_ string: String) -> Bool {
@@ -80,9 +84,15 @@ extension AccountView {
                     }
                     catch let error {
                         print("update profile failure with error: ", error.localizedDescription)
+                        self.textTitleAlert = "update profile failure with error"
+                        self.textAlert = error.localizedDescription
+                        self.presentAlert = true
                     }
                 case .failure(let error):
                     print("update profile failure with error: ", error.localizedDescription)
+                    self.textTitleAlert = "update profile failure with error"
+                    self.textAlert = error.localizedDescription
+                    self.presentAlert = true
                 }
             }
         }

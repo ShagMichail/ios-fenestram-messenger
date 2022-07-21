@@ -26,10 +26,16 @@ struct CodeView: View {
                 .ignoresSafeArea()
             
             getBase()
+            
+            if viewModel.presentAlert {
+                AlertView(show: $viewModel.presentAlert, textTitle: $viewModel.textTitleAlert, text: $viewModel.textAlert)
+            }
         }
         .onTapGesture {
             UIApplication.shared.endEditing()
+                
         }
+        
     }
     
     private func getBase() -> some View {

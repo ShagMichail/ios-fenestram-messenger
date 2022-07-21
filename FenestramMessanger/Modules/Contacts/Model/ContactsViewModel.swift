@@ -18,8 +18,12 @@ extension ContactsView {
             }
         }
         @Published var filteredContacts: [UserEntity] = []
-        
+        //@Published var chat: [ChatEntity] = []
         @Published var isLoading: Bool = false
+        
+        @Published var presentAlert = false
+        @Published var textTitleAlert = ""
+        @Published var textAlert = ""
         
         init() {
             getContacts()
@@ -61,6 +65,9 @@ extension ContactsView {
                     self?.allContacts = contacts.filter({ $0.id != currentUserId })
                 case .failure(let error):
                     print("get contacts failure with error: ", error.localizedDescription)
+                    self?.textTitleAlert = "get contacts failure with error"
+                    self?.textAlert = error.localizedDescription
+                    self?.presentAlert = true
                 }
                 
                 self?.isLoading = false
@@ -77,6 +84,9 @@ extension ContactsView {
                     self?.chatList = chatList
                 case .failure(let error):
                     print("get chat list failure with error:", error.localizedDescription)
+                    self?.textTitleAlert = "get chat list failure with error"
+                    self?.textAlert = error.localizedDescription
+                    self?.presentAlert = true
                 }
                 
                 self?.isLoading = false

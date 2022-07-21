@@ -35,6 +35,11 @@ extension ProfileView {
         
         private var profile: UserEntity? = nil
         
+        @Published var presentAlert = false
+        @Published var textTitleAlert = ""
+        @Published var textAlert = ""
+        
+        
         init() {
             getProfile()
         }
@@ -74,6 +79,7 @@ extension ProfileView {
                     
                     guard let token = try? AuthController.getToken() else {
                         print("Can't take access token")
+                        
                         return
                     }
                     
@@ -84,9 +90,15 @@ extension ProfileView {
                     }
                     catch let error {
                         print("update profile failure with error: ", error.localizedDescription)
+                        self.textTitleAlert = "update profile failure with error"
+                        self.textAlert = error.localizedDescription
+                        self.presentAlert = true
                     }
                 case .failure(let error):
                     print("update profile failure with error: ", error.localizedDescription)
+                    self.textTitleAlert = "update profile failure with error"
+                    self.textAlert = error.localizedDescription
+                    self.presentAlert = true
                 }
             }
         }

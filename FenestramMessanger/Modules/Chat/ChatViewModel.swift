@@ -13,6 +13,10 @@ extension ChatView {
         @Published var chatList: [ChatEntity] = []
         @Published var allContacts: [UserEntity] = []
         
+        @Published var presentAlert = false
+        @Published var textTitleAlert = ""
+        @Published var textAlert = ""
+        
         @Published var isLoading: Bool = false
         @Published var allFiles: [File] = [
             File(title: "fffff"),
@@ -39,6 +43,9 @@ extension ChatView {
                     self?.chatList = chatList
                 case .failure(let error):
                     print("get chat list failure with error:", error.localizedDescription)
+                    self?.textTitleAlert = "get chat list failure with error"
+                    self?.textAlert = error.localizedDescription
+                    self?.presentAlert = true
                 }
                 
                 self?.isLoading = false
@@ -60,6 +67,9 @@ extension ChatView {
                     self?.allContacts = contacts.filter({ $0.id != currentUserId })
                 case .failure(let error):
                     print("get contacts failure with error: ", error.localizedDescription)
+                    self?.textTitleAlert = "get contacts failure with error"
+                    self?.textAlert = error.localizedDescription
+                    self?.presentAlert = true
                 }
                 
                 self?.isLoading = false
