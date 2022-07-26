@@ -13,6 +13,7 @@
 "general.skip" = "Пропустить";
 "general.unknown" = "Неизвестно";
 "general.loading" = "Идет загрузка...";
+"general.close" = "Закрыть";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "Здесь будет отображаться список ваших чатов";
@@ -84,3 +85,7 @@
 
 // MARK: - CorrespondenceView
 "correspondence_view.message" = "Здесь будет отображаться история ваших сообщениий";
+"correspondence_view.text_message" = "Ваше сообщение";
+"correspondence_view.foto" = "Фото";
+"correspondence_view.image" = "Галерея";
+"correspondence_view.file" = "Файл";

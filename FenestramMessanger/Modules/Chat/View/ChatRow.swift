@@ -47,14 +47,14 @@ struct ChatRow: View {
         }
     }
     private func lastMessage() -> String {
-        let messege = chat.messages
+        //let messege = chat.messages
         guard let lastIndex = chat.messages?.last else { return "" }
-        return lastIndex.message ?? ""
+        return lastIndex.message 
     }
     private func lastMessageTime() -> String {
-        let messege = chat.messages
+        //let messege = chat.messages
         guard let lastIndex = chat.messages?.last else { return "" }
-        return  lastIndex.createdAt?.description ?? "01:09"// String(decoding: (lastIndex.createdAt)!, as: UTF8.self)
+        return  lastIndex.createdAt?.formatted(.dateTime.hour().minute() ) ?? "01:09"// String(decoding: (lastIndex.createdAt)!, as: UTF8.self)
     }
 }
 

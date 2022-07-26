@@ -56,6 +56,9 @@ extension ProfileView {
         func saveInfo() {
             guard let birthdateTimeInterval = birthday?.timeIntervalSince1970 else {
                 print("birthday is empty!")
+                self.textTitleAlert = " "
+                self.textAlert = "birthday is empty!"
+                self.presentAlert = true
                 return
             }
             
@@ -69,6 +72,9 @@ extension ProfileView {
                 case .success:
                     guard var userWithInfo = Settings.currentUser else {
                         print("user doesn't exist")
+                        self.textTitleAlert = " "
+                        self.textAlert = "user doesn't existb"
+                        self.presentAlert = true
                         return
                     }
                     
@@ -79,7 +85,9 @@ extension ProfileView {
                     
                     guard let token = try? AuthController.getToken() else {
                         print("Can't take access token")
-                        
+                        self.textTitleAlert = " "
+                        self.textAlert = "Can't take access token"
+                        self.presentAlert = true
                         return
                     }
                     

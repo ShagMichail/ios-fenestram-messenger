@@ -55,6 +55,9 @@ extension ChatView {
         private func getContacts() {
             guard let currentUserId = Settings.currentUser?.id else {
                 print("current user doesn't exist")
+                self.textTitleAlert = " "
+                self.textAlert = "current user doesn't exist"
+                self.presentAlert = true
                 return
             }
             

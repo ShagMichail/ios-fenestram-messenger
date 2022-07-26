@@ -40,7 +40,7 @@ struct AlertView: View {
                         show.toggle()
                     } label: {
                         
-                        Text("Закрыть")
+                        Text(L10n.General.close)
                             .frame(width: 252, height: 35.0)
                             .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 14))
                             .foregroundColor(Asset.text.swiftUIColor)

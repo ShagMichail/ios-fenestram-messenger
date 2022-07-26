@@ -64,6 +64,7 @@ struct ContactsView: View {
             .foregroundColor(Color.white)
             .padding(.horizontal)
             .padding(.top)
+            
     }
     
     private func getSearchView() -> some View {
@@ -98,7 +99,7 @@ struct ContactsView: View {
                 ScrollView {
                     if viewModel.filteredContacts.count > 0 {
                         ForEach(viewModel.filteredContacts) { contact in
-                            ContactsRow(contact: contact, haveChat: filterHaveChat(contact: contact))
+                            ContactsRow(contact: contact, chat: filterChat(contact: contact), haveChat: filterHaveChat(contact: contact))
                                 .padding(.horizontal)
                         }
                     } else {
@@ -194,6 +195,31 @@ struct ContactsView: View {
             }
         }
         return false
+    }
+    
+    private func filterChat(contact: UserEntity) -> [ChatEntity] {
+        //var chat: ChatEntity = viewModel.chatList[0]  //сомнительное решение ес честно
+        var allFilterChatList: [ChatEntity] = []
+        //var allMessage: [MessageEntity] = []
+        let userId = Settings.currentUser?.id
+        let usetChatId = contact.id
+        for index in viewModel.chatList.startIndex ... viewModel.chatList.endIndex {
+            if index < viewModel.chatList.endIndex {
+                let ids = viewModel.chatList[index].usersId  //[index].usersId
+                if ids.count == 2 {
+                    if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
+                        //viewModel.chatList[index]
+                        //var chat: ChatEntity
+                        allFilterChatList.append(viewModel.chatList[index])
+                        
+                        //allFilterChatList.append(viewModel.chatList[index])
+                        //chat = viewModel.chatList[index]
+                        
+                    }
+                }
+            }
+        }
+        return allFilterChatList
     }
 }
 

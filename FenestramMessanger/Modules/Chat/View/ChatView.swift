@@ -18,12 +18,17 @@ struct ChatView: View {
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @State var bottomSheetPosition: BookBottomSheetPosition = .hidden
     @State var isShowingSheet = false
+    @State var flag = false
     @State var chatUser: ChatEntity?
     @State var contact: UserEntity?
     
     @StateObject private var viewModel: ViewModel
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
+//        contact = Settings.currentUser
+//        if flag {
+//            bottomSheetPosition = .bottom
+//        }
     }
     
     var body: some View {
@@ -108,6 +113,7 @@ struct ChatView: View {
                     ForEach(viewModel.chatList) { chat in
                         Button(action: {
                             bottomSheetPosition = .bottom
+                           // flag = true
                             chatUser = chat
                         }, label: {
                             ChatRow(chat: chat)
@@ -129,7 +135,6 @@ struct ChatView: View {
             //The name of the book as the heading and the author as the subtitle with a divider.
             VStack {
                 HStack {
-                    
                     Asset.photo.swiftUIImage
                         .resizable()
                         .frame(width: 80.0, height: 80.0)
@@ -139,7 +144,7 @@ struct ChatView: View {
                         Text(chatUser?.name ?? " ")
                             .foregroundColor(.white)
                             .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
-                        Text(getNicNameUsers() ?? L10n.General.unknown)
+                        Text(getNicNameUsers())
                             .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                             .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                     }
@@ -181,7 +186,6 @@ struct ChatView: View {
 //                            .frame(width: 60.0, height: 60.0)
 //                            .padding(.horizontal)
 //                    }
-                    
                 }
             }
         }) {
@@ -204,9 +208,7 @@ struct ChatView: View {
                     .padding(.trailing, 50.0)
                 
                 Spacer().frame(height: 25.0)
-                
-              
-                    
+
                     ForEach(viewModel.recentFile) { files in
                         Button(action: {
                             
@@ -240,23 +242,21 @@ struct ChatView: View {
                             .padding(.trailing, 50.0)
                         Spacer().frame(height: 20)
                     }
-            
-                
             }
             
         }
     }
     private func getNicNameUsers() -> String {
-        var index = viewModel.allContacts.startIndex
+        let index = viewModel.allContacts.startIndex
         guard let users = chatUser?.usersId else { return "" }
         //var users = chatUser?.usersId
-        var i = 0
+        //var i = 0
         var result = ""
         for userChatId in users {
             for userId in index ... viewModel.allContacts.endIndex - 1 {
                 if userChatId.hashValue == viewModel.allContacts[userId].id.hashValue {
                     result.append("@")
-                    result.append(viewModel.allContacts[userId].name ?? "")
+                    result.append(viewModel.allContacts[userId].nickname ?? "")
                     result.append(" ")
                     if users.count == 2 {
                         contact = viewModel.allContacts[userId]

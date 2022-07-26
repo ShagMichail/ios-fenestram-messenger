@@ -10,7 +10,7 @@ import SwiftUI
 struct ContactsRow: View {
     
     let contact: UserEntity
-    //var chat: [ChatEntity] = []
+    var chat: [ChatEntity] = []
     let haveChat: Bool
     
     var body: some View {
@@ -26,10 +26,10 @@ struct ContactsRow: View {
             
             Spacer()
             if haveChat {
-            NavigationLink(destination: CorrespondenceView(contact: contact)) {
-                Asset.chat.swiftUIImage
-                    .padding(.horizontal)
-            }
+                NavigationLink(destination: CorrespondenceView(contact: contact, chat: chat)) {
+                    Asset.chat.swiftUIImage
+                        .padding(.horizontal)
+                }
             }
         }
     }

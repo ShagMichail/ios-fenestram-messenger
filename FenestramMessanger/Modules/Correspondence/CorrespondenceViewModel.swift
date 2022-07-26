@@ -14,7 +14,10 @@ extension CorrespondenceView {
         @Published var chatList: [ChatEntity] = []
         @Published var textMessage: String = ""
         @Published var isLoading: Bool = false
-
+        
+        @Published var presentAlert = false
+        @Published var textTitleAlert = ""
+        @Published var textAlert = ""
         init() {
             getChatList()
         }
@@ -29,6 +32,9 @@ extension CorrespondenceView {
                     self?.chatList = chatList
                 case .failure(let error):
                     print("get chat list failure with error:", error.localizedDescription)
+                    self?.textTitleAlert = "get contacts failure with error"
+                    self?.textAlert = error.localizedDescription
+                    self?.presentAlert = true
                 }
                 
                 self?.isLoading = false
