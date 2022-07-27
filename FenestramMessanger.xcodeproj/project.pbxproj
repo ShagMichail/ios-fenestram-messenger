@@ -113,6 +113,8 @@
 		FC600B2228787E74001CA2BD /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC600B2128787E74001CA2BD /* ProfileViewModel.swift */; };
 		FC600B2528788E7F001CA2BD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC600B2428788E7F001CA2BD /* SettingsView.swift */; };
 		FC600B2728788E87001CA2BD /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC600B2628788E87001CA2BD /* SettingsViewModel.swift */; };
+		FC7A57102891990D00ABF7BF /* PageContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7A570F2891990D00ABF7BF /* PageContactView.swift */; };
+		FC7A57122891991B00ABF7BF /* PageContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7A57112891991B00ABF7BF /* PageContactViewModel.swift */; };
 		FCD305962885E6AB00491220 /* ChatBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD305952885E6AB00491220 /* ChatBottomSheetView.swift */; };
 		FCD305982886A1FD00491220 /* ChatBottomSheetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD305972886A1FD00491220 /* ChatBottomSheetModel.swift */; };
 		FCD3059A2886A61F00491220 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD305992886A61F00491220 /* File.swift */; };
@@ -239,6 +241,8 @@
 		FC600B2128787E74001CA2BD /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		FC600B2428788E7F001CA2BD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FC600B2628788E87001CA2BD /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		FC7A570F2891990D00ABF7BF /* PageContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContactView.swift; sourceTree = "<group>"; };
+		FC7A57112891991B00ABF7BF /* PageContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContactViewModel.swift; sourceTree = "<group>"; };
 		FCD305952885E6AB00491220 /* ChatBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBottomSheetView.swift; sourceTree = "<group>"; };
 		FCD305972886A1FD00491220 /* ChatBottomSheetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBottomSheetModel.swift; sourceTree = "<group>"; };
 		FCD305992886A61F00491220 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
@@ -390,6 +394,7 @@
 		BDDB5ADD2872ECAA002BF418 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				FC3A2B5828919895006E0948 /* Page Contact */,
 				FC3A2B532891745A006E0948 /* File */,
 				FCD3059E2886E66100491220 /* Correspondence */,
 				FC13AF43287EE76000784E35 /* Chat */,
@@ -662,6 +667,15 @@
 			path = File;
 			sourceTree = "<group>";
 		};
+		FC3A2B5828919895006E0948 /* Page Contact */ = {
+			isa = PBXGroup;
+			children = (
+				FC7A570F2891990D00ABF7BF /* PageContactView.swift */,
+				FC7A57112891991B00ABF7BF /* PageContactViewModel.swift */,
+			);
+			path = "Page Contact";
+			sourceTree = "<group>";
+		};
 		FC600B2028787E4F001CA2BD /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -898,6 +912,7 @@
 				FCF5A4352878AD2C0028FBD3 /* ContactsViewModel.swift in Sources */,
 				FC17787F2875919200B0D979 /* CodeViewModel.swift in Sources */,
 				FCF5A43B287DB5170028FBD3 /* OnboardingContainerView.swift in Sources */,
+				FC7A57122891991B00ABF7BF /* PageContactViewModel.swift in Sources */,
 				BDDB5ADF2872ECBC002BF418 /* MainView.swift in Sources */,
 				FC13AF45287EE78B00784E35 /* ChatViewModel.swift in Sources */,
 				FC3A2B522891743E006E0948 /* FileView.swift in Sources */,
@@ -944,6 +959,7 @@
 				BDDB5ADF2872ECBC002BF418 /* MainView.swift in Sources */,
 				BDF2E2D6287F1B1200B7E182 /* UserEntity.swift in Sources */,
 				BDF2E2EF287F29F800B7E182 /* MessageEntity.swift in Sources */,
+				FC7A57102891990D00ABF7BF /* PageContactView.swift in Sources */,
 				FCD305A2288968FD00491220 /* AlertView.swift in Sources */,
 				FC3A2B552891747C006E0948 /* FileViewModel.swift in Sources */,
 				BDF2E2D9287F1B1200B7E182 /* Settings.swift in Sources */,

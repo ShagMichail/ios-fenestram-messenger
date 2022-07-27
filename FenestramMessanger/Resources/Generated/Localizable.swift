@@ -29,6 +29,8 @@ internal enum L10n {
     internal static let emptyText = L10n.tr("Localizable", "chat_view.empty_text")
     /// Недавние файлы
     internal static let recentFiles = L10n.tr("Localizable", "chat_view.recent_files")
+    /// Изображения
+    internal static let recentImage = L10n.tr("Localizable", "chat_view.recent_image")
   }
 
   internal enum CodeView {

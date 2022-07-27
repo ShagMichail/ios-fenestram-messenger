@@ -12,6 +12,7 @@ struct CorrespondenceNavigationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var contact: UserEntity
     @AppStorage ("isColorThema") var isColorThema: Bool?
+    @State var showSheet = false
     
     var body: some View {
         ZStack {
@@ -40,22 +41,49 @@ struct CorrespondenceNavigationView: View {
     }
     
     var title : some View {
-        HStack {
-            Asset.photo.swiftUIImage
-                .resizable()
-                .frame(width: 40.0, height: 40.0)
-            
-            VStack(alignment: .leading) {
-                Text(contact.name ?? L10n.General.unknown)
-                    .foregroundColor(Color.white)
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+        Button {
+            self.showSheet.toggle()
+        } label: {
+            HStack {
+                Asset.photo.swiftUIImage
+                    .resizable()
+                    .frame(width: 40.0, height: 40.0)
                 
-                Text("В сети")
-                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
+                VStack(alignment: .leading) {
+                    Text(contact.name ?? L10n.General.unknown)
+                        .foregroundColor(Color.white)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                    
+                    Text("В сети")
+                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
+                    
+                }
                 
             }
+        }.sheet(isPresented: $showSheet) {
+            PageContactView(contact: contact)
         }
+//
+//        NavigationLink(destination: PageContactView(contact: contact).navigationBarHidden(true)) {
+//            HStack {
+//                Asset.photo.swiftUIImage
+//                    .resizable()
+//                    .frame(width: 40.0, height: 40.0)
+//
+//                VStack(alignment: .leading) {
+//                    Text(contact.name ?? L10n.General.unknown)
+//                        .foregroundColor(Color.white)
+//                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+//
+//                    Text("В сети")
+//                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+//                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
+//
+//                }
+//
+//            }
+//        }
     }
     
     var btnBell : some View {
