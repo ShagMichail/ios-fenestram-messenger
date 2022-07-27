@@ -57,6 +57,7 @@ struct FileView: View {
                             .padding(.trailing, 20.0)
                         Spacer().frame(height: 20)
                     }
+                
                 }
             }
         }

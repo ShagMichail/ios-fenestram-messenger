@@ -71,39 +71,38 @@ struct CorrespondenceView: View {
                         }.padding()
                     }
                     Spacer()
-                   
+                    
                     if $viewModel.allFoto.count != 0 {
-                        
-                        HStack {
-                          
-                                   
-                                    ForEach(viewModel.allFoto) { foto in
-                                        ZStack {
-                                            Image(uiImage: foto.image)
-                                                .resizable()
-                                                .frame(width: 48, height: 48)
-                                                .cornerRadius(12)
-                                            Button {
-                                                viewModel.allFoto = viewModel.allFoto.filter({ $0.id != foto.id })
-                                            } label: {
-                                                
-                                                ZStack {
-                                                    RoundedRectangle(cornerRadius: 30)
-                                                        .frame(width: 25, height: 25)
-                                                        .foregroundColor(Color.white)
-                                                    Image(systemName: "xmark")
-                                                        .foregroundColor(Color.black)
-                                                }.padding(.bottom, 35)
-
-                                            }
+                
+                            HStack {
+                                ForEach(viewModel.allFoto) { foto in
+                                    ZStack {
+                                        Image(uiImage: foto.image)
+                                            .resizable()
+                                            .frame(width: 48, height: 48)
+                                            .cornerRadius(12)
+                                        Button {
+                                            viewModel.allFoto = viewModel.allFoto.filter({ $0.id != foto.id })
+                                        } label: {
                                             
-                                        
-                                    }
-                                        
-                                
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 30)
+                                                    .frame(width: 25, height: 25)
+                                                    .foregroundColor(Color.white)
+                                                Image(systemName: "xmark")
+                                                    .foregroundColor(Color.black)
+                                            }.padding(.bottom, 45)
+                                            
+                                        }
+                                    
+                                }
                             }
-                        }.frame(width: UIScreen.screenWidth)
-                      
+                            
+                            
+                    }.padding(.bottom, -20)
+                            .padding(.leading, 15)
+                            .frame(width: UIScreen.screenWidth, alignment: .leading)
+                         
                     }
                     VStack {
                         ZStack {
