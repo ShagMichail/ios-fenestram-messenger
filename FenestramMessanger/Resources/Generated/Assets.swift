@@ -35,6 +35,7 @@ internal enum Asset {
   internal static let border = ColorAsset(name: "border")
   internal static let buttonAlert = ColorAsset(name: "buttonAlert")
   internal static let buttonDis = ColorAsset(name: "buttonDis")
+  internal static let defaultImage = ImageAsset(name: "defaultImage")
   internal static let edit = ImageAsset(name: "edit")
   internal static let file = ImageAsset(name: "file")
   internal static let fileText = ColorAsset(name: "fileText")

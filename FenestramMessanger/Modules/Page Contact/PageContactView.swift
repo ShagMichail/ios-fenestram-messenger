@@ -8,15 +8,20 @@
 import SwiftUI
 
 struct PageContactView: View {
+   // @GestureState private var dragOffset = CGSize.zero
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @StateObject private var viewModel: ViewModel
+    @Environment(\.presentationMode) var presentationMode//: Binding<PresentationMode>
     var contact: UserEntity
+   // @Binding var showModal: Bool
     
     init(contact: UserEntity) {
         _viewModel = StateObject(wrappedValue: ViewModel())
         self.contact = contact
+        //_showModal = showModal
     }
     var body: some View {
+      
         VStack{
             ZStack{
                 Asset.tabBar.swiftUIColor.ignoresSafeArea()
@@ -62,6 +67,8 @@ struct PageContactView: View {
                 }
                 }
             }
+        }.onBackSwipe {
+            presentationMode.wrappedValue.dismiss()
         }
         Spacer().frame(height: 0)
         ZStack {
@@ -77,11 +84,19 @@ struct PageContactView: View {
                             .foregroundColor(Asset.fileText.swiftUIColor)
                     }
                     Spacer()
+                 
                     NavigationLink(destination: FileView().navigationBarHidden(true)){
                         Image(systemName: "chevron.down")
                             .frame(width: 10, height: 10)
                             .foregroundColor(Asset.fileText.swiftUIColor)
                     }
+//
+//                    NavigationLink(destination: FileView().navigationBarHidden(true)){
+//                        self.showModal = false
+//                        Image(systemName: "chevron.down")
+//                            .frame(width: 10, height: 10)
+//                            .foregroundColor(Asset.fileText.swiftUIColor)
+//                    }
 
 //                    Button {
 //                        <#code#>
@@ -128,9 +143,11 @@ struct PageContactView: View {
                         }
                     }).padding(.leading, 35.0)
                         .padding(.trailing, 50.0)
-                    Spacer().frame(height: 20)
+                    //Spacer().frame(height: 20)
                 }
             }
+        }.onBackSwipe {
+            presentationMode.wrappedValue.dismiss()
         }
         Spacer().frame(height: 0)
         ZStack {
@@ -141,55 +158,82 @@ struct PageContactView: View {
                         Text(L10n.ChatView.recentImage)
                             .font(.system(size: 14))
                             .foregroundColor(.white)
-                        Text("\(viewModel.allFiles.count) изображений")
+                        Text("\(viewModel.allPhoto.count) изображений")
                             .font(.system(size: 12))
                             .foregroundColor(Asset.fileText.swiftUIColor)
                     }
                     Spacer()
-                    Image(systemName: "chevron.down")
-                        .frame(width: 10, height: 10)
-                        .foregroundColor(Asset.fileText.swiftUIColor)
+                    NavigationLink(destination: ImagesView(images: viewModel.allPhoto).navigationBarHidden(true)){
+                        Image(systemName: "chevron.down")
+                            .frame(width: 10, height: 10)
+                            .foregroundColor(Asset.fileText.swiftUIColor)
+                    }
                 }.padding(.leading, 50.0)
                     .padding(.trailing, 50.0)
                 
-                Spacer().frame(height: 25.0)
+                Spacer().frame(height: 15.0)
                 
-                ForEach(viewModel.recentFile) { files in
-                    Button(action: {
-                        
-                    }, label: {
-                        HStack {
-                            Asset.file.swiftUIImage
-                                .resizable()
-                                .frame(width: 20.0, height: 20.0)
-                                .padding(.horizontal)
-                            Text(files.title)
-                                .font(.system(size: 14))
-                                .foregroundColor(Asset.fileText.swiftUIColor)
-                            Spacer()
+                HStack {
+                    ForEach(viewModel.recentPhotoFirst) { photo in
+                        Button(action: {
+                            
+                        }, label: {
+                            
                             HStack {
-                                Image(systemName: "circle.fill")
-                                    .font(.system(size: 2))
-                                    .foregroundColor(Asset.fileText.swiftUIColor)
-                                Spacer()
-                                    .frame(width: 3.0)
-                                Image(systemName: "circle.fill")
-                                    .font(.system(size: 2))
-                                    .foregroundColor(Asset.fileText.swiftUIColor)
-                                Spacer()
-                                    .frame(width: 3.0)
-                                Image(systemName: "circle.fill")
-                                    .font(.system(size: 2))
-                                    .foregroundColor(Asset.fileText.swiftUIColor)
+                                Image(uiImage: photo.image)
+                                    .resizable()
+                                    .frame(width: 90, height: 90, alignment: .leading)
+                                    .cornerRadius(15)
                             }
-                        }
-                    }).padding(.leading, 35.0)
-                        .padding(.trailing, 50.0)
-                    Spacer().frame(height: 20)
+                        })
+                        Spacer().frame(width: 10)
+                    }
                 }
-            }
+                HStack {
+                    ForEach(viewModel.recentPhotoSecond) { photo in
+                        
+                        Button(action: {
+                            
+                        }, label: {
+                            
+                            HStack {
+                                if photo.id == 5 && viewModel.allPhoto.count > 6 {
+                                    ZStack {
+                                        Image(uiImage: photo.image)
+                                            .resizable()
+                                            .frame(width: 90, height: 90, alignment: .leading)
+                                            .cornerRadius(15)
+                                            
+                                        ZStack{
+                                            RoundedRectangle(cornerRadius: 15)
+                                                .frame(width: 90, height: 90)
+                                                .foregroundColor(Color.primary.opacity(0.35))
+                                        Text("\(viewModel.allPhoto.count - 6)+")
+                                            .foregroundColor(Color.white)
+                                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 24))
+                                        }
+                                    }
+
+                                } else {
+                                    
+                                    Image(uiImage: photo.image)
+                                        .resizable()
+                                        .frame(width: 90, height: 90, alignment: .leading)
+                                        .cornerRadius(15)
+                                }
+                                
+                            }
+                        })
+                        Spacer().frame(width: 10)
+                    }
+                }
+            }.padding(.bottom, 20)
+        }.onBackSwipe {
+            presentationMode.wrappedValue.dismiss()
         }
+        
     }
+        
 }
 
 //struct PageContactView_Previews: PreviewProvider {

@@ -41,8 +41,9 @@ struct CorrespondenceNavigationView: View {
     }
     
     var title : some View {
-        Button {
-            self.showSheet.toggle()
+        NavigationLink {
+            PageContactView(contact: contact).navigationBarHidden(true)
+            //self.showSheet.toggle()
         } label: {
             HStack {
                 Asset.photo.swiftUIImage
@@ -61,9 +62,10 @@ struct CorrespondenceNavigationView: View {
                 }
                 
             }
-        }.sheet(isPresented: $showSheet) {
-            PageContactView(contact: contact)
         }
+//        }.sheet(isPresented: $showSheet) {
+//            PageContactView(contact: contact, showModal: self.$showSheet)
+//        }
 //
 //        NavigationLink(destination: PageContactView(contact: contact).navigationBarHidden(true)) {
 //            HStack {

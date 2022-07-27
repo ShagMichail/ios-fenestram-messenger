@@ -115,6 +115,8 @@
 		FC600B2728788E87001CA2BD /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC600B2628788E87001CA2BD /* SettingsViewModel.swift */; };
 		FC7A57102891990D00ABF7BF /* PageContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7A570F2891990D00ABF7BF /* PageContactView.swift */; };
 		FC7A57122891991B00ABF7BF /* PageContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7A57112891991B00ABF7BF /* PageContactViewModel.swift */; };
+		FC7A57152891AE3A00ABF7BF /* ImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7A57142891AE3A00ABF7BF /* ImagesView.swift */; };
+		FC7A57172891AE5700ABF7BF /* ImagesNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7A57162891AE5700ABF7BF /* ImagesNavigationView.swift */; };
 		FCD305962885E6AB00491220 /* ChatBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD305952885E6AB00491220 /* ChatBottomSheetView.swift */; };
 		FCD305982886A1FD00491220 /* ChatBottomSheetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD305972886A1FD00491220 /* ChatBottomSheetModel.swift */; };
 		FCD3059A2886A61F00491220 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD305992886A61F00491220 /* File.swift */; };
@@ -243,6 +245,8 @@
 		FC600B2628788E87001CA2BD /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		FC7A570F2891990D00ABF7BF /* PageContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContactView.swift; sourceTree = "<group>"; };
 		FC7A57112891991B00ABF7BF /* PageContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContactViewModel.swift; sourceTree = "<group>"; };
+		FC7A57142891AE3A00ABF7BF /* ImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesView.swift; sourceTree = "<group>"; };
+		FC7A57162891AE5700ABF7BF /* ImagesNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesNavigationView.swift; sourceTree = "<group>"; };
 		FCD305952885E6AB00491220 /* ChatBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBottomSheetView.swift; sourceTree = "<group>"; };
 		FCD305972886A1FD00491220 /* ChatBottomSheetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBottomSheetModel.swift; sourceTree = "<group>"; };
 		FCD305992886A61F00491220 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
@@ -367,6 +371,7 @@
 				FC3A2B4028902DDE006E0948 /* CorrespondenceNavigationView.swift */,
 				FC3A2B42289032ED006E0948 /* MessageStyleView.swift */,
 				FC3A2B56289174EF006E0948 /* FileNavigationView.swift */,
+				FC7A57162891AE5700ABF7BF /* ImagesNavigationView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -394,6 +399,7 @@
 		BDDB5ADD2872ECAA002BF418 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				FC7A57132891AE2D00ABF7BF /* Images */,
 				FC3A2B5828919895006E0948 /* Page Contact */,
 				FC3A2B532891745A006E0948 /* File */,
 				FCD3059E2886E66100491220 /* Correspondence */,
@@ -694,6 +700,14 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		FC7A57132891AE2D00ABF7BF /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				FC7A57142891AE3A00ABF7BF /* ImagesView.swift */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		FCD3059E2886E66100491220 /* Correspondence */ = {
 			isa = PBXGroup;
 			children = (
@@ -935,11 +949,13 @@
 				FC1EA8FF287F3CE10027107E /* SplashScreen.swift in Sources */,
 				FCD305982886A1FD00491220 /* ChatBottomSheetModel.swift in Sources */,
 				FC177873287583BA00B0D979 /* ImagePicker.swift in Sources */,
+				FC7A57172891AE5700ABF7BF /* ImagesNavigationView.swift in Sources */,
 				FC17787C2875913F00B0D979 /* PhoneViewModel.swift in Sources */,
 				FCEE88262874400700268971 /* CodeView.swift in Sources */,
 				BDDB5AE12872ECE2002BF418 /* MainViewModel.swift in Sources */,
 				BDE74BC4288030DE00F4A775 /* Fonts.swift in Sources */,
 				FCD305962885E6AB00491220 /* ChatBottomSheetView.swift in Sources */,
+				FC7A57152891AE3A00ABF7BF /* ImagesView.swift in Sources */,
 				FC600B2528788E7F001CA2BD /* SettingsView.swift in Sources */,
 				BDF2E2EA287F26E300B7E182 /* ChatEntity.swift in Sources */,
 				BDF2E2D4287F1B1200B7E182 /* RequestFactory.swift in Sources */,

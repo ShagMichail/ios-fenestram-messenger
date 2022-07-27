@@ -11,7 +11,8 @@ extension PageContactView {
     @MainActor
     final class ViewModel: ObservableObject {
 
-    
+        
+        var index = 0
         
         @Published var isLoading: Bool = false
         
@@ -26,17 +27,60 @@ extension PageContactView {
         
         @Published var recentFile: [File] = []
         
+        @Published var allPhoto: [PhotoEntity] = [
+            PhotoEntity(id: 0, image: Asset.defaultImage.image),
+            PhotoEntity(id: 1, image: Asset.defaultImage.image),
+            PhotoEntity(id: 2, image: Asset.defaultImage.image),
+            PhotoEntity(id: 3, image: Asset.defaultImage.image),
+            PhotoEntity(id: 4, image: Asset.defaultImage.image),
+            PhotoEntity(id: 5, image: Asset.defaultImage.image),
+            PhotoEntity(id: 6, image: Asset.defaultImage.image),
+            PhotoEntity(id: 7, image: Asset.defaultImage.image),
+            PhotoEntity(id: 8, image: Asset.defaultImage.image),
+            PhotoEntity(id: 9, image: Asset.defaultImage.image),
+            PhotoEntity(id: 10, image: Asset.defaultImage.image),
+        ]
+        
+        @Published var recentPhotoFirst: [PhotoEntity] = []
+        @Published var recentPhotoSecond: [PhotoEntity] = []
+        
         init() {
             fillterFile()
+            fillterPhotoFirst()
+            fillterPhotoSecond()
         }
         
 
         private func fillterFile() {
             let files = allFiles
-            var index = files.endIndex - 3
+            var index = 0
             if files.count > 3  {
                 for _ in 0...2  {
                     recentFile.append(files[index])
+                    index += 1
+                }
+                
+            }
+            
+        }
+        
+        private func fillterPhotoFirst() {
+            let files = allPhoto
+            if files.count > 0  {
+                for _ in 0...2  {
+                    recentPhotoFirst.append(files[index])
+                    index += 1
+                }
+                
+            }
+            
+        }
+        
+        private func fillterPhotoSecond() {
+            let files = allPhoto
+            if files.count > 3  {
+                for _ in 0...2  {
+                    recentPhotoSecond.append(files[index])
                     index += 1
                 }
                 
