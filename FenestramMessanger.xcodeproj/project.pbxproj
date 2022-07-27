@@ -106,6 +106,10 @@
 		FC1EA90228855CEF0027107E /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1EA90128855CEF0027107E /* ChatRow.swift */; };
 		FC3A2B4128902DDE006E0948 /* CorrespondenceNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B4028902DDE006E0948 /* CorrespondenceNavigationView.swift */; };
 		FC3A2B43289032ED006E0948 /* MessageStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B42289032ED006E0948 /* MessageStyleView.swift */; };
+		FC3A2B5028917348006E0948 /* PhotoEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B4F28917348006E0948 /* PhotoEntity.swift */; };
+		FC3A2B522891743E006E0948 /* FileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B512891743E006E0948 /* FileView.swift */; };
+		FC3A2B552891747C006E0948 /* FileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B542891747C006E0948 /* FileViewModel.swift */; };
+		FC3A2B57289174EF006E0948 /* FileNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B56289174EF006E0948 /* FileNavigationView.swift */; };
 		FC600B2228787E74001CA2BD /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC600B2128787E74001CA2BD /* ProfileViewModel.swift */; };
 		FC600B2528788E7F001CA2BD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC600B2428788E7F001CA2BD /* SettingsView.swift */; };
 		FC600B2728788E87001CA2BD /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC600B2628788E87001CA2BD /* SettingsViewModel.swift */; };
@@ -228,6 +232,10 @@
 		FC1EA90128855CEF0027107E /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
 		FC3A2B4028902DDE006E0948 /* CorrespondenceNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrespondenceNavigationView.swift; sourceTree = "<group>"; };
 		FC3A2B42289032ED006E0948 /* MessageStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStyleView.swift; sourceTree = "<group>"; };
+		FC3A2B4F28917348006E0948 /* PhotoEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEntity.swift; sourceTree = "<group>"; };
+		FC3A2B512891743E006E0948 /* FileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileView.swift; sourceTree = "<group>"; };
+		FC3A2B542891747C006E0948 /* FileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileViewModel.swift; sourceTree = "<group>"; };
+		FC3A2B56289174EF006E0948 /* FileNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNavigationView.swift; sourceTree = "<group>"; };
 		FC600B2128787E74001CA2BD /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		FC600B2428788E7F001CA2BD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FC600B2628788E87001CA2BD /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -354,6 +362,7 @@
 				FCD305A1288968FC00491220 /* AlertView.swift */,
 				FC3A2B4028902DDE006E0948 /* CorrespondenceNavigationView.swift */,
 				FC3A2B42289032ED006E0948 /* MessageStyleView.swift */,
+				FC3A2B56289174EF006E0948 /* FileNavigationView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -381,6 +390,7 @@
 		BDDB5ADD2872ECAA002BF418 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				FC3A2B532891745A006E0948 /* File */,
 				FCD3059E2886E66100491220 /* Correspondence */,
 				FC13AF43287EE76000784E35 /* Chat */,
 				FC13AF40287ECEC500784E35 /* New Contact */,
@@ -512,6 +522,7 @@
 				BDF2E2E9287F26E300B7E182 /* ChatEntity.swift */,
 				BDF2E2EE287F29F800B7E182 /* MessageEntity.swift */,
 				BDB5DAB62888129B0057966B /* BaseResponseEntity.swift */,
+				FC3A2B4F28917348006E0948 /* PhotoEntity.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -640,6 +651,15 @@
 				FCD305952885E6AB00491220 /* ChatBottomSheetView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		FC3A2B532891745A006E0948 /* File */ = {
+			isa = PBXGroup;
+			children = (
+				FC3A2B512891743E006E0948 /* FileView.swift */,
+				FC3A2B542891747C006E0948 /* FileViewModel.swift */,
+			);
+			path = File;
 			sourceTree = "<group>";
 		};
 		FC600B2028787E4F001CA2BD /* Profile */ = {
@@ -880,6 +900,7 @@
 				FCF5A43B287DB5170028FBD3 /* OnboardingContainerView.swift in Sources */,
 				BDDB5ADF2872ECBC002BF418 /* MainView.swift in Sources */,
 				FC13AF45287EE78B00784E35 /* ChatViewModel.swift in Sources */,
+				FC3A2B522891743E006E0948 /* FileView.swift in Sources */,
 				FCF5A43028789CC90028FBD3 /* ContactsRow.swift in Sources */,
 				FC13AF42287ECEE100784E35 /* NewContactViewModel.swift in Sources */,
 				FC600B2728788E87001CA2BD /* SettingsViewModel.swift in Sources */,
@@ -895,6 +916,7 @@
 				FC1778B42876E25C00B0D979 /* Feature.swift in Sources */,
 				FC1778E12877639800B0D979 /* MainTabView.swift in Sources */,
 				BDE74B9B28801F8E00F4A775 /* Asset+Extensions.swift in Sources */,
+				FC3A2B5028917348006E0948 /* PhotoEntity.swift in Sources */,
 				FC1EA8FF287F3CE10027107E /* SplashScreen.swift in Sources */,
 				FCD305982886A1FD00491220 /* ChatBottomSheetModel.swift in Sources */,
 				FC177873287583BA00B0D979 /* ImagePicker.swift in Sources */,
@@ -910,6 +932,7 @@
 				BDF2E2E6287F217D00B7E182 /* ChatRequestFactory.swift in Sources */,
 				BDF2E2D5287F1B1200B7E182 /* AuthRequestFactory.swift in Sources */,
 				BDF2E2D1287F1B1200B7E182 /* ProfileRequestRouter.swift in Sources */,
+				FC3A2B57289174EF006E0948 /* FileNavigationView.swift in Sources */,
 				FCD3059A2886A61F00491220 /* File.swift in Sources */,
 				BDF2E2DD287F1C0600B7E182 /* ProfileRequestFactory.swift in Sources */,
 				BD980FC02881767C0050F8B4 /* SocketIOManager.swift in Sources */,
@@ -922,6 +945,7 @@
 				BDF2E2D6287F1B1200B7E182 /* UserEntity.swift in Sources */,
 				BDF2E2EF287F29F800B7E182 /* MessageEntity.swift in Sources */,
 				FCD305A2288968FD00491220 /* AlertView.swift in Sources */,
+				FC3A2B552891747C006E0948 /* FileViewModel.swift in Sources */,
 				BDF2E2D9287F1B1200B7E182 /* Settings.swift in Sources */,
 				BDF2E2E4287F207000B7E182 /* ChatRequestRouter.swift in Sources */,
 				BDF2E2E8287F225F00B7E182 /* ChatService.swift in Sources */,

@@ -25,6 +25,8 @@ struct CorrespondenceView: View {
     var message: String = ""
     var allMessage: [MessageEntity] = []
     
+    @State private var sourceType: UIImagePickerController.SourceType = .camera
+    
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -69,10 +71,42 @@ struct CorrespondenceView: View {
                         }.padding()
                     }
                     Spacer()
-                    
+                   
+                    if $viewModel.allFoto.count != 0 {
+                        
+                        HStack {
+                          
+                                   
+                                    ForEach(viewModel.allFoto) { foto in
+                                        ZStack {
+                                            Image(uiImage: foto.image)
+                                                .resizable()
+                                                .frame(width: 48, height: 48)
+                                                .cornerRadius(12)
+                                            Button {
+                                                viewModel.allFoto = viewModel.allFoto.filter({ $0.id != foto.id })
+                                            } label: {
+                                                
+                                                ZStack {
+                                                    RoundedRectangle(cornerRadius: 30)
+                                                        .frame(width: 25, height: 25)
+                                                        .foregroundColor(Color.white)
+                                                    Image(systemName: "xmark")
+                                                        .foregroundColor(Color.black)
+                                                }.padding(.bottom, 35)
+
+                                            }
+                                            
+                                        
+                                    }
+                                        
+                                
+                            }
+                        }.frame(width: UIScreen.screenWidth)
+                      
+                    }
                     VStack {
                         ZStack {
-                            
                             HStack{
                                 Button {
                                     bottomSheetPosition = .bottom
@@ -118,6 +152,8 @@ struct CorrespondenceView: View {
                 }
                 
             }
+            .sheet(isPresented: $viewModel.showImagePicker) {
+                ImagePicker(image: $viewModel.image, isShown: $viewModel.showImagePicker, sourceType: self.sourceType)}
             
             .navigationBarHidden(true)
             
@@ -130,9 +166,7 @@ struct CorrespondenceView: View {
                     
                     HStack {
                         VStack {
-                            Button {
-                                print("fff")
-                            } label: {
+                            NavigationLink(destination: FileView().navigationBarHidden(true)) {
                                 Asset.fileCor.swiftUIImage
                                     .resizable()
                                     .frame(width: 60.0, height: 60.0)
@@ -140,14 +174,17 @@ struct CorrespondenceView: View {
                             }
                             Text(L10n.CorrespondenceView.file)
                                 .foregroundColor(Color.white)
-                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                         }
+                        
                         
                         Spacer().frame(width: 35.0)
                         
                         VStack {
                             Button {
-                                print("fff")
+                                viewModel.showImagePicker = true
+                                self.sourceType = .photoLibrary
+                                bottomSheetPosition = .hidden
                             } label: {
                                 Asset.imageCor.swiftUIImage
                                     .resizable()
@@ -156,12 +193,14 @@ struct CorrespondenceView: View {
                             }
                             Text(L10n.CorrespondenceView.image)
                                 .foregroundColor(Color.white)
-                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                         }
                         Spacer().frame(width: 35.0)
                         VStack {
                             Button {
-                                print("fff")
+                                viewModel.showImagePicker = true
+                                self.sourceType = .camera
+                                bottomSheetPosition = .hidden
                             } label: {
                                 Asset.fotoCor.swiftUIImage
                                     .resizable()
@@ -170,7 +209,7 @@ struct CorrespondenceView: View {
                             }
                             Text(L10n.CorrespondenceView.foto)
                                 .foregroundColor(Color.white)
-                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                         }
                         //                    NavigationLink(destination: CorrespondenceView(contact: contact!)) {
                         //                        Asset.messageIcon.swiftUIImage

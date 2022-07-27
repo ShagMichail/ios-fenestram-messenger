@@ -15,9 +15,21 @@ extension CorrespondenceView {
         @Published var textMessage: String = ""
         @Published var isLoading: Bool = false
         
+        @Published var showSheet: Bool = false
+        @Published var showImagePicker: Bool = false
+        
+        @Published var image: UIImage? {
+            didSet {
+                appendPhoto()
+            }
+        }
+
         @Published var presentAlert = false
         @Published var textTitleAlert = ""
         @Published var textAlert = ""
+        
+        @Published var allFoto: [PhotoEntity] = []
+        
         init() {
             getChatList()
         }
@@ -39,6 +51,12 @@ extension CorrespondenceView {
                 
                 self?.isLoading = false
             }
+        }
+        
+        private func appendPhoto() {
+            guard let foto = image else { return }
+            allFoto.append(PhotoEntity(id: allFoto.endIndex, image: foto))
+            image = nil
         }
     
     }
