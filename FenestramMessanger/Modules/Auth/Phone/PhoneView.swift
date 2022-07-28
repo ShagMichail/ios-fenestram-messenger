@@ -14,6 +14,8 @@ struct PhoneView: View {
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @State private var keyboardHeight: CGFloat = 0
     let maskPhone = "+X XXX XXX-XX-XX"
+    @AppStorage("isPhoneUser") var isPhoneUser: String?
+    
     @StateObject private var viewModel: ViewModel
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
@@ -83,6 +85,9 @@ struct PhoneView: View {
             } label: {
                 Button(action: {
                     viewModel.checkCode()
+                    if viewModel.numberCount {
+                        isPhoneUser = viewModel.textPhone
+                    }
                 }) {
                     Text(L10n.PhoneView.sendCode)
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)

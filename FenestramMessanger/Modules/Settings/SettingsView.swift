@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
     @AppStorage ("isColorThema") var isColorThema: Bool?
+    @AppStorage("isCodeUser") var isCodeUser: String?
+    @AppStorage("isPhoneUser") var isPhoneUser: String?
     @StateObject private var viewModel: ViewModel
     @State var colorThema = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -121,14 +123,20 @@ struct SettingsView: View {
                 }
                 Spacer().frame(height: 40)
                 HStack{
-                    Asset.exit.swiftUIImage
-                        .resizable()
-                        .frame(width: 22.0, height: 22.0)
-                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                    Text(L10n.SettingsView.exit)
-                        .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
-                        .foregroundColor(Color.white)
-                        .padding(.leading)
+                    Button {
+                        viewModel.out(phone: isPhoneUser ?? "", code: isCodeUser ?? "")
+                    } label: {
+                        Asset.exit.swiftUIImage
+                            .resizable()
+                            .frame(width: 22.0, height: 22.0)
+                            .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                        Text(L10n.SettingsView.exit)
+                            .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
+                            .foregroundColor(Color.white)
+                            .padding(.leading)
+                    }
+
+                    
                 }
                 Spacer()
             }.padding()

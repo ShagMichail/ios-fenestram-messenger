@@ -16,6 +16,8 @@ extension CodeView {
         @Published public var showAccountView = false
         @Published public var errorCode = false
         
+        @Published public var okCode = false
+        
         private let phoneNumber: String
         
         @Published var presentAlert = false
@@ -40,6 +42,7 @@ extension CodeView {
                     do {
                         try AuthController.signIn(.init(from: userWithToken), token: userWithToken.accessToken)
                         print("sign in success")
+                        self?.okCode = true
                     }
                     catch let error {
 
@@ -50,9 +53,9 @@ extension CodeView {
                     }
                 case .failure(let error):
                     print("login failure with error: ", error.localizedDescription)
-                    self?.textTitleAlert = "login failure with error"
-                    self?.textAlert = error.localizedDescription
-                    self?.presentAlert = true
+//                    self?.textTitleAlert = "login failure with error"
+//                    self?.textAlert = error.localizedDescription
+//                    self?.presentAlert = true
                     self?.errorCode = true
                 }
             }

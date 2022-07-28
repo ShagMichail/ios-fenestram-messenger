@@ -13,6 +13,7 @@ struct CodeView: View {
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @State private var keyboardHeight: CGFloat = 0
     let maskCode = "XXXX"
+    @AppStorage("isCodeUser") var isCodeUser: String?
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel: ViewModel
     
@@ -123,6 +124,9 @@ struct CodeView: View {
             } label: {
                 Button(action: {
                     viewModel.login()
+                    if viewModel.textCode.count == 4 {
+                        isCodeUser = viewModel.textCode
+                    }
                 }) {
                     Text(L10n.General.done)
                         .frame(width: UIScreen.screenWidth - 30, height: 45.0)
