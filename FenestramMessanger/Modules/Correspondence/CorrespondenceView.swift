@@ -161,15 +161,24 @@ struct CorrespondenceView: View {
             }
             .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: [.noDragIndicator, .allowContentDrag, .swipeToDismiss, .tapToDismiss, .absolutePositionValue, .background({ AnyView(Asset.buttonAlert.swiftUIColor) }), .cornerRadius(30)], headerContent: {
                 //The name of the book as the heading and the author as the subtitle with a divider.
-                VStack {
+                //VStack(alignment: .center) {
                     
                     HStack {
-                        VStack {
+                        Spacer()
+                        VStack(alignment: .center) {
                             NavigationLink(destination: FileView().navigationBarHidden(true)) {
-                                Asset.fileCor.swiftUIImage
-                                    .resizable()
-                                    .frame(width: 60.0, height: 60.0)
-                                    .padding(.horizontal)
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 30)
+                                        .frame(width: 60, height: 60, alignment: .center)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 30)
+                                                .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
+                                        )
+                                        .foregroundColor(Asset.buttonAlert.swiftUIColor)
+                                    Asset.fileButton.swiftUIImage
+                                        .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                                    
+                                }
                             }
                             Text(L10n.CorrespondenceView.file)
                                 .foregroundColor(Color.white)
@@ -177,7 +186,7 @@ struct CorrespondenceView: View {
                         }
                         
                         
-                        Spacer().frame(width: 35.0)
+                        Spacer()//.frame(width: 54.0)
                         
                         VStack {
                             Button {
@@ -185,39 +194,50 @@ struct CorrespondenceView: View {
                                 self.sourceType = .photoLibrary
                                 bottomSheetPosition = .hidden
                             } label: {
-                                Asset.imageCor.swiftUIImage
-                                    .resizable()
-                                    .frame(width: 60.0, height: 60.0)
-                                    .padding(.horizontal)
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 30)
+                                        .frame(width: 60, height: 60, alignment: .center)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 30)
+                                                .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
+                                        )
+                                        .foregroundColor(Asset.buttonAlert.swiftUIColor)
+                                    Asset.imageButton.swiftUIImage
+                                        .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                                    
+                                }
                             }
                             Text(L10n.CorrespondenceView.image)
                                 .foregroundColor(Color.white)
                                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                         }
-                        Spacer().frame(width: 35.0)
+                        Spacer()//.frame(width: 54.0)
                         VStack {
                             Button {
                                 viewModel.showImagePicker = true
                                 self.sourceType = .camera
                                 bottomSheetPosition = .hidden
                             } label: {
-                                Asset.fotoCor.swiftUIImage
-                                    .resizable()
-                                    .frame(width: 60.0, height: 60.0)
-                                    .padding(.horizontal)
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 30)
+                                        .frame(width: 60, height: 60, alignment: .center)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 30)
+                                                .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
+                                        )
+                                        .foregroundColor(Asset.buttonAlert.swiftUIColor)
+                                    Asset.phoneButton.swiftUIImage
+                                        .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                                    
+                                }
                             }
                             Text(L10n.CorrespondenceView.foto)
                                 .foregroundColor(Color.white)
                                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                         }
-                        //                    NavigationLink(destination: CorrespondenceView(contact: contact!)) {
-                        //                        Asset.messageIcon.swiftUIImage
-                        //                            .resizable()
-                        //                            .frame(width: 60.0, height: 60.0)
-                        //                            .padding(.horizontal)
-                        //                    }
-                    }
-                }
+                        Spacer()
+                    }//.padding(.horizontal, (UIScreen.screenWidth - 288)/3)
+                //  }
             }) {
                 //A short introduction to the book, with a "Read More" button and a "Bookmark" button.
                 

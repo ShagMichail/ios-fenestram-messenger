@@ -155,30 +155,54 @@ struct ChatView: View {
                     Button {
                         print("fff")
                     } label: {
-                        Asset.video.swiftUIImage
-                            .resizable()
-                            .frame(width: 60.0, height: 60.0)
-                            .padding(.horizontal)
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 30)
+                                .frame(width: 60, height: 60, alignment: .center)
+                                .overlay(
+                                            RoundedRectangle(cornerRadius: 30)
+                                                .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
+                                        )
+                                .foregroundColor(Asset.buttonAlert.swiftUIColor)
+                            Asset.videoButton.swiftUIImage
+                                .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                            
+                        }
                     }
                     
-                    Spacer().frame(width: 35.0)
+                    Spacer().frame(width: 54.0)
                     
                     Button {
                         print("fff")
                     } label: {
-                        Asset.phone.swiftUIImage
-                            .resizable()
-                            .frame(width: 60.0, height: 60.0)
-                            .padding(.horizontal)
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 30)
+                                .frame(width: 60, height: 60, alignment: .center)
+                                .overlay(
+                                            RoundedRectangle(cornerRadius: 30)
+                                                .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
+                                        )
+                                .foregroundColor(Asset.buttonAlert.swiftUIColor)
+                            Asset.phoneButton.swiftUIImage
+                                .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                            
+                        }
                     }
-                    Spacer().frame(width: 35.0)
+                    Spacer().frame(width: 54.0)
                     Button {
                         print("fff")
                     } label: {
-                        Asset.messageIcon.swiftUIImage
-                            .resizable()
-                            .frame(width: 60.0, height: 60.0)
-                            .padding(.horizontal)
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 30)
+                                .frame(width: 60, height: 60, alignment: .center)
+                                .overlay(
+                                            RoundedRectangle(cornerRadius: 30)
+                                                .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
+                                        )
+                                .foregroundColor(Asset.buttonAlert.swiftUIColor)
+                            Asset.messageButton.swiftUIImage
+                                .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                            
+                        }
                     }
 //                    NavigationLink(destination: CorrespondenceView(contact: contact!)) {
 //                        Asset.messageIcon.swiftUIImage

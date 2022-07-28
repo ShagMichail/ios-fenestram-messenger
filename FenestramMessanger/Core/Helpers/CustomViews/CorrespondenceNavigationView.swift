@@ -94,9 +94,22 @@ struct CorrespondenceNavigationView: View {
                 
             }) {
                 HStack {
-                    Asset.video.swiftUIImage
-                        .resizable()
-                        .frame(width: 40.0, height: 40.0)
+//                    Asset.video.swiftUIImage
+//                        .resizable()
+//                        .frame(width: 40.0, height: 40.0)
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 30)
+                            .frame(width: 40, height: 40, alignment: .center)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 30)
+                                    .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
+                            )
+                            .foregroundColor(Asset.buttonAlert.swiftUIColor)
+                        Asset.videoButtonSmall.swiftUIImage
+                            .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                            //.frame(width: 20, height: 20, alignment: .center)
+                        
+                    }
                 }
             }
             
@@ -104,9 +117,22 @@ struct CorrespondenceNavigationView: View {
                 
             }) {
                 HStack {
-                    Asset.phone.swiftUIImage
-                        .resizable()
-                        .frame(width: 40.0, height: 40.0)
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 30)
+                            .frame(width: 40, height: 40, alignment: .center)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 30)
+                                    .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
+                            )
+                            .foregroundColor(Asset.buttonAlert.swiftUIColor)
+                        Asset.phoneButtonSmall.swiftUIImage
+                            .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                            //.frame(width: 15, height: 15, alignment: .center)
+                        
+                    }
+//                    Asset.phone.swiftUIImage
+//                        .resizable()
+//                        .frame(width: 40.0, height: 40.0)
                 }
             }
         }
