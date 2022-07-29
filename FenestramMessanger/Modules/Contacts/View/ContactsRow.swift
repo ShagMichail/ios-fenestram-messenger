@@ -10,7 +10,7 @@ import SwiftUI
 struct ContactsRow: View {
     
     let contact: UserEntity
-    var chat: [ChatEntity] = []
+    var chat: ChatEntity?
     let haveChat: Bool
     
     var body: some View {

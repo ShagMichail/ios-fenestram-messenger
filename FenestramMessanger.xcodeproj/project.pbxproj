@@ -104,6 +104,7 @@
 		FC1778E12877639800B0D979 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778E02877639800B0D979 /* MainTabView.swift */; };
 		FC1EA8FF287F3CE10027107E /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1EA8FE287F3CE10027107E /* SplashScreen.swift */; };
 		FC1EA90228855CEF0027107E /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1EA90128855CEF0027107E /* ChatRow.swift */; };
+		FC305CC22892DC61001ED651 /* CodeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC305CC12892DC61001ED651 /* CodeEntity.swift */; };
 		FC3A2B4128902DDE006E0948 /* CorrespondenceNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B4028902DDE006E0948 /* CorrespondenceNavigationView.swift */; };
 		FC3A2B43289032ED006E0948 /* MessageStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B42289032ED006E0948 /* MessageStyleView.swift */; };
 		FC3A2B5028917348006E0948 /* PhotoEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B4F28917348006E0948 /* PhotoEntity.swift */; };
@@ -234,6 +235,7 @@
 		FC1778E02877639800B0D979 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		FC1EA8FE287F3CE10027107E /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		FC1EA90128855CEF0027107E /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
+		FC305CC12892DC61001ED651 /* CodeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEntity.swift; sourceTree = "<group>"; };
 		FC3A2B4028902DDE006E0948 /* CorrespondenceNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrespondenceNavigationView.swift; sourceTree = "<group>"; };
 		FC3A2B42289032ED006E0948 /* MessageStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStyleView.swift; sourceTree = "<group>"; };
 		FC3A2B4F28917348006E0948 /* PhotoEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEntity.swift; sourceTree = "<group>"; };
@@ -534,6 +536,7 @@
 				BDF2E2EE287F29F800B7E182 /* MessageEntity.swift */,
 				BDB5DAB62888129B0057966B /* BaseResponseEntity.swift */,
 				FC3A2B4F28917348006E0948 /* PhotoEntity.swift */,
+				FC305CC12892DC61001ED651 /* CodeEntity.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -963,6 +966,7 @@
 				BDF2E2E6287F217D00B7E182 /* ChatRequestFactory.swift in Sources */,
 				BDF2E2D5287F1B1200B7E182 /* AuthRequestFactory.swift in Sources */,
 				BDF2E2D1287F1B1200B7E182 /* ProfileRequestRouter.swift in Sources */,
+				FC305CC22892DC61001ED651 /* CodeEntity.swift in Sources */,
 				FC3A2B57289174EF006E0948 /* FileNavigationView.swift in Sources */,
 				FCD3059A2886A61F00491220 /* File.swift in Sources */,
 				BDF2E2DD287F1C0600B7E182 /* ProfileRequestFactory.swift in Sources */,

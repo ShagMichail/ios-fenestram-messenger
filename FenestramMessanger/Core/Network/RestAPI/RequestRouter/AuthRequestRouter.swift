@@ -30,9 +30,12 @@ public enum AuthRequestRouter: AbstractRequestRouter {
     
      var headers: HTTPHeaders {
         switch self {
-        case .sendCode, .login:
+        case .sendCode:
             return ["Content-Type": "application/json",
-                    "Accept": "application/json"]
+                    "accept": "*/*"]
+        case .login:
+            return ["Content-Type": "application/json",
+                    "accept": "*/*"]
         }
     }
     

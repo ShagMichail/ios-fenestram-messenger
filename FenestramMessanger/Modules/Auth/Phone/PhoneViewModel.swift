@@ -21,7 +21,15 @@ extension PhoneView {
         func checkCode() {
             if textPhone.count == 16 {
                 numberCount = true
-                
+                AuthService.sendCode(phoneNumber: textPhone) { [weak self] result in
+                    switch result {
+                    case .success(_):
+                        self?.numberCount = true
+                    case .failure( let error ):
+                        print("\(error)")
+                        self?.numberCount = false
+                    }
+                }
             } else {
                 numberCount = false
             }

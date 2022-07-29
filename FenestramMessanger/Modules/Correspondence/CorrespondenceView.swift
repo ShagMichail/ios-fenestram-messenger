@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import BottomSheet
+import Network
 
 
 enum CorrespondenceBottomSheetPosition: CGFloat, CaseIterable {
@@ -19,11 +20,11 @@ struct CorrespondenceView: View {
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @State private var keyboardHeight: CGFloat = 0
     var contact: UserEntity?
-    var chat: [ChatEntity] = []
+    var chatFirst: ChatEntity?
     var contactId: Int = 0
     //@State var whoseMessage = false
     var message: String = ""
-    var allMessage: [MessageEntity] = []
+    //var allMessage: [MessageEntity] = []
     
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     
@@ -31,11 +32,13 @@ struct CorrespondenceView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @StateObject private var viewModel: ViewModel
-    init(contact: UserEntity, chat: [ChatEntity]) {
-        _viewModel = StateObject(wrappedValue: ViewModel())
+    init(contact: UserEntity, chat: ChatEntity?) {
+        self.chatFirst = chat
         self.contact = contact
-        self.chat = chat
-        filterChat()
+        _viewModel = StateObject(wrappedValue: ViewModel(chat: chat))
+        
+        
+        //filterChat()
         
     }
     
@@ -47,14 +50,14 @@ struct CorrespondenceView: View {
                 
                 VStack {
                     CorrespondenceNavigationView(contact: contact!)
-                    if allMessage.count != 0 {
+                    if $viewModel.allMessage.count != 0 {
                         ScrollView {
                             //
-                            ForEach(allMessage) { message in
+                            ForEach(viewModel.allMessage) { message in
                                 
                                 HStack(alignment: .bottom, spacing: 15) {
                                     MessageStyleView(contentMessage: message.message,
-                                                     isCurrentUser: lastMessage(), message: message)
+                                                     isCurrentUser: lastMessage(message: message), message: message)
                                 }.padding(.all, 15)
                             }
                             
@@ -128,7 +131,9 @@ struct CorrespondenceView: View {
                                     .padding(.horizontal, 4)
                                 
                                 Button {
-                                    print("")
+                                    if !viewModel.textMessage.isEmpty {
+                                        viewModel.postMessage(chat: chatFirst)
+                                    }
                                 } label: {
                                     Asset.send.swiftUIImage
                                         .resizable()
@@ -247,22 +252,20 @@ struct CorrespondenceView: View {
         
     }
     
+//    
+//    private mutating func filterChat() {
+//        guard chatFirst != nil else { return }
+//        let chat = chatFirst
+//        viewModel.getChatUser(id: chat?.id ?? 0)
+//    }
     
-    private mutating func filterChat() {
-        guard chat[0] != nil else {return}
-        let chat = chat[0]
-        guard let allMessage = chat.messages else {return}
-        self.allMessage = allMessage
-    }
-    
-    private func lastMessage() -> Bool {
+    private func lastMessage(message: MessageEntity) -> Bool {
         //guard let message = chat[0].messages else { return "" }
-        let message: MessageEntity
-        for i in self.allMessage.startIndex ..< self.allMessage.count {
-            if self.allMessage[i].fromUserId == Settings.currentUser?.id{
+        //let _: MessageEntity
+        
+        if message.fromUserId == Settings.currentUser?.id{
                 return true
             }
-        }
         
         return false
         

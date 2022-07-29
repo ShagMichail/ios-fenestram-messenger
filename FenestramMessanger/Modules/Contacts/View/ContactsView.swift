@@ -10,9 +10,11 @@ import SwiftUI
 struct ContactsView: View {
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @StateObject private var viewModel: ViewModel
+    var chat: ChatEntity?
     
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
+        
     }
     
     var border: some View {
@@ -188,6 +190,7 @@ struct ContactsView: View {
                 if ids.count == 2 {
                     if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
                         //viewModel.chatList[index]
+                        
                         return true
                         
                     }
@@ -197,9 +200,10 @@ struct ContactsView: View {
         return false
     }
     
-    private func filterChat(contact: UserEntity) -> [ChatEntity] {
+    private func filterChat(contact: UserEntity) -> ChatEntity? {
+        //guard viewModel.chatList.count != 0 else { return }
         //var chat: ChatEntity = viewModel.chatList[0]  //сомнительное решение ес честно
-        var allFilterChatList: [ChatEntity] = []
+        var filterChatList: ChatEntity?
         //var allMessage: [MessageEntity] = []
         let userId = Settings.currentUser?.id
         let usetChatId = contact.id
@@ -210,8 +214,8 @@ struct ContactsView: View {
                     if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
                         //viewModel.chatList[index]
                         //var chat: ChatEntity
-                        allFilterChatList.append(viewModel.chatList[index])
-                        
+                        //chat = viewModel.chatList[index]
+                        filterChatList = viewModel.chatList[index]
                         //allFilterChatList.append(viewModel.chatList[index])
                         //chat = viewModel.chatList[index]
                         
@@ -219,7 +223,7 @@ struct ContactsView: View {
                 }
             }
         }
-        return allFilterChatList
+        return filterChatList
     }
 }
 
