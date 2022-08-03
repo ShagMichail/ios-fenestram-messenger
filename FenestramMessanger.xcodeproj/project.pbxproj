@@ -105,6 +105,7 @@
 		FC1EA8FF287F3CE10027107E /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1EA8FE287F3CE10027107E /* SplashScreen.swift */; };
 		FC1EA90228855CEF0027107E /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1EA90128855CEF0027107E /* ChatRow.swift */; };
 		FC305CC22892DC61001ED651 /* CodeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC305CC12892DC61001ED651 /* CodeEntity.swift */; };
+		FC305CC4289AE731001ED651 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC305CC3289AE731001ED651 /* CustomTextField.swift */; };
 		FC3A2B4128902DDE006E0948 /* CorrespondenceNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B4028902DDE006E0948 /* CorrespondenceNavigationView.swift */; };
 		FC3A2B43289032ED006E0948 /* MessageStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B42289032ED006E0948 /* MessageStyleView.swift */; };
 		FC3A2B5028917348006E0948 /* PhotoEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B4F28917348006E0948 /* PhotoEntity.swift */; };
@@ -236,6 +237,7 @@
 		FC1EA8FE287F3CE10027107E /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		FC1EA90128855CEF0027107E /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; usesTabs = 0; };
 		FC305CC12892DC61001ED651 /* CodeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEntity.swift; sourceTree = "<group>"; };
+		FC305CC3289AE731001ED651 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		FC3A2B4028902DDE006E0948 /* CorrespondenceNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrespondenceNavigationView.swift; sourceTree = "<group>"; };
 		FC3A2B42289032ED006E0948 /* MessageStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStyleView.swift; sourceTree = "<group>"; };
 		FC3A2B4F28917348006E0948 /* PhotoEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEntity.swift; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 				FC3A2B42289032ED006E0948 /* MessageStyleView.swift */,
 				FC3A2B56289174EF006E0948 /* FileNavigationView.swift */,
 				FC7A57162891AE5700ABF7BF /* ImagesNavigationView.swift */,
+				FC305CC3289AE731001ED651 /* CustomTextField.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -952,6 +955,7 @@
 				FC1EA8FF287F3CE10027107E /* SplashScreen.swift in Sources */,
 				FCD305982886A1FD00491220 /* ChatBottomSheetModel.swift in Sources */,
 				FC177873287583BA00B0D979 /* ImagePicker.swift in Sources */,
+				FC305CC4289AE731001ED651 /* CustomTextField.swift in Sources */,
 				FC7A57172891AE5700ABF7BF /* ImagesNavigationView.swift in Sources */,
 				FC17787C2875913F00B0D979 /* PhoneViewModel.swift in Sources */,
 				FCEE88262874400700268971 /* CodeView.swift in Sources */,

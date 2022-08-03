@@ -28,34 +28,11 @@ struct ImagesView: View {
                         ForEach(images) { image in
                             Image(uiImage: image.image)
                                 .resizable()
-                            //.frame(width: UIScreen.screenWidth/3, height: UIScreen.screenWidth/3)
-                                //.cornerRadius(15)
                         }
                     }
                 }
-                //                    ForEach(images) { image in
-                //                        if i
-                //                        HStack {
-                //                            Button {
-                //                                print("fff")
-                //                            } label: {
-                //                                Image(uiImage: image.image)
-                //                                    .resizable()
-                //                                    .frame(width: UIScreen.screenWidth/3, height: UIScreen.screenWidth/3)
-                //                                    .cornerRadius(15)
-                //                            }
-                //
-                //                        }
-                //                    }
-                //                }
             }
         }
         
     }
 }
-
-//struct ImagesView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ImagesView()
-//    }
-//}

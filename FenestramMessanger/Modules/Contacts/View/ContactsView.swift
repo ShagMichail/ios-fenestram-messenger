@@ -106,6 +106,9 @@ struct ContactsView: View {
                             NavigationLink() {
                                 CorrespondenceView(contact: contact, chat: filterChat(contact: contact)).navigationBarHidden(true)
                             } label: {
+                               
+                                    
+
                                 HStack() {
                                     Asset.photo.swiftUIImage
                                         .resizable()
@@ -124,8 +127,8 @@ struct ContactsView: View {
                                     }
                                     
                                 }.padding(.horizontal)
-                                
-                            }
+                                }
+                            
                         }
                     } else {
                         HStack {

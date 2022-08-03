@@ -30,6 +30,7 @@ struct CorrespondenceView: View {
     
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var obj: observed
     
     @StateObject private var viewModel: ViewModel
     init(contact: UserEntity, chat: ChatEntity?) {
@@ -118,21 +119,24 @@ struct CorrespondenceView: View {
                                         .frame(width: 24.0, height: 24.0)
                                 }.padding(.leading, 12.0)
                                 
-                                TextField("", text: $viewModel.textMessage)
-                                    .placeholder(when: viewModel.textMessage.isEmpty) {
-                                        Text(L10n.CorrespondenceView.textMessage).foregroundColor(Asset.text.swiftUIColor)
-                                    }
-                                    .foregroundColor(Asset.text.swiftUIColor)
-                                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                                    .multilineTextAlignment(.leading)
-                                    .accentColor(Asset.text.swiftUIColor)
-                                    .keyboardType(.default)
-                                //.textContentType(.telephoneNumber)
-                                    .padding(.horizontal, 4)
+                                CustomTextField().frame(height: self.obj.size)
+//                                TextField("", text: $viewModel.textMessage)
+//                                    .placeholder(when: viewModel.textMessage.isEmpty) {
+//                                        Text(L10n.CorrespondenceView.textMessage).foregroundColor(Asset.text.swiftUIColor)
+//                                    }
+//                                    .foregroundColor(Asset.text.swiftUIColor)
+//                                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+//                                    .multilineTextAlignment(.leading)
+//                                    .accentColor(Asset.text.swiftUIColor)
+//                                    .keyboardType(.default)
+//                                //.textContentType(.telephoneNumber)
+//                                    .padding(.horizontal, 4)
+//                                    .opacity(3)
                                 
                                 Button {
                                     if !viewModel.textMessage.isEmpty {
                                         viewModel.postMessage(chat: chatFirst)
+                                        
                                     }
                                 } label: {
                                     Asset.send.swiftUIImage
@@ -165,9 +169,6 @@ struct CorrespondenceView: View {
                 UIApplication.shared.endEditing()
             }
             .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: [.noDragIndicator, .allowContentDrag, .swipeToDismiss, .tapToDismiss, .absolutePositionValue, .background({ AnyView(Asset.buttonAlert.swiftUIColor) }), .cornerRadius(30)], headerContent: {
-                //The name of the book as the heading and the author as the subtitle with a divider.
-                //VStack(alignment: .center) {
-                    
                     HStack {
                         Spacer()
                         VStack(alignment: .center) {
@@ -216,7 +217,7 @@ struct CorrespondenceView: View {
                                 .foregroundColor(Color.white)
                                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                         }
-                        Spacer()//.frame(width: 54.0)
+                        Spacer()
                         VStack {
                             Button {
                                 viewModel.showImagePicker = true
@@ -241,8 +242,7 @@ struct CorrespondenceView: View {
                                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                         }
                         Spacer()
-                    }//.padding(.horizontal, (UIScreen.screenWidth - 288)/3)
-                //  }
+                    }
             }) {
                 //A short introduction to the book, with a "Read More" button and a "Bookmark" button.
                 
@@ -251,13 +251,7 @@ struct CorrespondenceView: View {
         }
         
     }
-    
-//    
-//    private mutating func filterChat() {
-//        guard chatFirst != nil else { return }
-//        let chat = chatFirst
-//        viewModel.getChatUser(id: chat?.id ?? 0)
-//    }
+
     
     private func lastMessage(message: MessageEntity) -> Bool {
         //guard let message = chat[0].messages else { return "" }
