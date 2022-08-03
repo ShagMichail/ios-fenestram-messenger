@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject private var viewModel: ViewModel
+    
     @AppStorage("isActiv") var isActiv: Bool?
     @AppStorage("isAlreadySetProfile") var isAlreadySetProfile: Bool?
+    
+    @StateObject private var viewModel: ViewModel
     
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())

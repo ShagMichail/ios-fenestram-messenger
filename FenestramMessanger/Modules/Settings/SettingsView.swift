@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @State var colorThema = false
+    
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @AppStorage("isCodeUser") var isCodeUser: String?
     @AppStorage("isPhoneUser") var isPhoneUser: String?
-    @StateObject private var viewModel: ViewModel
-    @State var colorThema = false
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    @StateObject private var viewModel: ViewModel
     
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
@@ -111,11 +114,7 @@ struct SettingsView: View {
                     Asset.info.swiftUIImage
                         .resizable()
                         .frame(width: 22.0, height: 22.0)
-                        //.renderingMode(.template)
                         .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                        //.background((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                        //.tint((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                        
                     Text(L10n.SettingsView.info)
                         .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
                         .foregroundColor(Color.white)
@@ -135,20 +134,10 @@ struct SettingsView: View {
                             .foregroundColor(Color.white)
                             .padding(.leading)
                     }
-
-                    
                 }
                 Spacer()
             }.padding()
-            
             Spacer()
-            //                RoundedRectangle(cornerRadius: 0)
-            //                    .foregroundColor(Asset.buttonDis.swiftUIColor)
-            //                    .frame(width: UIScreen.screenWidth, height: 100.0)
-            //                    .ignoresSafeArea()
-            //                Spacer()
-            
-            
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: title)

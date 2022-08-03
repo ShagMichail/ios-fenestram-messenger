@@ -30,10 +30,10 @@ extension ContactsView {
         
         func filterContent() {
             let lowercasedSearchText = searchText.lowercased()
-
+            
             if searchText.count > 0 {
                 var matchingCoffees: [UserEntity] = []
-
+                
                 allContacts.forEach { contact in
                     guard let searchContent = contact.name else { return }
                     
@@ -92,6 +92,41 @@ extension ContactsView {
                 
                 self?.isLoading = false
             }
+        }
+        
+        func filterHaveChat(contact: UserEntity) -> Bool {
+            let userId = Settings.currentUser?.id
+            let usetChatId = contact.id
+            if chatList.isEmpty {
+                return false
+            } else {
+                for index in chatList.startIndex ... chatList.endIndex - 1 {
+                    let ids = chatList[index].usersId
+                    if ids.count == 2 {
+                        if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
+                            return true
+                        }
+                    }
+                }
+            }
+            return false
+        }
+        
+        func filterChat(contact: UserEntity) -> ChatEntity? {
+            var filterChatList: ChatEntity?
+            let userId = Settings.currentUser?.id
+            let usetChatId = contact.id
+            for index in chatList.startIndex ... chatList.endIndex {
+                if index < chatList.endIndex {
+                    let ids = chatList[index].usersId
+                    if ids.count == 2 {
+                        if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
+                            filterChatList = chatList[index]
+                        }
+                    }
+                }
+            }
+            return filterChatList
         }
     }
 }

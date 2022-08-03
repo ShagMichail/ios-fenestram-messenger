@@ -48,7 +48,6 @@ extension ChatView {
                     self?.textAlert = error.localizedDescription
                     self?.presentAlert = true
                 }
-                
                 self?.isLoading = false
             }
         }
@@ -75,7 +74,6 @@ extension ChatView {
                     self?.textAlert = error.localizedDescription
                     self?.presentAlert = true
                 }
-                
                 self?.isLoading = false
             }
         }
@@ -88,7 +86,6 @@ extension ChatView {
                     recentFile.append(files[index])
                     index += 1
                 }
-                
             }
         }
         
@@ -103,5 +100,20 @@ extension ChatView {
             }
         }
         
+        func getNicNameUsers(chat: ChatEntity?) -> String {
+            let index = allContacts.startIndex
+            guard let users = chat?.usersId else { return "" }
+            var result = ""
+            for userChatId in users {
+                for userId in index ... allContacts.endIndex - 1 {
+                    if userChatId.hashValue == allContacts[userId].id.hashValue {
+                        result.append("@")
+                        result.append(allContacts[userId].nickname ?? "")
+                        result.append(" ")
+                    }
+                }
+            }
+            return result
+        }
     }
 }

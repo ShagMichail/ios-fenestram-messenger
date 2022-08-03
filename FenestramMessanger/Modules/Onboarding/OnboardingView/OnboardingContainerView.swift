@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct OnboardingContainerView: View {
+    
+    @State private var selectedPage = 0
+    
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @AppStorage("isOnboarding") var isOnboarding: Bool?
-    @State private var selectedPage = 0
     
     var body: some View {
         

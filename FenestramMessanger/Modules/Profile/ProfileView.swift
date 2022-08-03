@@ -9,12 +9,13 @@ import SwiftUI
 import Combine
 
 struct ProfileView: View {
-    //@State var customAlert = false
-    @State private var keyboardHeight: CGFloat = 0
-    @AppStorage ("isColorThema") var isColorThema: Bool?
-    @State private var sourceType: UIImagePickerController.SourceType = .camera
-    @StateObject private var viewModel: ViewModel
     
+    @State private var keyboardHeight: CGFloat = 0
+    @State private var sourceType: UIImagePickerController.SourceType = .camera
+    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
+    @StateObject private var viewModel: ViewModel
     
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
@@ -174,28 +175,16 @@ struct ProfileView: View {
                     .padding(.leading, 10)
                     .padding(.trailing, 5)
                     .foregroundColor(Asset.text.swiftUIColor)
-                    //.font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                     .multilineTextAlignment(.leading)
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
                     .textContentType(.name)
-                    
-//                    if viewModel.isTappedName == false && viewModel.name.count != 0 {
-//                        Button(action: {
-//                            print("ddd")
-//                        }, label: {
-//                            Image(systemName: "checkmark").foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-//                        })
-//                        .padding(.trailing, 10.0)
-//                        .disabled(true)
-//                    }
                 }
             }.background(border)
         }
     }
     
     private func getName() -> some View {
-        
         VStack(alignment: .center) {
             Text(viewModel.name)
                 .font(FontFamily.Poppins.bold.swiftUIFont(size: 22))
@@ -203,7 +192,6 @@ struct ProfileView: View {
                 .bold()
             Spacer().frame(height: 3.0 )
         }
-        
     }
     
     private func getNicName() -> some View {

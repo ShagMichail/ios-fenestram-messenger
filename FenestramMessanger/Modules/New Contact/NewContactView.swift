@@ -9,14 +9,7 @@ import SwiftUI
 
 struct NewContactView: View {
     
-    @AppStorage ("isColorThema") var isColorThema: Bool?
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @StateObject private var viewModel: ViewModel
     let maskPhone = "+X XXX XXX-XX-XX"
-    
-    init() {
-        _viewModel = StateObject(wrappedValue: ViewModel())
-    }
     
     var borderName: some View {
         RoundedRectangle(cornerRadius: 6)
@@ -55,6 +48,16 @@ struct NewContactView: View {
             .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
     }
     
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
+    @StateObject private var viewModel: ViewModel
+    
+    init() {
+        _viewModel = StateObject(wrappedValue: ViewModel())
+    }
     
     var body: some View {
         ZStack {
@@ -222,7 +225,7 @@ struct NewContactView: View {
     private func getButton() -> some View {
         VStack {
             Button(action: {
-              
+                
             }) {
                 Text(L10n.General.done)
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)

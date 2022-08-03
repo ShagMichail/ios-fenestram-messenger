@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ChatRow: View {
-    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
     let chat: ChatEntity
+    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
     
     var body: some View {
         HStack() {
@@ -26,8 +28,6 @@ struct ChatRow: View {
                     .foregroundColor(Asset.message.swiftUIColor)
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                 .lineLimit(1)
-                
-            
             }
             
             Spacer()
@@ -49,20 +49,15 @@ struct ChatRow: View {
             }
         }
     }
+    
     private func lastMessage() -> String {
-        //let messege = chat.messages
         guard let lastIndex = chat.messages?.last else { return "" }
         return lastIndex.message 
     }
+    
     private func lastMessageTime() -> String {
-        //let messege = chat.messages
         guard let lastIndex = chat.messages?.last else { return "" }
-        return  lastIndex.createdAt?.formatted(.dateTime.hour().minute() ) ?? "01:09"// String(decoding: (lastIndex.createdAt)!, as: UTF8.self)
+        return  lastIndex.createdAt?.formatted(.dateTime.hour().minute() ) ?? "01:09"
     }
 }
 
-//struct ChatRow_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ChatRow()
-//    }
-//}

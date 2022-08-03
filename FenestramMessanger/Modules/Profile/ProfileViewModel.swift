@@ -44,7 +44,7 @@ extension ProfileView {
         init() {
             getProfile()
         }
-
+        
         func textFieldValidatorEmail(_ string: String) -> Bool {
             if string.count > 100 {
                 return false

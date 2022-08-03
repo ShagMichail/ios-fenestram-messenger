@@ -21,7 +21,7 @@ extension SettingsView {
            
             AuthService.login(phoneNumber: newPhone, oneTimeCode: code) { [weak self] result in
                 switch result {
-                case .success(let userWithToken):
+                case .success(_):
                     print("login success")
 
                     do {
@@ -30,18 +30,10 @@ extension SettingsView {
                         self?.newPhone = ""
                     }
                     catch let error {
-
                         print("out failure with error: ", error.localizedDescription)
-//                        self?.textTitleAlert = "sign in failure with error"
-//                        self?.textAlert = error.localizedDescription
-//                        self?.presentAlert = true
                     }
                 case .failure(let error):
                     print("login failure with error: ", error.localizedDescription)
-//                    self?.textTitleAlert = "login failure with error"
-//                    self?.textAlert = error.localizedDescription
-//                    self?.presentAlert = true
-//                    self?.errorCode = true
                 }
             }
         }

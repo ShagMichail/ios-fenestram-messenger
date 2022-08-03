@@ -10,9 +10,12 @@ import Introspect
 import Combine
 
 struct AccountView: View {
-    @State private var keyboardHeight: CGFloat = 0
-    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
     @State private var sourceType: UIImagePickerController.SourceType = .camera
+    @State private var keyboardHeight: CGFloat = 0
+    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
     @StateObject private var viewModel: ViewModel
     
     init() {

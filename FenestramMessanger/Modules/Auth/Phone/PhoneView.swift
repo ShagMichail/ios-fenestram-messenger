@@ -11,12 +11,16 @@ import Introspect
 import Combine
 
 struct PhoneView: View {
-    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
     @State private var keyboardHeight: CGFloat = 0
+    
     let maskPhone = "+X XXX XXX-XX-XX"
+    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
     @AppStorage("isPhoneUser") var isPhoneUser: String?
     
     @StateObject private var viewModel: ViewModel
+    
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
     }

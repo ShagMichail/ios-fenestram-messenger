@@ -10,11 +10,16 @@ import Introspect
 import Combine
 
 struct CodeView: View {
-    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
     @State private var keyboardHeight: CGFloat = 0
+    
     let maskCode = "XXXX"
+    
     @AppStorage("isCodeUser") var isCodeUser: String?
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
     @Environment(\.presentationMode) var presentationMode
+    
     @StateObject private var viewModel: ViewModel
     
     init(phoneNumber: String) {
@@ -34,9 +39,7 @@ struct CodeView: View {
         }
         .onTapGesture {
             UIApplication.shared.endEditing()
-                
         }
-        
     }
     
     private func getBase() -> some View {

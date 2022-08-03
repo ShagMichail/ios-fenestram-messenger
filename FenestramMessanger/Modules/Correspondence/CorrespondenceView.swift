@@ -50,7 +50,7 @@ struct CorrespondenceView: View {
                             ForEach(viewModel.allMessage) { message in
                                 HStack(alignment: .bottom, spacing: 15) {
                                     MessageStyleView(contentMessage: message.message,
-                                                     isCurrentUser: lastMessage(message: message), message: message)
+                                                     isCurrentUser: viewModel.lastMessage(message: message), message: message)
                                 }.padding(.all, 15)
                             }
                         }
@@ -159,18 +159,7 @@ struct CorrespondenceView: View {
                     Spacer()
                     VStack(alignment: .center) {
                         NavigationLink(destination: FileView().navigationBarHidden(true)) {
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 30)
-                                    .frame(width: 60, height: 60, alignment: .center)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 30)
-                                            .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
-                                    )
-                                    .foregroundColor(Asset.buttonAlert.swiftUIColor)
-                                Asset.fileButton.swiftUIImage
-                                    .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
-                                
-                            }
+                            buttonsViewProperty(image: Asset.fileButton)
                         }
                         Text(L10n.CorrespondenceView.file)
                             .foregroundColor(Color.white)
@@ -185,17 +174,7 @@ struct CorrespondenceView: View {
                             self.sourceType = .photoLibrary
                             bottomSheetPosition = .hidden
                         } label: {
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 30)
-                                    .frame(width: 60, height: 60, alignment: .center)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 30)
-                                            .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
-                                    )
-                                    .foregroundColor(Asset.buttonAlert.swiftUIColor)
-                                Asset.imageButton.swiftUIImage
-                                    .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
-                            }
+                            buttonsViewProperty(image: Asset.imageButton)
                         }
                         Text(L10n.CorrespondenceView.image)
                             .foregroundColor(Color.white)
@@ -208,17 +187,7 @@ struct CorrespondenceView: View {
                             self.sourceType = .camera
                             bottomSheetPosition = .hidden
                         } label: {
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 30)
-                                    .frame(width: 60, height: 60, alignment: .center)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 30)
-                                            .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
-                                    )
-                                    .foregroundColor(Asset.buttonAlert.swiftUIColor)
-                                Asset.phoneButton.swiftUIImage
-                                    .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
-                            }
+                            buttonsViewProperty(image: Asset.photoButton)
                         }
                         Text(L10n.CorrespondenceView.foto)
                             .foregroundColor(Color.white)
@@ -231,11 +200,18 @@ struct CorrespondenceView: View {
         }
     }
     
-    private func lastMessage(message: MessageEntity) -> Bool {
-        if message.fromUserId == Settings.currentUser?.id{
-            return true
+    private func buttonsViewProperty(image: ImageAsset) -> some View {
+        ZStack{
+            RoundedRectangle(cornerRadius: 30)
+                .frame(width: 60, height: 60, alignment: .center)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 30)
+                        .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
+                )
+                .foregroundColor(Asset.buttonAlert.swiftUIColor)
+            image.swiftUIImage
+                .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
         }
-        return false
     }
 }
 

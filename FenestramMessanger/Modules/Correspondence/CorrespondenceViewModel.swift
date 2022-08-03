@@ -100,7 +100,13 @@ extension CorrespondenceView {
                 }
             }
         }
-    
+        
+        func lastMessage(message: MessageEntity) -> Bool {
+            if message.fromUserId == Settings.currentUser?.id{
+                return true
+            }
+            return false
+        }
     }
 }
 

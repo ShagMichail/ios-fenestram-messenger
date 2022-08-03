@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct ContactsView: View {
-    @AppStorage ("isColorThema") var isColorThema: Bool?
-    @StateObject private var viewModel: ViewModel
+    
     var chat: ChatEntity?
+    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
+    @StateObject private var viewModel: ViewModel
     
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
@@ -100,13 +103,9 @@ struct ContactsView: View {
                 ScrollView {
                     if viewModel.filteredContacts.count > 0 {
                         ForEach(viewModel.filteredContacts) { contact in
-  
                             NavigationLink() {
-                                CorrespondenceView(contact: contact, chat: filterChat(contact: contact)).navigationBarHidden(true)
+                                CorrespondenceView(contact: contact, chat: viewModel.filterChat(contact: contact)).navigationBarHidden(true)
                             } label: {
-                               
-                                    
-
                                 HStack() {
                                     Asset.photo.swiftUIImage
                                         .resizable()
@@ -119,14 +118,13 @@ struct ContactsView: View {
                                     
                                     Spacer()
                                     
-                                    if filterHaveChat(contact: contact) {
+                                    if viewModel.filterHaveChat(contact: contact) {
                                         Asset.chat.swiftUIImage
                                             .padding(.horizontal)
                                     }
                                     
                                 }.padding(.horizontal)
-                                }
-                            
+                            }
                         }
                     } else {
                         HStack {
@@ -184,42 +182,6 @@ struct ContactsView: View {
             }
             .padding(.bottom, 50)
         }
-    }
-    
-    private func filterHaveChat(contact: UserEntity) -> Bool {
-        let allChat = viewModel.chatList
-        let userId = Settings.currentUser?.id
-        let usetChatId = contact.id
-        if allChat.isEmpty {
-            return false
-        } else {
-            for index in viewModel.chatList.startIndex ... viewModel.chatList.endIndex - 1 {
-                let ids = viewModel.chatList[index].usersId
-                if ids.count == 2 {
-                    if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
-                        return true
-                    }
-                }
-            }
-        }
-        return false
-    }
-    
-    private func filterChat(contact: UserEntity) -> ChatEntity? {
-        var filterChatList: ChatEntity?
-        let userId = Settings.currentUser?.id
-        let usetChatId = contact.id
-        for index in viewModel.chatList.startIndex ... viewModel.chatList.endIndex {
-            if index < viewModel.chatList.endIndex {
-                let ids = viewModel.chatList[index].usersId
-                if ids.count == 2 {
-                    if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
-                        filterChatList = viewModel.chatList[index]
-                    }
-                }
-            }
-        }
-        return filterChatList
     }
 }
 
