@@ -13,11 +13,8 @@ struct AlertView: View {
     @Binding var textTitle: String
     @Binding var text: String
     
-    //@AppStorage ("isColorThema") var isColorThema: Bool?
-    
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .center)) {
-            //            Asset.tabBar.swiftUIColor.ignoresSafeArea()
             ZStack {
                 Asset.photoBack.swiftUIColor
                 VStack {
@@ -51,18 +48,12 @@ struct AlertView: View {
                             show.toggle()
                         }
                     }
-                    
                 }
                 .padding(.vertical, 25)
-//                .padding(.horizontal, 15)
-                
-                //.frame(maxWidth: 300, maxHeight: 300)
-                //.background(Asset.tabBar.swiftUIColor)
             }
             .frame(maxWidth: 300, maxHeight: 452)
             .cornerRadius(25)
         }
-        
         .edgesIgnoringSafeArea(.all)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         
@@ -72,11 +63,6 @@ struct AlertView: View {
     
 }
 
-//struct AlertView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AlertView(show: true, textTitle: "dfdfdfdf", text: "dsdfsdfsdf")
-//    }
-//}
 struct BlurView : UIViewRepresentable {
     func makeUIView(context: Context) -> UIVisualEffectView {
         let view = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterialLight))

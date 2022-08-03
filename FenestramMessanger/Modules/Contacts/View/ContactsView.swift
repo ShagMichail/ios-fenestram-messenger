@@ -14,7 +14,6 @@ struct ContactsView: View {
     
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
-        
     }
     
     var border: some View {
@@ -101,8 +100,7 @@ struct ContactsView: View {
                 ScrollView {
                     if viewModel.filteredContacts.count > 0 {
                         ForEach(viewModel.filteredContacts) { contact in
-                            //                            ContactsRow(contact: contact, chat: filterChat(contact: contact), haveChat: filterHaveChat(contact: contact))
-                            //                                .padding(.horizontal)
+  
                             NavigationLink() {
                                 CorrespondenceView(contact: contact, chat: filterChat(contact: contact)).navigationBarHidden(true)
                             } label: {
@@ -188,37 +186,18 @@ struct ContactsView: View {
         }
     }
     
-    //    private func filterChat(contact: UserEntity) -> ChatEntity {
-    //        let allChat = viewModel.chatList
-    //        let userId = Settings.currentUser?.id
-    //        let usetChatId = contact.id
-    //        for index in 0 ... viewModel.chatList.endIndex {
-    //            var ids = viewModel.chatList[index].usersId
-    //            if ids.count == 2 {
-    //                if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
-    //                    return viewModel.chatList[index]
-    //                }
-    //            }
-    //        }
-    //        //return ChatEntity(from: "")
-    //    }
-    
     private func filterHaveChat(contact: UserEntity) -> Bool {
         let allChat = viewModel.chatList
         let userId = Settings.currentUser?.id
         let usetChatId = contact.id
         if allChat.isEmpty {
-            
             return false
         } else {
             for index in viewModel.chatList.startIndex ... viewModel.chatList.endIndex - 1 {
-                let ids = viewModel.chatList[index].usersId  //[index].usersId
+                let ids = viewModel.chatList[index].usersId
                 if ids.count == 2 {
                     if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
-                        //viewModel.chatList[index]
-                        
                         return true
-                        
                     }
                 }
             }
@@ -227,24 +206,15 @@ struct ContactsView: View {
     }
     
     private func filterChat(contact: UserEntity) -> ChatEntity? {
-        //guard viewModel.chatList.count != 0 else { return }
-        //var chat: ChatEntity = viewModel.chatList[0]  //сомнительное решение ес честно
         var filterChatList: ChatEntity?
-        //var allMessage: [MessageEntity] = []
         let userId = Settings.currentUser?.id
         let usetChatId = contact.id
         for index in viewModel.chatList.startIndex ... viewModel.chatList.endIndex {
             if index < viewModel.chatList.endIndex {
-                let ids = viewModel.chatList[index].usersId  //[index].usersId
+                let ids = viewModel.chatList[index].usersId
                 if ids.count == 2 {
                     if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
-                        //viewModel.chatList[index]
-                        //var chat: ChatEntity
-                        //chat = viewModel.chatList[index]
                         filterChatList = viewModel.chatList[index]
-                        //allFilterChatList.append(viewModel.chatList[index])
-                        //chat = viewModel.chatList[index]
-                        
                     }
                 }
             }

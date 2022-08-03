@@ -18,9 +18,7 @@ extension ContactsView {
             }
         }
         @Published var filteredContacts: [UserEntity] = []
-        //@Published var chat: [ChatEntity] = []
         @Published var isLoading: Bool = false
-        
         @Published var presentAlert = false
         @Published var textTitleAlert = ""
         @Published var textAlert = ""

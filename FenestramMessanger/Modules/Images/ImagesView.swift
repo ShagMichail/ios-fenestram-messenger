@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct ImagesView: View {
+    
     private var columns: [GridItem] = [
         GridItem(.fixed(UIScreen.screenWidth/3)),
         GridItem(.fixed(UIScreen.screenWidth/3)),
         GridItem(.fixed(UIScreen.screenWidth/3))]
     var images: [PhotoEntity]
     var i = 0
+    
     init(images: [PhotoEntity]) {
         self.images = images
     }
@@ -33,6 +35,5 @@ struct ImagesView: View {
                 }
             }
         }
-        
     }
 }

@@ -10,12 +10,8 @@ import SwiftUI
 extension PageContactView {
     @MainActor
     final class ViewModel: ObservableObject {
-
-        
-        var index = 0
         
         @Published var isLoading: Bool = false
-        
         @Published var allFiles: [File] = [
             File(title: "FFFFF", data: "22.02.22", volume: "10 MB"),
             File(title: "fffff", data: "22.02.22", volume: "10 MB"),
@@ -24,9 +20,7 @@ extension PageContactView {
             File(title: "kkkkk", data: "22.02.22", volume: "10 MB"),
             File(title: "qqqqq", data: "22.02.22", volume: "10 MB")
         ]
-        
         @Published var recentFile: [File] = []
-        
         @Published var allPhoto: [PhotoEntity] = [
             PhotoEntity(id: 0, image: Asset.defaultImage.image),
             PhotoEntity(id: 1, image: Asset.defaultImage.image),
@@ -40,9 +34,10 @@ extension PageContactView {
             PhotoEntity(id: 9, image: Asset.defaultImage.image),
             PhotoEntity(id: 10, image: Asset.defaultImage.image),
         ]
-        
         @Published var recentPhotoFirst: [PhotoEntity] = []
         @Published var recentPhotoSecond: [PhotoEntity] = []
+        
+        var index = 0
         
         init() {
             fillterFile()
@@ -50,7 +45,6 @@ extension PageContactView {
             fillterPhotoSecond()
         }
         
-
         private func fillterFile() {
             let files = allFiles
             var index = 0
@@ -59,9 +53,7 @@ extension PageContactView {
                     recentFile.append(files[index])
                     index += 1
                 }
-                
             }
-            
         }
         
         private func fillterPhotoFirst() {
@@ -71,9 +63,7 @@ extension PageContactView {
                     recentPhotoFirst.append(files[index])
                     index += 1
                 }
-                
             }
-            
         }
         
         private func fillterPhotoSecond() {
@@ -83,9 +73,7 @@ extension PageContactView {
                     recentPhotoSecond.append(files[index])
                     index += 1
                 }
-                
             }
-            
         }
     }
 }

@@ -18,17 +18,14 @@ extension CorrespondenceView {
         @Published var showSheet: Bool = false
         @Published var showImagePicker: Bool = false
         @Published var allMessage: [MessageEntity] = []
-        
         @Published var image: UIImage? {
             didSet {
                 appendPhoto()
             }
         }
-
         @Published var presentAlert = false
         @Published var textTitleAlert = ""
         @Published var textAlert = ""
-        
         @Published var allFoto: [PhotoEntity] = []
         
         init(chat: ChatEntity?) {
@@ -56,9 +53,7 @@ extension CorrespondenceView {
             }
         }
         
-        
-        
-        func getChatUser(id: Int) {
+        private func getChatUser(id: Int) {
             isLoading = true
             
             ChatService.getChat(chatId: id, completion: { [weak self] result in

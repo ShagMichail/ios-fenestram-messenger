@@ -9,9 +9,11 @@ import SwiftUI
 import BottomSheet
 
 struct FileView: View {
-    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
     @StateObject private var viewModel: ViewModel
-
+    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
     }
@@ -33,18 +35,18 @@ struct FileView: View {
                                     RoundedRectangle(cornerRadius: 30)
                                         .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                                         .frame(width: 32, height: 32)
-                                Asset.fileWhite.swiftUIImage
-                                    .resizable()
-                                    .frame(width: 13.0, height: 16.0)
-                                    .padding(.horizontal)
+                                    Asset.fileWhite.swiftUIImage
+                                        .resizable()
+                                        .frame(width: 13.0, height: 16.0)
+                                        .padding(.horizontal)
                                 }
                                 VStack(alignment: .leading) {
                                     Text(files.title)
                                         .font(.system(size: 14))
-                                    .foregroundColor(Asset.fileText.swiftUIColor)
+                                        .foregroundColor(Asset.fileText.swiftUIColor)
                                     Text(files.volume)
                                         .font(.system(size: 12))
-                                    .foregroundColor(Asset.fileText.swiftUIColor)
+                                        .foregroundColor(Asset.fileText.swiftUIColor)
                                 }
                                 Spacer()
                                 HStack {
@@ -57,14 +59,11 @@ struct FileView: View {
                             .padding(.trailing, 20.0)
                         Spacer().frame(height: 20)
                     }
-                
                 }
             }
         }
     }
 }
-    
-
 
 struct FileView_Previews: PreviewProvider {
     static var previews: some View {

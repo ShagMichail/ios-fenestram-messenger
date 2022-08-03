@@ -10,11 +10,8 @@ import SwiftUI
 extension FileView {
     @MainActor
     final class ViewModel: ObservableObject {
-
-    
         
         @Published var isLoading: Bool = false
-        
         @Published var allFiles: [File] = [
             File(title: "FFFFF", data: "22.02.22", volume: "10 MB"),
             File(title: "fffff", data: "22.02.22", volume: "10 MB"),
@@ -23,7 +20,5 @@ extension FileView {
             File(title: "kkkkk", data: "22.02.22", volume: "10 MB"),
             File(title: "qqqqq", data: "22.02.22", volume: "10 MB")
         ]
-
-      
     }
 }
