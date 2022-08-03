@@ -46,7 +46,7 @@ public class ProfileService {
             "nickname": nickname,
             "email": email,
             "birth": Int(birthdate).description,
-            "avatar": avatar,
+            //"avatar": avatar,
             "player_id": playerId
         ]
         
