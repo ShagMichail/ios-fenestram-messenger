@@ -100,7 +100,7 @@ struct ContactsView: View {
     private func getContentView() -> some View {
         ZStack {
             VStack (alignment: .trailing) {
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     if viewModel.filteredContacts.count > 0 {
                         ForEach(viewModel.filteredContacts) { contact in
                             NavigationLink() {

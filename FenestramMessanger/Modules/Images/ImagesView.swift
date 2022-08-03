@@ -25,7 +25,7 @@ struct ImagesView: View {
             Asset.thema.swiftUIColor.ignoresSafeArea()
             VStack {
                 ImagesNavigationView()
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     LazyVGrid(columns: columns) {
                         ForEach(images) { image in
                             Image(uiImage: image.image)

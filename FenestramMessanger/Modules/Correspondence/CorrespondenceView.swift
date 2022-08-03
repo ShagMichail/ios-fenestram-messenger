@@ -46,7 +46,7 @@ struct CorrespondenceView: View {
                 VStack {
                     CorrespondenceNavigationView(contact: contact!)
                     if $viewModel.allMessage.count != 0 {
-                        ScrollView {
+                        ScrollView(showsIndicators: false) {
                             ForEach(viewModel.allMessage) { message in
                                 HStack(alignment: .bottom, spacing: 15) {
                                     MessageStyleView(contentMessage: message.message,
@@ -110,6 +110,7 @@ struct CorrespondenceView: View {
                                     .padding(.leading , 50)
                                     .padding(.trailing , 50)
                                     .fixedSize(horizontal: false, vertical: true)
+                                    
                             }
                             .padding(.horizontal)
                             .background(RoundedRectangle(cornerRadius: 10)

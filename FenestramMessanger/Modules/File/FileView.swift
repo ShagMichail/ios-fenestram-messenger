@@ -25,7 +25,7 @@ struct FileView: View {
             VStack {
                 FileNavigationView()
                 Spacer().frame(height: 20)
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     ForEach(viewModel.allFiles) { files in
                         Button(action: {
                             

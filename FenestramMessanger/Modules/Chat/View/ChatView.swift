@@ -18,6 +18,8 @@ struct ChatView: View {
     @State var isShowingSheet = false
     @State var flag = false
     @State var chatUser: ChatEntity?
+    @State var correspondence = false
+    @State var contact: UserEntity?
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
@@ -95,16 +97,53 @@ struct ChatView: View {
     
     private func getList() -> some View {
         ZStack {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 if viewModel.chatList.count > 0 {
                     ForEach(viewModel.chatList) { chat in
-                        Button(action: {
-                            bottomSheetPosition = .bottom
-                            chatUser = chat
-                        }, label: {
-                            ChatRow(chat: chat)
-                        })
-                        .padding(.horizontal)
+                        
+                        HStack() {
+                            Button {
+                                bottomSheetPosition = .bottom
+                                chatUser = chat
+                            } label: {
+                                Asset.photo.swiftUIImage
+                                    .resizable()
+                                    .frame(width: 40.0, height: 40.0)
+                                    .padding(.horizontal)
+                            }
+                            NavigationLink {
+                                CorrespondenceView(contact: viewModel.getUserEntity(from: chat), chat: chat)
+                                
+                            } label: {
+                                VStack(alignment: .leading) {
+                                    Text(chat.name)
+                                        .foregroundColor(.white)
+                                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                                    Text(lastMessage(chat: chat)) //?? L10n.General.unknown)
+                                        .foregroundColor(Asset.message.swiftUIColor)
+                                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                                        .lineLimit(1)
+                                }
+                                
+                                Spacer()
+                                
+                                VStack {
+                                    Text(lastMessageTime(chat: chat))
+                                        .foregroundColor(Asset.message.swiftUIColor)
+                                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                                    
+                                    Button(action: {
+                                        print("ddd")
+                                    }, label: {
+                                        Image(systemName: "checkmark")
+                                            .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                                    })
+                                    .padding(.trailing, 0.0)
+                                    .disabled(true)
+                                    
+                                }
+                            }
+                        }.padding(.horizontal)
                     }
                 } else {
                     HStack {
@@ -153,9 +192,18 @@ struct ChatView: View {
                     }
                     Spacer().frame(width: 54.0)
                     
-                    NavigationLink(destination: CorrespondenceView(contact: viewModel.getUserEntity(from: chatUser), chat: chatUser)) {
-                        buttonsViewProperty(image: Asset.messageButton)
+                    NavigationLink(isActive: $correspondence) {
+                        CorrespondenceView(contact: viewModel.getUserEntity(from: chatUser), chat: chatUser)
+                    } label:{
+                        Button {
+                            bottomSheetPosition = .hidden
+                            self.correspondence.toggle()
+                        } label: {
+                            buttonsViewProperty(image: Asset.messageButton)
+                        }
+                        
                     }
+                    
                 }
             }
         }) {
@@ -226,8 +274,17 @@ struct ChatView: View {
                 .foregroundColor(Asset.buttonAlert.swiftUIColor)
             image.swiftUIImage
                 .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
-            
         }
+    }
+    
+    private func lastMessage(chat: ChatEntity) -> String {
+        guard let lastIndex = chat.messages?.last else {return ""}
+        return lastIndex.message
+    }
+    
+    private func lastMessageTime(chat: ChatEntity) -> String {
+        guard let lastIndex = chat.messages?.last else {return ""}
+        return  lastIndex.createdAt?.formatted(.dateTime.hour().minute() ) ?? "01:09"
     }
 }
 
