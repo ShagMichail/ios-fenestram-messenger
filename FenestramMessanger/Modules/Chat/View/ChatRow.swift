@@ -25,6 +25,9 @@ struct ChatRow: View {
                 Text(lastMessage()) //?? L10n.General.unknown)
                     .foregroundColor(Asset.message.swiftUIColor)
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                .lineLimit(1)
+                
+            
             }
             
             Spacer()

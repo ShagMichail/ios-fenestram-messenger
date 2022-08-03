@@ -56,7 +56,7 @@ struct ContactsView: View {
             }.onTapGesture {
                 UIApplication.shared.endEditing()
             }
-                        .navigationBarHidden(true)
+            .navigationBarHidden(true)
         }
     }
     
@@ -66,7 +66,7 @@ struct ContactsView: View {
             .foregroundColor(Color.white)
             .padding(.horizontal)
             .padding(.top)
-            
+        
     }
     
     private func getSearchView() -> some View {
@@ -101,15 +101,38 @@ struct ContactsView: View {
                 ScrollView {
                     if viewModel.filteredContacts.count > 0 {
                         ForEach(viewModel.filteredContacts) { contact in
-                            ContactsRow(contact: contact, chat: filterChat(contact: contact), haveChat: filterHaveChat(contact: contact))
-                                .padding(.horizontal)
+                            //                            ContactsRow(contact: contact, chat: filterChat(contact: contact), haveChat: filterHaveChat(contact: contact))
+                            //                                .padding(.horizontal)
+                            NavigationLink() {
+                                CorrespondenceView(contact: contact, chat: filterChat(contact: contact)).navigationBarHidden(true)
+                            } label: {
+                                HStack() {
+                                    Asset.photo.swiftUIImage
+                                        .resizable()
+                                        .frame(width: 40.0, height: 40.0)
+                                        .padding(.horizontal)
+                                    
+                                    Text(contact.name ?? L10n.General.unknown)
+                                        .foregroundColor(.white)
+                                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
+                                    
+                                    Spacer()
+                                    
+                                    if filterHaveChat(contact: contact) {
+                                        Asset.chat.swiftUIImage
+                                            .padding(.horizontal)
+                                    }
+                                    
+                                }.padding(.horizontal)
+                                
+                            }
                         }
                     } else {
                         HStack {
                             Text(L10n.ContactView.contactDontExist)
                                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
                                 .foregroundColor(Color.white)
-                            .padding(.horizontal)
+                                .padding(.horizontal)
                         }.frame(width: UIScreen.screenWidth)
                     }
                 }
@@ -122,7 +145,7 @@ struct ContactsView: View {
                         Asset.addButtonIcon.swiftUIImage
                             .padding(.bottom, 10)
                             .padding(.trailing, 10)
-                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                            .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                         Image(systemName: "plus")
                             .font(.title)
                             .padding(.bottom, 17)
@@ -162,27 +185,27 @@ struct ContactsView: View {
         }
     }
     
-//    private func filterChat(contact: UserEntity) -> ChatEntity {
-//        let allChat = viewModel.chatList
-//        let userId = Settings.currentUser?.id
-//        let usetChatId = contact.id
-//        for index in 0 ... viewModel.chatList.endIndex {
-//            var ids = viewModel.chatList[index].usersId
-//            if ids.count == 2 {
-//                if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
-//                    return viewModel.chatList[index]
-//                }
-//            }
-//        }
-//        //return ChatEntity(from: "")
-//    }
+    //    private func filterChat(contact: UserEntity) -> ChatEntity {
+    //        let allChat = viewModel.chatList
+    //        let userId = Settings.currentUser?.id
+    //        let usetChatId = contact.id
+    //        for index in 0 ... viewModel.chatList.endIndex {
+    //            var ids = viewModel.chatList[index].usersId
+    //            if ids.count == 2 {
+    //                if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
+    //                    return viewModel.chatList[index]
+    //                }
+    //            }
+    //        }
+    //        //return ChatEntity(from: "")
+    //    }
     
     private func filterHaveChat(contact: UserEntity) -> Bool {
         let allChat = viewModel.chatList
         let userId = Settings.currentUser?.id
         let usetChatId = contact.id
         if allChat.isEmpty {
-        
+            
             return false
         } else {
             for index in viewModel.chatList.startIndex ... viewModel.chatList.endIndex - 1 {

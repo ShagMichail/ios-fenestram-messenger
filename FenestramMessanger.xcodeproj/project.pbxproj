@@ -234,7 +234,7 @@
 		FC1778D628774BA300B0D979 /* ContactsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		FC1778E02877639800B0D979 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		FC1EA8FE287F3CE10027107E /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
-		FC1EA90128855CEF0027107E /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; };
+		FC1EA90128855CEF0027107E /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; usesTabs = 0; };
 		FC305CC12892DC61001ED651 /* CodeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEntity.swift; sourceTree = "<group>"; };
 		FC3A2B4028902DDE006E0948 /* CorrespondenceNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrespondenceNavigationView.swift; sourceTree = "<group>"; };
 		FC3A2B42289032ED006E0948 /* MessageStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStyleView.swift; sourceTree = "<group>"; };

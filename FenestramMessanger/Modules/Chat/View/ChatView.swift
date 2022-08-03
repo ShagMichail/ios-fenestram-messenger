@@ -76,6 +76,7 @@ struct ChatView: View {
                 SettingsView()
             } label: {
                 Image(systemName: "gearshape").foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                    .font(.system(size: 20))
             }
         }
         .padding()

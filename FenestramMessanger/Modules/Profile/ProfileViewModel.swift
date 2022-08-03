@@ -39,6 +39,7 @@ extension ProfileView {
         @Published var textTitleAlert = ""
         @Published var textAlert = ""
         
+        @Published var editProfile = false
         
         init() {
             getProfile()
@@ -95,6 +96,7 @@ extension ProfileView {
                         try AuthController.signIn(userWithInfo, token: token)
                         self.profile = userWithInfo
                         print("update profile success")
+                        self.editProfile.toggle()
                     }
                     catch let error {
                         print("update profile failure with error: ", error.localizedDescription)
