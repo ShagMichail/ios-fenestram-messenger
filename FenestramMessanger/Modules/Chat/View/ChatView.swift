@@ -44,12 +44,7 @@ struct ChatView: View {
                         if viewModel.isLoading {
                             LoadingView()
                         } else {
-                            if viewModel.chatList.isEmpty {
-                            //if viewModel.allContacts.isEmpty {
-                                getEmptyView()
-                            } else {
-                                getList()
-                            }
+                            viewModel.chatList.isEmpty ? AnyView(getEmptyView()) : AnyView(getList())
                         }
                         
                     }
@@ -60,7 +55,6 @@ struct ChatView: View {
                 .onTapGesture {
                     UIApplication.shared.endEditing()
                 }
-               
                 .navigationBarHidden(true)
             }
         }
@@ -114,7 +108,6 @@ struct ChatView: View {
                     ForEach(viewModel.chatList) { chat in
                         Button(action: {
                             bottomSheetPosition = .bottom
-                           // flag = true
                             chatUser = chat
                         }, label: {
                             ChatRow(chat: chat)
@@ -156,18 +149,7 @@ struct ChatView: View {
                     Button {
                         print("fff")
                     } label: {
-                        ZStack{
-                            RoundedRectangle(cornerRadius: 30)
-                                .frame(width: 60, height: 60, alignment: .center)
-                                .overlay(
-                                            RoundedRectangle(cornerRadius: 30)
-                                                .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
-                                        )
-                                .foregroundColor(Asset.buttonAlert.swiftUIColor)
-                            Asset.videoButton.swiftUIImage
-                                .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
-                            
-                        }
+                        buttonsViewProperty(image: Asset.videoButton)
                     }
                     
                     Spacer().frame(width: 54.0)
@@ -175,42 +157,17 @@ struct ChatView: View {
                     Button {
                         print("fff")
                     } label: {
-                        ZStack{
-                            RoundedRectangle(cornerRadius: 30)
-                                .frame(width: 60, height: 60, alignment: .center)
-                                .overlay(
-                                            RoundedRectangle(cornerRadius: 30)
-                                                .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
-                                        )
-                                .foregroundColor(Asset.buttonAlert.swiftUIColor)
-                            Asset.phoneButton.swiftUIImage
-                                .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
-                            
-                        }
+                        buttonsViewProperty(image: Asset.phoneButton)
                     }
                     Spacer().frame(width: 54.0)
-                    Button {
-                        print("fff")
-                    } label: {
-                        ZStack{
-                            RoundedRectangle(cornerRadius: 30)
-                                .frame(width: 60, height: 60, alignment: .center)
-                                .overlay(
-                                            RoundedRectangle(cornerRadius: 30)
-                                                .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
-                                        )
-                                .foregroundColor(Asset.buttonAlert.swiftUIColor)
-                            Asset.messageButton.swiftUIImage
-                                .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
-                            
-                        }
+                    
+                    NavigationLink(destination: CorrespondenceView(contact: viewModel.getUserEntity(from: chatUser), chat: chatUser)) {
+                        Asset.messageIcon.swiftUIImage
+                            .resizable()
+                            .frame(width: 60.0, height: 60.0)
+                            .padding(.horizontal)
                     }
-//                    NavigationLink(destination: CorrespondenceView(contact: contact!)) {
-//                        Asset.messageIcon.swiftUIImage
-//                            .resizable()
-//                            .frame(width: 60.0, height: 60.0)
-//                            .padding(.horizontal)
-//                    }
+                    
                 }
             }
         }) {
@@ -290,6 +247,21 @@ struct ChatView: View {
             }
         }
         return result
+    }
+    
+    private func buttonsViewProperty(image: ImageAsset) -> some View {
+        ZStack{
+            RoundedRectangle(cornerRadius: 30)
+                .frame(width: 60, height: 60, alignment: .center)
+                .overlay(
+                            RoundedRectangle(cornerRadius: 30)
+                                .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
+                        )
+                .foregroundColor(Asset.buttonAlert.swiftUIColor)
+            image.swiftUIImage
+                .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+            
+        }
     }
 }
 

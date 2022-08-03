@@ -90,7 +90,18 @@ extension ChatView {
                 }
                 
             }
-            
         }
+        
+        func getUserEntity(from chat: ChatEntity?) -> UserEntity? {
+            guard let user = Settings.currentUser?.id, let chat = chat else { return nil }
+            if chat.usersId.count == 2 {
+                let correspId = chat.usersId.filter { $0 != user }.first
+                let correspondent = allContacts.first { $0.id == correspId }
+                return correspondent
+            } else {
+                return nil
+            }
+        }
+        
     }
 }

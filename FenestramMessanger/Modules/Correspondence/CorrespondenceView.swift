@@ -32,7 +32,7 @@ struct CorrespondenceView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @StateObject private var viewModel: ViewModel
-    init(contact: UserEntity, chat: ChatEntity?) {
+    init(contact: UserEntity?, chat: ChatEntity?) {
         self.chatFirst = chat
         self.contact = contact
         _viewModel = StateObject(wrappedValue: ViewModel(chat: chat))
