@@ -14,6 +14,7 @@ enum BookBottomSheetPosition: CGFloat, CaseIterable {
 
 struct ChatView: View {
     
+    @State var uiTabarController: UITabBarController?
     @State var bottomSheetPosition: BookBottomSheetPosition = .hidden
     @State var isShowingSheet = false
     @State var flag = false

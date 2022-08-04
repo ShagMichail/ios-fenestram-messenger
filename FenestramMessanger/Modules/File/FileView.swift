@@ -10,6 +10,8 @@ import BottomSheet
 
 struct FileView: View {
     
+    @State var uiTabarController: UITabBarController?
+    
     @StateObject private var viewModel: ViewModel
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
@@ -61,6 +63,12 @@ struct FileView: View {
                     }
                 }
             }
+        }
+        .introspectTabBarController { (UITabBarController) in
+            UITabBarController.tabBar.isHidden = true
+            uiTabarController = UITabBarController
+        }.onDisappear{
+            uiTabarController?.tabBar.isHidden = false
         }
     }
 }

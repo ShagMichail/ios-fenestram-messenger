@@ -9,10 +9,14 @@ import SwiftUI
 
 struct CorrespondenceNavigationView: View {
     
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    var contact: UserEntity
-    @AppStorage ("isColorThema") var isColorThema: Bool?
     @State var showSheet = false
+    
+    var contact: UserEntity
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+   
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
     
     var body: some View {
         ZStack {

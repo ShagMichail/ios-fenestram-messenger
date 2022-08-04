@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
+    @State var uiTabarController: UITabBarController?
     @State var colorThema = false
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
@@ -142,6 +144,12 @@ struct SettingsView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: title)
         .navigationBarItems(leading: btnBack)
+        .introspectTabBarController { (UITabBarController) in
+            UITabBarController.tabBar.isHidden = true
+            uiTabarController = UITabBarController
+        }.onDisappear{
+            uiTabarController?.tabBar.isHidden = false
+        }
     }
 }
 

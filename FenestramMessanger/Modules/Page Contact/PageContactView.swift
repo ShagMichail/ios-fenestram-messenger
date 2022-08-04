@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PageContactView: View {
     // @GestureState private var dragOffset = CGSize.zero
+    @State var uiTabarController: UITabBarController?
     
     var contact: UserEntity
     
@@ -224,6 +225,12 @@ struct PageContactView: View {
             }.padding(.bottom, 20)
         }.onBackSwipe {
             presentationMode.wrappedValue.dismiss()
+        }
+        .introspectTabBarController { (UITabBarController) in
+            UITabBarController.tabBar.isHidden = true
+            uiTabarController = UITabBarController
+        }.onDisappear{
+            uiTabarController?.tabBar.isHidden = false
         }
     }
 }

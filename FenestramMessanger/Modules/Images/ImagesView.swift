@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ImagesView: View {
     
+    @State var uiTabarController: UITabBarController?
+    
     private var columns: [GridItem] = [
         GridItem(.fixed(UIScreen.screenWidth/3)),
         GridItem(.fixed(UIScreen.screenWidth/3)),
@@ -34,6 +36,12 @@ struct ImagesView: View {
                     }
                 }
             }
+        }
+        .introspectTabBarController { (UITabBarController) in
+            UITabBarController.tabBar.isHidden = true
+            uiTabarController = UITabBarController
+        }.onDisappear{
+            uiTabarController?.tabBar.isHidden = false
         }
     }
 }
