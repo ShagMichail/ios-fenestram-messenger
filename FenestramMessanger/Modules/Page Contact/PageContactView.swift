@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PageContactView: View {
-    // @GestureState private var dragOffset = CGSize.zero
+    
     @State var uiTabarController: UITabBarController?
     
     var contact: [UserEntity]
