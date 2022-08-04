@@ -20,7 +20,7 @@ struct ChatView: View {
     @State var flag = false
     @State var chatUser: ChatEntity?
     @State var correspondence = false
-    @State var contact: UserEntity?
+    @State var contacts: [UserEntity] = []
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
@@ -113,11 +113,11 @@ struct ChatView: View {
                                     .padding(.horizontal)
                             }
                             NavigationLink {
-                                CorrespondenceView(contact: viewModel.getUserEntity(from: chat), chat: chat)
+                                CorrespondenceView(contacts: viewModel.getUserEntity(from: chat), chat: chat)
                                 
                             } label: {
                                 VStack(alignment: .leading) {
-                                    Text(((chat.usersId.count > 2) ? chat.name : viewModel.getUserEntity(from: chat)?.name) ?? "")
+                                    Text(((chat.usersId.count > 2) ? chat.name : viewModel.getUserEntity(from: chat)[0].name) ?? "")
                                         .foregroundColor(.white)
                                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                                     Text(lastMessage(chat: chat)) //?? L10n.General.unknown)
@@ -167,7 +167,7 @@ struct ChatView: View {
                         .padding(.horizontal)
                     
                     VStack(alignment: .leading) {
-                        Text(((chatUser?.usersId.count ?? 2 > 2) ? chatUser?.name : viewModel.getUserEntity(from: chatUser)?.name) ?? "")
+                        Text(((chatUser?.usersId.count ?? 2 > 2) ? chatUser?.name : viewModel.getUserEntity(from: chatUser).first?.name) ?? "")
                             .foregroundColor(.white)
                             .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                         Text(viewModel.getNicNameUsers(chat: chatUser))
@@ -194,7 +194,7 @@ struct ChatView: View {
                     Spacer().frame(width: 54.0)
                     
                     NavigationLink(isActive: $correspondence) {
-                        CorrespondenceView(contact: viewModel.getUserEntity(from: chatUser), chat: chatUser)
+                        CorrespondenceView(contacts: viewModel.getUserEntity(from: chatUser), chat: chatUser)
                     } label:{
                         Button {
                             bottomSheetPosition = .hidden

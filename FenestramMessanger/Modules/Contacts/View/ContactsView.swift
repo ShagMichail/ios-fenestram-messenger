@@ -104,7 +104,7 @@ struct ContactsView: View {
                     if viewModel.filteredContacts.count > 0 {
                         ForEach(viewModel.filteredContacts) { contact in
                             NavigationLink() {
-                                CorrespondenceView(contact: contact, chat: viewModel.filterChat(contact: contact)).navigationBarHidden(true)
+                                CorrespondenceView(contacts: [contact], chat: viewModel.filterChat(contact: contact)).navigationBarHidden(true)
                             } label: {
                                 HStack() {
                                     Asset.photo.swiftUIImage

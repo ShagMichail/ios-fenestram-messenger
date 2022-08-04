@@ -20,7 +20,7 @@ struct CorrespondenceView: View {
     @State private var keyboardHeight: CGFloat = 0
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     
-    var contact: UserEntity?
+    var contacts: [UserEntity]
     var chatFirst: ChatEntity?
     var contactId: Int = 0
     var message: String = ""
@@ -31,9 +31,9 @@ struct CorrespondenceView: View {
     
     @StateObject private var viewModel: ViewModel
     
-    init(contact: UserEntity?, chat: ChatEntity?) {
+    init(contacts: [UserEntity], chat: ChatEntity?) {
         self.chatFirst = chat
-        self.contact = contact
+        self.contacts = contacts
         _viewModel = StateObject(wrappedValue: ViewModel(chat: chat))
         UITextView.appearance().backgroundColor = .clear
     }
@@ -44,7 +44,7 @@ struct CorrespondenceView: View {
                 Asset.thema.swiftUIColor
                     .ignoresSafeArea()
                 VStack {
-                    CorrespondenceNavigationView(contact: contact!)
+                    CorrespondenceNavigationView(contacts: contacts, chat: chatFirst)
                     if $viewModel.allMessage.count != 0 {
                         ScrollView(showsIndicators: false) {
                             ForEach(viewModel.allMessage) { message in

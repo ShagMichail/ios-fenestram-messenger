@@ -89,16 +89,22 @@ extension ChatView {
             }
         }
         
-        func getUserEntity(from chat: ChatEntity?) -> UserEntity? {
-            guard let user = Settings.currentUser?.id, let chat = chat else { return nil }
-            if chat.usersId.count == 2 {
-                let correspId = chat.usersId.filter { $0 != user }.first
-                let correspondent = allContacts.first { $0.id == correspId }
-                return correspondent
-            } else {
-                return nil
+        func getUserEntity(from chat: ChatEntity?) -> [UserEntity] {
+            let user = Settings.currentUser?.id
+            //if chat.usersId.count == 2 {
+            //let correspId = chat.usersId.filter { $0 != user }.first
+            var correspondent: [UserEntity] = []
+            guard let allUsers = chat?.usersId else { return correspondent }
+            for i in allUsers {
+                for k in allContacts {
+                    if k.id != Settings.currentUser?.id && k.id == i {
+                        correspondent.append(k)
+                    }
+                }
             }
+            return correspondent
         }
+
         
         func getNicNameUsers(chat: ChatEntity?) -> String {
             let index = allContacts.startIndex

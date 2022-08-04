@@ -11,7 +11,8 @@ struct PageContactView: View {
     // @GestureState private var dragOffset = CGSize.zero
     @State var uiTabarController: UITabBarController?
     
-    var contact: UserEntity
+    var contact: [UserEntity]
+    var chat: ChatEntity?
     
     @StateObject private var viewModel: ViewModel
     
@@ -19,9 +20,10 @@ struct PageContactView: View {
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
-    init(contact: UserEntity) {
+    init(contact: [UserEntity], chat: ChatEntity?) {
         _viewModel = StateObject(wrappedValue: ViewModel())
         self.contact = contact
+        self.chat = chat
     }
     var body: some View {
         
@@ -35,10 +37,10 @@ struct PageContactView: View {
                             .frame(width: 80.0, height: 80.0)
                             .padding(.horizontal)
                         VStack(alignment: .leading) {
-                            Text(contact.name ?? " ")
+                            Text((contact.count > 2) ? chat?.name ?? "" : contact[0].name ?? " ")
                                 .foregroundColor(.white)
                                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
-                            Text("@\(contact.nickname ?? " ")")
+                            Text("@\(contact[0].nickname ?? " ")")
                                 .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                         }
