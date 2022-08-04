@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    
+    //MARK: Проперти
     @State var uiTabarController: UITabBarController?
     @State var colorThema = false
     
@@ -40,7 +40,7 @@ struct SettingsView: View {
             .foregroundColor(Color.white)
             .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
     }
-    
+    //MARK: Боди
     var body: some View {
         ZStack {
             Asset.thema.swiftUIColor
@@ -54,89 +54,17 @@ struct SettingsView: View {
                 Spacer()
             }
             VStack(alignment: .leading) {
-                HStack{
-                    Asset.color.swiftUIImage
-                        .resizable()
-                        .frame(width: 22.0, height: 22.0)
-                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                    Text(L10n.SettingsView.color)
-                        .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
-                        .foregroundColor(Color.white)
-                        .padding(.leading)
-                    Spacer()
-                    if isColorThema ?? false {
-                        Button {
-                            isColorThema = false
-                        } label: {
-                            RoundedRectangle(cornerRadius: 40)
-                                .frame(width: 24, height: 24)
-                                .foregroundColor(Asset.blue.swiftUIColor)
-                        }
-                        
-                        Spacer().frame(width: 30)
-                        
-                        Button {
-                            isColorThema = true
-                        } label: {
-                            RoundedRectangle(cornerRadius: 40)
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(Asset.green.swiftUIColor)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 40)
-                                        .stroke(Color.white, lineWidth: 3)
-                                )
-                        }.padding(.trailing)
-                    } else {
-                        Button {
-                            isColorThema = false
-                        } label: {
-                            RoundedRectangle(cornerRadius: 40)
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(Asset.blue.swiftUIColor)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 40)
-                                        .stroke(Color.white, lineWidth: 3)
-                                )
-                        }
-                        
-                        Spacer().frame(width: 30)
-                        
-                        Button {
-                            isColorThema = true
-                        } label: {
-                            RoundedRectangle(cornerRadius: 40)
-                                .frame(width: 24, height: 24)
-                                .foregroundColor(Asset.green.swiftUIColor)
-                        }.padding(.trailing)
-                    }
-                }
+                
+                getColorThemaSettings()
                 
                 Spacer().frame(height: 40)
-                HStack{
-                    Asset.info.swiftUIImage
-                        .resizable()
-                        .frame(width: 22.0, height: 22.0)
-                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                    Text(L10n.SettingsView.info)
-                        .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
-                        .foregroundColor(Color.white)
-                        .padding(.leading)
-                }
+                
+                getInfoSettings()
+                
                 Spacer().frame(height: 40)
-                HStack{
-                    Button {
-                        viewModel.out(phone: isPhoneUser ?? "", code: isCodeUser ?? "")
-                    } label: {
-                        Asset.exit.swiftUIImage
-                            .resizable()
-                            .frame(width: 22.0, height: 22.0)
-                            .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                        Text(L10n.SettingsView.exit)
-                            .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
-                            .foregroundColor(Color.white)
-                            .padding(.leading)
-                    }
-                }
+                
+                getOutSettings()
+                
                 Spacer()
             }.padding()
             Spacer()
@@ -149,6 +77,95 @@ struct SettingsView: View {
             uiTabarController = UITabBarController
         }.onDisappear{
             uiTabarController?.tabBar.isHidden = false
+        }
+    }
+    //MARK: Получаем все вью
+    private func getColorThemaSettings() -> some View {
+        HStack{
+            Asset.color.swiftUIImage
+                .resizable()
+                .frame(width: 22.0, height: 22.0)
+                .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+            Text(L10n.SettingsView.color)
+                .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
+                .foregroundColor(Color.white)
+                .padding(.leading)
+            Spacer()
+            if isColorThema ?? false {
+                Button {
+                    isColorThema = false
+                } label: {
+                    RoundedRectangle(cornerRadius: 40)
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(Asset.blue.swiftUIColor)
+                }
+                
+                Spacer().frame(width: 30)
+                
+                Button {
+                    isColorThema = true
+                } label: {
+                    RoundedRectangle(cornerRadius: 40)
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(Asset.green.swiftUIColor)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 40)
+                                .stroke(Color.white, lineWidth: 3)
+                        )
+                }.padding(.trailing)
+            } else {
+                Button {
+                    isColorThema = false
+                } label: {
+                    RoundedRectangle(cornerRadius: 40)
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(Asset.blue.swiftUIColor)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 40)
+                                .stroke(Color.white, lineWidth: 3)
+                        )
+                }
+                
+                Spacer().frame(width: 30)
+                
+                Button {
+                    isColorThema = true
+                } label: {
+                    RoundedRectangle(cornerRadius: 40)
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(Asset.green.swiftUIColor)
+                }.padding(.trailing)
+            }
+        }
+    }
+    
+    private func getInfoSettings() -> some View {
+        HStack{
+            Asset.info.swiftUIImage
+                .resizable()
+                .frame(width: 22.0, height: 22.0)
+                .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+            Text(L10n.SettingsView.info)
+                .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
+                .foregroundColor(Color.white)
+                .padding(.leading)
+        }
+    }
+    
+    private func getOutSettings() -> some View {
+        HStack{
+            Button {
+                viewModel.out(phone: isPhoneUser ?? "", code: isCodeUser ?? "")
+            } label: {
+                Asset.exit.swiftUIImage
+                    .resizable()
+                    .frame(width: 22.0, height: 22.0)
+                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                Text(L10n.SettingsView.exit)
+                    .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
+                    .foregroundColor(Color.white)
+                    .padding(.leading)
+            }
         }
     }
 }

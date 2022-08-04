@@ -27,41 +27,7 @@ struct FileView: View {
             VStack {
                 FileNavigationView()
                 Spacer().frame(height: 20)
-                ScrollView(showsIndicators: false) {
-                    ForEach(viewModel.allFiles) { files in
-                        Button(action: {
-                            
-                        }, label: {
-                            HStack {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 30)
-                                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                                        .frame(width: 32, height: 32)
-                                    Asset.fileWhite.swiftUIImage
-                                        .resizable()
-                                        .frame(width: 13.0, height: 16.0)
-                                        .padding(.horizontal)
-                                }
-                                VStack(alignment: .leading) {
-                                    Text(files.title)
-                                        .font(.system(size: 14))
-                                        .foregroundColor(Asset.fileText.swiftUIColor)
-                                    Text(files.volume)
-                                        .font(.system(size: 12))
-                                        .foregroundColor(Asset.fileText.swiftUIColor)
-                                }
-                                Spacer()
-                                HStack {
-                                    Text(files.data)
-                                        .font(.system(size: 12))
-                                        .foregroundColor(Asset.fileText.swiftUIColor)
-                                }
-                            }
-                        }).padding(.leading, 15.0)
-                            .padding(.trailing, 20.0)
-                        Spacer().frame(height: 20)
-                    }
-                }
+                getListFile()
             }
         }
         .introspectTabBarController { (UITabBarController) in
@@ -71,7 +37,52 @@ struct FileView: View {
             uiTabarController?.tabBar.isHidden = false
         }
     }
+    
+    //MARK: Все вью
+    private func getListFile() -> some View {
+        ScrollView(showsIndicators: false) {
+            ForEach(viewModel.allFiles) { files in
+                Button(action: {
+                    
+                }, label: {
+                    getRowFile(files: files)
+                }).padding(.leading, 15.0)
+                    .padding(.trailing, 20.0)
+                Spacer().frame(height: 20)
+            }
+        }
+    }
+    
+    private func getRowFile(files: File) -> some View {
+        HStack {
+            ZStack {
+                RoundedRectangle(cornerRadius: 30)
+                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                    .frame(width: 32, height: 32)
+                Asset.fileWhite.swiftUIImage
+                    .resizable()
+                    .frame(width: 13.0, height: 16.0)
+                    .padding(.horizontal)
+            }
+            VStack(alignment: .leading) {
+                Text(files.title)
+                    .font(.system(size: 14))
+                    .foregroundColor(Asset.fileText.swiftUIColor)
+                Text(files.volume)
+                    .font(.system(size: 12))
+                    .foregroundColor(Asset.fileText.swiftUIColor)
+            }
+            Spacer()
+            HStack {
+                Text(files.data)
+                    .font(.system(size: 12))
+                    .foregroundColor(Asset.fileText.swiftUIColor)
+            }
+        }
+    }
 }
+
+
 
 struct FileView_Previews: PreviewProvider {
     static var previews: some View {

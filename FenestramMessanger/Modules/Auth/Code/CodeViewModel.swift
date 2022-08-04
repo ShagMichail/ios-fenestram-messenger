@@ -33,6 +33,7 @@ extension CodeView {
             self.phoneNumber = phoneNumber
         }
         
+        //MARK: Функции запросов
         func login() {
             AuthService.login(phoneNumber: phoneNumber, oneTimeCode: textCode) { [weak self] result in
                 switch result {
@@ -57,6 +58,8 @@ extension CodeView {
                 }
             }
         }
+        
+        //MARK: Вспомогательные функции
         
         func changeIncorrect()  {
             if textCode.count < 4 {

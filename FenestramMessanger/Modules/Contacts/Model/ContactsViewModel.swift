@@ -27,27 +27,8 @@ extension ContactsView {
             getContacts()
             getChatList()
         }
-        
-        func filterContent() {
-            let lowercasedSearchText = searchText.lowercased()
-            
-            if searchText.count > 0 {
-                var matchingCoffees: [UserEntity] = []
                 
-                allContacts.forEach { contact in
-                    guard let searchContent = contact.name else { return }
-                    
-                    if searchContent.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil {
-                        matchingCoffees.append(contact)
-                    }
-                }
-                
-                self.filteredContacts = matchingCoffees
-            } else {
-                filteredContacts = allContacts
-            }
-        }
-        
+        //MARK: Функции запросов
         private func getContacts() {
             guard let currentUserId = Settings.currentUser?.id else {
                 print("current user doesn't exist")
@@ -91,6 +72,27 @@ extension ContactsView {
                 }
                 
                 self?.isLoading = false
+            }
+        }
+        
+        //MARK: Вспомогательные функции
+        func filterContent() {
+            let lowercasedSearchText = searchText.lowercased()
+            
+            if searchText.count > 0 {
+                var matchingCoffees: [UserEntity] = []
+                
+                allContacts.forEach { contact in
+                    guard let searchContent = contact.name else { return }
+                    
+                    if searchContent.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil {
+                        matchingCoffees.append(contact)
+                    }
+                }
+                
+                self.filteredContacts = matchingCoffees
+            } else {
+                filteredContacts = allContacts
             }
         }
         

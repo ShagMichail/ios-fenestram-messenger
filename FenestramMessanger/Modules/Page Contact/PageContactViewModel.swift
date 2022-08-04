@@ -45,6 +45,7 @@ extension PageContactView {
             fillterPhotoSecond()
         }
         
+        //MARK: Вспомогательные функции
         private func fillterFile() {
             let files = allFiles
             var index = 0

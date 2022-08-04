@@ -34,6 +34,8 @@ extension ChatView {
             fillterFile()
         }
         
+        //MARK: Функции запросов
+        
         private func getChatList() {
             isLoading = true
             
@@ -78,9 +80,11 @@ extension ChatView {
             }
         }
         
+        //MARK: Вспомогательные функции
+        
         private func fillterFile() {
             let files = allFiles
-            var index = files.endIndex - 3
+            var index = 0
             if files.count > 3  {
                 for _ in 0...2  {
                     recentFile.append(files[index])

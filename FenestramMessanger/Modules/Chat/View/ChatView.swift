@@ -13,7 +13,7 @@ enum BookBottomSheetPosition: CGFloat, CaseIterable {
 }
 
 struct ChatView: View {
-    
+    //MARK: Проперти
     @State var uiTabarController: UITabBarController?
     @State var bottomSheetPosition: BookBottomSheetPosition = .hidden
     @State var isShowingSheet = false
@@ -29,7 +29,7 @@ struct ChatView: View {
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
     }
-    
+    //MARK: Боди
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
@@ -55,7 +55,8 @@ struct ChatView: View {
             }
         }
     }
-    
+    //MARK: Получаем все вью
+
     private func getHeader() -> some View {
         HStack(alignment: .center){
             Text("FENESTRAM")
@@ -102,49 +103,7 @@ struct ChatView: View {
                 if viewModel.chatList.count > 0 {
                     ForEach(viewModel.chatList) { chat in
                         
-                        HStack() {
-                            Button {
-                                bottomSheetPosition = .bottom
-                                chatUser = chat
-                            } label: {
-                                Asset.photo.swiftUIImage
-                                    .resizable()
-                                    .frame(width: 40.0, height: 40.0)
-                                    .padding(.horizontal)
-                            }
-                            NavigationLink {
-                                CorrespondenceView(contacts: viewModel.getUserEntity(from: chat), chat: chat)
-                                
-                            } label: {
-                                VStack(alignment: .leading) {
-                                    Text(((chat.usersId.count > 2) ? chat.name : viewModel.getUserEntity(from: chat)[0].name) ?? "")
-                                        .foregroundColor(.white)
-                                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
-                                    Text(lastMessage(chat: chat)) //?? L10n.General.unknown)
-                                        .foregroundColor(Asset.message.swiftUIColor)
-                                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
-                                        .lineLimit(1)
-                                }
-                                
-                                Spacer()
-                                
-                                VStack {
-                                    Text(lastMessageTime(chat: chat))
-                                        .foregroundColor(Asset.message.swiftUIColor)
-                                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
-                                    
-                                    Button(action: {
-                                        print("ddd")
-                                    }, label: {
-                                        Image(systemName: "checkmark")
-                                            .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                                    })
-                                    .padding(.trailing, 0.0)
-                                    .disabled(true)
-                                    
-                                }
-                            }
-                        }.padding(.horizontal)
+                        getChatRow(chat: chat)
                     }
                 } else {
                     HStack {
@@ -159,107 +118,160 @@ struct ChatView: View {
             
         }.bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: [.noDragIndicator, .allowContentDrag, .swipeToDismiss, .tapToDismiss, .absolutePositionValue, .background({ AnyView(Asset.buttonAlert.swiftUIColor) }), .cornerRadius(30)], headerContent: {
             
-            VStack {
-                HStack {
-                    Asset.photo.swiftUIImage
-                        .resizable()
-                        .frame(width: 80.0, height: 80.0)
-                        .padding(.horizontal)
-                    
-                    VStack(alignment: .leading) {
-                        Text(((chatUser?.usersId.count ?? 2 > 2) ? chatUser?.name : viewModel.getUserEntity(from: chatUser).first?.name) ?? "")
-                            .foregroundColor(.white)
-                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
-                        Text(viewModel.getNicNameUsers(chat: chatUser))
-                            .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
-                    }
-                    Spacer()
+            getHeaderBottomSheet()
+        }) {
+            getBodyBottomSheet()
+        }
+    }
+    
+    private func getChatRow(chat: ChatEntity) -> some View {
+        HStack() {
+            Button {
+                bottomSheetPosition = .bottom
+                chatUser = chat
+            } label: {
+                Asset.photo.swiftUIImage
+                    .resizable()
+                    .frame(width: 40.0, height: 40.0)
+                    .padding(.horizontal)
+            }
+            NavigationLink {
+                CorrespondenceView(contacts: viewModel.getUserEntity(from: chat), chat: chat)
+                
+            } label: {
+                VStack(alignment: .leading) {
+                    Text(((chat.usersId.count > 2) ? chat.name : viewModel.getUserEntity(from: chat)[0].name) ?? "")
+                        .foregroundColor(.white)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                    Text(lastMessage(chat: chat)) //?? L10n.General.unknown)
+                        .foregroundColor(Asset.message.swiftUIColor)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                        .lineLimit(1)
                 }
-                Spacer().frame(height: 30.0)
-                HStack {
-                    Button {
-                        print("fff")
-                    } label: {
-                        buttonsViewProperty(image: Asset.videoButton)
-                    }
+                
+                Spacer()
+                
+                VStack {
+                    Text(lastMessageTime(chat: chat))
+                        .foregroundColor(Asset.message.swiftUIColor)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                     
-                    Spacer().frame(width: 54.0)
-                    
-                    Button {
-                        print("fff")
-                    } label: {
-                        buttonsViewProperty(image: Asset.phoneButton)
-                    }
-                    Spacer().frame(width: 54.0)
-                    
-                    NavigationLink(isActive: $correspondence) {
-                        CorrespondenceView(contacts: viewModel.getUserEntity(from: chatUser), chat: chatUser)
-                    } label:{
-                        Button {
-                            bottomSheetPosition = .hidden
-                            self.correspondence.toggle()
-                        } label: {
-                            buttonsViewProperty(image: Asset.messageButton)
-                        }
-                        
-                    }
+                    Button(action: {
+                        print("ddd")
+                    }, label: {
+                        Image(systemName: "checkmark")
+                            .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                    })
+                    .padding(.trailing, 0.0)
+                    .disabled(true)
                     
                 }
             }
-        }) {
-            VStack {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(L10n.ChatView.recentFiles)
-                            .font(.system(size: 14))
-                            .foregroundColor(.white)
-                        Text("\(viewModel.allFiles.count) файлов")
-                            .font(.system(size: 12))
-                            .foregroundColor(Asset.fileText.swiftUIColor)
+        }.padding(.horizontal)
+    }
+    
+    private func getHeaderBottomSheet() -> some View {
+        VStack {
+            HStack {
+                Asset.photo.swiftUIImage
+                    .resizable()
+                    .frame(width: 80.0, height: 80.0)
+                    .padding(.horizontal)
+                
+                VStack(alignment: .leading) {
+                    Text(((chatUser?.usersId.count ?? 2 > 2) ? chatUser?.name : viewModel.getUserEntity(from: chatUser).first?.name) ?? "")
+                        .foregroundColor(.white)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
+                    Text(viewModel.getNicNameUsers(chat: chatUser))
+                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
+                }
+                Spacer()
+            }
+            Spacer().frame(height: 30.0)
+            HStack {
+                Button {
+                    print("fff")
+                } label: {
+                    buttonsViewProperty(image: Asset.videoButton)
+                }
+                
+                Spacer().frame(width: 54.0)
+                
+                Button {
+                    print("fff")
+                } label: {
+                    buttonsViewProperty(image: Asset.phoneButton)
+                }
+                Spacer().frame(width: 54.0)
+                
+                NavigationLink(isActive: $correspondence) {
+                    CorrespondenceView(contacts: viewModel.getUserEntity(from: chatUser), chat: chatUser)
+                } label:{
+                    Button {
+                        bottomSheetPosition = .hidden
+                        self.correspondence.toggle()
+                    } label: {
+                        buttonsViewProperty(image: Asset.messageButton)
                     }
-                    Spacer()
-                    Image(systemName: "chevron.down")
-                        .frame(width: 10, height: 10)
+                    
+                }
+                
+            }
+        }
+    }
+    private func getBodyBottomSheet() -> some View {
+        VStack {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(L10n.ChatView.recentFiles)
+                        .font(.system(size: 14))
+                        .foregroundColor(.white)
+                    Text("\(viewModel.allFiles.count) файлов")
+                        .font(.system(size: 12))
                         .foregroundColor(Asset.fileText.swiftUIColor)
-                }.padding(.leading, 50.0)
-                    .padding(.trailing, 50.0)
-                
-                Spacer().frame(height: 25.0)
-                
-                ForEach(viewModel.recentFile) { files in
-                    Button(action: {
-                        
-                    }, label: {
+                }
+                Spacer()
+                Image(systemName: "chevron.down")
+                    .frame(width: 10, height: 10)
+                    .foregroundColor(Asset.fileText.swiftUIColor)
+            }.padding(.leading, 50.0)
+                .padding(.trailing, 50.0)
+            
+            Spacer().frame(height: 25.0)
+            
+            ForEach(viewModel.recentFile) { files in
+                Button(action: {
+                    
+                }, label: {
+                    HStack {
+                        Asset.file.swiftUIImage
+                            .resizable()
+                            .frame(width: 20.0, height: 20.0)
+                            .padding(.horizontal)
+                        Text(files.title)
+                            .font(.system(size: 14))
+                            .foregroundColor(Asset.fileText.swiftUIColor)
+                        Spacer()
                         HStack {
-                            Asset.file.swiftUIImage
-                                .resizable()
-                                .frame(width: 20.0, height: 20.0)
-                                .padding(.horizontal)
-                            Text(files.title)
-                                .font(.system(size: 14))
+                            Image(systemName: "circle.fill")
+                                .font(.system(size: 2))
                                 .foregroundColor(Asset.fileText.swiftUIColor)
                             Spacer()
-                            HStack {
-                                Image(systemName: "circle.fill")
-                                    .font(.system(size: 2))
-                                    .foregroundColor(Asset.fileText.swiftUIColor)
-                                Spacer()
-                                    .frame(width: 3.0)
-                                Image(systemName: "circle.fill")
-                                    .font(.system(size: 2))
-                                    .foregroundColor(Asset.fileText.swiftUIColor)
-                                Spacer()
-                                    .frame(width: 3.0)
-                                Image(systemName: "circle.fill")
-                                    .font(.system(size: 2))
-                                    .foregroundColor(Asset.fileText.swiftUIColor)
-                            }
+                                .frame(width: 3.0)
+                            Image(systemName: "circle.fill")
+                                .font(.system(size: 2))
+                                .foregroundColor(Asset.fileText.swiftUIColor)
+                            Spacer()
+                                .frame(width: 3.0)
+                            Image(systemName: "circle.fill")
+                                .font(.system(size: 2))
+                                .foregroundColor(Asset.fileText.swiftUIColor)
                         }
-                    }).padding(.leading, 35.0)
-                        .padding(.trailing, 50.0)
-                    Spacer().frame(height: 20)
-                }
+                    }
+                }).padding(.leading, 35.0)
+                    .padding(.trailing, 50.0)
+                Spacer().frame(height: 20)
             }
         }
     }
@@ -278,6 +290,8 @@ struct ChatView: View {
         }
     }
     
+    //MARK: Функции настройки ячейки
+
     private func lastMessage(chat: ChatEntity) -> String {
         guard let lastIndex = chat.messages?.last else {return ""}
         return lastIndex.message

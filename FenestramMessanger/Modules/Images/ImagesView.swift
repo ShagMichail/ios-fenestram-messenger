@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ImagesView: View {
-    
+    //MARK: Проперти
     @State var uiTabarController: UITabBarController?
     
     private var columns: [GridItem] = [
@@ -21,20 +21,13 @@ struct ImagesView: View {
     init(images: [PhotoEntity]) {
         self.images = images
     }
-    
+    //MARK: Боди
     var body: some View {
         ZStack {
             Asset.thema.swiftUIColor.ignoresSafeArea()
             VStack {
                 ImagesNavigationView()
-                ScrollView(showsIndicators: false) {
-                    LazyVGrid(columns: columns) {
-                        ForEach(images) { image in
-                            Image(uiImage: image.image)
-                                .resizable()
-                        }
-                    }
-                }
+                getListPhoto()
             }
         }
         .introspectTabBarController { (UITabBarController) in
@@ -42,6 +35,17 @@ struct ImagesView: View {
             uiTabarController = UITabBarController
         }.onDisappear{
             uiTabarController?.tabBar.isHidden = false
+        }
+    }
+    //MARK: Получаем все вью
+    private func getListPhoto() -> some View {
+        ScrollView(showsIndicators: false) {
+            LazyVGrid(columns: columns) {
+                ForEach(images) { image in
+                    Image(uiImage: image.image)
+                        .resizable()
+                }
+            }
         }
     }
 }

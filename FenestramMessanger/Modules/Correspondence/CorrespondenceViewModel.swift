@@ -33,7 +33,7 @@ extension CorrespondenceView {
             getChatList()
             getChatUser(id: chat?.id ?? 0)
         }
-        
+        //MARK: Функции запросов
         private func getChatList() {
             isLoading = true
             
@@ -73,9 +73,19 @@ extension CorrespondenceView {
                 
                 self?.isLoading = false
             })
-                                
         }
         
+        func postMessage(chat: ChatEntity?) {
+            ChatService.postMessage(chatId: chat?.id ?? 0, messageType: .text, content: textMessage) { result in
+                switch result {
+                case .success(_):
+                    break
+                case .failure( let error ):
+                    print("\(error)")
+                }
+            }
+        }
+        //MARK: Вспомогательные функции
         private func appendPhoto() {
             guard let foto = image else { return }
             allFoto.append(PhotoEntity(id: allFoto.endIndex, image: foto))
@@ -88,17 +98,6 @@ extension CorrespondenceView {
                 allMessageNew.insert(allMessage[i], at: 0)
             }
             allMessage = allMessageNew
-        }
-        
-        func postMessage(chat: ChatEntity?) {
-            ChatService.postMessage(chatId: chat?.id ?? 0, messageType: .text, content: textMessage) { result in
-                switch result {
-                case .success(_):
-                    break
-                case .failure( let error ):
-                    print("\(error)")
-                }
-            }
         }
         
         func lastMessage(message: MessageEntity) -> Bool {

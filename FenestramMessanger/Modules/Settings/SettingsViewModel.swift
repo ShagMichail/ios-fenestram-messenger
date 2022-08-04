@@ -12,6 +12,8 @@ extension SettingsView {
     final class ViewModel: ObservableObject {
         var newPhone: String = ""
         
+        //MARK: Функции запросов
+
         public func out(phone: String, code: String) {
             for character in phone {
                 if character != " " && character != "-" {

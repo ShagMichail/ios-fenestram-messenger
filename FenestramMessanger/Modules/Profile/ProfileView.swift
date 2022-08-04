@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct ProfileView: View {
-    
+    //MARK: Проперти
     @State private var keyboardHeight: CGFloat = 0
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     
@@ -26,7 +26,7 @@ struct ProfileView: View {
             .strokeBorder(
                 LinearGradient(colors: [Asset.border.swiftUIColor] , startPoint: .topLeading, endPoint: .bottomTrailing))
     }
-    
+    //MARK: Боди
     var body: some View {
         NavigationView {
             ZStack {
@@ -51,9 +51,7 @@ struct ProfileView: View {
                             if viewModel.editProfile {
                                 editName()
                             } else {
-                                
                                 getName()
-                                
                                 Spacer()
                                     .frame(height: 30.0)
                             }
@@ -85,7 +83,7 @@ struct ProfileView: View {
             .navigationBarHidden(true)
         }
     }
-    
+    //MARK: Получаем все вью
     private func getHeader() -> some View {
         HStack(){
             
