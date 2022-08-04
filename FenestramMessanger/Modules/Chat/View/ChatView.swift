@@ -116,7 +116,7 @@ struct ChatView: View {
                                 
                             } label: {
                                 VStack(alignment: .leading) {
-                                    Text(chat.name)
+                                    Text(((chat.usersId.count > 2) ? chat.name : viewModel.getUserEntity(from: chat)?.name) ?? "")
                                         .foregroundColor(.white)
                                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                                     Text(lastMessage(chat: chat)) //?? L10n.General.unknown)
@@ -166,7 +166,7 @@ struct ChatView: View {
                         .padding(.horizontal)
                     
                     VStack(alignment: .leading) {
-                        Text(chatUser?.name ?? " ")
+                        Text(((chatUser?.usersId.count ?? 2 > 2) ? chatUser?.name : viewModel.getUserEntity(from: chatUser)?.name) ?? "")
                             .foregroundColor(.white)
                             .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                         Text(viewModel.getNicNameUsers(chat: chatUser))
