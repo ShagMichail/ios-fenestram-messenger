@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct ImagesView: View {
-    //MARK: Проперти
+    
+    
+    //MARK: - Properties
+    
     @State var uiTabarController: UITabBarController?
     
     private var columns: [GridItem] = [
@@ -21,7 +24,10 @@ struct ImagesView: View {
     init(images: [PhotoEntity]) {
         self.images = images
     }
-    //MARK: Боди
+    
+    
+    //MARK: - Body
+    
     var body: some View {
         ZStack {
             Asset.thema.swiftUIColor.ignoresSafeArea()
@@ -37,7 +43,10 @@ struct ImagesView: View {
             uiTabarController?.tabBar.isHidden = false
         }
     }
-    //MARK: Получаем все вью
+    
+    
+    //MARK: - Views
+    
     private func getListPhoto() -> some View {
         ScrollView(showsIndicators: false) {
             LazyVGrid(columns: columns) {

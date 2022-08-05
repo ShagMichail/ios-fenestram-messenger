@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct PageContactView: View {
-    //MARK: Проперти
+    
+    
+    //MARK: - Properties
+    
     @State var uiTabarController: UITabBarController?
     
     var contact: [UserEntity]
@@ -25,7 +28,10 @@ struct PageContactView: View {
         self.contact = contact
         self.chat = chat
     }
-    //MARK: Боди
+   
+    
+    //MARK: - Body
+    
     var body: some View {
         
         VStack{
@@ -69,7 +75,10 @@ struct PageContactView: View {
             uiTabarController?.tabBar.isHidden = false
         }
     }
-    //MARK: Получаем все вью
+    
+    
+    //MARK: - Views
+    
     private func getNameAndPhoto() -> some View {
         HStack {
             Asset.photo.swiftUIImage

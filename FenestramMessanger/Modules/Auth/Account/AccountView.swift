@@ -10,7 +10,10 @@ import Introspect
 import Combine
 
 struct AccountView: View {
-    //MARK: Проперти
+    
+    
+    //MARK: - Properties
+    
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     @State private var keyboardHeight: CGFloat = 0
     
@@ -27,7 +30,10 @@ struct AccountView: View {
             .strokeBorder(
                 LinearGradient(colors: [Asset.border.swiftUIColor] , startPoint: .topLeading, endPoint: .bottomTrailing))
     }
-    //MARK: Боди
+   
+    
+    //MARK: - Body
+    
     var body: some View {
         ZStack {
             Asset.thema.swiftUIColor
@@ -61,7 +67,10 @@ struct AccountView: View {
         }
         
     }
-    //MARK: Получаем все вью
+    
+    
+    //MARK: - Views
+    
     private func getHeader() -> some View {
         Text(L10n.AccountView.title)
             .frame(width: UIScreen.screenWidth / 2)

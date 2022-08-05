@@ -11,6 +11,10 @@ import SwiftUI
 extension CorrespondenceView {
     @MainActor
     final class ViewModel: ObservableObject {
+        
+        
+        //MARK: - Properties
+        
         @Published var chatList: [ChatEntity] = []
         @Published var textMessage: String = ""
         @Published var isLoading: Bool = false
@@ -33,7 +37,10 @@ extension CorrespondenceView {
             getChatList()
             getChatUser(id: chat?.id ?? 0)
         }
-        //MARK: Функции запросов
+        
+        
+        //MARK: - Query functions
+        
         private func getChatList() {
             isLoading = true
             
@@ -75,6 +82,25 @@ extension CorrespondenceView {
             })
         }
         
+        func createChat(chatName: String, usersId: [Int]) {
+            ChatService.createChat(chatName: chatName, usersId: usersId) { [weak self] result in
+                switch result {
+                case .success(let chat):
+                    print("create chat user success")
+                    self?.chat = chat
+                    self?.postMessage(chat: chat)
+                    //guard let allMessage = self?.chat?.messages else {return}
+                    //self?.allMessage = (self?.chat?.messages)!
+                    //self?.filterArray()
+                case .failure(let error):
+                    print("create chat user failure with error:", error.localizedDescription)
+                    self?.textTitleAlert = "create chat user with error"
+                    self?.textAlert = error.localizedDescription
+                    self?.presentAlert = true
+                }
+            }
+        }
+        
         func postMessage(chat: ChatEntity?) {
             ChatService.postMessage(chatId: chat?.id ?? 0, messageType: .text, content: textMessage) { result in
                 switch result {
@@ -85,7 +111,10 @@ extension CorrespondenceView {
                 }
             }
         }
-        //MARK: Вспомогательные функции
+        
+        
+        //MARK: - Auxiliary functions
+        
         private func appendPhoto() {
             guard let foto = image else { return }
             allFoto.append(PhotoEntity(id: allFoto.endIndex, image: foto))
@@ -105,6 +134,14 @@ extension CorrespondenceView {
                 return true
             }
             return false
+        }
+        
+        func getUserEntityIds(contactId: Int) -> [Int] {
+            var ids: [Int] = []
+            guard let curretUserId = Settings.currentUser?.id else { return ids }
+            ids.append(curretUserId)
+            ids.append(contactId)
+            return ids
         }
     }
 }

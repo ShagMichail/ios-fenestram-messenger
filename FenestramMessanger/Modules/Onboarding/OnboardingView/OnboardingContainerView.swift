@@ -9,10 +9,16 @@ import SwiftUI
 
 struct OnboardingContainerView: View {
     
+    
+    //MARK: - Properties
+    
     @State private var selectedPage = 0
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @AppStorage("isOnboarding") var isOnboarding: Bool?
+    
+    
+    //MARK: - Body
     
     var body: some View {
         
@@ -62,6 +68,9 @@ struct OnboardingContainerView: View {
             }
         }
     }
+    
+    
+    //MARK: - Views
     
     private func getButton() -> some View {
         VStack {

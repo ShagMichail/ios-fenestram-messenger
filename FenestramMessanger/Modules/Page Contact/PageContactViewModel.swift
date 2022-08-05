@@ -11,6 +11,9 @@ extension PageContactView {
     @MainActor
     final class ViewModel: ObservableObject {
         
+        
+        //MARK: - Properties
+        
         @Published var isLoading: Bool = false
         @Published var allFiles: [File] = [
             File(title: "FFFFF", data: "22.02.22", volume: "10 MB"),
@@ -45,7 +48,9 @@ extension PageContactView {
             fillterPhotoSecond()
         }
         
-        //MARK: Вспомогательные функции
+        
+        //MARK: - Auxiliary functions
+        
         private func fillterFile() {
             let files = allFiles
             var index = 0

@@ -9,6 +9,9 @@ import SwiftUI
 
 struct MainView: View {
     
+    
+    //MARK: - Properties
+    
     @AppStorage("isActiv") var isActiv: Bool?
     @AppStorage("isAlreadySetProfile") var isAlreadySetProfile: Bool?
     
@@ -17,6 +20,9 @@ struct MainView: View {
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
     }
+    
+    
+    //MARK: - Body
     
     var body: some View {
         if viewModel.isSignIn {

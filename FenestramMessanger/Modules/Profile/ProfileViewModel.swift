@@ -10,6 +10,10 @@ import SwiftUI
 extension ProfileView {
     @MainActor
     final class ViewModel: ObservableObject {
+        
+        
+        //MARK: - Properties
+        
         @Published var birthday: Date? = nil
         
         @Published var image: UIImage?
@@ -45,7 +49,9 @@ extension ProfileView {
             getProfile()
         }
         
-        //MARK: Функции запросов
+        
+        //MARK: - Query functions
+        
         func saveInfo() {
             guard let birthdateTimeInterval = birthday?.timeIntervalSince1970 else {
                 print("birthday is empty!")
@@ -126,7 +132,10 @@ extension ProfileView {
                 self.isLoading = false
             }
         }
-        //MARK: Вспомогательные функции
+        
+        
+        //MARK: - Auxiliary functions
+        
         func textFieldValidatorEmail(_ string: String) -> Bool {
             if string.count > 100 {
                 return false

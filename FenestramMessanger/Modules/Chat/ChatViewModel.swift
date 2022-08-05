@@ -10,6 +10,10 @@ import SwiftUI
 extension ChatView {
     @MainActor
     final class ViewModel: ObservableObject {
+        
+        
+        //MARK: - Properties
+        
         @Published var chatList: [ChatEntity] = []
         @Published var allContacts: [UserEntity] = []
         
@@ -34,7 +38,8 @@ extension ChatView {
             fillterFile()
         }
         
-        //MARK: Функции запросов
+        
+        //MARK: - Query functions
         
         private func getChatList() {
             isLoading = true
@@ -80,7 +85,8 @@ extension ChatView {
             }
         }
         
-        //MARK: Вспомогательные функции
+        
+        //MARK: - Auxiliary functions
         
         private func fillterFile() {
             let files = allFiles

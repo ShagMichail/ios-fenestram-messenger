@@ -12,6 +12,9 @@ extension CodeView {
     @MainActor
     final class ViewModel: ObservableObject {
         
+        
+        //MARK: - Properties
+        
         private let phoneNumber: String
         
         @Published public var textCode = ""
@@ -33,7 +36,9 @@ extension CodeView {
             self.phoneNumber = phoneNumber
         }
         
-        //MARK: Функции запросов
+        
+        //MARK: - Query functions
+        
         func login() {
             AuthService.login(phoneNumber: phoneNumber, oneTimeCode: textCode) { [weak self] result in
                 switch result {
@@ -59,7 +64,8 @@ extension CodeView {
             }
         }
         
-        //MARK: Вспомогательные функции
+        
+        //MARK: - Auxiliary functions
         
         func changeIncorrect()  {
             if textCode.count < 4 {

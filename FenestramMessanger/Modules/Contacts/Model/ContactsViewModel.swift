@@ -10,6 +10,10 @@ import SwiftUI
 extension ContactsView {
     @MainActor
     final class ViewModel: ObservableObject {
+        
+        
+        //MARK: - Properties
+        
         @Published var searchText = ""
         @Published var chatList: [ChatEntity] = []
         @Published var allContacts: [UserEntity] = [] {
@@ -27,8 +31,10 @@ extension ContactsView {
             getContacts()
             getChatList()
         }
-                
-        //MARK: Функции запросов
+        
+        
+        //MARK: - Query functions
+        
         private func getContacts() {
             guard let currentUserId = Settings.currentUser?.id else {
                 print("current user doesn't exist")
@@ -75,7 +81,9 @@ extension ContactsView {
             }
         }
         
-        //MARK: Вспомогательные функции
+        
+        //MARK: - Auxiliary functions
+        
         func filterContent() {
             let lowercasedSearchText = searchText.lowercased()
             

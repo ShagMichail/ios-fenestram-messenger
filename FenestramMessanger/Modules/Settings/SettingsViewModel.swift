@@ -10,10 +10,15 @@ import SwiftUI
 extension SettingsView {
     @MainActor
     final class ViewModel: ObservableObject {
+        
+        
+        //MARK: - Properties
+        
         var newPhone: String = ""
         
-        //MARK: Функции запросов
-
+        
+        //MARK: - Query functions
+        
         public func out(phone: String, code: String) {
             for character in phone {
                 if character != " " && character != "-" {

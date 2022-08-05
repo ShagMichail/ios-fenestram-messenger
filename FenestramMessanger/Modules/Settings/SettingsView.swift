@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct SettingsView: View {
-    //MARK: Проперти
+    
+    
+    //MARK: - Properties
+    
     @State var uiTabarController: UITabBarController?
     @State var colorThema = false
     
@@ -40,7 +43,10 @@ struct SettingsView: View {
             .foregroundColor(Color.white)
             .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
     }
-    //MARK: Боди
+    
+    
+    //MARK: - Body
+    
     var body: some View {
         ZStack {
             Asset.thema.swiftUIColor
@@ -79,7 +85,10 @@ struct SettingsView: View {
             uiTabarController?.tabBar.isHidden = false
         }
     }
-    //MARK: Получаем все вью
+    
+    
+    //MARK: - Views
+    
     private func getColorThemaSettings() -> some View {
         HStack{
             Asset.color.swiftUIImage

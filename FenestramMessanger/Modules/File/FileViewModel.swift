@@ -11,6 +11,9 @@ extension FileView {
     @MainActor
     final class ViewModel: ObservableObject {
         
+        
+        //MARK: - Properties
+        
         @Published var isLoading: Bool = false
         @Published var allFiles: [File] = [
             File(title: "FFFFF", data: "22.02.22", volume: "10 MB"),

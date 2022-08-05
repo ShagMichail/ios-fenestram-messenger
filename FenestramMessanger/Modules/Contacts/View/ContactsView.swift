@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct ContactsView: View {
-    //MARK: Проперти
+    
+    
+    //MARK: - Properties
+    
     var chat: ChatEntity?
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
@@ -26,7 +29,10 @@ struct ContactsView: View {
                                startPoint: .topLeading,
                                endPoint: .bottomTrailing))
     }
-    //MARK: Боди
+    
+    
+    //MARK: - Body
+    
     var body: some View {
         NavigationView {
             ZStack{
@@ -61,7 +67,10 @@ struct ContactsView: View {
             .navigationBarHidden(true)
         }
     }
-    //MARK: Получаем все вью
+    
+    
+    //MARK: - Views
+    
     private func getHeaderView() -> some View {
         Text(L10n.ContactView.title)
             .font(FontFamily.Poppins.bold.swiftUIFont(size: 18))

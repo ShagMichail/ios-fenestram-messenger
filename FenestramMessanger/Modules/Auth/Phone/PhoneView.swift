@@ -11,7 +11,10 @@ import Introspect
 import Combine
 
 struct PhoneView: View {
-    //MARK: Проперти
+    
+    
+    //MARK: - Properties
+    
     @State private var keyboardHeight: CGFloat = 0
     
     let maskPhone = "+X XXX XXX-XX-XX"
@@ -24,7 +27,10 @@ struct PhoneView: View {
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
     }
-    //MARK: Боди
+    
+    
+    //MARK: - Body
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -39,7 +45,10 @@ struct PhoneView: View {
             .navigationBarHidden(true)
         }
     }
-    //MARK: Получаем все вью
+    
+    
+    //MARK: - Views
+    
     private func getBase() -> some View {
         VStack(alignment: .center) {
             Text("FENESTRAM")

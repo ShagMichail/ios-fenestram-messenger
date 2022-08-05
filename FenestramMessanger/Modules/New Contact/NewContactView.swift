@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct NewContactView: View {
-    //MARK: Проперти
+    
+    
+    //MARK: - Properties
+    
     let maskPhone = "+X XXX XXX-XX-XX"
     
     var borderName: some View {
@@ -58,7 +61,10 @@ struct NewContactView: View {
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
     }
-    //MARK: Боди
+    
+    
+    //MARK: - Body
+    
     var body: some View {
         ZStack {
             Asset.thema.swiftUIColor
@@ -88,7 +94,9 @@ struct NewContactView: View {
         .navigationBarItems(leading: title)
         .navigationBarItems(leading: btnBack)
     }
-    //MARK: Получаем все вью
+    
+    
+    //MARK: - Views
     
     private func getName() -> some View {
         VStack (alignment: .trailing){

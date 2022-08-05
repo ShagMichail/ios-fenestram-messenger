@@ -10,7 +10,10 @@ import Introspect
 import Combine
 
 struct CodeView: View {
-    //MARK: Проперти
+    
+    
+    //MARK: - Properties
+    
     @State private var keyboardHeight: CGFloat = 0
     
     let maskCode = "XXXX"
@@ -25,7 +28,10 @@ struct CodeView: View {
     init(phoneNumber: String) {
         _viewModel = StateObject(wrappedValue: ViewModel(phoneNumber: phoneNumber))
     }
-    //MARK: Боди
+   
+    
+    //MARK: - Body
+    
     var body: some View {
         ZStack {
             Asset.thema.swiftUIColor
@@ -41,7 +47,10 @@ struct CodeView: View {
             UIApplication.shared.endEditing()
         }
     }
-    //MARK: Получаем все вью
+    
+    
+    //MARK: - Views
+    
     private func getBase() -> some View {
         VStack(alignment: .center) {
             Text("FENESTRAM")

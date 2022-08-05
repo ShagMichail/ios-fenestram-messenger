@@ -13,7 +13,10 @@ enum BookBottomSheetPosition: CGFloat, CaseIterable {
 }
 
 struct ChatView: View {
-    //MARK: Проперти
+    
+    
+    //MARK: - Properties
+    
     @State var uiTabarController: UITabBarController?
     @State var bottomSheetPosition: BookBottomSheetPosition = .hidden
     @State var isShowingSheet = false
@@ -29,7 +32,10 @@ struct ChatView: View {
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
     }
-    //MARK: Боди
+    
+    
+    //MARK: - Body
+    
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
@@ -55,8 +61,10 @@ struct ChatView: View {
             }
         }
     }
-    //MARK: Получаем все вью
-
+    
+    
+    //MARK: - Views
+    
     private func getHeader() -> some View {
         HStack(alignment: .center){
             Text("FENESTRAM")
@@ -290,7 +298,7 @@ struct ChatView: View {
         }
     }
     
-    //MARK: Функции настройки ячейки
+    //MARK: - Cell setup functions
 
     private func lastMessage(chat: ChatEntity) -> String {
         guard let lastIndex = chat.messages?.last else {return ""}

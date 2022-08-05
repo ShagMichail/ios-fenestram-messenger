@@ -10,6 +10,9 @@ import BottomSheet
 
 struct FileView: View {
     
+    
+    //MARK: - Properties
+    
     @State var uiTabarController: UITabBarController?
     
     @StateObject private var viewModel: ViewModel
@@ -19,6 +22,9 @@ struct FileView: View {
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
     }
+    
+    
+    //MARK: - Body
     
     var body: some View {
         
@@ -38,7 +44,10 @@ struct FileView: View {
         }
     }
     
-    //MARK: Все вью
+    
+    
+    //MARK: - Views
+    
     private func getListFile() -> some View {
         ScrollView(showsIndicators: false) {
             ForEach(viewModel.allFiles) { files in

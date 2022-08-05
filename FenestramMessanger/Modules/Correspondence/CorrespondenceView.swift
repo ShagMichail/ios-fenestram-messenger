@@ -15,7 +15,10 @@ enum CorrespondenceBottomSheetPosition: CGFloat, CaseIterable {
 }
 
 struct CorrespondenceView: View {
-    //MARK: Проперти
+    
+    
+    //MARK: - Properties
+    
     @State var bottomSheetPosition: CorrespondenceBottomSheetPosition = .hidden
     @State private var keyboardHeight: CGFloat = 0
     @State private var sourceType: UIImagePickerController.SourceType = .camera
@@ -38,7 +41,9 @@ struct CorrespondenceView: View {
         UITextView.appearance().backgroundColor = .clear
     }
 
-    //MARK: Боди
+    
+    //MARK: - Body
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -53,7 +58,7 @@ struct CorrespondenceView: View {
                             getEmtyView()
                         }
                         
-                        // Spacer()
+                        Spacer()
                         if $viewModel.allFoto.count != 0 {
                             getPhotoMessage()
                         }
@@ -78,7 +83,10 @@ struct CorrespondenceView: View {
             }
         }
     }
-//MARK: Получаем все вью
+    
+    
+    //MARK: - Views
+    
     private func getMessage() -> some View {
         ScrollView(showsIndicators: false) {
             ForEach(viewModel.allMessage) { message in
@@ -167,7 +175,11 @@ struct CorrespondenceView: View {
                 Spacer()
                 Button {
                     if !viewModel.textMessage.isEmpty {
-                        viewModel.postMessage(chat: chatFirst)
+                        if chatFirst == nil {
+                            viewModel.createChat(chatName: contacts[0].name ?? "", usersId: viewModel.getUserEntityIds(contactId: contacts[0].id))
+                        } else {
+                            viewModel.postMessage(chat: chatFirst)
+                        }
                     }
                 } label: {
                     Asset.send.swiftUIImage
