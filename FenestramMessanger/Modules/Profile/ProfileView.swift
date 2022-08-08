@@ -9,10 +9,15 @@ import SwiftUI
 import Combine
 
 struct ProfileView: View {
-    //@State var customAlert = false
+    
+    
+    //MARK: - Properties
+    
     @State private var keyboardHeight: CGFloat = 0
-    @AppStorage ("isColorThema") var isColorThema: Bool?
     @State private var sourceType: UIImagePickerController.SourceType = .camera
+    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
     @StateObject private var viewModel: ViewModel
     
     init() {
@@ -24,6 +29,9 @@ struct ProfileView: View {
             .strokeBorder(
                 LinearGradient(colors: [Asset.border.swiftUIColor] , startPoint: .topLeading, endPoint: .bottomTrailing))
     }
+    
+    
+    //MARK: - Body
     
     var body: some View {
         NavigationView {
@@ -46,19 +54,22 @@ struct ProfileView: View {
                             Spacer()
                                 .frame(height: 30.0)
                             
-                            getName()
-                            
-                            Spacer()
-                                .frame(height: 30.0)
-                            
+                            if viewModel.editProfile {
+                                editName()
+                            } else {
+                                getName()
+                                Spacer()
+                                    .frame(height: 30.0)
+                            }
                             getNicName()
                             getBirthday()
                             getEmail()
                             
                             Spacer()
                                 .frame(height: 40.0)
-                            
-                            getButton()
+                            if viewModel.editProfile {
+                                getButton()
+                            }
                         }
                         .padding()
                         .ignoresSafeArea(.keyboard, edges: .bottom)
@@ -79,11 +90,14 @@ struct ProfileView: View {
         }
     }
     
+    
+    //MARK: - Views
+    
     private func getHeader() -> some View {
         HStack(){
             
-            NavigationLink() {
-                SettingsView()
+            Button {
+                viewModel.editProfile.toggle()
             } label: {
                 Asset.edit.swiftUIImage
                     .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
@@ -95,6 +109,7 @@ struct ProfileView: View {
                 SettingsView()
             } label: {
                 Image(systemName: "gearshape").foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                    .font(.system(size: 20))
             }
             
         }
@@ -108,38 +123,72 @@ struct ProfileView: View {
                 .frame(width: 120, height: 120)
                 .clipShape(Circle())
             
-            Button(action: {
-                viewModel.showSheet = true
-            }) {
-                HStack {
-                    Image(systemName: "plus")
-                        .font(.title)
+            if viewModel.editProfile {
+                Button(action: {
+                    viewModel.showSheet = true
+                }) {
+                    HStack {
+                        Image(systemName: "plus")
+                            .font(.title)
+                    }
+                    .padding(.all, 5.0)
+                    .foregroundColor(.white)
+                    .background(LinearGradient(gradient: Gradient(colors: [(isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)]), startPoint: .leading, endPoint: .trailing))
+                    .cornerRadius(40)
+                    .frame(width: 50.0, height: 100.0, alignment: .center)
+                    .actionSheet(isPresented: $viewModel.showSheet) {
+                        ActionSheet(title: Text(L10n.ProfileView.SelectPhoto.title), message: Text(L10n.ProfileView.SelectPhoto.message), buttons: [
+                            .default(Text(L10n.ProfileView.SelectPhoto.photoLibrary)) {
+                                viewModel.showImagePicker = true
+                                self.sourceType = .photoLibrary
+                            },
+                            .default(Text(L10n.ProfileView.SelectPhoto.camera)) {
+                                viewModel.showImagePicker = true
+                                self.sourceType = .camera
+                            },
+                            .cancel()
+                        ])
+                    }
                 }
-                .padding(.all, 5.0)
-                .foregroundColor(.white)
-                .background(LinearGradient(gradient: Gradient(colors: [(isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)]), startPoint: .leading, endPoint: .trailing))
-                .cornerRadius(40)
-                .frame(width: 50.0, height: 100.0, alignment: .center)
-                .actionSheet(isPresented: $viewModel.showSheet) {
-                    ActionSheet(title: Text(L10n.ProfileView.SelectPhoto.title), message: Text(L10n.ProfileView.SelectPhoto.message), buttons: [
-                        .default(Text(L10n.ProfileView.SelectPhoto.photoLibrary)) {
-                            viewModel.showImagePicker = true
-                            self.sourceType = .photoLibrary
-                        },
-                        .default(Text(L10n.ProfileView.SelectPhoto.camera)) {
-                            viewModel.showImagePicker = true
-                            self.sourceType = .camera
-                        },
-                        .cancel()
-                    ])
-                }
+                .padding(.bottom, -84)
+                .padding(.trailing, -7)
             }
-            .padding(.bottom, -84)
-            .padding(.trailing, -7)
             
         }
         .sheet(isPresented: $viewModel.showImagePicker) {
             ImagePicker(image: $viewModel.image, isShown: $viewModel.showImagePicker, sourceType: self.sourceType)}
+    }
+    
+    private func editName() -> some View {
+        VStack(alignment: .leading){
+            Text(L10n.AccountView.name)
+                .font(.headline)
+                .foregroundColor(Asset.text.swiftUIColor)
+            Spacer().frame(height: 3.0)
+            
+            ZStack {
+                HStack (spacing: 5){
+                    TextField("", text: $viewModel.name) { (status) in
+                        if status {
+                            viewModel.isTappedName = true
+                        } else {
+                            viewModel.isTappedName = false
+                        }
+                    } onCommit: {
+                        viewModel.isTappedName = false
+                    }
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .padding(.vertical, 12)
+                    .padding(.leading, 10)
+                    .padding(.trailing, 5)
+                    .foregroundColor(Asset.text.swiftUIColor)
+                    .multilineTextAlignment(.leading)
+                    .accentColor(Asset.text.swiftUIColor)
+                    .keyboardType(.default)
+                    .textContentType(.name)
+                }
+            }.background(border)
+        }
     }
     
     private func getName() -> some View {
@@ -247,7 +296,7 @@ struct ProfileView: View {
     private func getButton() -> some View {
         HStack {
             Button(action: {
-                viewModel.cancelChanges()
+                viewModel.editProfile.toggle()
             }) {
                 Text(L10n.General.cancel)
                     .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)

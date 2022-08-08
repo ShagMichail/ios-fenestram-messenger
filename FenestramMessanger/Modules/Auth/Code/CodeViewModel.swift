@@ -12,11 +12,16 @@ extension CodeView {
     @MainActor
     final class ViewModel: ObservableObject {
         
+        
+        //MARK: - Properties
+        
+        private let phoneNumber: String
+        
         @Published public var textCode = ""
         @Published public var showAccountView = false
         @Published public var errorCode = false
         
-        private let phoneNumber: String
+        @Published public var okCode = false
         
         @Published var presentAlert = false
         @Published var textTitleAlert = ""
@@ -31,6 +36,9 @@ extension CodeView {
             self.phoneNumber = phoneNumber
         }
         
+        
+        //MARK: - Query functions
+        
         func login() {
             AuthService.login(phoneNumber: phoneNumber, oneTimeCode: textCode) { [weak self] result in
                 switch result {
@@ -40,6 +48,7 @@ extension CodeView {
                     do {
                         try AuthController.signIn(.init(from: userWithToken), token: userWithToken.accessToken)
                         print("sign in success")
+                        self?.okCode = true
                     }
                     catch let error {
 
@@ -50,19 +59,18 @@ extension CodeView {
                     }
                 case .failure(let error):
                     print("login failure with error: ", error.localizedDescription)
-                    self?.textTitleAlert = "login failure with error"
-                    self?.textAlert = error.localizedDescription
-                    self?.presentAlert = true
                     self?.errorCode = true
                 }
             }
         }
         
+        
+        //MARK: - Auxiliary functions
+        
         func changeIncorrect()  {
             if textCode.count < 4 {
                 errorCode = false
             }
-            
             self.textCode = ""
         }
     }

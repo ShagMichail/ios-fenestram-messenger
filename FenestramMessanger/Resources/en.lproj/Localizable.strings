@@ -13,10 +13,12 @@
 "general.skip" = "Skip";
 "general.unknown" = "Unknown";
 "general.loading" = "Loading...";
+"general.close" = "Close";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "A list of your chats will be displayed here";
 "chat_view.recent_files" = "Recent files";
+"chat_view.recent_image" = "Images";
 
 // MARK: - NewContactView
 "new_contact_view.title" = "Add Contact";
@@ -84,3 +86,7 @@
 
 // MARK: - CorrespondenceView
 "correspondence_view.message" = "Your message history will be displayed here";
+"correspondence_view.text_message" = "Your message";
+"correspondence_view.foto" = "Photo";
+"correspondence_view.image" = "Gallery";
+"correspondence_view.file" = "File";

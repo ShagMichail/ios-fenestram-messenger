@@ -10,6 +10,10 @@ import SwiftUI
 extension ChatView {
     @MainActor
     final class ViewModel: ObservableObject {
+        
+        
+        //MARK: - Properties
+        
         @Published var chatList: [ChatEntity] = []
         @Published var allContacts: [UserEntity] = []
         
@@ -19,11 +23,12 @@ extension ChatView {
         
         @Published var isLoading: Bool = false
         @Published var allFiles: [File] = [
-            File(title: "fffff"),
-            File(title: "aaaaa"),
-            File(title: "ggggg"),
-            File(title: "kkkkk"),
-            File(title: "qqqqq")
+            File(title: "FFFFF", data: "22.02.22", volume: "10 MB"),
+            File(title: "fffff", data: "22.02.22", volume: "10 MB"),
+            File(title: "aaaaa", data: "22.02.22", volume: "10 MB"),
+            File(title: "ggggg", data: "22.02.22", volume: "10 MB"),
+            File(title: "kkkkk", data: "22.02.22", volume: "10 MB"),
+            File(title: "qqqqq", data: "22.02.22", volume: "10 MB")
         ]
         @Published var recentFile: [File] = []
         
@@ -32,6 +37,9 @@ extension ChatView {
             getChatList()
             fillterFile()
         }
+        
+        
+        //MARK: - Query functions
         
         private func getChatList() {
             isLoading = true
@@ -47,7 +55,6 @@ extension ChatView {
                     self?.textAlert = error.localizedDescription
                     self?.presentAlert = true
                 }
-                
                 self?.isLoading = false
             }
         }
@@ -55,6 +62,9 @@ extension ChatView {
         private func getContacts() {
             guard let currentUserId = Settings.currentUser?.id else {
                 print("current user doesn't exist")
+                self.textTitleAlert = " "
+                self.textAlert = "current user doesn't exist"
+                self.presentAlert = true
                 return
             }
             
@@ -71,22 +81,52 @@ extension ChatView {
                     self?.textAlert = error.localizedDescription
                     self?.presentAlert = true
                 }
-                
                 self?.isLoading = false
             }
         }
         
+        
+        //MARK: - Auxiliary functions
+        
         private func fillterFile() {
             let files = allFiles
-            var index = files.endIndex - 3
+            var index = 0
             if files.count > 3  {
                 for _ in 0...2  {
                     recentFile.append(files[index])
                     index += 1
                 }
-                
             }
-            
+        }
+        
+        func getUserEntity(from chat: ChatEntity?) -> [UserEntity] {
+            var correspondent: [UserEntity] = []
+            guard let allUsers = chat?.usersId else { return correspondent }
+            for i in allUsers {
+                for k in allContacts {
+                    if k.id != Settings.currentUser?.id && k.id == i {
+                        correspondent.append(k)
+                    }
+                }
+            }
+            return correspondent
+        }
+
+        
+        func getNicNameUsers(chat: ChatEntity?) -> String {
+            let index = allContacts.startIndex
+            guard let users = chat?.usersId else { return "" }
+            var result = ""
+            for userChatId in users {
+                for userId in index ... allContacts.endIndex - 1 {
+                    if userChatId.hashValue == allContacts[userId].id.hashValue {
+                        result.append("@")
+                        result.append(allContacts[userId].nickname ?? "")
+                        result.append(" ")
+                    }
+                }
+            }
+            return result
         }
     }
 }

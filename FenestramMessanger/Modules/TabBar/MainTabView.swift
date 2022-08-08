@@ -8,12 +8,19 @@
 import SwiftUI
 
 struct MainTabView: View {
+    
+    
+    //MARK: - Properties
+    
     @State var selectionTabView = 0
     
     init() {
         UITabBar.appearance().backgroundColor = Asset.tabBar.color
         UITabBar.appearance().unselectedItemTintColor = Asset.photoBack.color
     }
+    
+    
+    //MARK: - Body
     
     var body: some View {
         TabView(selection: $selectionTabView) {
@@ -61,7 +68,6 @@ struct MainTabView: View {
         }
         .accentColor(.white)
         .ignoresSafeArea()
-        
     }
 }
 

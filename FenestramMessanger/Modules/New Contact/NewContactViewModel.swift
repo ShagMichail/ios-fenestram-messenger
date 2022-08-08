@@ -9,7 +9,10 @@ import SwiftUI
 extension NewContactView {
     @MainActor
     final class ViewModel: ObservableObject {
-
+        
+        
+        //MARK: - Properties
+        
         @Published var image: UIImage?
         
         @Published var name = ""

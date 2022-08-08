@@ -7,205 +7,247 @@
 
 import SwiftUI
 import Combine
+import BottomSheet
+import Network
+
+enum CorrespondenceBottomSheetPosition: CGFloat, CaseIterable {
+    case bottom = 220, hidden = 0
+}
 
 struct CorrespondenceView: View {
-    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
+    
+    //MARK: - Properties
+    
+    @State var bottomSheetPosition: CorrespondenceBottomSheetPosition = .hidden
     @State private var keyboardHeight: CGFloat = 0
-    var contact: UserEntity?
-    var chat: ChatEntity?
+    @State private var sourceType: UIImagePickerController.SourceType = .camera
+    
+    var contacts: [UserEntity]
+    var chatFirst: ChatEntity?
     var contactId: Int = 0
+    var message: String = ""
+    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @StateObject private var viewModel: ViewModel
-    init(contact: UserEntity) {
-        _viewModel = StateObject(wrappedValue: ViewModel())
-        self.contact = contact
-        //self.chat = chat
-        filterChat()
-        
-    }
     
-    var btnBack : some View {
-        Button(action: {
-            self.presentationMode.wrappedValue.dismiss()
-        }) {
-            HStack {
-                Image(systemName: "chevron.left")
-                    .foregroundColor(Color.white)
-            }
-        }
+    init(contacts: [UserEntity], chat: ChatEntity?) {
+        self.chatFirst = chat
+        self.contacts = contacts
+        _viewModel = StateObject(wrappedValue: ViewModel(chat: chat))
+        UITextView.appearance().backgroundColor = .clear
     }
+
     
-    var title : some View {
-        HStack {
-            Asset.photo.swiftUIImage
-                .resizable()
-                .frame(width: 40.0, height: 40.0)
-            
-            VStack(alignment: .leading) {
-                Text(contact?.name ?? L10n.General.unknown)
-                    .foregroundColor(Color.white)
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
-                
-                Text("В сети")
-                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
-                
-            }
-        }
-    }
-    
-    var btnBell : some View {
-        HStack {
-            Button(action: {
-                
-            }) {
-                HStack {
-                    Asset.video.swiftUIImage
-                        .resizable()
-                        .frame(width: 40.0, height: 40.0)
-                }
-            }
-            
-            Button(action: {
-                
-            }) {
-                HStack {
-                    Asset.phone.swiftUIImage
-                        .resizable()
-                        .frame(width: 40.0, height: 40.0)
-                }
-            }
-        }
-    }
+    //MARK: - Body
     
     var body: some View {
-        ZStack {
-            Asset.thema.swiftUIColor
-                .ignoresSafeArea()
-            
-            VStack {
-                RoundedRectangle(cornerRadius: 0)
-                    .foregroundColor(Asset.buttonDis.swiftUIColor)
-                    .frame(width: UIScreen.screenWidth, height: 100.0)
+        GeometryReader { geometry in
+            ZStack {
+                Asset.thema.swiftUIColor
                     .ignoresSafeArea()
-                Spacer()
-            }
-            
-            VStack {
                 VStack {
-                    Asset.helloMessage.swiftUIImage
-                        .resizable()
-                        .scaledToFit()
-                    Text(L10n.CorrespondenceView.message)
-                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                        .foregroundColor(Asset.photoBack.swiftUIColor)
-                        .multilineTextAlignment(.center)
-                }.padding()
-                
-                
-                Spacer()
-                
-                VStack {
-                    ZStack {
-                        //                        RoundedRectangle(cornerRadius: 10)
-                        //                        //.stroke(Asset.border.swiftUIColor, lineWidth: 1)
-                        //                            .background(Asset.tabBar.swiftUIColor)
-                        //                            .frame(width: UIScreen.screenWidth - 24, height: 55)
-                        HStack{
-                            Button {
-                                print("")
-                            } label: {
-                                Asset.severicons.swiftUIImage
-                                    .resizable()
-                                    .frame(width: 24.0, height: 24.0)
-                            }.padding(.leading, 12.0)
-                            
-                            TextField("", text: $viewModel.textMessage)
-                                .placeholder(when: viewModel.textMessage.isEmpty) {
-                                    Text("Ваше сообщение").foregroundColor(Asset.text.swiftUIColor)
-                                }
-                                .foregroundColor(Asset.text.swiftUIColor)
-                                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                                .multilineTextAlignment(.leading)
-                                .accentColor(Asset.text.swiftUIColor)
-                                .keyboardType(.default)
-                            //.textContentType(.telephoneNumber)
-                                .padding(.horizontal, 4)
-                            
-                            Button {
-                                print("")
-                            } label: {
-                                Asset.send.swiftUIImage
-                                    .resizable()
-                                    .frame(width: 24.0, height: 24.0)
-                                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                            }.padding(.trailing, 12.0)
+                    VStack {
+                        CorrespondenceNavigationView(contacts: contacts, chat: chatFirst)
+                        if $viewModel.allMessage.count != 0 {
+                            getMessage()
+                        } else {
+                            getEmtyView()
                         }
-                        .frame(height: 48)
-                        //                        .overlay(
-                        //                            RoundedRectangle(cornerRadius: 5)
-                        //                                //.stroke(Asset.border.swiftUIColor, lineWidth: 1)
-                        //                                //.background(Asset.tabBar.swiftUIColor)
-                        //                        )
-                        .padding(.vertical, 12)
-                        .padding(.horizontal)
-                        .background(RoundedRectangle(cornerRadius: 10)
-                                    //.stroke(Asset.border.swiftUIColor, lineWidth: 1)
-                            .foregroundColor(Asset.tabBar.swiftUIColor)
-                            .frame(width: UIScreen.screenWidth - 24, height: 55))
+                        
+                        Spacer()
+                        if $viewModel.allFoto.count != 0 {
+                            getPhotoMessage()
+                        }
+                        //Spacer().frame(height: 10)
+                        getMessageTextEditor()
                     }
+                    Spacer().frame(height: 16)
                     
                 }
             }
+            .sheet(isPresented: $viewModel.showImagePicker) {
+                ImagePicker(image: $viewModel.image, isShown: $viewModel.showImagePicker, sourceType: self.sourceType)}
             
-            //Text("Переписка!").foregroundColor(Color.white)
+            .navigationBarHidden(true)
+            
+            .onTapGesture {
+                UIApplication.shared.endEditing()
+            }
+            .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: [.noDragIndicator, .allowContentDrag, .swipeToDismiss, .tapToDismiss, .absolutePositionValue, .background({ AnyView(Asset.buttonAlert.swiftUIColor) }), .cornerRadius(30)], headerContent: {
+                getBottomSheet()
+            }) {
+            }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: title)
-        .navigationBarItems(leading: btnBack)
-        .navigationBarItems(trailing: btnBell)
-        //.onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
-        .onTapGesture {
-            UIApplication.shared.endEditing()
-        }
-        
-        
     }
-    private func filterChat() {
-        //var chat: ChatEntity = viewModel.chatList[0]  //сомнительное решение ес честно
-        var allFilterChatList: [ChatEntity] = []
-        let userId = Settings.currentUser?.id
-        let usetChatId = contact?.id
-        for index in viewModel.chatList.startIndex ... viewModel.chatList.endIndex {
-            if index < viewModel.chatList.endIndex {
-                let ids = viewModel.chatList[index].usersId  //[index].usersId
-                if ids.count == 2 {
-                    if (ids[0] == userId && ids[1] == usetChatId) || (ids[1] == userId && ids[0] == usetChatId) {
-                        //viewModel.chatList[index]
-                        //var chat: ChatEntity
-                        allFilterChatList.append(viewModel.chatList[index])
-                        //chat = viewModel.chatList[index]
+    
+    
+    //MARK: - Views
+    
+    private func getMessage() -> some View {
+        ScrollView(showsIndicators: false) {
+            ForEach(viewModel.allMessage) { message in
+                HStack(alignment: .bottom, spacing: 15) {
+                    MessageStyleView(contentMessage: message.message,
+                                     isCurrentUser: viewModel.lastMessage(message: message), message: message)
+                }.padding(.all, 15)
+            }
+        }
+    }
+    
+    private func getEmtyView() -> some View {
+        VStack {
+            Asset.helloMessage.swiftUIImage
+                .resizable()
+                .scaledToFit()
+            Text(L10n.CorrespondenceView.message)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                .foregroundColor(Asset.photoBack.swiftUIColor)
+                .multilineTextAlignment(.center)
+        }.padding()
+    }
+    
+    private func getPhotoMessage() -> some View {
+        HStack {
+            ForEach(viewModel.allFoto) { foto in
+                ZStack {
+                    Image(uiImage: foto.image)
+                        .resizable()
+                        .frame(width: 48, height: 48)
+                        .cornerRadius(12)
+                    Button {
+                        viewModel.allFoto = viewModel.allFoto.filter({ $0.id != foto.id })
+                    } label: {
                         
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 30)
+                                .frame(width: 25, height: 25)
+                                .foregroundColor(Color.white)
+                            Image(systemName: "xmark")
+                                .foregroundColor(Color.black)
+                        }.padding(.bottom, 45)
                     }
                 }
             }
-        }
-        viewModel.chatList = allFilterChatList
-    }
-}
-
-struct NavigationConfigurator: UIViewControllerRepresentable {
-    var configure: (UINavigationController) -> Void = { _ in }
-    
-    func makeUIViewController(context: UIViewControllerRepresentableContext<NavigationConfigurator>) -> UIViewController {
-        UIViewController()
-    }
-    func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<NavigationConfigurator>) {
-        if let nc = uiViewController.navigationController {
-            self.configure(nc)
-        }
+        }.padding(.bottom, -10)
+            .padding(.leading, 15)
+            .frame(width: UIScreen.screenWidth, alignment: .leading)
     }
     
+    private func getMessageTextEditor() -> some View {
+        ZStack(alignment: .bottom) {
+            HStack{
+                TextEditor(text: $viewModel.textMessage)
+                    .placeholder(when: viewModel.textMessage.isEmpty) {
+                        Text(L10n.CorrespondenceView.textMessage).foregroundColor(Asset.text.swiftUIColor)
+                            .padding(.leading, 5)
+                    }
+                    .frame(minHeight: 40, maxHeight: 150, alignment: .leading)
+                    .foregroundColor(Asset.text.swiftUIColor)
+                    .accentColor(Asset.text.swiftUIColor)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                    .background(RoundedRectangle(cornerRadius: 10)
+                        .foregroundColor(Asset.tabBar.swiftUIColor)
+                        .frame(width: UIScreen.screenWidth - 24))
+                    .padding(.leading , 50)
+                    .padding(.trailing , 50)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+            }
+            .padding(.horizontal)
+            .background(RoundedRectangle(cornerRadius: 10)
+                .foregroundColor(Asset.tabBar.swiftUIColor)
+                .frame(width: UIScreen.screenWidth - 24, height: 55))
+            
+            HStack(alignment: .bottom){
+                Button {
+                    bottomSheetPosition = .bottom
+                } label: {
+                    Asset.severicons.swiftUIImage
+                        .resizable()
+                        .frame(width: 24.0, height: 24.0)
+                }.padding(.leading, 12.0)
+                    .padding(.bottom, -5)
+                
+                Spacer()
+                Button {
+                    if !viewModel.textMessage.isEmpty {
+                        if chatFirst == nil {
+                            viewModel.createChat(chatName: contacts[0].name ?? "", usersId: viewModel.getUserEntityIds(contactId: contacts[0].id))
+                        } else {
+                            viewModel.postMessage(chat: chatFirst)
+                        }
+                    }
+                } label: {
+                    Asset.send.swiftUIImage
+                        .resizable()
+                        .frame(width: 24.0, height: 24.0)
+                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                }.padding(.trailing, 12.0)
+                    .padding(.bottom, -5)
+            }
+            .padding(.vertical, 12)
+            .padding(.horizontal)
+        }
+    }
+    
+    private func getBottomSheet() -> some View {
+        HStack {
+            Spacer()
+            VStack(alignment: .center) {
+                NavigationLink(destination: FileView().navigationBarHidden(true)) {
+                    buttonsViewProperty(image: Asset.fileButton)
+                }
+                Text(L10n.CorrespondenceView.file)
+                    .foregroundColor(Color.white)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+            }
+            
+            Spacer()
+            
+            VStack {
+                Button {
+                    viewModel.showImagePicker = true
+                    self.sourceType = .photoLibrary
+                    bottomSheetPosition = .hidden
+                } label: {
+                    buttonsViewProperty(image: Asset.imageButton)
+                }
+                Text(L10n.CorrespondenceView.image)
+                    .foregroundColor(Color.white)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+            }
+            Spacer()
+            VStack {
+                Button {
+                    viewModel.showImagePicker = true
+                    self.sourceType = .camera
+                    bottomSheetPosition = .hidden
+                } label: {
+                    buttonsViewProperty(image: Asset.photoButton)
+                }
+                Text(L10n.CorrespondenceView.foto)
+                    .foregroundColor(Color.white)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+            }
+            Spacer()
+        }
+    }
+    
+    private func buttonsViewProperty(image: ImageAsset) -> some View {
+        ZStack{
+            RoundedRectangle(cornerRadius: 30)
+                .frame(width: 60, height: 60, alignment: .center)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 30)
+                        .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
+                )
+                .foregroundColor(Asset.buttonAlert.swiftUIColor)
+            image.swiftUIImage
+                .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+        }
+    }
 }

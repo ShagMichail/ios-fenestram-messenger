@@ -29,6 +29,8 @@ internal enum L10n {
     internal static let emptyText = L10n.tr("Localizable", "chat_view.empty_text")
     /// Недавние файлы
     internal static let recentFiles = L10n.tr("Localizable", "chat_view.recent_files")
+    /// Изображения
+    internal static let recentImage = L10n.tr("Localizable", "chat_view.recent_image")
   }
 
   internal enum CodeView {
@@ -56,13 +58,23 @@ internal enum L10n {
   }
 
   internal enum CorrespondenceView {
+    /// Файл
+    internal static let file = L10n.tr("Localizable", "correspondence_view.file")
+    /// Фото
+    internal static let foto = L10n.tr("Localizable", "correspondence_view.foto")
+    /// Галерея
+    internal static let image = L10n.tr("Localizable", "correspondence_view.image")
     /// Здесь будет отображаться история ваших сообщениий
     internal static let message = L10n.tr("Localizable", "correspondence_view.message")
+    /// Ваше сообщение
+    internal static let textMessage = L10n.tr("Localizable", "correspondence_view.text_message")
   }
 
   internal enum General {
     /// Отмена
     internal static let cancel = L10n.tr("Localizable", "general.cancel")
+    /// Закрыть
+    internal static let close = L10n.tr("Localizable", "general.close")
     /// Готово
     internal static let done = L10n.tr("Localizable", "general.done")
     /// Идет загрузка...

@@ -58,4 +58,17 @@ extension View {
         }
         return result
     }
+    
+    
+    func onBackSwipe(perform action: @escaping () -> Void) -> some View {
+        gesture(
+            DragGesture()
+                .onEnded({ value in
+                    if value.startLocation.x < UIScreen.screenWidth && value.translation.width > 20 {
+                        action()
+                    }
+                })
+        )
+    }
+    
 }

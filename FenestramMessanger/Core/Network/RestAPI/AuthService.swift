@@ -34,11 +34,11 @@ public class AuthService {
             })
         }
     
-    public static func sendCode(phoneNumber: String, completion: @escaping (Result<Bool,Error>) -> Void) {
-        let parameters: [String: Any] = [
+    public static func sendCode(phoneNumber: String, completion: @escaping (Result<CodeEntity,Error>) -> Void) {
+        let parameters = [ //: [String: Any]
             "phone": phoneNumber
         ]
-        sendRequest(requestOptions: .sendCode(parameters: parameters)) { result in
+        sendRequest(modelType: CodeEntity.self, requestOptions: .sendCode(parameters: parameters)) { result in
             completion(result)
         }
     }
@@ -53,4 +53,5 @@ public class AuthService {
             completion(result)
         }
     }
+    
 }

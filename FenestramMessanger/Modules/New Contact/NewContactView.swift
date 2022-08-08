@@ -9,14 +9,10 @@ import SwiftUI
 
 struct NewContactView: View {
     
-    @AppStorage ("isColorThema") var isColorThema: Bool?
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @StateObject private var viewModel: ViewModel
-    let maskPhone = "+X XXX XXX-XX-XX"
     
-    init() {
-        _viewModel = StateObject(wrappedValue: ViewModel())
-    }
+    //MARK: - Properties
+    
+    let maskPhone = "+X XXX XXX-XX-XX"
     
     var borderName: some View {
         RoundedRectangle(cornerRadius: 6)
@@ -56,6 +52,19 @@ struct NewContactView: View {
     }
     
     
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
+    @StateObject private var viewModel: ViewModel
+    
+    init() {
+        _viewModel = StateObject(wrappedValue: ViewModel())
+    }
+    
+    
+    //MARK: - Body
+    
     var body: some View {
         ZStack {
             Asset.thema.swiftUIColor
@@ -85,6 +94,9 @@ struct NewContactView: View {
         .navigationBarItems(leading: title)
         .navigationBarItems(leading: btnBack)
     }
+    
+    
+    //MARK: - Views
     
     private func getName() -> some View {
         VStack (alignment: .trailing){
@@ -222,7 +234,7 @@ struct NewContactView: View {
     private func getButton() -> some View {
         VStack {
             Button(action: {
-              
+                
             }) {
                 Text(L10n.General.done)
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)

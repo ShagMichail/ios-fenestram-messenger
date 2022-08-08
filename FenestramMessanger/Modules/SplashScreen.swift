@@ -204,10 +204,7 @@ struct CircleText: View {
         
         return .radians(angleForPreChars + labelAngle)
     }
-    
 }
-
-
 
 extension Double {
     var perimeter: Double {
@@ -216,7 +213,6 @@ extension Double {
 }
 
 
-//Get size for label helper
 struct WidthPreferenceKey: PreferenceKey {
     typealias Value = CGFloat
     static var defaultValue = CGFloat(0)

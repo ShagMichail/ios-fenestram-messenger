@@ -10,12 +10,19 @@ import Foundation
 extension PhoneView {
     @MainActor
     final class ViewModel: ObservableObject {
+        
+        
+        //MARK: - Properties
+        
         @Published var textPhone = ""
         
         @Published var text = ""
         
         @Published var isEditing: Bool = false
         @Published public var numberCount = false
+        
+        
+        //MARK: - Query functions
         
         func checkCode() {
             if textPhone.count == 16 {

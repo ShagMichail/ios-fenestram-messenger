@@ -10,4 +10,6 @@ import SwiftUI
 struct File: Identifiable {
     var id = UUID()
     var title: String
+    var data: String
+    var volume: String
 }
