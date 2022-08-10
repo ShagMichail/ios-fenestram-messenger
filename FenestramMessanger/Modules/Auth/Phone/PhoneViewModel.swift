@@ -14,9 +14,13 @@ extension PhoneView {
         
         //MARK: - Properties
         
-        @Published var textPhone = ""
-        
-        @Published var text = ""
+        @Published var textPhone = "" {
+            didSet {
+                if textPhone.prefix(1) != "+" {
+                    textPhone = "+7" + textPhone
+                }
+            }
+        }
         
         @Published var isEditing: Bool = false
         @Published public var numberCount = false
@@ -25,7 +29,9 @@ extension PhoneView {
         //MARK: - Query functions
         
         func checkCode() {
-            if textPhone.count == 16 {
+            print("texphone:", textPhone, textPhone.count)
+            if textPhone.count == 12 {
+                
                 AuthService.sendCode(phoneNumber: textPhone) { [weak self] result in
                     guard let self = self else { return }
                     switch result {

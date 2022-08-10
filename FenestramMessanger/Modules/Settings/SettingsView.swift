@@ -26,18 +26,7 @@ struct SettingsView: View {
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
     }
-    
-    var btnBack : some View {
-        Button(action: {
-            self.presentationMode.wrappedValue.dismiss()
-        }) {
-            HStack {
-                Image(systemName: "chevron.left")
-                    .foregroundColor(Color.white)
-            }
-        }
-    }
-    
+        
     var title : some View {
         Text(L10n.SettingsView.title)
             .foregroundColor(Color.white)
@@ -61,6 +50,8 @@ struct SettingsView: View {
             }
             VStack(alignment: .leading) {
                 
+                Spacer().frame(height: 20)
+                
                 getColorThemaSettings()
                 
                 Spacer().frame(height: 40)
@@ -75,9 +66,7 @@ struct SettingsView: View {
             }.padding()
             Spacer()
         }
-        .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: title)
-        .navigationBarItems(leading: btnBack)
         .introspectTabBarController { (UITabBarController) in
             UITabBarController.tabBar.isHidden = true
             uiTabarController = UITabBarController

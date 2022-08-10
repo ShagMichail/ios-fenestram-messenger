@@ -111,6 +111,8 @@ struct ProfileView: View {
                 Image(systemName: "gearshape").foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                     .font(.system(size: 20))
             }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("")
             
         }
         .padding(.leading, UIScreen.screenWidth - 90)

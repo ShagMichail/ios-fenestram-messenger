@@ -7,5 +7,7 @@ target 'FenestramMessanger' do
 
   # Pods for FenestramMessanger
   pod 'SwiftGen', '~> 6.0'
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
 
 end

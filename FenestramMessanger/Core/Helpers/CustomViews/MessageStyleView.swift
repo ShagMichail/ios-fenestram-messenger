@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct MessageStyleView: View {
-    var contentMessage: String
+    
     var isCurrentUser: Bool
     var message: MessageEntity
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
     var body: some View {
         VStack(alignment: isCurrentUser ? .trailing : .leading) {
-            Text(contentMessage)
+            Text(message.message)
                 .padding(10)
                 .foregroundColor(Color.white)
                 .background(isCurrentUser ? Asset.blue.swiftUIColor : Asset.tabBar.swiftUIColor)
@@ -36,10 +36,10 @@ struct MessageStyleView: View {
         }
     }
 }
-//
+
 //struct MessageStyleView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        MessageStyleView(contentMessage: "sdfsdsdasdasdasdasdf", isCurrentUser: true)
+//        MessageStyleView(isCurrentUser: <#T##Bool#>, message: <#T##MessageEntity#>)
 //    }
 //}
 

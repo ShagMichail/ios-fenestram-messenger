@@ -32,7 +32,6 @@ extension CodeView {
                 .replacingOccurrences(of: " ", with: "")
                 .replacingOccurrences(of: "-", with: "")
             
-            print("phone number: ", phoneNumber)
             self.phoneNumber = phoneNumber
         }
         

@@ -16,9 +16,7 @@ struct PhoneView: View {
     //MARK: - Properties
     
     @State private var keyboardHeight: CGFloat = 0
-    
-    let maskPhone = "+X XXX XXX-XX-XX"
-    
+
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @AppStorage("isPhoneUser") var isPhoneUser: String?
     
@@ -92,24 +90,17 @@ struct PhoneView: View {
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background((viewModel.textPhone.count == 16) ?
+                    .background((viewModel.textPhone.count == 12) ?
                                 (isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor) : Asset.buttonDis.swiftUIColor)
                     .cornerRadius(6)
             }
         }
-        .disabled(viewModel.textPhone.count != 16)
+        .disabled(viewModel.textPhone.count != 12)
     }
     
     private func getTextField() -> some View {
         VStack {
-            TextField("", text: Binding<String>(get: {
-                format(with: self.maskPhone, phone: viewModel.textPhone)
-            }, set: {
-                viewModel.textPhone = $0
-            }))
-            .placeholder(when: viewModel.textPhone.isEmpty) {
-                Text("+7").foregroundColor(Asset.text.swiftUIColor)
-            }
+            TextField("", text: $viewModel.textPhone)
             .foregroundColor(Asset.text.swiftUIColor)
             .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
             .multilineTextAlignment(.leading)
@@ -117,6 +108,7 @@ struct PhoneView: View {
             .keyboardType(.phonePad)
             .textContentType(.telephoneNumber)
             .padding(.horizontal, 16)
+            
         }
         .frame(height: 48)
         .overlay(

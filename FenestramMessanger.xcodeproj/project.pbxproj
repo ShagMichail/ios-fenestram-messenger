@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		57B6A98428A42D7C0051429F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57B6A98328A42D7C0051429F /* GoogleService-Info.plist */; };
 		6D3B8991ABEEC255BD8A2A57 /* Pods_FenestramMessanger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F33D57429665AA5A47D624DD /* Pods_FenestramMessanger.framework */; };
 		BD74D88428805A880004C961 /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD74D87228805A860004C961 /* Montserrat-Black.ttf */; };
 		BD74D88528805A880004C961 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD74D87328805A860004C961 /* Montserrat-Bold.ttf */; };
@@ -135,6 +136,7 @@
 /* Begin PBXFileReference section */
 		0B943E235FBEAE9164E84F34 /* Pods-FenestramMessanger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FenestramMessanger.release.xcconfig"; path = "Target Support Files/Pods-FenestramMessanger/Pods-FenestramMessanger.release.xcconfig"; sourceTree = "<group>"; };
 		1734F72B5ABD583B612C09E0 /* Pods-FenestramMessanger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FenestramMessanger.debug.xcconfig"; path = "Target Support Files/Pods-FenestramMessanger/Pods-FenestramMessanger.debug.xcconfig"; sourceTree = "<group>"; };
+		57B6A98328A42D7C0051429F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BD74D87228805A860004C961 /* Montserrat-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.ttf"; sourceTree = "<group>"; };
 		BD74D87328805A860004C961 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		BD74D87428805A860004C961 /* Montserrat-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-MediumItalic.ttf"; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 				BDE74B8C28801CA000F4A775 /* Resources */,
 				BD7783A92872EBB50023032D /* FenestramMessangerApp.swift */,
 				BD74D89828806F860004C961 /* AppDelegate.swift */,
+				57B6A98328A42D7C0051429F /* GoogleService-Info.plist */,
 				BD7783AF2872EBB70023032D /* Preview Content */,
 			);
 			path = FenestramMessanger;
@@ -755,6 +758,7 @@
 				BD7783A32872EBB50023032D /* Frameworks */,
 				BD7783A42872EBB50023032D /* Resources */,
 				BDE74B9528801E3100F4A775 /* ShellScript */,
+				A06FAA96867CABA14D80A17F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -799,10 +803,10 @@
 			);
 			mainGroup = BD77839D2872EBB50023032D;
 			packageReferences = (
-				FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
-				FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
-				BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire" */,
-				BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket" */,
+				FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField.git" */,
+				FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect.git" */,
+				BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire.git" */,
+				BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 				FCD3059B2886ADCA00491220 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 			);
 			productRefGroup = BD7783A72872EBB50023032D /* Products */;
@@ -836,6 +840,7 @@
 				BDE74BBE288030A400F4A775 /* Poppins-Black.ttf in Resources */,
 				BD74D88428805A880004C961 /* Montserrat-Black.ttf in Resources */,
 				BDE74BC1288030A400F4A775 /* Poppins-Italic.ttf in Resources */,
+				57B6A98428A42D7C0051429F /* GoogleService-Info.plist in Resources */,
 				BDE74BB8288030A400F4A775 /* Poppins-ExtraBold.ttf in Resources */,
 				BDE74BBC288030A400F4A775 /* Poppins-LightItalic.ttf in Resources */,
 				BD74D88728805A880004C961 /* Montserrat-Thin.ttf in Resources */,
@@ -864,6 +869,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		A06FAA96867CABA14D80A17F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FenestramMessanger/Pods-FenestramMessanger-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FenestramMessanger/Pods-FenestramMessanger-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FenestramMessanger/Pods-FenestramMessanger-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BDE74B9528801E3100F4A775 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1213,7 +1235,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket" */ = {
+		BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
 			requirement = {
@@ -1221,7 +1243,7 @@
 				minimumVersion = 16.0.0;
 			};
 		};
-		BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -1229,7 +1251,7 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+		FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
 			requirement = {
@@ -1245,7 +1267,7 @@
 				kind = branch;
 			};
 		};
-		FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */ = {
+		FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MojtabaHs/iPhoneNumberField.git";
 			requirement = {
@@ -1258,17 +1280,17 @@
 /* Begin XCSwiftPackageProductDependency section */
 		BD980FBC288176280050F8B4 /* SocketIO */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket" */;
+			package = BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
 			productName = SocketIO;
 		};
 		BDF2E2DF287F1C1C00B7E182 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire.git" */;
 			productName = Alamofire;
 		};
 		FC17786B2875831700B0D979 /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			package = FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect.git" */;
 			productName = Introspect;
 		};
 		FCD3059C2886ADCB00491220 /* BottomSheet */ = {
@@ -1278,7 +1300,7 @@
 		};
 		FCEE88282874409B00268971 /* iPhoneNumberField */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */;
+			package = FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField.git" */;
 			productName = iPhoneNumberField;
 		};
 /* End XCSwiftPackageProductDependency section */

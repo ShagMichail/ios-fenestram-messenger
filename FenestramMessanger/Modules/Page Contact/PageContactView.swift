@@ -19,7 +19,7 @@ struct PageContactView: View {
     
     @StateObject private var viewModel: ViewModel
     
-    @Environment(\.presentationMode) var presentationMode//: Binding<PresentationMode>
+    @Environment(\.presentationMode) var presentationMode
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     

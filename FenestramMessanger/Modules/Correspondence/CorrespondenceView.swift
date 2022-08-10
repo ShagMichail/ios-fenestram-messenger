@@ -52,17 +52,13 @@ struct CorrespondenceView: View {
                 VStack {
                     VStack {
                         CorrespondenceNavigationView(contacts: contacts, chat: chatFirst)
-                        if $viewModel.allMessage.count != 0 {
-                            getMessage()
-                        } else {
-                            getEmtyView()
-                        }
                         
+                        $viewModel.allMessage.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
+
                         Spacer()
                         if $viewModel.allFoto.count != 0 {
                             getPhotoMessage()
                         }
-                        //Spacer().frame(height: 10)
                         getMessageTextEditor()
                     }
                     Spacer().frame(height: 16)
@@ -73,7 +69,9 @@ struct CorrespondenceView: View {
                 ImagePicker(image: $viewModel.image, isShown: $viewModel.showImagePicker, sourceType: self.sourceType)}
             
             .navigationBarHidden(true)
-            
+            .onBackSwipe {
+                presentationMode.wrappedValue.dismiss()
+            }
             .onTapGesture {
                 UIApplication.shared.endEditing()
             }
@@ -91,8 +89,8 @@ struct CorrespondenceView: View {
         ScrollView(showsIndicators: false) {
             ForEach(viewModel.allMessage) { message in
                 HStack(alignment: .bottom, spacing: 15) {
-                    MessageStyleView(contentMessage: message.message,
-                                     isCurrentUser: viewModel.lastMessage(message: message), message: message)
+                    MessageStyleView(isCurrentUser: viewModel.lastMessage(message: message),
+                                     message: message)
                 }.padding(.all, 15)
             }
         }
