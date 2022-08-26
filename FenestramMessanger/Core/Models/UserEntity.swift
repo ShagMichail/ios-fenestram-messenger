@@ -17,15 +17,21 @@ public struct UserWithTokenEntity: Codable, Identifiable {
     public let nickname: String?
     public let email: String?
     public let birthdate: String?
+    public var avatar: String?
+    public var isOnline: Bool
+    public let lastActivate: String?
     
     enum CodingKeys: String, CodingKey {
         case id
         case accessToken = "access_token"
         case phoneNumber = "phone"
         case name
-        case nickname = "login"
+        case nickname
         case email
         case birthdate = "birth"
+        case avatar
+        case isOnline = "is_online"
+        case lastActivate = "last_active"
     }
 }
 
@@ -38,6 +44,9 @@ public struct UserEntity: Codable, Identifiable {
     public var nickname: String?
     public var email: String?
     public var birthdate: String?
+    public var avatar: String?
+    public var isOnline: Bool
+    public let lastActivate: String?
     
     public var birthday: Date? {
         guard let birthdate = birthdate,
@@ -59,9 +68,12 @@ public struct UserEntity: Codable, Identifiable {
         case id
         case phoneNumber = "phone"
         case name
-        case nickname = "login"
+        case nickname
         case email
         case birthdate = "birth"
+        case avatar
+        case isOnline = "is_online"
+        case lastActivate = "last_active"
     }
     
     init(from userWithToken: UserWithTokenEntity) {
@@ -71,5 +83,8 @@ public struct UserEntity: Codable, Identifiable {
         self.nickname = userWithToken.nickname
         self.email = userWithToken.email
         self.birthdate = userWithToken.birthdate
+        self.avatar = userWithToken.avatar
+        self.isOnline = userWithToken.isOnline
+        self.lastActivate = userWithToken.lastActivate
     }
 }

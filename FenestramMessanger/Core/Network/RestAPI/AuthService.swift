@@ -35,7 +35,7 @@ public class AuthService {
         }
     
     public static func sendCode(phoneNumber: String, completion: @escaping (Result<Bool,Error>) -> Void) {
-        let parameters: [String: Any] = [
+        let parameters = [
             "phone": phoneNumber
         ]
         sendRequest(requestOptions: .sendCode(parameters: parameters)) { result in
@@ -53,4 +53,5 @@ public class AuthService {
             completion(result)
         }
     }
+    
 }

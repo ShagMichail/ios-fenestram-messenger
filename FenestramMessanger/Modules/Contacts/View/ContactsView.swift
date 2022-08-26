@@ -8,6 +8,14 @@
 import SwiftUI
 
 struct ContactsView: View {
+    
+    
+    //MARK: - Properties
+    
+    var chat: ChatEntity?
+    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
     @StateObject private var viewModel: ViewModel
     
     init() {
@@ -21,6 +29,9 @@ struct ContactsView: View {
                                startPoint: .topLeading,
                                endPoint: .bottomTrailing))
     }
+    
+    
+    //MARK: - Body
     
     var body: some View {
         NavigationView {
@@ -45,6 +56,11 @@ struct ContactsView: View {
                         }
                     }
                 }
+                
+                if viewModel.presentAlert {
+                    AlertView(show: $viewModel.presentAlert, textTitle: $viewModel.textTitleAlert, text: $viewModel.textAlert)
+                }
+                
             }.onTapGesture {
                 UIApplication.shared.endEditing()
             }
@@ -52,12 +68,16 @@ struct ContactsView: View {
         }
     }
     
+    
+    //MARK: - Views
+    
     private func getHeaderView() -> some View {
         Text(L10n.ContactView.title)
             .font(FontFamily.Poppins.bold.swiftUIFont(size: 18))
             .foregroundColor(Color.white)
             .padding(.horizontal)
             .padding(.top)
+        
     }
     
     private func getSearchView() -> some View {
@@ -89,30 +109,66 @@ struct ContactsView: View {
     private func getContentView() -> some View {
         ZStack {
             VStack (alignment: .trailing) {
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     if viewModel.filteredContacts.count > 0 {
                         ForEach(viewModel.filteredContacts) { contact in
-                            ContactsRow(contact: contact)
-                                .padding(.horizontal)
+                            getContactsRow(contact: contact)
                         }
                     } else {
-                        Text(L10n.ContactView.contactDontExist)
-                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
-                            .foregroundColor(Color.white)
-                            .padding(.horizontal)
+                        HStack {
+                            Text(L10n.ContactView.contactDontExist)
+                                .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
+                                .foregroundColor(Color.white)
+                                .padding(.horizontal)
+                        }.frame(width: UIScreen.screenWidth)
                     }
                 }
-                .padding(.bottom, -70)
+                .padding(.bottom, -85)
+                getButtonNewContact()
                 
-                NavigationLink() {
-                    NewContactView()
-                        .navigationBarHidden(true)
-                } label: {
-                    Asset.addButtonIcon.swiftUIImage
-                        .padding(.bottom, 10)
-                        .padding(.trailing, 10)
-                }
             }
+        }
+    }
+    
+    private func getButtonNewContact() -> some View {
+        NavigationLink() {
+            NewContactView()
+        } label: {
+            ZStack {
+                Asset.addButtonIcon.swiftUIImage
+                    .padding(.bottom, 10)
+                    .padding(.trailing, 10)
+                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                Image(systemName: "plus")
+                    .font(.title)
+                    .padding(.bottom, 17)
+                    .padding(.trailing, 10)
+            }
+        }
+    }
+    
+    private func getContactsRow(contact: UserEntity) -> some View {
+        NavigationLink() {
+            CorrespondenceView(contacts: [contact], chat: viewModel.filterChat(contact: contact)).navigationBarHidden(true)
+        } label: {
+            HStack() {
+                Asset.photo.swiftUIImage
+                    .resizable()
+                    .frame(width: 40.0, height: 40.0)
+                    .padding(.horizontal)
+                
+                Text(contact.name ?? L10n.General.unknown)
+                    .foregroundColor(.white)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
+                
+                Spacer()
+                
+                if viewModel.filterHaveChat(contact: contact) {
+                    Asset.chat.swiftUIImage
+                        .padding(.horizontal)
+                }
+                
+            }.padding(.horizontal)
         }
     }
     
@@ -136,7 +192,7 @@ struct ContactsView: View {
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background(Asset.blue.swiftUIColor)
+                    .background((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                     .cornerRadius(6)
             }
             .padding(.bottom, 50)

@@ -57,6 +57,43 @@ final class ChatRequestFactory: AbstractRequestFactory {
         }
     }
     
+    public func sendRequestCustom(requestOptions: ChatRequestRouter,
+                                  completion: @escaping (Result<ChatEntityResult, Error>) -> Void) {
+        self.request(requestOptions).responseDecodable(of: ChatEntityResult.self) { response in
+            guard let statusCode = response.response?.statusCode else {
+                completion(.failure(NetworkError.serverError))
+                return
+            }
+            switch statusCode {
+            case 200 ... 399:
+                if let data = response.data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let decodedData = try decoder.decode(ChatEntityResult.self, from: data)
+                        
+                        if let error = decodedData.error {
+                            completion(.failure(error))
+                        } else {
+                            completion(.success(decodedData))
+                        }
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
+            case 400...499:
+                guard statusCode != 401 else {
+                    try? AuthController.signOut()
+                    return
+                }
+                completion(.failure(NetworkError.responseError))
+            case 500...599:
+                completion(.failure(NetworkError.serverError))
+            default:
+                return completion(.failure(NetworkError.serverError))
+            }
+        }
+    }
+    
     public func sendRequest(requestOptions: ChatRequestRouter,
                             completion: @escaping (Result<Bool, Error>) -> Void) {
         self.request(requestOptions).response { (response) in

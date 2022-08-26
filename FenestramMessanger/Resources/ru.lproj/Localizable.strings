@@ -13,9 +13,12 @@
 "general.skip" = "Пропустить";
 "general.unknown" = "Неизвестно";
 "general.loading" = "Идет загрузка...";
+"general.close" = "Закрыть";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "Здесь будет отображаться список ваших чатов";
+"chat_view.recent_files" = "Недавние файлы";
+"chat_view.recent_image" = "Изображения";
 
 // MARK: - NewContactView
 "new_contact_view.title" = "Добавить контакт";
@@ -41,6 +44,9 @@
 
 // MARK: - SettingsView
 "settings_view.title" = "Настройки";
+"settings_view.color" = "Изменить цвет";
+"settings_view.info" = "О приложении";
+"settings_view.exit" = "Выход из учетной записи";
 
 // MARK: - ProfileView
 "profile_view.select_photo.title" = "Выбрать фотографию";
@@ -77,3 +83,10 @@
 // MARK: - PhoneView
 "phone_view.phone_number" = "Номер телефона";
 "phone_view.send_code" = "Отправить код";
+
+// MARK: - CorrespondenceView
+"correspondence_view.message" = "Здесь будет отображаться история ваших сообщениий";
+"correspondence_view.text_message" = "Ваше сообщение";
+"correspondence_view.foto" = "Фото";
+"correspondence_view.image" = "Галерея";
+"correspondence_view.file" = "Файл";

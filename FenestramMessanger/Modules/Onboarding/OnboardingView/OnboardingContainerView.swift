@@ -8,8 +8,17 @@
 import SwiftUI
 
 struct OnboardingContainerView: View {
-    @AppStorage("isOnboarding") var isOnboarding: Bool?
+    
+    
+    //MARK: - Properties
+    
     @State private var selectedPage = 0
+    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    @AppStorage("isOnboarding") var isOnboarding: Bool?
+    
+    
+    //MARK: - Body
     
     var body: some View {
         
@@ -60,6 +69,9 @@ struct OnboardingContainerView: View {
         }
     }
     
+    
+    //MARK: - Views
+    
     private func getButton() -> some View {
         VStack {
             Button(action: {
@@ -74,7 +86,7 @@ struct OnboardingContainerView: View {
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background(Asset.blue.swiftUIColor)
+                    .background((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                     .cornerRadius(6)
             })
             

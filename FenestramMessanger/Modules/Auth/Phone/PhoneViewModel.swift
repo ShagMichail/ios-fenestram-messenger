@@ -10,16 +10,38 @@ import Foundation
 extension PhoneView {
     @MainActor
     final class ViewModel: ObservableObject {
-        @Published var textPhone = ""
         
-        @Published var text = ""
+        
+        //MARK: - Properties
+        
+        @Published var textPhone = "" {
+            didSet {
+                if textPhone.prefix(1) != "+" {
+                    textPhone = "+7" + textPhone
+                }
+            }
+        }
         
         @Published var isEditing: Bool = false
         @Published public var numberCount = false
         
+        
+        //MARK: - Query functions
+        
         func checkCode() {
-            if textPhone.count == 16 {
-                numberCount = true
+            print("texphone:", textPhone, textPhone.count)
+            if textPhone.count == 12 {
+                
+                AuthService.sendCode(phoneNumber: textPhone) { [weak self] result in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(_):
+                        self.numberCount = true
+                    case .failure(let error):
+                        print("error: ", error.localizedDescription)
+                        self.numberCount = false
+                    }
+                }
             } else {
                 numberCount = false
             }

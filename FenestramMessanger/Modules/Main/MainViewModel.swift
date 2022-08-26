@@ -10,7 +10,12 @@ import SwiftUI
 extension MainView {
     @MainActor
     final class ViewModel: ObservableObject {
+        
+        
+        //MARK: - Properties
+        
         @Published var isSignIn: Bool
+        
         var socketManager: SocketIOManager?
         
         init() {
@@ -23,6 +28,9 @@ extension MainView {
                 self.socketManager = SocketIOManager(delegate: nil, accessToken: token)
             }
         }
+        
+        
+        //MARK: - Query functions
         
         @objc
         private func handleAuthState() {

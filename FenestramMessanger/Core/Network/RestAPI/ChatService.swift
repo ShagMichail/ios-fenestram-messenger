@@ -34,8 +34,17 @@ public class ChatService {
             })
         }
     
-    public static func getChats(completion: @escaping (Result<[ChatEntity], Error>) -> Void) {
-        sendRequest(modelType: [ChatEntity].self, requestOptions: .getChats) { result in
+    private static func sendRequestCustom(
+        requestOptions: ChatRequestRouter,
+        completion: @escaping (Result<ChatEntityResult, Error>) -> Void) {
+            chatFactory = factory.makeChatFactory()
+            chatFactory?.sendRequestCustom(requestOptions: requestOptions, completion: { result in
+                completion(result)
+            })
+        }
+    
+    public static func getChats(page: Int, completion: @escaping (Result<ChatEntityResult, Error>) -> Void) {
+        sendRequestCustom(requestOptions: .getChats(limit: String(10), page: String(page))) { result in
             completion(result)
         }
     }

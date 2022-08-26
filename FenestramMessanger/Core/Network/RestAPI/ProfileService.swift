@@ -40,15 +40,18 @@ public class ProfileService {
         }
     }
     
-    public static func updateProfile(name: String, nickname: String, email: String, birthdate: TimeInterval, avatar: String, playerId: String, completion: @escaping (Result<Bool,Error>) -> Void) {
-        let parameters = [
+    public static func updateProfile(name: String, nickname: String, email: String, birthdate: TimeInterval, avatar: String, completion: @escaping (Result<Bool,Error>) -> Void) {
+        var parameters = [
             "name": name,
             "nickname": nickname,
             "email": email,
             "birth": Int(birthdate).description,
-            "avatar": avatar,
-            "player_id": playerId
+            //"avatar": avatar
         ]
+        
+        if let firebaseToken = Settings.firebaseToken {
+            parameters["player_id"] = firebaseToken
+        }
         
         sendRequest(requestOptions: .updateProfile(parameters: parameters)) { result in
             completion(result)

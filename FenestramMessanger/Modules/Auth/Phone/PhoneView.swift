@@ -11,12 +11,23 @@ import Introspect
 import Combine
 
 struct PhoneView: View {
+    
+    
+    //MARK: - Properties
+    
     @State private var keyboardHeight: CGFloat = 0
-    let maskPhone = "+X XXX XXX-XX-XX"
+
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    @AppStorage("isPhoneUser") var isPhoneUser: String?
+    
     @StateObject private var viewModel: ViewModel
+    
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
     }
+    
+    
+    //MARK: - Body
     
     var body: some View {
         NavigationView {
@@ -32,6 +43,9 @@ struct PhoneView: View {
             .navigationBarHidden(true)
         }
     }
+    
+    
+    //MARK: - Views
     
     private func getBase() -> some View {
         VStack(alignment: .center) {
@@ -49,53 +63,59 @@ struct PhoneView: View {
                 
                 Spacer().frame(height: 3.0 )
                 
-                VStack {
-                    TextField("", text: Binding<String>(get: {
-                        format(with: self.maskPhone, phone: viewModel.textPhone)
-                    }, set: {
-                        viewModel.textPhone = $0
-                    }))
-                    .placeholder(when: viewModel.textPhone.isEmpty) {
-                        Text("+7").foregroundColor(Asset.text.swiftUIColor)
-                    }
-                    .foregroundColor(Asset.text.swiftUIColor)
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                    .multilineTextAlignment(.leading)
-                    .accentColor(Asset.text.swiftUIColor)
-                    .keyboardType(.phonePad)
-                    .textContentType(.telephoneNumber)
-                    .padding(.horizontal, 16)
-                }
-                .frame(height: 48)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Asset.border.swiftUIColor, lineWidth: 1)
-                )
-                .padding(.vertical, 12)
+                getTextField()
             }
             
             Spacer()
                 .frame(height: 83.0)
             
-            NavigationLink(isActive: $viewModel.numberCount) {
-                CodeView(phoneNumber: viewModel.textPhone).navigationBarHidden(true)
-            } label: {
-                Button(action: {
-                    viewModel.checkCode()
-                }) {
-                    Text(L10n.PhoneView.sendCode)
-                        .frame(width: UIScreen.screenWidth - 30, height: 45.0)
-                        .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
-                        .foregroundColor(.white)
-                        .background((viewModel.textPhone.count == 16) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
-                        .cornerRadius(6)
-                }
-            }
-            .disabled(viewModel.textPhone.count != 16)
+            getButton()
         }
         .padding()
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
+    }
+    
+    private func getButton() -> some View {
+        NavigationLink(isActive: $viewModel.numberCount) {
+            CodeView(phoneNumber: viewModel.textPhone).navigationBarHidden(true)
+        } label: {
+            Button(action: {
+                viewModel.checkCode()
+                if viewModel.numberCount {
+                    isPhoneUser = viewModel.textPhone
+                }
+            }) {
+                Text(L10n.PhoneView.sendCode)
+                    .frame(width: UIScreen.screenWidth - 30, height: 45.0)
+                    .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
+                    .foregroundColor(.white)
+                    .background((viewModel.textPhone.count == 12) ?
+                                (isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor) : Asset.buttonDis.swiftUIColor)
+                    .cornerRadius(6)
+            }
+        }
+        .disabled(viewModel.textPhone.count != 12)
+    }
+    
+    private func getTextField() -> some View {
+        VStack {
+            TextField("", text: $viewModel.textPhone)
+            .foregroundColor(Asset.text.swiftUIColor)
+            .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+            .multilineTextAlignment(.leading)
+            .accentColor(Asset.text.swiftUIColor)
+            .keyboardType(.phonePad)
+            .textContentType(.telephoneNumber)
+            .padding(.horizontal, 16)
+            
+        }
+        .frame(height: 48)
+        .overlay(
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(Asset.border.swiftUIColor, lineWidth: 1)
+        )
+        .padding(.vertical, 12)
     }
 }
 

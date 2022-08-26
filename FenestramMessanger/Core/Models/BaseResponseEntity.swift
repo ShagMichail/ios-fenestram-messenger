@@ -20,3 +20,7 @@ public struct ErrorEntity: Codable, LocalizedError {
         return message
     }
 }
+public struct BBaseResponseEntity: Codable {
+    public let data: String
+    public let error: ErrorEntity?
+}

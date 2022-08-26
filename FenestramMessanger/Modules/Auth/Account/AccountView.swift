@@ -10,9 +10,15 @@ import Introspect
 import Combine
 
 struct AccountView: View {
-    @State private var keyboardHeight: CGFloat = 0
+    
+    
+    //MARK: - Properties
     
     @State private var sourceType: UIImagePickerController.SourceType = .camera
+    @State private var keyboardHeight: CGFloat = 0
+    
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
     @StateObject private var viewModel: ViewModel
     
     init() {
@@ -24,6 +30,9 @@ struct AccountView: View {
             .strokeBorder(
                 LinearGradient(colors: [Asset.border.swiftUIColor] , startPoint: .topLeading, endPoint: .bottomTrailing))
     }
+   
+    
+    //MARK: - Body
     
     var body: some View {
         ZStack {
@@ -48,11 +57,19 @@ struct AccountView: View {
             .ignoresSafeArea(.keyboard, edges: .bottom)
             .padding(.bottom, keyboardHeight/4)
             .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
+            
+            if viewModel.presentAlert {
+                AlertView(show: $viewModel.presentAlert, textTitle: $viewModel.textTitleAlert, text: $viewModel.textAlert)
+            }
         }
         .onTapGesture {
             UIApplication.shared.endEditing()
         }
+        
     }
+    
+    
+    //MARK: - Views
     
     private func getHeader() -> some View {
         Text(L10n.AccountView.title)
@@ -77,7 +94,7 @@ struct AccountView: View {
                 }
                 .padding(.all, 5.0)
                 .foregroundColor(.white)
-                .background(LinearGradient(gradient: Gradient(colors: [Asset.blue.swiftUIColor]), startPoint: .leading, endPoint: .trailing))
+                .background(LinearGradient(gradient: Gradient(colors: [(isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(40)
                 .frame(width: 50.0, height: 100.0, alignment: .center)
                 .actionSheet(isPresented: $viewModel.showSheet) {
@@ -134,7 +151,7 @@ struct AccountView: View {
                         Button(action: {
                             print("ddd")
                         }, label: {
-                            Image(systemName: "checkmark").foregroundColor(Asset.blue.swiftUIColor)
+                            Image(systemName: "checkmark").foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                         })
                         .padding(.trailing, 10.0)
                         .disabled(true)
@@ -177,7 +194,7 @@ struct AccountView: View {
                             print("ddd")
                         }, label: {
                             Image(systemName: "checkmark")
-                                .foregroundColor(Asset.blue.swiftUIColor)
+                                .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                         })
                         .padding(.trailing, 10.0)
                         .disabled(true)
@@ -207,7 +224,7 @@ struct AccountView: View {
                             print("ddd")
                         }, label: {
                             Image(systemName: "checkmark")
-                                .foregroundColor(Asset.blue.swiftUIColor)
+                                .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                         })
                         .padding(.trailing, 10.0)
                         .disabled(true)
@@ -259,7 +276,7 @@ struct AccountView: View {
                             print("ddd")
                         }, label: {
                             Image(systemName: "checkmark")
-                                .foregroundColor(Asset.blue.swiftUIColor)
+                                .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                         })
                         .padding(.trailing, 10.0)
                         .disabled(true)
@@ -278,7 +295,7 @@ struct AccountView: View {
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background( (viewModel.name.count != 0 && viewModel.nicName.count != 0 && viewModel.birthday != nil && viewModel.textEmailOk) ? Asset.blue.swiftUIColor : Asset.buttonDis.swiftUIColor)
+                    .background( (viewModel.name.count != 0 && viewModel.nicName.count != 0 && viewModel.birthday != nil && viewModel.textEmailOk) ? (isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor) : Asset.buttonDis.swiftUIColor)
                     .cornerRadius(6)
             }.disabled((viewModel.name.count == 0 || viewModel.nicName.count == 0 || viewModel.birthday == nil || viewModel.textEmailOk == false))
             
