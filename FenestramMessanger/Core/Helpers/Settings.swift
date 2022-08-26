@@ -11,6 +11,7 @@ public final class Settings {
     
     private enum Keys: String {
         case user = "current_user"
+        case firebaseToken = "firebase_token"
     }
     
     static func jsonContainer<T: Encodable>(value: T) -> [String: T] {
@@ -31,6 +32,15 @@ public final class Settings {
                 UserDefaults.standard.removeObject(forKey: Keys.user.rawValue)
             }
             UserDefaults.standard.synchronize()
+        }
+    }
+    
+    static var firebaseToken: String? {
+        get {
+            UserDefaults.standard.value(forKey: Keys.firebaseToken.rawValue) as? String
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: Keys.firebaseToken.rawValue)
         }
     }
 }

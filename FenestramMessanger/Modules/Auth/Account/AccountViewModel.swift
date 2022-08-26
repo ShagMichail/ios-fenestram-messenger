@@ -54,7 +54,7 @@ extension AccountView {
                 return
             }
             
-            ProfileService.updateProfile(name: name, nickname: nicName, email: textEmail, birthdate: birthdateTimeInterval, avatar: "", playerId: "") { [weak self] result in
+            ProfileService.updateProfile(name: name, nickname: nicName, email: textEmail, birthdate: birthdateTimeInterval, avatar: "") { [weak self] result in
                 guard let self = self else {
                     print("self doesn't exist")
                     return
