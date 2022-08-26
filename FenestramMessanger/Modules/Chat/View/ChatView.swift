@@ -112,6 +112,9 @@ struct ChatView: View {
                     ForEach(viewModel.chatList) { chat in
                         
                         getChatRow(chat: chat)
+                            .onAppear() {
+                                viewModel.loadMoreContent(currentItem: chat)
+                            }
                     }
                 } else {
                     HStack {

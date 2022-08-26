@@ -23,7 +23,7 @@ struct MessageStyleView: View {
             .frame(maxWidth: .infinity, alignment: isCurrentUser ? .trailing : .leading)
             Spacer().frame(height: 5)
             HStack {
-                Text("11:00")
+                Text(getMessageTime(message.createdAt))
                     .foregroundColor(Asset.message.swiftUIColor)
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
                 if isCurrentUser {
@@ -34,6 +34,15 @@ struct MessageStyleView: View {
                 }
             }
         }
+    }
+    
+    private func getMessageTime(_ date: Date?) -> String {
+        guard let date = date else { return "" }
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        let time = formatter.string(from: date)
+        return time
     }
 }
 

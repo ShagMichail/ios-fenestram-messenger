@@ -65,11 +65,11 @@ extension ContactsView {
         private func getChatList() {
             isLoading = true
             
-            ChatService.getChats { [weak self] result in
+            ChatService.getChats(page: 1) { [weak self] result in
                 switch result {
                 case .success(let chatList):
                     print("get chat list success")
-                    self?.chatList = chatList
+                    self?.chatList = chatList.data ?? []
                 case .failure(let error):
                     print("get chat list failure with error:", error.localizedDescription)
                     self?.textTitleAlert = "get chat list failure with error"

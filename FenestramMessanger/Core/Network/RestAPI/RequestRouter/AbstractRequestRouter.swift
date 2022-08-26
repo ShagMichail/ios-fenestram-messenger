@@ -27,6 +27,17 @@ extension AbstractRequestRouter {
         return baseUrl.appendingPathComponent(path)
     }
     
+    
+    func getFullUrl(with query: [URLQueryItem]) -> URL {
+        var appUrl = Constants.baseNetworkURL
+        appUrl.append(path)
+        var components = URLComponents(string: appUrl)
+        components?.queryItems = query
+        
+        guard let url = components?.url else { return fullUrl }
+        return url
+    }
+    
     var headers: HTTPHeaders {
         return ["Content-Type": "application/json"]
     }

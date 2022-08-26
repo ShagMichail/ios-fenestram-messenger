@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 public enum ChatRequestRouter: AbstractRequestRouter {
-    case getChats
+    case getChats(limit: String, page: String)
     case createChat(parameters: Parameters)
     case getChat(chatId: Int)
     case postMessage(chatId: Int, parameters: Parameters)
@@ -61,14 +61,19 @@ public enum ChatRequestRouter: AbstractRequestRouter {
     
     public func asURLRequest() throws -> URLRequest {
         var urlRequest = URLRequest(url: fullUrl)
-        urlRequest.httpMethod = method.rawValue
-        urlRequest.headers = headers
         switch self {
         case .createChat(let parameters), .postMessage(_, let parameters):
             urlRequest = try CustomPatchEncding().encode(urlRequest, with: parameters)
-        case .getChats, .getChat:
+        case .getChat:
+            urlRequest = try URLEncoding.default.encode(urlRequest, with: nil)
+        case .getChats(let limit, let page):
+            let url = getFullUrl(with: [URLQueryItem(name: "limit", value: limit),
+                                        URLQueryItem(name: "page", value: page)])
+            urlRequest = URLRequest(url: url)
             urlRequest = try URLEncoding.default.encode(urlRequest, with: nil)
         }
+        urlRequest.httpMethod = method.rawValue
+        urlRequest.headers = headers
         return urlRequest
     }
 }

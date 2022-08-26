@@ -24,7 +24,7 @@ struct CorrespondenceView: View {
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     
     var contacts: [UserEntity]
-    var chatFirst: ChatEntity?
+    var chatHistory: ChatEntity?
     var contactId: Int = 0
     var message: String = ""
     
@@ -34,8 +34,15 @@ struct CorrespondenceView: View {
     
     @StateObject private var viewModel: ViewModel
     
+    private let bottomSheetOptions: [BottomSheet.Options] = [.noDragIndicator,
+                                                             .allowContentDrag,
+                                                             .swipeToDismiss, .tapToDismiss,
+                                                             .absolutePositionValue,
+                                                             .background({ AnyView(Asset.buttonAlert.swiftUIColor) }),
+                                                             .cornerRadius(30)]
+    
     init(contacts: [UserEntity], chat: ChatEntity?) {
-        self.chatFirst = chat
+        self.chatHistory = chat
         self.contacts = contacts
         _viewModel = StateObject(wrappedValue: ViewModel(chat: chat))
         UITextView.appearance().backgroundColor = .clear
@@ -45,53 +52,55 @@ struct CorrespondenceView: View {
     //MARK: - Body
     
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                Asset.thema.swiftUIColor
-                    .ignoresSafeArea()
+        
+        ZStack {
+            Asset.thema.swiftUIColor
+                .ignoresSafeArea()
+            VStack {
                 VStack {
-                    VStack {
-                        CorrespondenceNavigationView(contacts: contacts, chat: chatFirst)
-                        
-                        $viewModel.allMessage.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
-
-                        Spacer()
-                        if $viewModel.allFoto.count != 0 {
-                            getPhotoMessage()
-                        }
-                        getMessageTextEditor()
-                    }
-                    Spacer().frame(height: 16)
+                    CorrespondenceNavigationView(contacts: contacts, chat: chatHistory)
                     
+                    $viewModel.allMessage.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
+
+                    Spacer()
+                    if $viewModel.allFoto.count != 0 {
+                        getPhotoMessage()
+                    }
+                    getMessageTextEditor()
                 }
-            }
-            .sheet(isPresented: $viewModel.showImagePicker) {
-                ImagePicker(image: $viewModel.image, isShown: $viewModel.showImagePicker, sourceType: self.sourceType)}
-            
-            .navigationBarHidden(true)
-            .onBackSwipe {
-                presentationMode.wrappedValue.dismiss()
-            }
-            .onTapGesture {
-                UIApplication.shared.endEditing()
-            }
-            .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: [.noDragIndicator, .allowContentDrag, .swipeToDismiss, .tapToDismiss, .absolutePositionValue, .background({ AnyView(Asset.buttonAlert.swiftUIColor) }), .cornerRadius(30)], headerContent: {
-                getBottomSheet()
-            }) {
+                Spacer().frame(height: 16)
+                
             }
         }
+        .sheet(isPresented: $viewModel.showImagePicker) {
+            ImagePicker(image: $viewModel.chatImage,
+                        isShown: $viewModel.showImagePicker,
+                        sourceType: self.sourceType)}
+        .navigationBarHidden(true)
+        .onBackSwipe { presentationMode.wrappedValue.dismiss() }
+        .onTapGesture { UIApplication.shared.endEditing() }
+            /// Bottom sheet for attachment
+        .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: bottomSheetOptions,
+                     headerContent: { getBottomSheet()}) {}
     }
     
     
     //MARK: - Views
     
     private func getMessage() -> some View {
-        ScrollView(showsIndicators: false) {
-            ForEach(viewModel.allMessage) { message in
-                HStack(alignment: .bottom, spacing: 15) {
-                    MessageStyleView(isCurrentUser: viewModel.lastMessage(message: message),
-                                     message: message)
-                }.padding(.all, 15)
+        ScrollViewReader { proxy in
+            ScrollView() {
+                ForEach(viewModel.allMessage, id: \.id) { message in
+                    HStack(alignment: .bottom, spacing: 15) {
+                        MessageStyleView(isCurrentUser: viewModel.lastMessage(message: message),
+                                         message: message)
+                        }.padding(.all, 15)
+                    
+                }
+            }
+            .onAppear {
+                guard let lasMessage = viewModel.allMessage.last else { return }
+                proxy.scrollTo(lasMessage.id)
             }
         }
     }
@@ -173,10 +182,10 @@ struct CorrespondenceView: View {
                 Spacer()
                 Button {
                     if !viewModel.textMessage.isEmpty {
-                        if chatFirst == nil {
+                        if chatHistory == nil {
                             viewModel.createChat(chatName: contacts[0].name ?? "", usersId: viewModel.getUserEntityIds(contactId: contacts[0].id))
                         } else {
-                            viewModel.postMessage(chat: chatFirst)
+                            viewModel.postMessage(chat: chatHistory)
                         }
                     }
                 } label: {
