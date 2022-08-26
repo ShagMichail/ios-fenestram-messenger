@@ -21,7 +21,6 @@ struct AlertView: View {
                     Asset.alert.swiftUIImage
                         .resizable()
                         .frame(width: 300, height: 175)
-                    //.frame(width: 120, height: 120)
                     VStack(alignment: .leading) {
                         Text("Произошла ошибка")
                             .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 18))

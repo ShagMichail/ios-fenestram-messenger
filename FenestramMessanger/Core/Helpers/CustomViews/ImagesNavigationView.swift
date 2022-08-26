@@ -20,7 +20,6 @@ struct ImagesNavigationView: View {
                 btnBack
                 title
                 Spacer()
-               // btnBell
             }.padding(.leading, 15)
                 .padding(.trailing, 15)
         }
