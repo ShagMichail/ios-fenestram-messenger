@@ -105,7 +105,6 @@
 		FC1778E12877639800B0D979 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778E02877639800B0D979 /* MainTabView.swift */; };
 		FC1EA8FF287F3CE10027107E /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1EA8FE287F3CE10027107E /* SplashScreen.swift */; };
 		FC1EA90228855CEF0027107E /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1EA90128855CEF0027107E /* ChatRow.swift */; };
-		FC305CC22892DC61001ED651 /* CodeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC305CC12892DC61001ED651 /* CodeEntity.swift */; };
 		FC305CC4289AE731001ED651 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC305CC3289AE731001ED651 /* CustomTextField.swift */; };
 		FC3A2B4128902DDE006E0948 /* CorrespondenceNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B4028902DDE006E0948 /* CorrespondenceNavigationView.swift */; };
 		FC3A2B43289032ED006E0948 /* MessageStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B42289032ED006E0948 /* MessageStyleView.swift */; };
@@ -127,7 +126,6 @@
 		FCEE882428743FFD00268971 /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE882328743FFC00268971 /* PhoneView.swift */; };
 		FCEE88262874400700268971 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE88252874400700268971 /* CodeView.swift */; };
 		FCEE88292874409B00268971 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = FCEE88282874409B00268971 /* iPhoneNumberField */; };
-		FCF5A43028789CC90028FBD3 /* ContactsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF5A42F28789CC90028FBD3 /* ContactsRow.swift */; };
 		FCF5A4352878AD2C0028FBD3 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF5A4342878AD2C0028FBD3 /* ContactsViewModel.swift */; };
 		FCF5A43728798EB70028FBD3 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF5A43628798EB70028FBD3 /* ChatView.swift */; };
 		FCF5A43B287DB5170028FBD3 /* OnboardingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF5A43A287DB5170028FBD3 /* OnboardingContainerView.swift */; };
@@ -236,7 +234,6 @@
 		FC1778E02877639800B0D979 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		FC1EA8FE287F3CE10027107E /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		FC1EA90128855CEF0027107E /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; usesTabs = 0; };
-		FC305CC12892DC61001ED651 /* CodeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEntity.swift; sourceTree = "<group>"; };
 		FC305CC3289AE731001ED651 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		FC3A2B4028902DDE006E0948 /* CorrespondenceNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrespondenceNavigationView.swift; sourceTree = "<group>"; };
 		FC3A2B42289032ED006E0948 /* MessageStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStyleView.swift; sourceTree = "<group>"; };
@@ -256,7 +253,6 @@
 		FCD305A1288968FC00491220 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		FCEE882328743FFC00268971 /* PhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
 		FCEE88252874400700268971 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
-		FCF5A42F28789CC90028FBD3 /* ContactsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsRow.swift; sourceTree = "<group>"; };
 		FCF5A4342878AD2C0028FBD3 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
 		FCF5A43628798EB70028FBD3 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		FCF5A43A287DB5170028FBD3 /* OnboardingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerView.swift; sourceTree = "<group>"; };
@@ -538,7 +534,6 @@
 				BDF2E2EE287F29F800B7E182 /* MessageEntity.swift */,
 				BDB5DAB62888129B0057966B /* BaseResponseEntity.swift */,
 				FC3A2B4F28917348006E0948 /* PhotoEntity.swift */,
-				FC305CC12892DC61001ED651 /* CodeEntity.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -733,7 +728,6 @@
 			isa = PBXGroup;
 			children = (
 				FC1778D628774BA300B0D979 /* ContactsView.swift */,
-				FCF5A42F28789CC90028FBD3 /* ContactsRow.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -803,10 +797,10 @@
 			);
 			mainGroup = BD77839D2872EBB50023032D;
 			packageReferences = (
-				FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField.git" */,
-				FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect.git" */,
-				BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire.git" */,
-				BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
+				FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
+				FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket" */,
 				FCD3059B2886ADCA00491220 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 			);
 			productRefGroup = BD7783A72872EBB50023032D /* Products */;
@@ -952,7 +946,6 @@
 				BDDB5ADF2872ECBC002BF418 /* MainView.swift in Sources */,
 				FC13AF45287EE78B00784E35 /* ChatViewModel.swift in Sources */,
 				FC3A2B522891743E006E0948 /* FileView.swift in Sources */,
-				FCF5A43028789CC90028FBD3 /* ContactsRow.swift in Sources */,
 				FC13AF42287ECEE100784E35 /* NewContactViewModel.swift in Sources */,
 				FC600B2728788E87001CA2BD /* SettingsViewModel.swift in Sources */,
 				FC17786E2875837300B0D979 /* AccountView.swift in Sources */,
@@ -984,7 +977,6 @@
 				BDF2E2E6287F217D00B7E182 /* ChatRequestFactory.swift in Sources */,
 				BDF2E2D5287F1B1200B7E182 /* AuthRequestFactory.swift in Sources */,
 				BDF2E2D1287F1B1200B7E182 /* ProfileRequestRouter.swift in Sources */,
-				FC305CC22892DC61001ED651 /* CodeEntity.swift in Sources */,
 				FC3A2B57289174EF006E0948 /* FileNavigationView.swift in Sources */,
 				FCD3059A2886A61F00491220 /* File.swift in Sources */,
 				BDF2E2DD287F1C0600B7E182 /* ProfileRequestFactory.swift in Sources */,
@@ -1235,7 +1227,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+		BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
 			requirement = {
@@ -1243,7 +1235,7 @@
 				minimumVersion = 16.0.0;
 			};
 		};
-		BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire.git" */ = {
+		BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -1251,7 +1243,7 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect.git" */ = {
+		FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
 			requirement = {
@@ -1267,7 +1259,7 @@
 				kind = branch;
 			};
 		};
-		FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField.git" */ = {
+		FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MojtabaHs/iPhoneNumberField.git";
 			requirement = {
@@ -1280,17 +1272,17 @@
 /* Begin XCSwiftPackageProductDependency section */
 		BD980FBC288176280050F8B4 /* SocketIO */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			package = BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket" */;
 			productName = SocketIO;
 		};
 		BDF2E2DF287F1C1C00B7E182 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire.git" */;
+			package = BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
 		FC17786B2875831700B0D979 /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect.git" */;
+			package = FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = Introspect;
 		};
 		FCD3059C2886ADCB00491220 /* BottomSheet */ = {
@@ -1300,7 +1292,7 @@
 		};
 		FCEE88282874409B00268971 /* iPhoneNumberField */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField.git" */;
+			package = FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */;
 			productName = iPhoneNumberField;
 		};
 /* End XCSwiftPackageProductDependency section */

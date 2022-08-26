@@ -21,6 +21,7 @@ public struct ChatEntity: Codable, Identifiable {
     public let usersId: [Int]
     public let messages: [MessageEntity]?
     public let createdAt: Date?
+    public let avatar: String?
     
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -28,6 +29,7 @@ public struct ChatEntity: Codable, Identifiable {
         self.name = try values.decode(String.self, forKey: .name)
         self.usersId = try values.decode([Int].self, forKey: .usersId)
         self.messages = try? values.decode([MessageEntity].self, forKey: .messages)
+        self.avatar = try? values.decode(String.self, forKey: .avatar)
         
         if let createdAtString = try? values.decode(String.self, forKey: .createdAt),
            let createdAt = Date.isoDateFormatter.date(from: createdAtString) {
@@ -43,5 +45,6 @@ public struct ChatEntity: Codable, Identifiable {
         case createdAt = "created_at"
         case usersId = "users"
         case messages = "message"
+        case avatar
     }
 }

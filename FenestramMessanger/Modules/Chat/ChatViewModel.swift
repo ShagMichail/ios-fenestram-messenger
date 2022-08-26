@@ -32,7 +32,7 @@ extension ChatView {
         ]
         @Published var recentFile: [File] = []
         
-        private var totalPages = 4
+        private var totalPages = 0
         private var page : Int = 1
         
         init() {
@@ -61,7 +61,9 @@ extension ChatView {
             ChatService.getChats(page: page) { [weak self] result in
                 switch result {
                 case .success(let chatList):
+                    self?.totalPages = chatList.total ?? 0
                     self?.chatList = chatList.data ?? []
+                    print("Get chat ava", chatList.data)
                 case .failure(let error):
                     print("get chat list failure with error:", error.localizedDescription)
                     self?.textTitleAlert = "get chat list failure with error"

@@ -51,21 +51,8 @@ struct ImagesNavigationView: View {
             }
         }
     }
-    
-//    var btnBell : some View {
-//        HStack {
-//            Button(action: {
-//                
-//            }) {
-//                HStack {
-//                    Asset.search.swiftUIImage
-//                        .resizable()
-//                        .frame(width: 20.0, height: 20.0)
-//                }
-//            }
-//        }
-//    }
 }
+
 struct ImagesNavigationView_Previews: PreviewProvider {
     static var previews: some View {
         ImagesNavigationView()

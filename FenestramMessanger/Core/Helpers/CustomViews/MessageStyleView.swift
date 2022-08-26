@@ -46,9 +46,3 @@ struct MessageStyleView: View {
     }
 }
 
-//struct MessageStyleView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MessageStyleView(isCurrentUser: <#T##Bool#>, message: <#T##MessageEntity#>)
-//    }
-//}
-

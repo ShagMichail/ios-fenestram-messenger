@@ -44,21 +44,9 @@ public class ChatService {
         }
     
     public static func getChats(page: Int, completion: @escaping (Result<ChatEntityResult, Error>) -> Void) {
-//        sendRequest(modelType: [ChatEntity].self, requestOptions: .getChats(limit: String(10), page: String(page))) { result in
-//            completion(result)
-//        }
         sendRequestCustom(requestOptions: .getChats(limit: String(10), page: String(page))) { result in
-            //print("get here1: ", result)
             completion(result)
-            switch result{
-            case .success(let data):
-                print("get here ", data.data)
-            case .failure(let error):
-                print(error)
-            }
         }
-        
-        
     }
     
     public static func createChat(chatName: String, usersId: [Int], completion: @escaping (Result<ChatEntity, Error>) -> Void) {

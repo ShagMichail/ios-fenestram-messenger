@@ -72,9 +72,9 @@ struct ChatView: View {
                 .font(FontFamily.Montserrat.semiBold.swiftUIFont(size: 22))
             Spacer()
             NavigationLink() {
-                SettingsView()
+                //Search chats
             } label: {
-                Image(systemName: "gearshape").foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                Image(systemName: "magnifyingglass").foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
                     .font(.system(size: 20))
             }
         }
