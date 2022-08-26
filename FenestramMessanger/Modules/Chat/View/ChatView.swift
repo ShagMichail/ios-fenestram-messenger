@@ -309,8 +309,12 @@ struct ChatView: View {
     }
     
     private func lastMessageTime(chat: ChatEntity) -> String {
-        guard let lastIndex = chat.messages?.last else {return ""}
-        return  lastIndex.createdAt?.formatted(.dateTime.hour().minute() ) ?? "01:09"
+        guard let lastIndex = chat.messages?.last, let createdDate = lastIndex.createdAt else {return ""}
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .none
+        dateFormatter.timeStyle = .short
+        
+        return dateFormatter.string(from: createdDate)
     }
 }
 
