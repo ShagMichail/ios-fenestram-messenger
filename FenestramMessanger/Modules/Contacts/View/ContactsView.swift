@@ -18,8 +18,8 @@ struct ContactsView: View {
     
     @StateObject private var viewModel: ViewModel
     
-    init() {
-        _viewModel = StateObject(wrappedValue: ViewModel())
+    init(socketManager: SocketIOManager?) {
+        _viewModel = StateObject(wrappedValue: ViewModel(socketManager: socketManager))
     }
     
     var border: some View {
@@ -149,7 +149,7 @@ struct ContactsView: View {
     
     private func getContactsRow(contact: UserEntity) -> some View {
         NavigationLink() {
-            CorrespondenceView(contacts: [contact], chat: viewModel.filterChat(contact: contact)).navigationBarHidden(true)
+            CorrespondenceView(contacts: [contact], chat: viewModel.filterChat(contact: contact), socketManager: viewModel.socketManager).navigationBarHidden(true)
         } label: {
             HStack() {
                 Asset.photo.swiftUIImage
@@ -202,7 +202,7 @@ struct ContactsView: View {
 
 struct ContactsView_Previews: PreviewProvider {
     static var previews: some View {
-        ContactsView()
+        ContactsView(socketManager: nil)
     }
 }
 

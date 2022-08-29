@@ -10,14 +10,13 @@ import SwiftUI
 
 extension CorrespondenceView {
     @MainActor
-    final class ViewModel: ObservableObject {
+    final class ViewModel: ObservableObject, SocketIOManagerObserver {
         
         
         //MARK: - Properties
         
         @Published var textMessage: String = ""
         @Published var isLoading: Bool = false
-        @State var messagesLoaded: Bool = false
         @Published var chat: ChatEntity?
         @Published var showSheet: Bool = false
         @Published var showImagePicker: Bool = false
@@ -32,11 +31,40 @@ extension CorrespondenceView {
         @Published var textAlert = ""
         @Published var allFoto: [PhotoEntity] = []
         
-        init(chat: ChatEntity?) {
+        private var socketManager: SocketIOManager?
+        
+        private var totalPages = 0
+        private var page: Int = 1
+        
+        var lastMessageId: Int?
+        var currentMessageId: Int?
+        
+        init(chat: ChatEntity?, socketManager: SocketIOManager?) {
             self.chat = chat
+            
+            if let socketManager = socketManager {
+                self.socketManager = socketManager
+                socketManager.addObserver(self)
+            }
             
             guard let chatId = chat?.id else { return }
             getChatUser(id: chatId)
+        }
+        
+        func loadMoreContent(currentItem item: MessageEntity){
+            let thresholdIndex = self.allMessage.first?.id
+            
+            if thresholdIndex == item.id, (self.page + 1) <= self.totalPages {
+                self.page += 1
+                self.getMessages()
+            }
+        }
+        
+        func loadMoreContent(){
+            if (self.page + 1) <= self.totalPages {
+                self.page += 1
+                self.getMessages()
+            }
         }
         
         
@@ -47,17 +75,42 @@ extension CorrespondenceView {
                 switch result {
                 case .success(let chat):
                     self?.chat = chat
-                    self?.allMessage = chat.messages ?? []
-                    self?.filterArray()
+                    self?.getMessages()
                 case .failure(let error):
                     print("get chat user failure with error:", error.localizedDescription)
                     self?.textTitleAlert = "get chat user with error"
                     self?.textAlert = error.localizedDescription
                     self?.presentAlert = true
                 }
-                
-                self?.messagesLoaded = true
             })
+        }
+        
+        private func getMessages() {
+            guard let chatId = chat?.id else {
+                return
+            }
+            
+            isLoading = true
+            
+            ChatService.getMessages(chatId: chatId, page: page) { [weak self] result in
+                switch result {
+                case .success(let chatList):
+                    self?.totalPages = (chatList.total ?? 0) / 10
+                    print("first element: ", self?.allMessage.first ?? "no element")
+                    self?.currentMessageId = self?.allMessage.first?.id
+                    var buffer = self?.allMessage ?? []
+                    buffer.append(contentsOf: chatList.data ?? [])
+                    self?.allMessage = buffer.sorted(by: { $0.id < $1.id })
+                    print("Get messages ava:", chatList.data ?? "no data")
+                case .failure(let error):
+                    print("get messages list failure with error:", error.localizedDescription)
+                    self?.textTitleAlert = "get messages list failure with error"
+                    self?.textAlert = error.localizedDescription
+                    self?.presentAlert = true
+                }
+                
+                self?.isLoading = false
+            }
         }
         
         func createChat(chatName: String, usersId: [Int]) {
@@ -77,10 +130,10 @@ extension CorrespondenceView {
         }
         
         func postMessage(chat: ChatEntity?) {
-            ChatService.postMessage(chatId: chat?.id ?? 0, messageType: .text, content: textMessage) { result in
+            ChatService.postMessage(chatId: chat?.id ?? 0, messageType: .text, content: textMessage) { [weak self] result in
                 switch result {
                 case .success(_):
-                    break
+                    self?.textMessage = ""
                 case .failure( let error ):
                     print("\(error)")
                 }
@@ -96,16 +149,8 @@ extension CorrespondenceView {
             chatImage = nil
         }
         
-        private func filterArray() {
-            var allMessageNew: [MessageEntity] = []
-            for i in allMessage.indices where allMessage.count != 0 {
-                allMessageNew.insert(allMessage[i], at: 0)
-            }
-            allMessage = allMessageNew
-        }
-        
         func lastMessage(message: MessageEntity) -> Bool {
-            if message.fromUserId == Settings.currentUser?.id{
+            if message.fromUserId == Settings.currentUser?.id {
                 return true
             }
             return false
@@ -117,6 +162,10 @@ extension CorrespondenceView {
             ids.append(curretUserId)
             ids.append(contactId)
             return ids
+        }
+        
+        func receiveMessage(_ message: MessageEntity) {
+            allMessage.append(message)
         }
     }
 }

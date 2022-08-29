@@ -9,6 +9,8 @@ import Foundation
 
 public struct BaseResponseEntity<T: Codable>: Codable {
     public let data: T?
+    public let total: Int?
+    public let page: Int?
     public let error: ErrorEntity?
 }
 
@@ -19,8 +21,4 @@ public struct ErrorEntity: Codable, LocalizedError {
     public var errorDescription: String? {
         return message
     }
-}
-public struct BBaseResponseEntity: Codable {
-    public let data: String
-    public let error: ErrorEntity?
 }

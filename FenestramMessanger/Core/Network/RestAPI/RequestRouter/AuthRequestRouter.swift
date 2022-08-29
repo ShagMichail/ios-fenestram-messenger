@@ -11,10 +11,11 @@ import Alamofire
 public enum AuthRequestRouter: AbstractRequestRouter {
     case sendCode(parameters: Parameters)
     case login(parameters: Parameters)
+    case refresh(parameters: Parameters)
     
     var method: HTTPMethod {
         switch self {
-        case .sendCode, .login:
+        case .sendCode, .login, .refresh:
             return .post
         }
     }
@@ -25,15 +26,14 @@ public enum AuthRequestRouter: AbstractRequestRouter {
             return "api/\(Constants.apiVersion)/authorization/send_code"
         case .login:
             return "api/\(Constants.apiVersion)/authorization/login"
+        case .refresh:
+            return "api/\(Constants.apiVersion)/authorization/refresh"
         }
     }
     
      var headers: HTTPHeaders {
         switch self {
-        case .sendCode:
-            return ["Content-Type": "application/json",
-                    "accept": "*/*"]
-        case .login:
+        case .sendCode, .login, .refresh:
             return ["Content-Type": "application/json",
                     "accept": "*/*"]
         }
@@ -58,7 +58,7 @@ public enum AuthRequestRouter: AbstractRequestRouter {
         urlRequest.httpMethod = method.rawValue
         urlRequest.headers = headers
         switch self {
-        case .sendCode(let parameters), .login(let parameters):
+        case .sendCode(let parameters), .login(let parameters), .refresh(let parameters):
             urlRequest = try CustomPatchEncding().encode(urlRequest, with: parameters)
         }
         return urlRequest

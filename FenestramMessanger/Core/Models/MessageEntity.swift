@@ -11,7 +11,11 @@ public enum MessageType: String, Codable {
     case text = "text"
 }
 
-public struct MessageEntity: Codable, Identifiable {
+public struct MessageResponse: Codable {
+    public let message: MessageEntity
+}
+
+public struct MessageEntity: Codable, Identifiable, Equatable {
     public let id: Int
     
     public let fromUserId: Int

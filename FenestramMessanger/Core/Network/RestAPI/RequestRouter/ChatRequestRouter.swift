@@ -13,10 +13,11 @@ public enum ChatRequestRouter: AbstractRequestRouter {
     case createChat(parameters: Parameters)
     case getChat(chatId: Int)
     case postMessage(chatId: Int, parameters: Parameters)
+    case getMessages(chatId: Int, limit: String, page: String)
     
     var method: HTTPMethod {
         switch self {
-        case .getChats, .getChat:
+        case .getChats, .getChat, .getMessages:
             return .get
         case .createChat, .postMessage:
             return .post
@@ -31,6 +32,8 @@ public enum ChatRequestRouter: AbstractRequestRouter {
             return "api/\(Constants.apiVersion)/chats/\(chatId)"
         case .postMessage(let chatId, _):
             return "api/\(Constants.apiVersion)/chats/message/\(chatId)"
+        case .getMessages(let chatId, _, _):
+            return "api/\(Constants.apiVersion)/chats/\(chatId)/messages"
         }
     }
     
@@ -66,7 +69,7 @@ public enum ChatRequestRouter: AbstractRequestRouter {
             urlRequest = try CustomPatchEncding().encode(urlRequest, with: parameters)
         case .getChat:
             urlRequest = try URLEncoding.default.encode(urlRequest, with: nil)
-        case .getChats(let limit, let page):
+        case .getChats(let limit, let page), .getMessages(_, let limit, let page):
             let url = getFullUrl(with: [URLQueryItem(name: "limit", value: limit),
                                         URLQueryItem(name: "page", value: page)])
             urlRequest = URLRequest(url: url)

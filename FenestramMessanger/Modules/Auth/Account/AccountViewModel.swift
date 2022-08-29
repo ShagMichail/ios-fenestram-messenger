@@ -75,16 +75,17 @@ extension AccountView {
                     userWithInfo.email = self.textEmail
                     userWithInfo.birthdate = birthdateTimeInterval.description
                     
-                    guard let token = try? AuthController.getToken() else {
-                        print("Can't take access token")
+                    guard let accessToken = try? AuthController.getToken(),
+                          let refreshToken = try? AuthController.getRefreshToken() else {
+                        print("Can't take token")
                         self.textTitleAlert = " "
-                        self.textAlert = "Can't take access token"
+                        self.textAlert = "Can't take token"
                         self.presentAlert = true
                         return
                     }
                     
                     do {
-                        try AuthController.signIn(userWithInfo, token: token)
+                        try AuthController.signIn(userWithInfo, accessToken: accessToken, refreshToken: refreshToken)
                         print("update profile success")
                         self.isAlreadySetProfile = true
                     }

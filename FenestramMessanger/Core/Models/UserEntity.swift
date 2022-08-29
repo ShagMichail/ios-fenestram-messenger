@@ -7,9 +7,20 @@
 
 import Foundation
 
+public struct TokenEntity: Codable {
+    public let accessToken: String
+    public let refreshToken: String
+    
+    enum CodingKeys: String, CodingKey {
+        case accessToken = "access_token"
+        case refreshToken = "refresh_token"
+    }
+}
+
 public struct UserWithTokenEntity: Codable, Identifiable {
     public let id: Int
     public let accessToken: String
+    public let refreshToken: String
     
     public let phoneNumber: String
     
@@ -24,6 +35,7 @@ public struct UserWithTokenEntity: Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case id
         case accessToken = "access_token"
+        case refreshToken = "refresh_token"
         case phoneNumber = "phone"
         case name
         case nickname

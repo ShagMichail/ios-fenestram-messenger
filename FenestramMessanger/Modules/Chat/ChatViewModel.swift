@@ -35,7 +35,10 @@ extension ChatView {
         private var totalPages = 0
         private var page : Int = 1
         
-        init() {
+        private(set) var socketManager: SocketIOManager?
+        
+        init(socketManager: SocketIOManager?) {
+            self.socketManager = socketManager
             getContacts()
             getChatList()
             fillterFile()

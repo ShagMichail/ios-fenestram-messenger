@@ -29,8 +29,8 @@ struct ChatView: View {
     
     @StateObject private var viewModel: ViewModel
     
-    init() {
-        _viewModel = StateObject(wrappedValue: ViewModel())
+    init(socketManager: SocketIOManager?) {
+        _viewModel = StateObject(wrappedValue: ViewModel(socketManager: socketManager))
     }
     
     
@@ -147,7 +147,7 @@ struct ChatView: View {
                     .padding(.horizontal)
             }
             NavigationLink {
-                CorrespondenceView(contacts: viewModel.getUserEntity(from: chat), chat: chat)
+                CorrespondenceView(contacts: viewModel.getUserEntity(from: chat), chat: chat, socketManager: viewModel.socketManager)
                 
             } label: {
                 VStack(alignment: .leading) {
@@ -217,7 +217,7 @@ struct ChatView: View {
                 Spacer().frame(width: 54.0)
                 
                 NavigationLink(isActive: $correspondence) {
-                    CorrespondenceView(contacts: viewModel.getUserEntity(from: chatUser), chat: chatUser)
+                    CorrespondenceView(contacts: viewModel.getUserEntity(from: chatUser), chat: chatUser, socketManager: viewModel.socketManager)
                 } label:{
                     Button {
                         bottomSheetPosition = .hidden
@@ -320,6 +320,6 @@ struct ChatView: View {
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView()
+        ChatView(socketManager: nil)
     }
 }

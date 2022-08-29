@@ -78,24 +78,24 @@ struct PhoneView: View {
     
     private func getButton() -> some View {
         NavigationLink(isActive: $viewModel.numberCount) {
-            CodeView(phoneNumber: viewModel.textPhone).navigationBarHidden(true)
+            CodeView(phoneNumber: viewModel.formattedPhone).navigationBarHidden(true)
         } label: {
             Button(action: {
                 viewModel.checkCode()
                 if viewModel.numberCount {
-                    isPhoneUser = viewModel.textPhone
+                    isPhoneUser = viewModel.formattedPhone
                 }
             }) {
                 Text(L10n.PhoneView.sendCode)
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background((viewModel.textPhone.count == 12) ?
+                    .background(viewModel.checkPhone() ?
                                 (isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor) : Asset.buttonDis.swiftUIColor)
                     .cornerRadius(6)
             }
         }
-        .disabled(viewModel.textPhone.count != 12)
+        .disabled(!viewModel.checkPhone())
     }
     
     private func getTextField() -> some View {

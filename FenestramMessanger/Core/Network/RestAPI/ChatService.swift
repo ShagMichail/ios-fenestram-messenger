@@ -25,6 +25,16 @@ public class ChatService {
             })
         }
     
+    private static func sendPaginationRequest<T>(
+        modelType: T.Type,
+        requestOptions: ChatRequestRouter,
+        completion: @escaping (Result<BaseResponseEntity<T>, Error>) -> Void) where T : Codable {
+            chatFactory = factory.makeChatFactory()
+            chatFactory?.sendPaginationRequest(modelType: modelType, requestOptions: requestOptions, completion: { result in
+                completion(result)
+            })
+        }
+    
     private static func sendRequest(
         requestOptions: ChatRequestRouter,
         completion: @escaping (Result<Bool, Error>) -> Void) {
@@ -34,17 +44,8 @@ public class ChatService {
             })
         }
     
-    private static func sendRequestCustom(
-        requestOptions: ChatRequestRouter,
-        completion: @escaping (Result<ChatEntityResult, Error>) -> Void) {
-            chatFactory = factory.makeChatFactory()
-            chatFactory?.sendRequestCustom(requestOptions: requestOptions, completion: { result in
-                completion(result)
-            })
-        }
-    
-    public static func getChats(page: Int, completion: @escaping (Result<ChatEntityResult, Error>) -> Void) {
-        sendRequestCustom(requestOptions: .getChats(limit: String(10), page: String(page))) { result in
+    public static func getChats(page: Int, completion: @escaping (Result<BaseResponseEntity<[ChatEntity]>, Error>) -> Void) {
+        sendPaginationRequest(modelType: [ChatEntity].self, requestOptions: .getChats(limit: String(10), page: String(page))) { result in
             completion(result)
         }
     }
@@ -66,13 +67,19 @@ public class ChatService {
         }
     }
     
-    public static func postMessage(chatId: Int, messageType: MessageType, content: String, completion: @escaping (Result<MessageEntity, Error>) -> Void) {
+    public static func postMessage(chatId: Int, messageType: MessageType, content: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         let parameters: [String: Any] = [
             "message_type": messageType.rawValue,
             "text": content
         ]
         
-        sendRequest(modelType: MessageEntity.self, requestOptions: .postMessage(chatId: chatId, parameters: parameters)) { result in
+        sendRequest(requestOptions: .postMessage(chatId: chatId, parameters: parameters)) { result in
+            completion(result)
+        }
+    }
+    
+    public static func getMessages(chatId: Int, page: Int, completion: @escaping (Result<BaseResponseEntity<[MessageEntity]>, Error>) -> Void) {
+        sendPaginationRequest(modelType: [MessageEntity].self, requestOptions: .getMessages(chatId: chatId, limit: String(10), page: String(page))) { result in
             completion(result)
         }
     }
