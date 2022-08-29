@@ -50,10 +50,11 @@ public class ChatService {
         }
     }
     
-    public static func createChat(chatName: String, usersId: [Int], completion: @escaping (Result<ChatEntity, Error>) -> Void) {
+    public static func createChat(chatName: String, usersId: [Int], isGroup: Bool, completion: @escaping (Result<ChatEntity, Error>) -> Void) {
         let parameters: [String: Any] = [
             "name": chatName,
-            "users": usersId
+            "users": usersId,
+            "is_group": isGroup
         ]
         
         sendRequest(modelType: ChatEntity.self, requestOptions: .createChat(parameters: parameters)) { result in

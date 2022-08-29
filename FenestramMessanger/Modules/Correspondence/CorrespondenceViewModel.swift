@@ -114,7 +114,7 @@ extension CorrespondenceView {
         }
         
         func createChat(chatName: String, usersId: [Int]) {
-            ChatService.createChat(chatName: chatName, usersId: usersId) { [weak self] result in
+            ChatService.createChat(chatName: chatName, usersId: usersId, isGroup: usersId.count > 2) { [weak self] result in
                 switch result {
                 case .success(let chat):
                     print("create chat user success")
