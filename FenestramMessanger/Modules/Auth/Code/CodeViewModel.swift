@@ -45,7 +45,7 @@ extension CodeView {
                     print("login success")
                     
                     do {
-                        try AuthController.signIn(.init(from: userWithToken), token: userWithToken.accessToken)
+                        try AuthController.signIn(.init(from: userWithToken), accessToken: userWithToken.accessToken, refreshToken: userWithToken.refreshToken)
                         print("sign in success")
                         self?.okCode = true
                     }

@@ -54,4 +54,20 @@ public class AuthService {
         }
     }
     
+    public static func refresh(completion: @escaping (Result<TokenEntity, Error>) -> Void) {
+        guard let accessToken = try? AuthController.getToken(),
+              let refreshToken = try? AuthController.getRefreshToken() else {
+            completion(.failure(NetworkError.sessionTimedOut))
+            return
+        }
+        
+        let parameters = [
+            "access_token": accessToken,
+            "refresh_token": refreshToken
+        ]
+        
+        sendRequest(modelType: TokenEntity.self, requestOptions: .login(parameters: parameters)) { result in
+            completion(result)
+        }
+    }
 }

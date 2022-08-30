@@ -7,13 +7,6 @@
 
 import Foundation
 
-public struct ChatEntityResult: Codable {
-    public let data: [ChatEntity]?
-    public let total: Int?
-    public let page: Int?
-    public let error: ErrorEntity?
-}
-
 public struct ChatEntity: Codable, Identifiable {
     public let id: Int
     

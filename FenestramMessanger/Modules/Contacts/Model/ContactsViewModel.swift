@@ -27,7 +27,10 @@ extension ContactsView {
         @Published var textTitleAlert = ""
         @Published var textAlert = ""
         
-        init() {
+        private(set) var socketManager: SocketIOManager?
+        
+        init(socketManager: SocketIOManager?) {
+            self.socketManager = socketManager
             getContacts()
             getChatList()
         }

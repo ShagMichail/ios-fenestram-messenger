@@ -14,17 +14,19 @@ struct MainTabView: View {
     
     @State var selectionTabView = 0
     
-    init() {
+    @StateObject private var viewModel: ViewModel
+    
+    init(socketManager: SocketIOManager?) {
+        _viewModel = StateObject(wrappedValue: ViewModel(socketManager: socketManager))
         UITabBar.appearance().backgroundColor = Asset.tabBar.color
         UITabBar.appearance().unselectedItemTintColor = Asset.photoBack.color
     }
-    
     
     //MARK: - Body
     
     var body: some View {
         TabView(selection: $selectionTabView) {
-            ContactsView()
+            ContactsView(socketManager: viewModel.socketManager)
                 .navigationBarHidden(true)
                 .tabItem {
                     if selectionTabView == 0 {
@@ -38,7 +40,7 @@ struct MainTabView: View {
                 }
                 .tag(0)
             
-            ChatView()
+            ChatView(socketManager: viewModel.socketManager)
                 .navigationBarHidden(true)
                 .tabItem {
                     if selectionTabView == 1 {
@@ -73,6 +75,6 @@ struct MainTabView: View {
 
 struct MainTabView_Previews: PreviewProvider {
     static var previews: some View {
-        MainTabView()
+        MainTabView(socketManager: nil)
     }
 }

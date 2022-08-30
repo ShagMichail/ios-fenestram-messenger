@@ -16,7 +16,7 @@ extension MainView {
         
         @Published var isSignIn: Bool
         
-        var socketManager: SocketIOManager?
+        private(set) var socketManager: SocketIOManager?
         
         init() {
             self.isSignIn = AuthController.isSignedIn
@@ -25,7 +25,7 @@ extension MainView {
             
             if let token = try? AuthController.getToken(),
                self.isSignIn {
-                self.socketManager = SocketIOManager(delegate: nil, accessToken: token)
+                self.socketManager = SocketIOManager(accessToken: token)
             }
         }
         
@@ -38,7 +38,7 @@ extension MainView {
             
             if let token = try? AuthController.getToken(),
                self.isSignIn {
-                self.socketManager = SocketIOManager(delegate: nil, accessToken: token)
+                self.socketManager = SocketIOManager(accessToken: token)
             }
         }
     }

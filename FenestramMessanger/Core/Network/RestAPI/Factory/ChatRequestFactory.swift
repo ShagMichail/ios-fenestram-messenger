@@ -20,7 +20,7 @@ final class ChatRequestFactory: AbstractRequestFactory {
     public func sendRequest<T>(modelType: T.Type,
                                requestOptions: ChatRequestRouter,
                                completion: @escaping (Result<T, Error>) -> Void) where T : Codable {
-        self.request(requestOptions).responseDecodable(of: T.self) { response in
+        self.request(requestOptions).responseDecodable(of: BaseResponseEntity<T>.self) { response in
             guard let statusCode = response.response?.statusCode else {
                 completion(.failure(NetworkError.serverError))
                 return
@@ -45,7 +45,23 @@ final class ChatRequestFactory: AbstractRequestFactory {
                 }
             case 400...499:
                 guard statusCode != 401 else {
-                    try? AuthController.signOut()
+                    AuthService.refresh { result in
+                        switch result {
+                        case .success(let token):
+                            guard let currentUser = Settings.currentUser else {
+                                try? AuthController.signOut()
+                                return
+                            }
+                            do {
+                                try AuthController.signIn(currentUser, accessToken: token.accessToken, refreshToken: token.refreshToken)
+                            }
+                            catch {
+                                try? AuthController.signOut()
+                            }
+                        case .failure:
+                            try? AuthController.signOut()
+                        }
+                    }
                     return
                 }
                 completion(.failure(NetworkError.responseError))
@@ -57,9 +73,10 @@ final class ChatRequestFactory: AbstractRequestFactory {
         }
     }
     
-    public func sendRequestCustom(requestOptions: ChatRequestRouter,
-                                  completion: @escaping (Result<ChatEntityResult, Error>) -> Void) {
-        self.request(requestOptions).responseDecodable(of: ChatEntityResult.self) { response in
+    public func sendPaginationRequest<T>(modelType: T.Type,
+                               requestOptions: ChatRequestRouter,
+                               completion: @escaping (Result<BaseResponseEntity<T>, Error>) -> Void) where T : Codable {
+        self.request(requestOptions).responseDecodable(of: BaseResponseEntity<T>.self) { response in
             guard let statusCode = response.response?.statusCode else {
                 completion(.failure(NetworkError.serverError))
                 return
@@ -69,7 +86,7 @@ final class ChatRequestFactory: AbstractRequestFactory {
                 if let data = response.data {
                     do {
                         let decoder = JSONDecoder()
-                        let decodedData = try decoder.decode(ChatEntityResult.self, from: data)
+                        let decodedData = try decoder.decode(BaseResponseEntity<T>.self, from: data)
                         
                         if let error = decodedData.error {
                             completion(.failure(error))
@@ -82,7 +99,23 @@ final class ChatRequestFactory: AbstractRequestFactory {
                 }
             case 400...499:
                 guard statusCode != 401 else {
-                    try? AuthController.signOut()
+                    AuthService.refresh { result in
+                        switch result {
+                        case .success(let token):
+                            guard let currentUser = Settings.currentUser else {
+                                try? AuthController.signOut()
+                                return
+                            }
+                            do {
+                                try AuthController.signIn(currentUser, accessToken: token.accessToken, refreshToken: token.refreshToken)
+                            }
+                            catch {
+                                try? AuthController.signOut()
+                            }
+                        case .failure:
+                            try? AuthController.signOut()
+                        }
+                    }
                     return
                 }
                 completion(.failure(NetworkError.responseError))
@@ -106,7 +139,23 @@ final class ChatRequestFactory: AbstractRequestFactory {
                 completion(.success(true))
             case 400...499:
                 guard statusCode != 401 else {
-                    try? AuthController.signOut()
+                    AuthService.refresh { result in
+                        switch result {
+                        case .success(let token):
+                            guard let currentUser = Settings.currentUser else {
+                                try? AuthController.signOut()
+                                return
+                            }
+                            do {
+                                try AuthController.signIn(currentUser, accessToken: token.accessToken, refreshToken: token.refreshToken)
+                            }
+                            catch {
+                                try? AuthController.signOut()
+                            }
+                        case .failure:
+                            try? AuthController.signOut()
+                        }
+                    }
                     return
                 }
                 completion(.failure(NetworkError.responseError))

@@ -9,16 +9,18 @@ import Foundation
 import SocketIO
 import Alamofire
 
-protocol SocketIODelegate: AnyObject {
+@MainActor
+protocol SocketIOManagerObserver: AnyObject {
+    func receiveMessage(_ message: MessageEntity)
 }
 
 final class SocketIOManager {
     let manager: SocketManager
     let socket: SocketIOClient
     
-    private weak var delegate: SocketIODelegate?
+    private var observers: [Weak<SocketIOManagerObserver>] = []
     
-    init(delegate: SocketIODelegate?, accessToken: String) {
+    init(accessToken: String) {
         print("access token: ", accessToken)
         self.manager = SocketManager(socketURL: URL(string: Constants.socketURL)!, config: [
             .log(true),
@@ -27,8 +29,6 @@ final class SocketIOManager {
         self.socket = self.manager.defaultSocket
         
         connect()
-        
-        self.delegate = delegate
     }
     
     deinit {
@@ -42,6 +42,21 @@ final class SocketIOManager {
         
         socket.on("receiveMessage") { data, ack in
             print("receive message: ", data)
+            
+            if let jsonData = try? JSONSerialization.data(withJSONObject: data, options: .fragmentsAllowed),
+               let messagesList = try? JSONDecoder().decode([MessageResponse].self, from: jsonData) {
+                messagesList.forEach { [weak self] message in
+                    self?.observers.forEach({ observer in
+                        guard let observer = observer.value else {
+                            return
+                        }
+                        
+                        Task {
+                            await observer.receiveMessage(message.message)
+                        }
+                    })
+                }
+            }
         }
         
         socket.connect()
@@ -51,5 +66,13 @@ final class SocketIOManager {
         if manager.status != .connected {
             manager.reconnect()
         }
+    }
+    
+    func addObserver(_ observer: SocketIOManagerObserver) {
+        observers.append(Weak(value: observer))
+    }
+    
+    func removeObserver(_ observer: SocketIOManagerObserver) {
+        observers.removeAll(where: { $0.value === observer })
     }
 }

@@ -41,10 +41,10 @@ struct CorrespondenceView: View {
                                                              .background({ AnyView(Asset.buttonAlert.swiftUIColor) }),
                                                              .cornerRadius(30)]
     
-    init(contacts: [UserEntity], chat: ChatEntity?) {
+    init(contacts: [UserEntity], chat: ChatEntity?, socketManager: SocketIOManager?) {
         self.chatHistory = chat
         self.contacts = contacts
-        _viewModel = StateObject(wrappedValue: ViewModel(chat: chat))
+        _viewModel = StateObject(wrappedValue: ViewModel(chat: chat, socketManager: socketManager))
         UITextView.appearance().backgroundColor = .clear
     }
 
@@ -90,17 +90,46 @@ struct CorrespondenceView: View {
     private func getMessage() -> some View {
         ScrollViewReader { proxy in
             ScrollView() {
-                ForEach(viewModel.allMessage, id: \.id) { message in
-                    HStack(alignment: .bottom, spacing: 15) {
-                        MessageStyleView(isCurrentUser: viewModel.lastMessage(message: message),
-                                         message: message)
-                        }.padding(.all, 15)
+                LazyVStack {
+                    if viewModel.isLoading {
+                        HStack {
+                            Spacer()
+                            
+                            ProgressView()
+                            
+                            Spacer()
+                        }
+                        .id(-2)
+                    }
                     
+                    ForEach(viewModel.allMessage, id: \.id) { message in
+                        HStack(alignment: .bottom, spacing: 15) {
+                            MessageStyleView(isCurrentUser: viewModel.lastMessage(message: message),
+                                             message: message)
+                        }
+                        .id(message.id)
+                        .padding(.all, 15)
+                        .onAppear {
+                            viewModel.loadMoreContent(currentItem: message)
+                        }
+                        
+                    }
                 }
             }
+            .disabled(viewModel.isLoading)
+            .onChange(of: viewModel.allMessage, perform: { newValue in
+                guard let lastMessageId = newValue.last?.id else { return }
+                
+                if lastMessageId != viewModel.lastMessageId {
+                    viewModel.lastMessageId = lastMessageId
+                    proxy.scrollTo(lastMessageId, anchor: .bottom)
+                } else if let currentMessageId = viewModel.currentMessageId {
+                    proxy.scrollTo(currentMessageId, anchor: .top)
+                }
+            })
             .onAppear {
-                guard let lasMessage = viewModel.allMessage.last else { return }
-                proxy.scrollTo(lasMessage.id)
+                guard let lastMessage = viewModel.allMessage.last else { return }
+                proxy.scrollTo(lastMessage.id)
             }
         }
     }

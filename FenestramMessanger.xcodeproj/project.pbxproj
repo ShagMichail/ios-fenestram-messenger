@@ -63,6 +63,8 @@
 		BDE74BC1288030A400F4A775 /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BDE74BAE288030A400F4A775 /* Poppins-Italic.ttf */; };
 		BDE74BC2288030A400F4A775 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BDE74BAF288030A400F4A775 /* Poppins-MediumItalic.ttf */; };
 		BDE74BC4288030DE00F4A775 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE74BC3288030DE00F4A775 /* Fonts.swift */; };
+		BDF1F22528BCCFFC000D8499 /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF1F22428BCCFFC000D8499 /* Weak.swift */; };
+		BDF1F22728BCE94A000D8499 /* MainTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF1F22628BCE94A000D8499 /* MainTabViewModel.swift */; };
 		BDF2E2CF287F1B1200B7E182 /* AbstractRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2BF287F1B1200B7E182 /* AbstractRequestRouter.swift */; };
 		BDF2E2D0287F1B1200B7E182 /* AuthRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2C0287F1B1200B7E182 /* AuthRequestRouter.swift */; };
 		BDF2E2D1287F1B1200B7E182 /* ProfileRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2C1287F1B1200B7E182 /* ProfileRequestRouter.swift */; };
@@ -194,6 +196,8 @@
 		BDE74BAF288030A400F4A775 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
 		BDE74BC3288030DE00F4A775 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		BDE74BC52880314D00F4A775 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BDF1F22428BCCFFC000D8499 /* Weak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weak.swift; sourceTree = "<group>"; };
+		BDF1F22628BCE94A000D8499 /* MainTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewModel.swift; sourceTree = "<group>"; };
 		BDF2E2BF287F1B1200B7E182 /* AbstractRequestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractRequestRouter.swift; sourceTree = "<group>"; };
 		BDF2E2C0287F1B1200B7E182 /* AuthRequestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthRequestRouter.swift; sourceTree = "<group>"; };
 		BDF2E2C1287F1B1200B7E182 /* ProfileRequestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileRequestRouter.swift; sourceTree = "<group>"; };
@@ -549,6 +553,7 @@
 				BDF2E2CC287F1B1200B7E182 /* Settings.swift */,
 				BDF2E2CD287F1B1200B7E182 /* AuthController.swift */,
 				BDF2E2CE287F1B1200B7E182 /* NetworkError.swift */,
+				BDF1F22428BCCFFC000D8499 /* Weak.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -651,6 +656,7 @@
 			isa = PBXGroup;
 			children = (
 				FC1778E02877639800B0D979 /* MainTabView.swift */,
+				BDF1F22628BCE94A000D8499 /* MainTabViewModel.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -955,6 +961,7 @@
 				FC600B2228787E74001CA2BD /* ProfileViewModel.swift in Sources */,
 				FC3A2B4128902DDE006E0948 /* CorrespondenceNavigationView.swift in Sources */,
 				BDE74B9928801E7900F4A775 /* Localizable.swift in Sources */,
+				BDF1F22728BCE94A000D8499 /* MainTabViewModel.swift in Sources */,
 				FC13AF3D287EC42600784E35 /* NewContactView.swift in Sources */,
 				BDB5DAB72888129B0057966B /* BaseResponseEntity.swift in Sources */,
 				FCEE882428743FFD00268971 /* PhoneView.swift in Sources */,
@@ -1005,6 +1012,7 @@
 				BDF2E2DA287F1B1200B7E182 /* AuthController.swift in Sources */,
 				BDF2E2D7287F1B1200B7E182 /* Constants.swift in Sources */,
 				BDF2E2DB287F1B1200B7E182 /* NetworkError.swift in Sources */,
+				BDF1F22528BCCFFC000D8499 /* Weak.swift in Sources */,
 				BDDB5AE12872ECE2002BF418 /* MainViewModel.swift in Sources */,
 				BDF2E2D0287F1B1200B7E182 /* AuthRequestRouter.swift in Sources */,
 			);
