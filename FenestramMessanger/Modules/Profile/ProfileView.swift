@@ -100,7 +100,7 @@ struct ProfileView: View {
                 viewModel.editProfile.toggle()
             } label: {
                 Asset.edit.swiftUIImage
-                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                    .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
             }
             
             Spacer().frame(width: 15)
@@ -108,7 +108,7 @@ struct ProfileView: View {
             NavigationLink() {
                 SettingsView()
             } label: {
-                Image(systemName: "gearshape").foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                Image(systemName: "gearshape").foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                     .font(.system(size: 20))
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -135,7 +135,7 @@ struct ProfileView: View {
                     }
                     .padding(.all, 5.0)
                     .foregroundColor(.white)
-                    .background(LinearGradient(gradient: Gradient(colors: [(isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)]), startPoint: .leading, endPoint: .trailing))
+                    .background(LinearGradient(gradient: Gradient(colors: [(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)]), startPoint: .leading, endPoint: .trailing))
                     .cornerRadius(40)
                     .frame(width: 50.0, height: 100.0, alignment: .center)
                     .actionSheet(isPresented: $viewModel.showSheet) {
@@ -317,7 +317,7 @@ struct ProfileView: View {
                     .frame(width: UIScreen.screenWidth/2 - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background(isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                    .background(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
                     .cornerRadius(6)
             }
         }

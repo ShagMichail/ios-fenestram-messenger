@@ -65,6 +65,8 @@
 		BDE74BC4288030DE00F4A775 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE74BC3288030DE00F4A775 /* Fonts.swift */; };
 		BDF1F22528BCCFFC000D8499 /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF1F22428BCCFFC000D8499 /* Weak.swift */; };
 		BDF1F22728BCE94A000D8499 /* MainTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF1F22628BCE94A000D8499 /* MainTabViewModel.swift */; };
+		BDF1F22A28BE2B9F000D8499 /* NewChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF1F22928BE2B9F000D8499 /* NewChatView.swift */; };
+		BDF1F22C28BE2BAB000D8499 /* NewChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF1F22B28BE2BAB000D8499 /* NewChatViewModel.swift */; };
 		BDF2E2CF287F1B1200B7E182 /* AbstractRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2BF287F1B1200B7E182 /* AbstractRequestRouter.swift */; };
 		BDF2E2D0287F1B1200B7E182 /* AuthRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2C0287F1B1200B7E182 /* AuthRequestRouter.swift */; };
 		BDF2E2D1287F1B1200B7E182 /* ProfileRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2C1287F1B1200B7E182 /* ProfileRequestRouter.swift */; };
@@ -198,6 +200,8 @@
 		BDE74BC52880314D00F4A775 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BDF1F22428BCCFFC000D8499 /* Weak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weak.swift; sourceTree = "<group>"; };
 		BDF1F22628BCE94A000D8499 /* MainTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewModel.swift; sourceTree = "<group>"; };
+		BDF1F22928BE2B9F000D8499 /* NewChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatView.swift; sourceTree = "<group>"; };
+		BDF1F22B28BE2BAB000D8499 /* NewChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatViewModel.swift; sourceTree = "<group>"; };
 		BDF2E2BF287F1B1200B7E182 /* AbstractRequestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractRequestRouter.swift; sourceTree = "<group>"; };
 		BDF2E2C0287F1B1200B7E182 /* AuthRequestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthRequestRouter.swift; sourceTree = "<group>"; };
 		BDF2E2C1287F1B1200B7E182 /* ProfileRequestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileRequestRouter.swift; sourceTree = "<group>"; };
@@ -405,6 +409,7 @@
 		BDDB5ADD2872ECAA002BF418 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				BDF1F22828BE2B5D000D8499 /* NewChat */,
 				FC7A57132891AE2D00ABF7BF /* Images */,
 				FC3A2B5828919895006E0948 /* Page Contact */,
 				FC3A2B532891745A006E0948 /* File */,
@@ -487,6 +492,15 @@
 				BDE74BAF288030A400F4A775 /* Poppins-MediumItalic.ttf */,
 			);
 			path = Poppins;
+			sourceTree = "<group>";
+		};
+		BDF1F22828BE2B5D000D8499 /* NewChat */ = {
+			isa = PBXGroup;
+			children = (
+				BDF1F22928BE2B9F000D8499 /* NewChatView.swift */,
+				BDF1F22B28BE2BAB000D8499 /* NewChatViewModel.swift */,
+			);
+			path = NewChat;
 			sourceTree = "<group>";
 		};
 		BDF2E2BC287F1B1200B7E182 /* Core */ = {
@@ -968,6 +982,7 @@
 				FCF5A43728798EB70028FBD3 /* ChatView.swift in Sources */,
 				FC1778B42876E25C00B0D979 /* Feature.swift in Sources */,
 				FC1778E12877639800B0D979 /* MainTabView.swift in Sources */,
+				BDF1F22C28BE2BAB000D8499 /* NewChatViewModel.swift in Sources */,
 				BDE74B9B28801F8E00F4A775 /* Asset+Extensions.swift in Sources */,
 				FC3A2B5028917348006E0948 /* PhotoEntity.swift in Sources */,
 				FC1EA8FF287F3CE10027107E /* SplashScreen.swift in Sources */,
@@ -1011,6 +1026,7 @@
 				BD980FB9288170CC0050F8B4 /* Notification+Extensions.swift in Sources */,
 				BDF2E2DA287F1B1200B7E182 /* AuthController.swift in Sources */,
 				BDF2E2D7287F1B1200B7E182 /* Constants.swift in Sources */,
+				BDF1F22A28BE2B9F000D8499 /* NewChatView.swift in Sources */,
 				BDF2E2DB287F1B1200B7E182 /* NetworkError.swift in Sources */,
 				BDF1F22528BCCFFC000D8499 /* Weak.swift in Sources */,
 				BDDB5AE12872ECE2002BF418 /* MainViewModel.swift in Sources */,

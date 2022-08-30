@@ -18,7 +18,7 @@ struct MessageStyleView: View {
             Text(message.message)
                 .padding(10)
                 .foregroundColor(Color.white)
-                .background(isCurrentUser ? Asset.blue.swiftUIColor : Asset.tabBar.swiftUIColor)
+                .background(isCurrentUser ? Asset.blue1.swiftUIColor : Asset.tabBar.swiftUIColor)
                 .cornerRadius(10)
             .frame(maxWidth: .infinity, alignment: isCurrentUser ? .trailing : .leading)
             Spacer().frame(height: 5)
@@ -30,7 +30,7 @@ struct MessageStyleView: View {
                     Asset.send.swiftUIImage
                         .resizable()
                         .frame(width: 13.0, height: 13.0)
-                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                        .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                 }
             }
         }

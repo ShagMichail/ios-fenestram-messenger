@@ -74,7 +74,7 @@ struct ChatView: View {
             NavigationLink() {
                 //Search chats
             } label: {
-                Image(systemName: "magnifyingglass").foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                Image(systemName: "magnifyingglass").foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                     .font(.system(size: 20))
             }
         }
@@ -171,7 +171,7 @@ struct ChatView: View {
                         print("ddd")
                     }, label: {
                         Image(systemName: "checkmark")
-                            .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                            .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                     })
                     .padding(.trailing, 0.0)
                     .disabled(true)
@@ -194,7 +194,7 @@ struct ChatView: View {
                         .foregroundColor(.white)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                     Text(viewModel.getNicNameUsers(chat: chatUser))
-                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                        .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                 }
                 Spacer()
@@ -297,7 +297,7 @@ struct ChatView: View {
                 )
                 .foregroundColor(Asset.buttonAlert.swiftUIColor)
             image.swiftUIImage
-                .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                .foregroundColor((isColorThema == false) ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
         }
     }
     

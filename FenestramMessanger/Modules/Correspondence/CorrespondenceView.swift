@@ -221,7 +221,7 @@ struct CorrespondenceView: View {
                     Asset.send.swiftUIImage
                         .resizable()
                         .frame(width: 24.0, height: 24.0)
-                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                        .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                 }.padding(.trailing, 12.0)
                     .padding(.bottom, -5)
             }
@@ -283,7 +283,7 @@ struct CorrespondenceView: View {
                 )
                 .foregroundColor(Asset.buttonAlert.swiftUIColor)
             image.swiftUIImage
-                .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                .foregroundColor((isColorThema == false) ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
         }
     }
 }

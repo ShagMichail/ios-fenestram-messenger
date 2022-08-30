@@ -138,7 +138,7 @@ struct ContactsView: View {
                 Asset.addButtonIcon.swiftUIImage
                     .padding(.bottom, 10)
                     .padding(.trailing, 10)
-                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                    .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                 Image(systemName: "plus")
                     .font(.title)
                     .padding(.bottom, 17)
@@ -192,7 +192,7 @@ struct ContactsView: View {
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                    .background((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                     .cornerRadius(6)
             }
             .padding(.bottom, 50)

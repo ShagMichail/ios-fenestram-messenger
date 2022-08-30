@@ -83,7 +83,7 @@ struct SettingsView: View {
             Asset.color.swiftUIImage
                 .resizable()
                 .frame(width: 22.0, height: 22.0)
-                .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
             Text(L10n.SettingsView.color)
                 .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
                 .foregroundColor(Color.white)
@@ -95,7 +95,7 @@ struct SettingsView: View {
                 } label: {
                     RoundedRectangle(cornerRadius: 40)
                         .frame(width: 24, height: 24)
-                        .foregroundColor(Asset.blue.swiftUIColor)
+                        .foregroundColor(Asset.blue1.swiftUIColor)
                 }
                 
                 Spacer().frame(width: 30)
@@ -105,7 +105,7 @@ struct SettingsView: View {
                 } label: {
                     RoundedRectangle(cornerRadius: 40)
                         .frame(width: 30, height: 30)
-                        .foregroundColor(Asset.green.swiftUIColor)
+                        .foregroundColor(Asset.green1.swiftUIColor)
                         .overlay(
                             RoundedRectangle(cornerRadius: 40)
                                 .stroke(Color.white, lineWidth: 3)
@@ -117,7 +117,7 @@ struct SettingsView: View {
                 } label: {
                     RoundedRectangle(cornerRadius: 40)
                         .frame(width: 30, height: 30)
-                        .foregroundColor(Asset.blue.swiftUIColor)
+                        .foregroundColor(Asset.blue1.swiftUIColor)
                         .overlay(
                             RoundedRectangle(cornerRadius: 40)
                                 .stroke(Color.white, lineWidth: 3)
@@ -131,7 +131,7 @@ struct SettingsView: View {
                 } label: {
                     RoundedRectangle(cornerRadius: 40)
                         .frame(width: 24, height: 24)
-                        .foregroundColor(Asset.green.swiftUIColor)
+                        .foregroundColor(Asset.green1.swiftUIColor)
                 }.padding(.trailing)
             }
         }
@@ -142,7 +142,7 @@ struct SettingsView: View {
             Asset.info.swiftUIImage
                 .resizable()
                 .frame(width: 22.0, height: 22.0)
-                .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
             Text(L10n.SettingsView.info)
                 .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
                 .foregroundColor(Color.white)
@@ -158,7 +158,7 @@ struct SettingsView: View {
                 Asset.exit.swiftUIImage
                     .resizable()
                     .frame(width: 22.0, height: 22.0)
-                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                    .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                 Text(L10n.SettingsView.exit)
                     .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
                     .foregroundColor(Color.white)

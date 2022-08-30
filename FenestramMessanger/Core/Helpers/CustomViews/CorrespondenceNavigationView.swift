@@ -60,7 +60,7 @@ struct CorrespondenceNavigationView: View {
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                     
                     Text("В сети")
-                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                        .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
                 }
             }
@@ -82,7 +82,7 @@ struct CorrespondenceNavigationView: View {
                             )
                             .foregroundColor(Asset.buttonAlert.swiftUIColor)
                         Asset.videoButtonSmall.swiftUIImage
-                            .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                            .foregroundColor((isColorThema == false) ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
                     }
                 }
             }
@@ -100,7 +100,7 @@ struct CorrespondenceNavigationView: View {
                             )
                             .foregroundColor(Asset.buttonAlert.swiftUIColor)
                         Asset.phoneButtonSmall.swiftUIImage
-                            .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                            .foregroundColor((isColorThema == false) ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
                     }
                 }
             }

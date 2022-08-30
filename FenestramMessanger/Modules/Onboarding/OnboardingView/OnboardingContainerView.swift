@@ -86,7 +86,7 @@ struct OnboardingContainerView: View {
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                    .background((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                     .cornerRadius(6)
             })
             
