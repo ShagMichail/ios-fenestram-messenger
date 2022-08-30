@@ -21,6 +21,9 @@ final class AuthRequestFactory: AbstractRequestFactory {
                                requestOptions: AuthRequestRouter,
                                completion: @escaping (Result<T, Error>) -> Void) where T : Codable {
         self.request(requestOptions).responseDecodable(of: BaseResponseEntity<T>.self) { response in
+            if response.request?.url?.absoluteString.contains("refresh") ?? false {
+                print("refresh request")
+            }
             guard let statusCode = response.response?.statusCode else {
                 completion(.failure(NetworkError.serverError))
                 return

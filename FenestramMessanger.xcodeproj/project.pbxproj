@@ -67,6 +67,8 @@
 		BDF1F22728BCE94A000D8499 /* MainTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF1F22628BCE94A000D8499 /* MainTabViewModel.swift */; };
 		BDF1F22A28BE2B9F000D8499 /* NewChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF1F22928BE2B9F000D8499 /* NewChatView.swift */; };
 		BDF1F22C28BE2BAB000D8499 /* NewChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF1F22B28BE2BAB000D8499 /* NewChatViewModel.swift */; };
+		BDF1F22F28BE42FA000D8499 /* NewChatConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF1F22E28BE42FA000D8499 /* NewChatConfirmView.swift */; };
+		BDF1F23128BE430C000D8499 /* NewChatConfirmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF1F23028BE430C000D8499 /* NewChatConfirmViewModel.swift */; };
 		BDF2E2CF287F1B1200B7E182 /* AbstractRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2BF287F1B1200B7E182 /* AbstractRequestRouter.swift */; };
 		BDF2E2D0287F1B1200B7E182 /* AuthRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2C0287F1B1200B7E182 /* AuthRequestRouter.swift */; };
 		BDF2E2D1287F1B1200B7E182 /* ProfileRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2E2C1287F1B1200B7E182 /* ProfileRequestRouter.swift */; };
@@ -202,6 +204,8 @@
 		BDF1F22628BCE94A000D8499 /* MainTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewModel.swift; sourceTree = "<group>"; };
 		BDF1F22928BE2B9F000D8499 /* NewChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatView.swift; sourceTree = "<group>"; };
 		BDF1F22B28BE2BAB000D8499 /* NewChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatViewModel.swift; sourceTree = "<group>"; };
+		BDF1F22E28BE42FA000D8499 /* NewChatConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatConfirmView.swift; sourceTree = "<group>"; };
+		BDF1F23028BE430C000D8499 /* NewChatConfirmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatConfirmViewModel.swift; sourceTree = "<group>"; };
 		BDF2E2BF287F1B1200B7E182 /* AbstractRequestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractRequestRouter.swift; sourceTree = "<group>"; };
 		BDF2E2C0287F1B1200B7E182 /* AuthRequestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthRequestRouter.swift; sourceTree = "<group>"; };
 		BDF2E2C1287F1B1200B7E182 /* ProfileRequestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileRequestRouter.swift; sourceTree = "<group>"; };
@@ -409,6 +413,7 @@
 		BDDB5ADD2872ECAA002BF418 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				BDF1F22D28BE42E2000D8499 /* NewChatConfirm */,
 				BDF1F22828BE2B5D000D8499 /* NewChat */,
 				FC7A57132891AE2D00ABF7BF /* Images */,
 				FC3A2B5828919895006E0948 /* Page Contact */,
@@ -501,6 +506,15 @@
 				BDF1F22B28BE2BAB000D8499 /* NewChatViewModel.swift */,
 			);
 			path = NewChat;
+			sourceTree = "<group>";
+		};
+		BDF1F22D28BE42E2000D8499 /* NewChatConfirm */ = {
+			isa = PBXGroup;
+			children = (
+				BDF1F22E28BE42FA000D8499 /* NewChatConfirmView.swift */,
+				BDF1F23028BE430C000D8499 /* NewChatConfirmViewModel.swift */,
+			);
+			path = NewChatConfirm;
 			sourceTree = "<group>";
 		};
 		BDF2E2BC287F1B1200B7E182 /* Core */ = {
@@ -994,6 +1008,7 @@
 				BDDB5AE12872ECE2002BF418 /* MainViewModel.swift in Sources */,
 				BDE74BC4288030DE00F4A775 /* Fonts.swift in Sources */,
 				FC7A57152891AE3A00ABF7BF /* ImagesView.swift in Sources */,
+				BDF1F22F28BE42FA000D8499 /* NewChatConfirmView.swift in Sources */,
 				FC600B2528788E7F001CA2BD /* SettingsView.swift in Sources */,
 				BDF2E2EA287F26E300B7E182 /* ChatEntity.swift in Sources */,
 				BDF2E2D4287F1B1200B7E182 /* RequestFactory.swift in Sources */,
@@ -1008,6 +1023,7 @@
 				BDF2E2D8287F1B1200B7E182 /* KeychainPasswordItem.swift in Sources */,
 				BD7783AA2872EBB50023032D /* FenestramMessangerApp.swift in Sources */,
 				BDF2E2D2287F1B1200B7E182 /* AuthService.swift in Sources */,
+				BDF1F23128BE430C000D8499 /* NewChatConfirmViewModel.swift in Sources */,
 				FC1EA90228855CEF0027107E /* ChatRow.swift in Sources */,
 				BDF2E2E2287F1CC400B7E182 /* ProfileService.swift in Sources */,
 				BDDB5ADF2872ECBC002BF418 /* MainView.swift in Sources */,

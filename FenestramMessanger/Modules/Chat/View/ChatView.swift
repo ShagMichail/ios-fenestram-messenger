@@ -127,6 +127,15 @@ struct ChatView: View {
             }
             .padding(.bottom, 1)
             
+            VStack {
+                Spacer()
+                
+                HStack {
+                    Spacer()
+                    
+                    getButtonNewChat()
+                }
+            }
         }.bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: [.noDragIndicator, .allowContentDrag, .swipeToDismiss, .tapToDismiss, .absolutePositionValue, .background({ AnyView(Asset.buttonAlert.swiftUIColor) }), .cornerRadius(30)], headerContent: {
             
             getHeaderBottomSheet()
@@ -298,6 +307,23 @@ struct ChatView: View {
                 .foregroundColor(Asset.buttonAlert.swiftUIColor)
             image.swiftUIImage
                 .foregroundColor((isColorThema == false) ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
+        }
+    }
+    
+    private func getButtonNewChat() -> some View {
+        NavigationLink() {
+            NewChatView()
+        } label: {
+            ZStack {
+                Asset.addButtonIcon.swiftUIImage
+                    .padding(.bottom, 10)
+                    .padding(.trailing, 10)
+                    .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
+                Image(systemName: "plus")
+                    .font(.title)
+                    .padding(.bottom, 17)
+                    .padding(.trailing, 10)
+            }
         }
     }
     

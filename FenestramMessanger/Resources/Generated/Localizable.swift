@@ -77,6 +77,8 @@ internal enum L10n {
     internal static let close = L10n.tr("Localizable", "general.close")
     /// Готово
     internal static let done = L10n.tr("Localizable", "general.done")
+    /// Произошла ошибка
+    internal static let errorTitle = L10n.tr("Localizable", "general.error_title")
     /// Идет загрузка...
     internal static let loading = L10n.tr("Localizable", "general.loading")
     /// Далее
@@ -94,6 +96,19 @@ internal enum L10n {
     internal static let contacts = L10n.tr("Localizable", "main_tab_view.contacts")
     /// Профиль
     internal static let profile = L10n.tr("Localizable", "main_tab_view.profile")
+  }
+
+  internal enum NewChatView {
+    /// Выберите участников чата
+    internal static let selectContacts = L10n.tr("Localizable", "new_chat_view.select_contacts")
+    /// Создание чата
+    internal static let title = L10n.tr("Localizable", "new_chat_view.title")
+    internal enum Confirm {
+      /// Участники чата
+      internal static let contacts = L10n.tr("Localizable", "new_chat_view.confirm.contacts")
+      /// Введите имя чата
+      internal static let namePlaceholder = L10n.tr("Localizable", "new_chat_view.confirm.name_placeholder")
+    }
   }
 
   internal enum NewContactView {
