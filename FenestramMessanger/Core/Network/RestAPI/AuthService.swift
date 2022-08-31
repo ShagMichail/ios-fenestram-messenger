@@ -70,4 +70,20 @@ public class AuthService {
             completion(result)
         }
     }
+    
+    public static func setFirebaseToken(firebaseToken: String, completion: @escaping (Result<Bool,Error>) -> Void) {
+        let parameters = [
+            "firebase_token": firebaseToken
+        ]
+        
+        sendRequest(requestOptions: .setFirebaseToken(parameters: parameters)) { result in
+            completion(result)
+        }
+    }
+    
+    public static func deleteFirebaseToken(firebaseToken: String, completion: @escaping (Result<Bool,Error>) -> Void) {
+        sendRequest(requestOptions: .deleteFirebaseToken(firebaseToken: firebaseToken)) { result in
+            completion(result)
+        }
+    }
 }
