@@ -42,6 +42,14 @@ struct ChatView: View {
                 ZStack {
                     Asset.thema.swiftUIColor
                         .ignoresSafeArea()
+                    
+                    NavigationLink(isActive: $viewModel.isShowNewChatView) {
+                        NewChatView(isPopToChatListView: $viewModel.isShowNewChatView)
+                    } label: {
+                        EmptyView()
+                    }
+
+
                     VStack {
                         getHeader()
                         if viewModel.isLoading {
@@ -311,8 +319,8 @@ struct ChatView: View {
     }
     
     private func getButtonNewChat() -> some View {
-        NavigationLink() {
-            NewChatView()
+        Button {
+            viewModel.isShowNewChatView = true
         } label: {
             ZStack {
                 Asset.addButtonIcon.swiftUIImage

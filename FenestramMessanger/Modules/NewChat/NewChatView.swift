@@ -11,8 +11,11 @@ struct NewChatView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject private var viewModel: ViewModel
     
-    init() {
+    @Binding var isPopToChatListView: Bool
+    
+    init(isPopToChatListView: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: ViewModel())
+        _isPopToChatListView = isPopToChatListView
     }
     
     var body: some View {
@@ -47,7 +50,7 @@ struct NewChatView: View {
                         Spacer()
                         
                         NavigationLink {
-                            NewChatConfirmView(selectedContacts: viewModel.getSelectedContacts())
+                            NewChatConfirmView(selectedContacts: viewModel.getSelectedContacts(), isPopToChatListView: $isPopToChatListView)
                         } label: {
                             Asset.nextButtonIcon.swiftUIImage
                         }
@@ -126,6 +129,6 @@ struct NewChatView: View {
 
 struct NewChatView_Previews: PreviewProvider {
     static var previews: some View {
-        NewChatView()
+        NewChatView(isPopToChatListView: .constant(true))
     }
 }

@@ -32,6 +32,8 @@ extension ChatView {
         ]
         @Published var recentFile: [File] = []
         
+        @Published var isShowNewChatView: Bool = false
+        
         private var totalPages = 0
         private var page : Int = 1
         

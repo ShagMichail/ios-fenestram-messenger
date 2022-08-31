@@ -11,8 +11,13 @@ struct NewChatConfirmView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject private var viewModel: ViewModel
     
-    init(selectedContacts: [UserEntity]) {
+    @Binding var isPopToChatListView: Bool
+    
+    @State private var sourceType: UIImagePickerController.SourceType = .camera
+    
+    init(selectedContacts: [UserEntity], isPopToChatListView: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: ViewModel(selectedContacts: selectedContacts))
+        _isPopToChatListView = isPopToChatListView
     }
     
     var body: some View {
@@ -29,6 +34,28 @@ struct NewChatConfirmView: View {
                 
                 getContactsList()
             }
+            
+            if !viewModel.chatName.isEmpty {
+                VStack {
+                    Spacer()
+                    
+                    HStack {
+                        Spacer()
+                        
+                        Button {
+                            viewModel.createChat() {
+                                self.isPopToChatListView = false
+                            }
+                        } label: {
+                            Asset.doneButtonIcon.swiftUIImage
+                        }
+                    }
+                }
+                .padding()
+            }
+        }
+        .onTapGesture {
+            UIApplication.shared.endEditing()
         }
         .onBackSwipe { presentationMode.wrappedValue.dismiss() }
         .navigationBarHidden(true)
@@ -65,29 +92,48 @@ struct NewChatConfirmView: View {
     private func getChatIconAndNameView() -> some View {
         HStack {
             Button {
+                viewModel.showSheet = true
             } label: {
-                if let selectedIcon = viewModel.selectedIcon {
-                    Image(uiImage: selectedIcon)
-                } else {
-                    Asset.chatPlaceholderIcon.swiftUIImage
+                VStack {
+                    if let selectedIcon = viewModel.selectedIcon {
+                        Image(uiImage: selectedIcon)
+                            .resizable()
+                            .clipShape(Circle())
+                    } else {
+                        Asset.chatPlaceholderIcon.swiftUIImage
+                            .resizable()
+                    }
                 }
+                .frame(width: 50, height: 50)
             }
-            
-            Spacer()
-                .frame(width: 16)
+            .actionSheet(isPresented: $viewModel.showSheet) {
+                ActionSheet(title: Text(L10n.ProfileView.SelectPhoto.title), message: Text(L10n.ProfileView.SelectPhoto.message), buttons: [
+                    .default(Text(L10n.ProfileView.SelectPhoto.photoLibrary)) {
+                        viewModel.showImagePicker = true
+                        self.sourceType = .photoLibrary
+                    },
+                    .default(Text(L10n.ProfileView.SelectPhoto.camera)) {
+                        viewModel.showImagePicker = true
+                        self.sourceType = .camera
+                    },
+                    .cancel()
+                ])
+            }
             
             VStack {
                 TextField("", text: $viewModel.chatName)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .padding()
                     .placeholder(when: viewModel.chatName.isEmpty) {
                         Text(L10n.NewChatView.Confirm.namePlaceholder)
                             .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                             .foregroundColor(Asset.grey1.swiftUIColor)
                     }
+                    .padding()
             }
         }
+        .sheet(isPresented: $viewModel.showImagePicker) {
+            ImagePicker(image: $viewModel.selectedIcon, isShown: $viewModel.showImagePicker, sourceType: self.sourceType)}
         .padding()
     }
     
@@ -113,6 +159,8 @@ struct NewChatConfirmView: View {
                 ForEach(viewModel.selectedContacts) { contact in
                     HStack {
                         Asset.photo.swiftUIImage
+                            .resizable()
+                            .frame(width: 32, height: 32)
                         
                         Text(contact.name ?? L10n.General.unknown)
                             .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
@@ -129,6 +177,6 @@ struct NewChatConfirmView: View {
 
 struct NewChatConfirmView_Previews: PreviewProvider {
     static var previews: some View {
-        NewChatConfirmView(selectedContacts: [])
+        NewChatConfirmView(selectedContacts: [], isPopToChatListView: .constant(true))
     }
 }

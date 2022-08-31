@@ -55,7 +55,7 @@ struct CorrespondenceNavigationView: View {
                     .frame(width: 40.0, height: 40.0)
                 
                 VStack(alignment: .leading) {
-                    Text((contacts.count > 2) ? chat?.name ?? "" : contacts[0].name ?? L10n.General.unknown)
+                    Text((contacts.count > 1) ? chat?.name ?? "" : contacts[0].name ?? L10n.General.unknown)
                         .foregroundColor(Color.white)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                     
