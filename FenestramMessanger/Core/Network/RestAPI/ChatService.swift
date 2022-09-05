@@ -44,8 +44,8 @@ public class ChatService {
             })
         }
     
-    public static func getChats(page: Int, completion: @escaping (Result<BaseResponseEntity<[ChatEntity]>, Error>) -> Void) {
-        sendPaginationRequest(modelType: [ChatEntity].self, requestOptions: .getChats(limit: String(10), page: String(page))) { result in
+    public static func getChats(page: Int, limit: Int = 10, completion: @escaping (Result<BaseResponseEntity<[ChatEntity]>, Error>) -> Void) {
+        sendPaginationRequest(modelType: [ChatEntity].self, requestOptions: .getChats(limit: String(limit), page: String(page))) { result in
             completion(result)
         }
     }

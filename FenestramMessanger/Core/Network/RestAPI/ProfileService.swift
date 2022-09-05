@@ -46,7 +46,7 @@ public class ProfileService {
             "nickname": nickname,
             "email": email,
             "birth": Int(birthdate).description,
-            //"avatar": avatar
+            "avatar": avatar
         ]
         
         if let firebaseToken = Settings.firebaseToken {
@@ -54,12 +54,6 @@ public class ProfileService {
         }
         
         sendRequest(requestOptions: .updateProfile(parameters: parameters)) { result in
-            completion(result)
-        }
-    }
-    
-    public static func getContacts(completion: @escaping (Result<[UserEntity],Error>) -> Void) {
-        sendRequest(modelType: [UserEntity].self, requestOptions: .getContacts) { result in
             completion(result)
         }
     }

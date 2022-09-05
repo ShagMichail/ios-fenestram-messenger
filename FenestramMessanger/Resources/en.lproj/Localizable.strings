@@ -14,6 +14,7 @@
 "general.unknown" = "Unknown";
 "general.loading" = "Loading...";
 "general.close" = "Close";
+"general.error_title" = "Error";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "A list of your chats will be displayed here";
@@ -90,3 +91,16 @@
 "correspondence_view.foto" = "Photo";
 "correspondence_view.image" = "Gallery";
 "correspondence_view.file" = "File";
+
+// MARK: - NewChatView
+"new_chat_view.title" = "New chat";
+"new_chat_view.select_contacts" = "Select chat members";
+"new_chat_view.confirm.name_placeholder" = "Enter a chat name";
+"new_chat_view.confirm.contacts" = "Chat Members";
+
+// MARK: - PageContactView
+"page_contact_view.chat" = "Chat";
+"page_contact_view.files" = "files";
+"page_contact_view.images" = "images";
+"page_contact_view.participants" = "participants";
+"page_contact_view.participants_title" = "Chat participants";

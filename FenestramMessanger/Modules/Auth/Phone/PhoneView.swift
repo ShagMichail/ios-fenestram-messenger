@@ -91,7 +91,7 @@ struct PhoneView: View {
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
                     .background(viewModel.checkPhone() ?
-                                (isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor) : Asset.buttonDis.swiftUIColor)
+                                (isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor) : Asset.buttonDis.swiftUIColor)
                     .cornerRadius(6)
             }
         }

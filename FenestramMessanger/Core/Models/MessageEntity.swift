@@ -19,9 +19,11 @@ public struct MessageEntity: Codable, Identifiable, Equatable {
     public let id: Int
     
     public let fromUserId: Int
+    public let chatId: Int?
     public let message: String
     public let messageType: MessageType
     public let createdAt: Date?
+    public let fromUser: UserEntity?
     
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -29,6 +31,13 @@ public struct MessageEntity: Codable, Identifiable, Equatable {
         self.fromUserId = try values.decode(Int.self, forKey: .fromUserId)
         self.message = try values.decode(String.self, forKey: .message)
         self.messageType = try values.decode(MessageType.self, forKey: .messageType)
+        self.fromUser = try? values.decode(UserEntity.self, forKey: .fromUser)
+        
+        if let chatIdString = try? values.decode(String.self, forKey: .chatId) {
+            self.chatId = Int(chatIdString)
+        } else {
+            self.chatId = nil
+        }
         
         if let createdAtString = try? values.decode(String.self, forKey: .createdAt),
            let createdAt = Date.isoDateFormatter.date(from: createdAtString) {
@@ -41,8 +50,10 @@ public struct MessageEntity: Codable, Identifiable, Equatable {
     enum CodingKeys: String, CodingKey {
         case id
         case fromUserId = "initiator_id"
+        case chatId = "chat_id"
         case message = "text"
         case messageType = "message_type"
         case createdAt = "created_at"
+        case fromUser = "user"
     }
 }

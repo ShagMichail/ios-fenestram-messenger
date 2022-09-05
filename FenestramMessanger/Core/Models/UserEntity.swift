@@ -47,7 +47,7 @@ public struct UserWithTokenEntity: Codable, Identifiable {
     }
 }
 
-public struct UserEntity: Codable, Identifiable {
+public struct UserEntity: Codable, Identifiable, Equatable, Hashable {
     public let id: Int
     
     public let phoneNumber: String
@@ -73,7 +73,8 @@ public struct UserEntity: Codable, Identifiable {
         name == nil ||
         nickname == nil ||
         email == nil ||
-        birthdate == nil
+        birthdate == nil ||
+        avatar == nil
     }
     
     enum CodingKeys: String, CodingKey {

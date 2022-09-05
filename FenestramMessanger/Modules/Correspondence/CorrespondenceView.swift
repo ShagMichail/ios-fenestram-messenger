@@ -23,9 +23,6 @@ struct CorrespondenceView: View {
     @State private var keyboardHeight: CGFloat = 0
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     
-    var contacts: [UserEntity]
-    var chatHistory: ChatEntity?
-    var contactId: Int = 0
     var message: String = ""
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
@@ -42,9 +39,7 @@ struct CorrespondenceView: View {
                                                              .cornerRadius(30)]
     
     init(contacts: [UserEntity], chat: ChatEntity?, socketManager: SocketIOManager?) {
-        self.chatHistory = chat
-        self.contacts = contacts
-        _viewModel = StateObject(wrappedValue: ViewModel(chat: chat, socketManager: socketManager))
+        _viewModel = StateObject(wrappedValue: ViewModel(chat: chat, contacts: contacts, socketManager: socketManager))
         UITextView.appearance().backgroundColor = .clear
     }
 
@@ -58,9 +53,9 @@ struct CorrespondenceView: View {
                 .ignoresSafeArea()
             VStack {
                 VStack {
-                    CorrespondenceNavigationView(contacts: contacts, chat: chatHistory)
+                    CorrespondenceNavigationView(contacts: viewModel.contacts, chat: viewModel.chat)
                     
-                    $viewModel.allMessage.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
+                    viewModel.messagesWithTime.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
 
                     Spacer()
                     if $viewModel.allFoto.count != 0 {
@@ -102,23 +97,31 @@ struct CorrespondenceView: View {
                         .id(-2)
                     }
                     
-                    ForEach(viewModel.allMessage, id: \.id) { message in
-                        HStack(alignment: .bottom, spacing: 15) {
-                            MessageStyleView(isCurrentUser: viewModel.lastMessage(message: message),
-                                             message: message)
-                        }
-                        .id(message.id)
-                        .padding(.all, 15)
-                        .onAppear {
-                            viewModel.loadMoreContent(currentItem: message)
-                        }
+                    ForEach(viewModel.messagesWithTime.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                        Text(viewModel.getSectionHeader(with: key))
+                            .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 12))
+                            .foregroundColor(Asset.grey1.swiftUIColor)
+                            .padding()
                         
+                        ForEach(value, id: \.id) { message in
+                            HStack(alignment: .bottom, spacing: 15) {
+                                MessageStyleView(isCurrentUser: viewModel.lastMessage(message: message),
+                                                 isGroupChat: viewModel.chat?.isGroup ?? false,
+                                                 message: message)
+                            }
+                            .id(message.id)
+                            .padding(.all, 15)
+                            .onAppear {
+                                viewModel.loadMoreContent(currentItem: message)
+                            }
+                        }
                     }
                 }
             }
             .disabled(viewModel.isLoading)
-            .onChange(of: viewModel.allMessage, perform: { newValue in
-                guard let lastMessageId = newValue.last?.id else { return }
+            .onChange(of: viewModel.messagesWithTime, perform: { newValue in
+                guard let key = newValue.keys.max(),
+                      let lastMessageId = newValue[key]?.last?.id else { return }
                 
                 if lastMessageId != viewModel.lastMessageId {
                     viewModel.lastMessageId = lastMessageId
@@ -128,7 +131,9 @@ struct CorrespondenceView: View {
                 }
             })
             .onAppear {
-                guard let lastMessage = viewModel.allMessage.last else { return }
+                guard let key = viewModel.messagesWithTime.keys.max(),
+                      let lastMessage = viewModel.messagesWithTime[key]?.last else { return }
+                
                 proxy.scrollTo(lastMessage.id)
             }
         }
@@ -211,17 +216,17 @@ struct CorrespondenceView: View {
                 Spacer()
                 Button {
                     if !viewModel.textMessage.isEmpty {
-                        if chatHistory == nil {
-                            viewModel.createChat(chatName: contacts[0].name ?? "", usersId: viewModel.getUserEntityIds(contactId: contacts[0].id))
+                        if viewModel.chat == nil {
+                            viewModel.createChat(chatName: viewModel.contacts[0].name ?? "", usersId: viewModel.getUserEntityIds(contactId: viewModel.contacts[0].id))
                         } else {
-                            viewModel.postMessage(chat: chatHistory)
+                            viewModel.postMessage(chat: viewModel.chat)
                         }
                     }
                 } label: {
                     Asset.send.swiftUIImage
                         .resizable()
                         .frame(width: 24.0, height: 24.0)
-                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                        .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                 }.padding(.trailing, 12.0)
                     .padding(.bottom, -5)
             }
@@ -283,7 +288,7 @@ struct CorrespondenceView: View {
                 )
                 .foregroundColor(Asset.buttonAlert.swiftUIColor)
             image.swiftUIImage
-                .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                .foregroundColor((isColorThema == false) ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
         }
     }
 }

@@ -20,7 +20,7 @@ final class ProfileRequestFactory: AbstractRequestFactory {
     public func sendRequest<T>(modelType: T.Type,
                                requestOptions: ProfileRequestRouter,
                                completion: @escaping (Result<T, Error>) -> Void) where T : Codable {
-        self.request(requestOptions).responseDecodable(of: T.self) { response in
+        self.request(requestOptions).response { response in
             guard let statusCode = response.response?.statusCode else {
                 completion(.failure(NetworkError.serverError))
                 return
@@ -45,7 +45,7 @@ final class ProfileRequestFactory: AbstractRequestFactory {
                 }
             case 400...499:
                 guard statusCode != 401 else {
-                    AuthService.refresh { result in
+                    AuthService.refresh { [weak self] result in
                         switch result {
                         case .success(let token):
                             guard let currentUser = Settings.currentUser else {
@@ -54,6 +54,7 @@ final class ProfileRequestFactory: AbstractRequestFactory {
                             }
                             do {
                                 try AuthController.signIn(currentUser, accessToken: token.accessToken, refreshToken: token.refreshToken)
+                                self?.sendRequest(modelType: modelType, requestOptions: requestOptions, completion: completion)
                             }
                             catch {
                                 try? AuthController.signOut()
@@ -85,7 +86,7 @@ final class ProfileRequestFactory: AbstractRequestFactory {
                 completion(.success(true))
             case 400...499:
                 guard statusCode != 401 else {
-                    AuthService.refresh { result in
+                    AuthService.refresh { [weak self] result in
                         switch result {
                         case .success(let token):
                             guard let currentUser = Settings.currentUser else {
@@ -94,6 +95,7 @@ final class ProfileRequestFactory: AbstractRequestFactory {
                             }
                             do {
                                 try AuthController.signIn(currentUser, accessToken: token.accessToken, refreshToken: token.refreshToken)
+                                self?.sendRequest(requestOptions: requestOptions, completion: completion)
                             }
                             catch {
                                 try? AuthController.signOut()

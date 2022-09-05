@@ -20,7 +20,7 @@ final class AuthRequestFactory: AbstractRequestFactory {
     public func sendRequest<T>(modelType: T.Type,
                                requestOptions: AuthRequestRouter,
                                completion: @escaping (Result<T, Error>) -> Void) where T : Codable {
-        self.request(requestOptions).responseDecodable(of: T.self) { response in
+        self.request(requestOptions).response { response in
             guard let statusCode = response.response?.statusCode else {
                 completion(.failure(NetworkError.serverError))
                 return

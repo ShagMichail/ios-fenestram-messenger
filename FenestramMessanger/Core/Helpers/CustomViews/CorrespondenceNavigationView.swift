@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct CorrespondenceNavigationView: View {
     
@@ -21,20 +22,25 @@ struct CorrespondenceNavigationView: View {
     
     var body: some View {
         ZStack {
-            Asset.buttonDis.swiftUIColor.ignoresSafeArea()
+            Asset.buttonDis.swiftUIColor
+                .ignoresSafeArea()
+            
             HStack {
-                btnBack
-                title
+                getBackButton()
+                
+                getTitleView()
+                
                 Spacer()
-                btnBell
-            }.padding(.leading, 15)
-                .padding(.trailing, 15)
+                
+                getBellButton()
+            }
+            .padding(.horizontal, 16)
         }
-        .frame(width: UIScreen.screenWidth, height: 60.0)
+        .frame(height: 60.0)
         
     }
     
-    var btnBack : some View {
+    private func getBackButton() -> some View {
         Button(action: {
             self.presentationMode.wrappedValue.dismiss()
         }) {
@@ -45,29 +51,40 @@ struct CorrespondenceNavigationView: View {
         }
     }
     
-    var title : some View {
+    private func getTitleView() -> some View {
         NavigationLink {
-            PageContactView(contact: contacts, chat: chat).navigationBarHidden(true)
+            PageContactView(contacts: contacts, chat: chat).navigationBarHidden(true)
         } label: {
             HStack {
-                Asset.photo.swiftUIImage
-                    .resizable()
-                    .frame(width: 40.0, height: 40.0)
+                if let avatarString = (chat?.isGroup ?? false) ? chat?.avatar : contacts.first?.avatar,
+                   let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                   !avatarString.isEmpty {
+                    KFImage(url)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 40.0, height: 40.0)
+                        .clipShape(Circle())
+                } else {
+                    Asset.photo.swiftUIImage
+                        .resizable()
+                        .frame(width: 40.0, height: 40.0)
+                }
+                
                 
                 VStack(alignment: .leading) {
-                    Text((contacts.count > 2) ? chat?.name ?? "" : contacts[0].name ?? L10n.General.unknown)
+                    Text((chat?.isGroup ?? false) ? (chat?.name ?? L10n.General.unknown) : (contacts.first?.name ?? L10n.General.unknown))
                         .foregroundColor(Color.white)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                     
                     Text("В сети")
-                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                        .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
                 }
             }
         }
     }
     
-    var btnBell : some View {
+    private func getBellButton() -> some View {
         HStack {
             Button(action: {
                 
@@ -82,7 +99,7 @@ struct CorrespondenceNavigationView: View {
                             )
                             .foregroundColor(Asset.buttonAlert.swiftUIColor)
                         Asset.videoButtonSmall.swiftUIImage
-                            .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                            .foregroundColor((isColorThema == false) ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
                     }
                 }
             }
@@ -100,7 +117,7 @@ struct CorrespondenceNavigationView: View {
                             )
                             .foregroundColor(Asset.buttonAlert.swiftUIColor)
                         Asset.phoneButtonSmall.swiftUIImage
-                            .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                            .foregroundColor((isColorThema == false) ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
                     }
                 }
             }

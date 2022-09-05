@@ -9,7 +9,7 @@ import SwiftUI
 
 extension ChatView {
     @MainActor
-    final class ViewModel: ObservableObject {
+    final class ViewModel: ObservableObject, SocketIOManagerObserver {
         
         
         //MARK: - Properties
@@ -32,6 +32,8 @@ extension ChatView {
         ]
         @Published var recentFile: [File] = []
         
+        @Published var isShowNewChatView: Bool = false
+        
         private var totalPages = 0
         private var page : Int = 1
         
@@ -39,6 +41,7 @@ extension ChatView {
         
         init(socketManager: SocketIOManager?) {
             self.socketManager = socketManager
+            socketManager?.addObserver(self)
             getContacts()
             getChatList()
             fillterFile()
@@ -53,6 +56,12 @@ extension ChatView {
                 page += 1
                 getChatList()
             }
+        }
+        
+        func reset() {
+            page = 1
+            chatList.removeAll()
+            getChatList()
         }
         
         
@@ -88,11 +97,11 @@ extension ChatView {
             
             isLoading = true
             
-            ProfileService.getContacts { [weak self] result in
+            ContactsService.getContacts { [weak self] result in
                 switch result {
                 case .success(let contacts):
                     print("get contacts success")
-                    self?.allContacts = contacts.filter({ $0.id != currentUserId })
+                    self?.allContacts = contacts.compactMap({$0.user}).filter({ $0.id != currentUserId })
                 case .failure(let error):
                     print("get contacts failure with error: ", error.localizedDescription)
                     self?.textTitleAlert = "get contacts failure with error"
@@ -101,6 +110,25 @@ extension ChatView {
                 }
                 self?.isLoading = false
             }
+        }
+        
+        func getContact(with chat: ChatEntity?) -> UserEntity? {
+            guard let userId = Settings.currentUser?.id,
+                  let contactId = chat?.usersId.first(where: { $0 != userId }),
+                  !(chat?.isGroup ?? false) else { return nil }
+            
+            return allContacts.first(where: { $0.id == contactId })
+        }
+        
+        func receiveMessage(_ message: MessageEntity) {
+            guard let chatIndex = self.chatList.firstIndex(where: { $0.id == message.chatId }) else {
+                reset()
+                return
+            }
+            
+            self.chatList[chatIndex].messages = [message]
+            let buffer = chatList.sorted(by: { ($0.messages?.first?.id ?? -1) > ($1.messages?.first?.id ?? -1) })
+            self.chatList = buffer
         }
         
         

@@ -77,6 +77,8 @@ internal enum L10n {
     internal static let close = L10n.tr("Localizable", "general.close")
     /// Готово
     internal static let done = L10n.tr("Localizable", "general.done")
+    /// Произошла ошибка
+    internal static let errorTitle = L10n.tr("Localizable", "general.error_title")
     /// Идет загрузка...
     internal static let loading = L10n.tr("Localizable", "general.loading")
     /// Далее
@@ -94,6 +96,19 @@ internal enum L10n {
     internal static let contacts = L10n.tr("Localizable", "main_tab_view.contacts")
     /// Профиль
     internal static let profile = L10n.tr("Localizable", "main_tab_view.profile")
+  }
+
+  internal enum NewChatView {
+    /// Выберите участников чата
+    internal static let selectContacts = L10n.tr("Localizable", "new_chat_view.select_contacts")
+    /// Создание чата
+    internal static let title = L10n.tr("Localizable", "new_chat_view.title")
+    internal enum Confirm {
+      /// Участники чата
+      internal static let contacts = L10n.tr("Localizable", "new_chat_view.confirm.contacts")
+      /// Введите имя чата
+      internal static let namePlaceholder = L10n.tr("Localizable", "new_chat_view.confirm.name_placeholder")
+    }
   }
 
   internal enum NewContactView {
@@ -132,6 +147,19 @@ internal enum L10n {
     internal static let secondDescription = L10n.tr("Localizable", "onboarding_view.second_description")
     /// С другой стороны укрепление и развитие структуры играет важную роль в формировании существенных финансовых и административных условий.
     internal static let thirdDescription = L10n.tr("Localizable", "onboarding_view.third_description")
+  }
+
+  internal enum PageContactView {
+    /// Чат
+    internal static let chat = L10n.tr("Localizable", "page_contact_view.chat")
+    /// файлов
+    internal static let files = L10n.tr("Localizable", "page_contact_view.files")
+    /// изображений
+    internal static let images = L10n.tr("Localizable", "page_contact_view.images")
+    /// участников
+    internal static let participants = L10n.tr("Localizable", "page_contact_view.participants")
+    /// Участники чата
+    internal static let participantsTitle = L10n.tr("Localizable", "page_contact_view.participants_title")
   }
 
   internal enum PhoneView {

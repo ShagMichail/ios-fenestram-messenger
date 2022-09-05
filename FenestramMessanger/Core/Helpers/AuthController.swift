@@ -35,12 +35,44 @@ public final class AuthController {
         
         Settings.currentUser = user
         
-        NotificationCenter.default.post(name: .loginStatusChanged, object: nil)
+        if let firebaseToken = Settings.firebaseToken {
+            AuthService.setFirebaseToken(firebaseToken: firebaseToken) { result in
+                switch result {
+                case .success:
+                    print("set firebase token success")
+                case .failure(let error):
+                    print("set firebase token failure with error: ", error.localizedDescription)
+                }
+            }
+        }
+        
+        ContactsService.postContacts(contacts: PhoneBookEntity.generateModelArray()) { result in
+            switch result {
+            case .success:
+                print("post contacts success")
+            case .failure(let error):
+                print("post contacts failure with error: ", error.localizedDescription)
+            }
+            
+            NotificationCenter.default.post(name: .loginStatusChanged, object: nil)
+        }
     }
     
     public class func signOut() throws {
         guard let currentUser = Settings.currentUser else {
             return
+        }
+        
+        if let firebaseToken = Settings.firebaseToken {
+            AuthService.deleteFirebaseToken(firebaseToken: firebaseToken) { result in
+                switch result {
+                case .success:
+                    print("delete firebase token success")
+                    Settings.firebaseToken = nil
+                case .failure(let error):
+                    print("delete firebase token failure with error: ", error.localizedDescription)
+                }
+            }
         }
         
         try KeychainPasswordItem(service: serviceTokenName, account: currentUser.phoneNumber).deleteItem()
