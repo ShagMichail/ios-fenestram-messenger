@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import Kingfisher
 
 struct ProfileView: View {
     
@@ -119,11 +120,28 @@ struct ProfileView: View {
     }
     
     private func getImage() -> some View {
-        ZStack (alignment: .trailing){
-            Image(uiImage: viewModel.image ?? Asset.photo.image)
-                .resizable()
-                .frame(width: 120, height: 120)
-                .clipShape(Circle())
+        ZStack (alignment: .trailing) {
+            if let setImage = viewModel.image {
+                Image(uiImage: setImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 120, height: 120)
+                    .clipShape(Circle())
+            } else if let avatarString = viewModel.profile?.avatar,
+                      let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                      !avatarString.isEmpty {
+                KFImage(url)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 120, height: 120)
+                    .clipShape(Circle())
+            } else {
+                Image(uiImage: Asset.photo.image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 120, height: 120)
+                    .clipShape(Circle())
+            }
             
             if viewModel.editProfile {
                 Button(action: {

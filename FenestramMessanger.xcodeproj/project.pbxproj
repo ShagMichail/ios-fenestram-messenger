@@ -37,6 +37,10 @@
 		BD785F4928C205550075BC89 /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD785F4828C205550075BC89 /* ContactsService.swift */; };
 		BD785F4B28C2123D0075BC89 /* ContactEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD785F4A28C2123D0075BC89 /* ContactEntity.swift */; };
 		BD785F4E28C61D080075BC89 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = BD785F4D28C61D080075BC89 /* Kingfisher */; };
+		BD785F5028C6455E0075BC89 /* FilesRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD785F4F28C6455E0075BC89 /* FilesRequestRouter.swift */; };
+		BD785F5228C6499F0075BC89 /* FilesRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD785F5128C6499F0075BC89 /* FilesRequestFactory.swift */; };
+		BD785F5428C64DD60075BC89 /* FileEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD785F5328C64DD60075BC89 /* FileEntity.swift */; };
+		BD785F5628C64E980075BC89 /* FilesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD785F5528C64E980075BC89 /* FilesService.swift */; };
 		BD980FB528816F940050F8B4 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980FB428816F940050F8B4 /* UIApplication+Extensions.swift */; };
 		BD980FB7288170B20050F8B4 /* Publishers+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980FB6288170B20050F8B4 /* Publishers+Extensions.swift */; };
 		BD980FB9288170CC0050F8B4 /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980FB8288170CC0050F8B4 /* Notification+Extensions.swift */; };
@@ -177,6 +181,10 @@
 		BD785F4628C204F60075BC89 /* ContactsRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsRequestFactory.swift; sourceTree = "<group>"; };
 		BD785F4828C205550075BC89 /* ContactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsService.swift; sourceTree = "<group>"; };
 		BD785F4A28C2123D0075BC89 /* ContactEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactEntity.swift; sourceTree = "<group>"; };
+		BD785F4F28C6455E0075BC89 /* FilesRequestRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesRequestRouter.swift; sourceTree = "<group>"; };
+		BD785F5128C6499F0075BC89 /* FilesRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesRequestFactory.swift; sourceTree = "<group>"; };
+		BD785F5328C64DD60075BC89 /* FileEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileEntity.swift; sourceTree = "<group>"; };
+		BD785F5528C64E980075BC89 /* FilesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesService.swift; sourceTree = "<group>"; };
 		BD980FB428816F940050F8B4 /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
 		BD980FB6288170B20050F8B4 /* Publishers+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishers+Extensions.swift"; sourceTree = "<group>"; };
 		BD980FB8288170CC0050F8B4 /* Notification+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extensions.swift"; sourceTree = "<group>"; };
@@ -411,6 +419,7 @@
 				BDF2E2E1287F1CC400B7E182 /* ProfileService.swift */,
 				BDF2E2E7287F225F00B7E182 /* ChatService.swift */,
 				BD785F4828C205550075BC89 /* ContactsService.swift */,
+				BD785F5528C64E980075BC89 /* FilesService.swift */,
 			);
 			path = RestAPI;
 			sourceTree = "<group>";
@@ -558,6 +567,7 @@
 				BDF2E2C1287F1B1200B7E182 /* ProfileRequestRouter.swift */,
 				BDF2E2E3287F207000B7E182 /* ChatRequestRouter.swift */,
 				BD785F4428C203760075BC89 /* ContactsRequestRouter.swift */,
+				BD785F4F28C6455E0075BC89 /* FilesRequestRouter.swift */,
 			);
 			path = RequestRouter;
 			sourceTree = "<group>";
@@ -571,6 +581,7 @@
 				BDF2E2DC287F1C0600B7E182 /* ProfileRequestFactory.swift */,
 				BDF2E2E5287F217D00B7E182 /* ChatRequestFactory.swift */,
 				BD785F4628C204F60075BC89 /* ContactsRequestFactory.swift */,
+				BD785F5128C6499F0075BC89 /* FilesRequestFactory.swift */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -585,6 +596,7 @@
 				FC3A2B4F28917348006E0948 /* PhotoEntity.swift */,
 				BD785F4228C202640075BC89 /* PhoneBookEntity.swift */,
 				BD785F4A28C2123D0075BC89 /* ContactEntity.swift */,
+				BD785F5328C64DD60075BC89 /* FileEntity.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -975,6 +987,8 @@
 				BD7783AA2872EBB50023032D /* FenestramMessangerApp.swift in Sources */,
 				FC1778D828774BA300B0D979 /* CorrespondenceView.swift in Sources */,
 				BDE74B9828801E7900F4A775 /* Assets.swift in Sources */,
+				BD785F5028C6455E0075BC89 /* FilesRequestRouter.swift in Sources */,
+				BD785F5628C64E980075BC89 /* FilesService.swift in Sources */,
 				BD980FB7288170B20050F8B4 /* Publishers+Extensions.swift in Sources */,
 				FC3A2B43289032ED006E0948 /* MessageStyleView.swift in Sources */,
 				FC1778902875A1B900B0D979 /* UIScreen+Extensions.swift in Sources */,
@@ -984,6 +998,7 @@
 				FCF5A43B287DB5170028FBD3 /* OnboardingContainerView.swift in Sources */,
 				FC7A57122891991B00ABF7BF /* PageContactViewModel.swift in Sources */,
 				BDDB5ADF2872ECBC002BF418 /* MainView.swift in Sources */,
+				BD785F5228C6499F0075BC89 /* FilesRequestFactory.swift in Sources */,
 				FC13AF45287EE78B00784E35 /* ChatViewModel.swift in Sources */,
 				FC3A2B522891743E006E0948 /* FileView.swift in Sources */,
 				FC13AF42287ECEE100784E35 /* NewContactViewModel.swift in Sources */,
@@ -1018,6 +1033,7 @@
 				BD785F4928C205550075BC89 /* ContactsService.swift in Sources */,
 				BDF2E2EA287F26E300B7E182 /* ChatEntity.swift in Sources */,
 				BDF2E2D4287F1B1200B7E182 /* RequestFactory.swift in Sources */,
+				BD785F5428C64DD60075BC89 /* FileEntity.swift in Sources */,
 				BDF2E2D3287F1B1200B7E182 /* AbstractRequestFactory.swift in Sources */,
 				BDF2E2E6287F217D00B7E182 /* ChatRequestFactory.swift in Sources */,
 				BDF2E2D5287F1B1200B7E182 /* AuthRequestFactory.swift in Sources */,

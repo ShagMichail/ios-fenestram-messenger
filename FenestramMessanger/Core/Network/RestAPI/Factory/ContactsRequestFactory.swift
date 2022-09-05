@@ -45,7 +45,7 @@ final class ContactsRequestFactory: AbstractRequestFactory {
                 }
             case 400...499:
                 guard statusCode != 401 else {
-                    AuthService.refresh { result in
+                    AuthService.refresh { [weak self] result in
                         switch result {
                         case .success(let token):
                             guard let currentUser = Settings.currentUser else {
@@ -54,6 +54,7 @@ final class ContactsRequestFactory: AbstractRequestFactory {
                             }
                             do {
                                 try AuthController.signIn(currentUser, accessToken: token.accessToken, refreshToken: token.refreshToken)
+                                self?.sendRequest(modelType: modelType, requestOptions: requestOptions, completion: completion)
                             }
                             catch {
                                 try? AuthController.signOut()
@@ -85,7 +86,7 @@ final class ContactsRequestFactory: AbstractRequestFactory {
                 completion(.success(true))
             case 400...499:
                 guard statusCode != 401 else {
-                    AuthService.refresh { result in
+                    AuthService.refresh { [weak self] result in
                         switch result {
                         case .success(let token):
                             guard let currentUser = Settings.currentUser else {
@@ -94,6 +95,7 @@ final class ContactsRequestFactory: AbstractRequestFactory {
                             }
                             do {
                                 try AuthController.signIn(currentUser, accessToken: token.accessToken, refreshToken: token.refreshToken)
+                                self?.sendRequest(requestOptions: requestOptions, completion: completion)
                             }
                             catch {
                                 try? AuthController.signOut()

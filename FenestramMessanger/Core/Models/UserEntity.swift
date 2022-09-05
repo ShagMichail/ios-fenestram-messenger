@@ -73,7 +73,8 @@ public struct UserEntity: Codable, Identifiable, Equatable, Hashable {
         name == nil ||
         nickname == nil ||
         email == nil ||
-        birthdate == nil
+        birthdate == nil ||
+        avatar == nil
     }
     
     enum CodingKeys: String, CodingKey {

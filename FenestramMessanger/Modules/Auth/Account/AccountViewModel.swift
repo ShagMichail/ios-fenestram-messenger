@@ -54,52 +54,103 @@ extension AccountView {
                 return
             }
             
-            ProfileService.updateProfile(name: name, nickname: nicName, email: textEmail, birthdate: birthdateTimeInterval, avatar: "") { [weak self] result in
-                guard let self = self else {
-                    print("self doesn't exist")
-                    return
-                }
+            guard let avatar = image else {
+                print("avatar is empty!")
+                self.textTitleAlert = " "
+                self.textAlert = "avatar is empty!"
+                self.presentAlert = true
+                return
+            }
+            
+            uploadFile(image: avatar) { [weak self] avatarURL in
+                guard let self = self else { return }
                 
-                switch result {
-                case .success:
-                    guard var userWithInfo = Settings.currentUser else {
-                        print("user doesn't exist")
-                        self.textTitleAlert = " "
-                        self.textAlert = "user doesn't exist"
-                        self.presentAlert = true
+                ProfileService.updateProfile(name: self.name, nickname: self.nicName, email: self.textEmail, birthdate: birthdateTimeInterval, avatar: avatarURL) { [weak self] result in
+                    guard let self = self else {
+                        print("self doesn't exist")
                         return
                     }
                     
-                    userWithInfo.name = self.name
-                    userWithInfo.nickname = self.nicName
-                    userWithInfo.email = self.textEmail
-                    userWithInfo.birthdate = birthdateTimeInterval.description
-                    
-                    guard let accessToken = try? AuthController.getToken(),
-                          let refreshToken = try? AuthController.getRefreshToken() else {
-                        print("Can't take token")
-                        self.textTitleAlert = " "
-                        self.textAlert = "Can't take token"
-                        self.presentAlert = true
-                        return
-                    }
-                    
-                    do {
-                        try AuthController.signIn(userWithInfo, accessToken: accessToken, refreshToken: refreshToken)
-                        print("update profile success")
-                        self.isAlreadySetProfile = true
-                    }
-                    catch let error {
+                    switch result {
+                    case .success:
+                        guard var userWithInfo = Settings.currentUser else {
+                            print("user doesn't exist")
+                            self.textTitleAlert = " "
+                            self.textAlert = "user doesn't exist"
+                            self.presentAlert = true
+                            return
+                        }
+                        
+                        userWithInfo.name = self.name
+                        userWithInfo.nickname = self.nicName
+                        userWithInfo.email = self.textEmail
+                        userWithInfo.birthdate = birthdateTimeInterval.description
+                        userWithInfo.avatar = avatarURL
+                        
+                        guard let accessToken = try? AuthController.getToken(),
+                              let refreshToken = try? AuthController.getRefreshToken() else {
+                            print("Can't take token")
+                            self.textTitleAlert = " "
+                            self.textAlert = "Can't take token"
+                            self.presentAlert = true
+                            return
+                        }
+                        
+                        do {
+                            try AuthController.signIn(userWithInfo, accessToken: accessToken, refreshToken: refreshToken)
+                            print("update profile success")
+                            self.isAlreadySetProfile = true
+                        }
+                        catch let error {
+                            print("update profile failure with error: ", error.localizedDescription)
+                            self.textTitleAlert = "update profile failure with error"
+                            self.textAlert = error.localizedDescription
+                            self.presentAlert = true
+                        }
+                    case .failure(let error):
                         print("update profile failure with error: ", error.localizedDescription)
                         self.textTitleAlert = "update profile failure with error"
                         self.textAlert = error.localizedDescription
                         self.presentAlert = true
                     }
+                }
+            }
+        }
+        
+        private func uploadFile(image: UIImage, success: @escaping (String) -> ()) {
+            if let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
+               let jpegData = image.jpegData(compressionQuality: 1.0) {
+                
+                let fileName = "new_chat_avatar.jpeg"
+                let url = documents.appendingPathComponent(fileName)
+                
+                do {
+                    try jpegData.write(to: url)
+                    upload(imagePathURL: url, success: success)
+                }
+                catch let error {
+                    print("error: ", error.localizedDescription)
+                }
+            }
+        }
+        
+        private func upload(imagePathURL: URL, success: @escaping (String) -> ()) {
+            FilesService.upload(imageURL: imagePathURL) { result in
+                switch result {
+                case .success(let fileData):
+                    print("JSON: ", fileData)
+                    
+                    success(fileData.pathToFile)
+                    
+                    do {
+                        try FileManager.default.removeItem(at: imagePathURL)
+                    }
+                    catch let error {
+                        print("error: ", error.localizedDescription)
+                    }
+                    
                 case .failure(let error):
-                    print("update profile failure with error: ", error.localizedDescription)
-                    self.textTitleAlert = "update profile failure with error"
-                    self.textAlert = error.localizedDescription
-                    self.presentAlert = true
+                    print("error: ", error.localizedDescription)
                 }
             }
         }
