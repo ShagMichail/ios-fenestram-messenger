@@ -12,6 +12,8 @@ public class AuthService {
     private static let factory = RequestFactory()
     private static var authFactory: AuthRequestFactory?
     
+    private static var alreadyRefresh: Bool = false
+    
     private init() {
     }
     
@@ -55,11 +57,17 @@ public class AuthService {
     }
     
     public static func refresh(completion: @escaping (Result<TokenEntity, Error>) -> Void) {
+        if alreadyRefresh {
+            return
+        }
+        
         guard let accessToken = try? AuthController.getToken(),
               let refreshToken = try? AuthController.getRefreshToken() else {
             completion(.failure(NetworkError.sessionTimedOut))
             return
         }
+        
+        alreadyRefresh = true
         
         let parameters = [
             "access_token": accessToken,
@@ -68,6 +76,7 @@ public class AuthService {
         
         sendRequest(modelType: TokenEntity.self, requestOptions: .login(parameters: parameters)) { result in
             completion(result)
+            alreadyRefresh = false
         }
     }
     

@@ -112,6 +112,14 @@ extension ChatView {
             }
         }
         
+        func getContact(with chat: ChatEntity?) -> UserEntity? {
+            guard let userId = Settings.currentUser?.id,
+                  let contactId = chat?.usersId.first(where: { $0 != userId }),
+                  !(chat?.isGroup ?? false) else { return nil }
+            
+            return allContacts.first(where: { $0.id == contactId })
+        }
+        
         func receiveMessage(_ message: MessageEntity) {
             guard let chatIndex = self.chatList.firstIndex(where: { $0.id == message.chatId }) else {
                 reset()

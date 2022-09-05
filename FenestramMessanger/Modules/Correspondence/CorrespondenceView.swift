@@ -106,6 +106,7 @@ struct CorrespondenceView: View {
                         ForEach(value, id: \.id) { message in
                             HStack(alignment: .bottom, spacing: 15) {
                                 MessageStyleView(isCurrentUser: viewModel.lastMessage(message: message),
+                                                 isGroupChat: viewModel.chat?.isGroup ?? false,
                                                  message: message)
                             }
                             .id(message.id)

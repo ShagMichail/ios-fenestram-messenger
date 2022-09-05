@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct CorrespondenceNavigationView: View {
     
@@ -21,20 +22,25 @@ struct CorrespondenceNavigationView: View {
     
     var body: some View {
         ZStack {
-            Asset.buttonDis.swiftUIColor.ignoresSafeArea()
+            Asset.buttonDis.swiftUIColor
+                .ignoresSafeArea()
+            
             HStack {
-                btnBack
-                title
+                getBackButton()
+                
+                getTitleView()
+                
                 Spacer()
-                btnBell
-            }.padding(.leading, 15)
-                .padding(.trailing, 15)
+                
+                getBellButton()
+            }
+            .padding(.horizontal, 16)
         }
-        .frame(width: UIScreen.screenWidth, height: 60.0)
+        .frame(height: 60.0)
         
     }
     
-    var btnBack : some View {
+    private func getBackButton() -> some View {
         Button(action: {
             self.presentationMode.wrappedValue.dismiss()
         }) {
@@ -45,14 +51,25 @@ struct CorrespondenceNavigationView: View {
         }
     }
     
-    var title : some View {
+    private func getTitleView() -> some View {
         NavigationLink {
             PageContactView(contacts: contacts, chat: chat).navigationBarHidden(true)
         } label: {
             HStack {
-                Asset.photo.swiftUIImage
-                    .resizable()
-                    .frame(width: 40.0, height: 40.0)
+                if let avatarString = (chat?.isGroup ?? false) ? chat?.avatar : contacts.first?.avatar,
+                   let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                   !avatarString.isEmpty {
+                    KFImage(url)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 40.0, height: 40.0)
+                        .clipShape(Circle())
+                } else {
+                    Asset.photo.swiftUIImage
+                        .resizable()
+                        .frame(width: 40.0, height: 40.0)
+                }
+                
                 
                 VStack(alignment: .leading) {
                     Text((chat?.isGroup ?? false) ? (chat?.name ?? L10n.General.unknown) : (contacts.first?.name ?? L10n.General.unknown))
@@ -67,7 +84,7 @@ struct CorrespondenceNavigationView: View {
         }
     }
     
-    var btnBell : some View {
+    private func getBellButton() -> some View {
         HStack {
             Button(action: {
                 

@@ -36,6 +36,7 @@
 		BD785F4728C204F60075BC89 /* ContactsRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD785F4628C204F60075BC89 /* ContactsRequestFactory.swift */; };
 		BD785F4928C205550075BC89 /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD785F4828C205550075BC89 /* ContactsService.swift */; };
 		BD785F4B28C2123D0075BC89 /* ContactEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD785F4A28C2123D0075BC89 /* ContactEntity.swift */; };
+		BD785F4E28C61D080075BC89 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = BD785F4D28C61D080075BC89 /* Kingfisher */; };
 		BD980FB528816F940050F8B4 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980FB428816F940050F8B4 /* UIApplication+Extensions.swift */; };
 		BD980FB7288170B20050F8B4 /* Publishers+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980FB6288170B20050F8B4 /* Publishers+Extensions.swift */; };
 		BD980FB9288170CC0050F8B4 /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980FB8288170CC0050F8B4 /* Notification+Extensions.swift */; };
@@ -288,6 +289,7 @@
 			files = (
 				FCEE88292874409B00268971 /* iPhoneNumberField in Frameworks */,
 				FCD3059D2886ADCB00491220 /* BottomSheet in Frameworks */,
+				BD785F4E28C61D080075BC89 /* Kingfisher in Frameworks */,
 				FC17786C2875831700B0D979 /* Introspect in Frameworks */,
 				6D3B8991ABEEC255BD8A2A57 /* Pods_FenestramMessanger.framework in Frameworks */,
 				BD980FBD288176280050F8B4 /* SocketIO in Frameworks */,
@@ -800,6 +802,7 @@
 				BDF2E2DF287F1C1C00B7E182 /* Alamofire */,
 				BD980FBC288176280050F8B4 /* SocketIO */,
 				FCD3059C2886ADCB00491220 /* BottomSheet */,
+				BD785F4D28C61D080075BC89 /* Kingfisher */,
 			);
 			productName = FenestramMessanger;
 			productReference = BD7783A62872EBB50023032D /* FenestramMessanger.app */;
@@ -837,6 +840,7 @@
 				BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket" */,
 				FCD3059B2886ADCA00491220 /* XCRemoteSwiftPackageReference "BottomSheet" */,
+				BD785F4C28C61D080075BC89 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = BD7783A72872EBB50023032D /* Products */;
 			projectDirPath = "";
@@ -1281,6 +1285,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		BD785F4C28C61D080075BC89 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
@@ -1324,6 +1336,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BD785F4D28C61D080075BC89 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BD785F4C28C61D080075BC89 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		BD980FBC288176280050F8B4 /* SocketIO */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket" */;

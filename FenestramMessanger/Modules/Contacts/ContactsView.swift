@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ContactsView: View {
     
@@ -152,11 +153,23 @@ struct ContactsView: View {
         NavigationLink() {
             CorrespondenceView(contacts: [contact], chat: nil, socketManager: viewModel.socketManager).navigationBarHidden(true)
         } label: {
-            HStack() {
-                Asset.photo.swiftUIImage
-                    .resizable()
-                    .frame(width: 40.0, height: 40.0)
-                    .padding(.horizontal)
+            HStack {
+                VStack {
+                    if let avatarString = contact.avatar,
+                       let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                       !avatarString.isEmpty {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 40.0, height: 40.0)
+                            .clipShape(Circle())
+                    } else {
+                        Asset.photo.swiftUIImage
+                            .resizable()
+                            .frame(width: 40.0, height: 40.0)
+                    }
+                }
+                .padding(.horizontal)
                 
                 Text(contact.name ?? L10n.General.unknown)
                     .foregroundColor(.white)

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import BottomSheet
+import Kingfisher
 
 enum BookBottomSheetPosition: CGFloat, CaseIterable {
     case middle = 450, bottom = 300, hidden = 0
@@ -23,7 +24,6 @@ struct ChatView: View {
     @State var flag = false
     @State var chatUser: ChatEntity?
     @State var correspondence = false
-    @State var contacts: [UserEntity] = []
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
@@ -163,17 +163,30 @@ struct ChatView: View {
                 bottomSheetPosition = .bottom
                 chatUser = chat
             } label: {
-                Asset.photo.swiftUIImage
-                    .resizable()
-                    .frame(width: 40.0, height: 40.0)
-                    .padding(.horizontal)
+                VStack {
+                    if let avatarString = chat.isGroup ? chat.avatar : viewModel.getContact(with: chat)?.avatar,
+                       let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                       !avatarString.isEmpty {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 40.0, height: 40.0)
+                            .clipShape(Circle())
+                    } else {
+                        Asset.photo.swiftUIImage
+                            .resizable()
+                            .frame(width: 40.0, height: 40.0)
+                    }
+                }
+                .padding(.horizontal)
             }
+            
             NavigationLink {
                 CorrespondenceView(contacts: viewModel.getUserEntity(from: chat), chat: chat, socketManager: viewModel.socketManager)
                 
             } label: {
                 VStack(alignment: .leading) {
-                    Text(chat.name)
+                    Text(chat.isGroup ? chat.name : viewModel.getContact(with: chat)?.name ?? L10n.General.unknown)
                         .foregroundColor(.white)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                     Text(lastMessage(chat: chat))
@@ -197,7 +210,6 @@ struct ChatView: View {
                     })
                     .padding(.trailing, 0.0)
                     .disabled(true)
-                    
                 }
             }
         }.padding(.horizontal)
@@ -206,10 +218,22 @@ struct ChatView: View {
     private func getHeaderBottomSheet() -> some View {
         VStack {
             HStack {
-                Asset.photo.swiftUIImage
-                    .resizable()
-                    .frame(width: 80.0, height: 80.0)
-                    .padding(.horizontal)
+                VStack {
+                    if let avatarString = (chatUser?.isGroup ?? false) ? chatUser?.avatar : viewModel.getContact(with: chatUser)?.avatar,
+                       let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                       !avatarString.isEmpty {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 80.0, height: 80.0)
+                            .clipShape(Circle())
+                    } else {
+                        Asset.photo.swiftUIImage
+                            .resizable()
+                            .frame(width: 80.0, height: 80.0)
+                    }
+                }
+                .padding(.horizontal)
                 
                 VStack(alignment: .leading) {
                     Text(((chatUser?.usersId.count ?? 2 > 2) ? chatUser?.name : viewModel.getUserEntity(from: chatUser).first?.name) ?? "")

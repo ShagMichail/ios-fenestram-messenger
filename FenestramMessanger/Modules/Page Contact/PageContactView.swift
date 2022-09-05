@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PageContactView: View {
     
@@ -41,6 +42,7 @@ struct PageContactView: View {
                 VStack {
                     Spacer()
                         .frame(height: 24)
+                    
                     getNameAndPhoto()
                     
                     Spacer().frame(height: 30.0)
@@ -78,18 +80,37 @@ struct PageContactView: View {
     
     //MARK: - Views
     
+    private func getPhoto() -> some View {
+        VStack {
+            if let avatarString = (chat?.isGroup ?? false) ? chat?.avatar : contacts.first?.avatar,
+               let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+               !avatarString.isEmpty {
+                KFImage(url)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 80.0, height: 80.0)
+                    .clipShape(Circle())
+            } else {
+                Asset.photo.swiftUIImage
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 80.0, height: 80.0)
+                    .clipShape(Circle())
+            }
+        }
+        .padding(.trailing)
+    }
+    
     private func getNameAndPhoto() -> some View {
         HStack {
-            Asset.photo.swiftUIImage
-                .resizable()
-                .frame(width: 80.0, height: 80.0)
-                .padding(.trailing)
+            getPhoto()
+                
             VStack(alignment: .leading) {
                 Text((chat?.isGroup ?? false) ? (chat?.name ?? L10n.General.unknown) : (contacts.first?.name ?? L10n.General.unknown))
                     .foregroundColor(.white)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                 if chat?.isGroup ?? false {
-                    Text("\(L10n.PageContactView.chat) - \(contacts.count) \(L10n.PageContactView.participants)")
+                    Text("\(L10n.PageContactView.chat) - \(contacts.count + 1) \(L10n.PageContactView.participants)")
                         .font(FontFamily.Poppins.medium.swiftUIFont(size: 14))
                         .foregroundColor(Asset.grey2.swiftUIColor)
                 } else {
@@ -155,11 +176,23 @@ struct PageContactView: View {
             
             ForEach(contacts) { contact in
                 HStack {
-                    Asset.photo.swiftUIImage
-                        .resizable()
-                        .frame(width: 32, height: 32)
-                        .padding(.trailing, 8)
-                        
+                    VStack {
+                        if let avatarString = contact.avatar,
+                           let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                           !avatarString.isEmpty {
+                            KFImage(url)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 32, height: 32)
+                                .clipShape(Circle())
+                        } else {
+                            Asset.photo.swiftUIImage
+                                .resizable()
+                                .frame(width: 32, height: 32)
+                        }
+                    }
+                    .padding(.trailing, 8)
+ 
                     Text(contact.name ?? L10n.General.unknown)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                         .foregroundColor(.white)
