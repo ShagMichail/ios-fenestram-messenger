@@ -61,6 +61,7 @@ internal enum Asset {
   internal static let file = ImageAsset(name: "file")
   internal static let fileText = ColorAsset(name: "fileText")
   internal static let fileWhite = ImageAsset(name: "fileWhite")
+  internal static let greenTick = ImageAsset(name: "green_tick")
   internal static let helloMessage = ImageAsset(name: "helloMessage")
   internal static let message = ColorAsset(name: "message")
   internal static let messageIcon = ImageAsset(name: "messageIcon")

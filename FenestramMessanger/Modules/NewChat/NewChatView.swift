@@ -121,7 +121,12 @@ struct NewChatView: View {
                                 Spacer()
                                 
                                 if viewModel.isSelectedContact(contact) {
-                                    Asset.blueTick.swiftUIImage
+                                    if isColorThema == false {
+                                        Asset.blueTick.swiftUIImage
+                                    } else {
+                                        Asset.greenTick.swiftUIImage
+                                    }
+                                    
                                 }
                             }
                             .padding()

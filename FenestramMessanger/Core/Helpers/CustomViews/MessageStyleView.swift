@@ -22,7 +22,7 @@ struct MessageStyleView: View {
                     .foregroundColor(.white)
                     .padding(10)
                     .foregroundColor(Color.white)
-                    .background(Asset.blue1.swiftUIColor)
+                    .background(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
                     .cornerRadius(10)
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 
