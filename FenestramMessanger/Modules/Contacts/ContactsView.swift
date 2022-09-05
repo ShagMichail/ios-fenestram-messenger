@@ -108,24 +108,25 @@ struct ContactsView: View {
     
     private func getContentView() -> some View {
         ZStack {
-            VStack (alignment: .trailing) {
+            VStack(alignment: .trailing) {
                 ScrollView(showsIndicators: false) {
-                    if viewModel.filteredContacts.count > 0 {
-                        ForEach(viewModel.filteredContacts) { contact in
-                            getContactsRow(contact: contact)
+                    LazyVStack {
+                        if viewModel.filteredContacts.count > 0 {
+                            ForEach(viewModel.filteredContacts) { contact in
+                                getContactsRow(contact: contact)
+                            }
+                        } else {
+                            HStack {
+                                Text(L10n.ContactView.contactDontExist)
+                                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
+                                    .foregroundColor(Color.white)
+                                    .padding(.horizontal)
+                            }.frame(width: UIScreen.screenWidth)
                         }
-                    } else {
-                        HStack {
-                            Text(L10n.ContactView.contactDontExist)
-                                .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
-                                .foregroundColor(Color.white)
-                                .padding(.horizontal)
-                        }.frame(width: UIScreen.screenWidth)
                     }
                 }
                 .padding(.bottom, -85)
                 getButtonNewContact()
-                
             }
         }
     }
@@ -149,7 +150,7 @@ struct ContactsView: View {
     
     private func getContactsRow(contact: UserEntity) -> some View {
         NavigationLink() {
-            CorrespondenceView(contacts: [contact], chat: viewModel.filterChat(contact: contact), socketManager: viewModel.socketManager).navigationBarHidden(true)
+            CorrespondenceView(contacts: [contact], chat: nil, socketManager: viewModel.socketManager).navigationBarHidden(true)
         } label: {
             HStack() {
                 Asset.photo.swiftUIImage
@@ -162,12 +163,6 @@ struct ContactsView: View {
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
                 
                 Spacer()
-                
-                if viewModel.filterHaveChat(contact: contact) {
-                    Asset.chat.swiftUIImage
-                        .padding(.horizontal)
-                }
-                
             }.padding(.horizontal)
         }
     }

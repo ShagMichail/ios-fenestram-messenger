@@ -55,6 +55,7 @@ internal enum Asset {
   internal static let chatPlaceholderIcon = ImageAsset(name: "chat_placeholder_icon")
   internal static let defaultImage = ImageAsset(name: "defaultImage")
   internal static let doneButtonIcon = ImageAsset(name: "done_button_icon")
+  internal static let dotsHorizontalIcon = ImageAsset(name: "dots_horizontal_icon")
   internal static let edit = ImageAsset(name: "edit")
   internal static let file = ImageAsset(name: "file")
   internal static let fileText = ColorAsset(name: "fileText")

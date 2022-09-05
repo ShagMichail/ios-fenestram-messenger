@@ -53,11 +53,11 @@ extension NewChatView {
             
             isLoading = true
             
-            ProfileService.getContacts { [weak self] result in
+            ContactsService.getContacts { [weak self] result in
                 switch result {
                 case .success(let contacts):
                     print("get contacts success")
-                    self?.allContacts = contacts.filter({ $0.id != currentUserId })
+                    self?.allContacts = contacts.compactMap({$0.user}).filter({ $0.id != currentUserId })
                 case .failure(let error):
                     print("get contacts failure with error: ", error.localizedDescription)
                     self?.textTitleAlert = "get contacts failure with error"

@@ -20,7 +20,7 @@ final class ChatRequestFactory: AbstractRequestFactory {
     public func sendRequest<T>(modelType: T.Type,
                                requestOptions: ChatRequestRouter,
                                completion: @escaping (Result<T, Error>) -> Void) where T : Codable {
-        self.request(requestOptions).responseDecodable(of: BaseResponseEntity<T>.self) { response in
+        self.request(requestOptions).response { response in
             guard let statusCode = response.response?.statusCode else {
                 completion(.failure(NetworkError.serverError))
                 return
@@ -76,7 +76,7 @@ final class ChatRequestFactory: AbstractRequestFactory {
     public func sendPaginationRequest<T>(modelType: T.Type,
                                requestOptions: ChatRequestRouter,
                                completion: @escaping (Result<BaseResponseEntity<T>, Error>) -> Void) where T : Codable {
-        self.request(requestOptions).responseDecodable(of: BaseResponseEntity<T>.self) { response in
+        self.request(requestOptions).response { response in
             guard let statusCode = response.response?.statusCode else {
                 completion(.failure(NetworkError.serverError))
                 return

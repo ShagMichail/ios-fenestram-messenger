@@ -47,7 +47,7 @@ struct CorrespondenceNavigationView: View {
     
     var title : some View {
         NavigationLink {
-            PageContactView(contact: contacts, chat: chat).navigationBarHidden(true)
+            PageContactView(contacts: contacts, chat: chat).navigationBarHidden(true)
         } label: {
             HStack {
                 Asset.photo.swiftUIImage
@@ -55,7 +55,7 @@ struct CorrespondenceNavigationView: View {
                     .frame(width: 40.0, height: 40.0)
                 
                 VStack(alignment: .leading) {
-                    Text((contacts.count > 1) ? chat?.name ?? "" : contacts[0].name ?? L10n.General.unknown)
+                    Text((chat?.isGroup ?? false) ? (chat?.name ?? L10n.General.unknown) : (contacts.first?.name ?? L10n.General.unknown))
                         .foregroundColor(Color.white)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                     

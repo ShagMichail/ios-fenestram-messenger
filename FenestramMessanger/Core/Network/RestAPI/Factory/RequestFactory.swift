@@ -12,6 +12,7 @@ class RequestFactory {
     private var authFactory: AuthRequestFactory?
     private var profileFactory: ProfileRequestFactory?
     private var chatFactory: ChatRequestFactory?
+    private var contactsFactory: ContactsRequestFactory?
     
     private let sessionManager: Session
     
@@ -50,6 +51,16 @@ class RequestFactory {
         } else {
             let factory = ChatRequestFactory(sessionManager: sessionManager)
             chatFactory = factory
+            return factory
+        }
+    }
+    
+    func makeContactsFactory() -> ContactsRequestFactory {
+        if let factory = contactsFactory {
+            return factory
+        } else {
+            let factory = ContactsRequestFactory(sessionManager: sessionManager)
+            contactsFactory = factory
             return factory
         }
     }

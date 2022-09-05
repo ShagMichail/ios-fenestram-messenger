@@ -1,30 +1,30 @@
 //
-//  ProfileRequestRouter.swift
+//  ContactsRequestRouter.swift
 //  FenestramMessanger
 //
-//  Created by Михаил Беленко on 13.07.2022.
+//  Created by Михаил Беленко on 02.09.2022.
 //
 
 import Foundation
 import Alamofire
 
-public enum ProfileRequestRouter: AbstractRequestRouter {
-    case getProfile
-    case updateProfile(parameters: Parameters)
+public enum ContactsRequestRouter: AbstractRequestRouter {
+    case getContacts
+    case postContacts(phoneNumbers: Parameters)
     
     var method: HTTPMethod {
         switch self {
-        case .getProfile:
+        case .getContacts:
             return .get
-        case .updateProfile:
-            return .patch
+        case .postContacts:
+            return .post
         }
     }
     
     var path: String {
         switch self {
-        case .getProfile, .updateProfile:
-            return "api/\(Constants.apiVersion)/profile"
+        case .getContacts, .postContacts:
+            return "api/\(Constants.apiVersion)/contacts"
         }
     }
     
@@ -58,9 +58,9 @@ public enum ProfileRequestRouter: AbstractRequestRouter {
         urlRequest.httpMethod = method.rawValue
         urlRequest.headers = headers
         switch self {
-        case .updateProfile(let parameters):
+        case .postContacts(let parameters):
             urlRequest = try CustomPatchEncding().encode(urlRequest, with: parameters)
-        case .getProfile:
+        case .getContacts:
             urlRequest = try URLEncoding.default.encode(urlRequest, with: nil)
         }
         return urlRequest

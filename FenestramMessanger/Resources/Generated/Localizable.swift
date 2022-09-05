@@ -149,6 +149,19 @@ internal enum L10n {
     internal static let thirdDescription = L10n.tr("Localizable", "onboarding_view.third_description")
   }
 
+  internal enum PageContactView {
+    /// Чат
+    internal static let chat = L10n.tr("Localizable", "page_contact_view.chat")
+    /// файлов
+    internal static let files = L10n.tr("Localizable", "page_contact_view.files")
+    /// изображений
+    internal static let images = L10n.tr("Localizable", "page_contact_view.images")
+    /// участников
+    internal static let participants = L10n.tr("Localizable", "page_contact_view.participants")
+    /// Участники чата
+    internal static let participantsTitle = L10n.tr("Localizable", "page_contact_view.participants_title")
+  }
+
   internal enum PhoneView {
     /// Номер телефона
     internal static let phoneNumber = L10n.tr("Localizable", "phone_view.phone_number")

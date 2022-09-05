@@ -1,14 +1,14 @@
 //
-//  ProfileRequestFactory.swift
+//  ContactsRequestFactory.swift
 //  FenestramMessanger
 //
-//  Created by Михаил Беленко on 13.07.2022.
+//  Created by Михаил Беленко on 02.09.2022.
 //
 
 import Foundation
 import Alamofire
 
-final class ProfileRequestFactory: AbstractRequestFactory {
+final class ContactsRequestFactory: AbstractRequestFactory {
     var sessionManager: Session
     var queue: DispatchQueue
     
@@ -18,7 +18,7 @@ final class ProfileRequestFactory: AbstractRequestFactory {
     }
     
     public func sendRequest<T>(modelType: T.Type,
-                               requestOptions: ProfileRequestRouter,
+                               requestOptions: ContactsRequestRouter,
                                completion: @escaping (Result<T, Error>) -> Void) where T : Codable {
         self.request(requestOptions).response { response in
             guard let statusCode = response.response?.statusCode else {
@@ -73,7 +73,7 @@ final class ProfileRequestFactory: AbstractRequestFactory {
         }
     }
     
-    public func sendRequest(requestOptions: ProfileRequestRouter,
+    public func sendRequest(requestOptions: ContactsRequestRouter,
                             completion: @escaping (Result<Bool, Error>) -> Void) {
         self.request(requestOptions).response { (response) in
             guard let statusCode = response.response?.statusCode else {

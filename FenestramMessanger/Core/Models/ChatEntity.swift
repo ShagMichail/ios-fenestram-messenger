@@ -12,7 +12,8 @@ public struct ChatEntity: Codable, Identifiable {
     
     public let name: String
     public let usersId: [Int]
-    public let messages: [MessageEntity]?
+    public let isGroup: Bool
+    public var messages: [MessageEntity]?
     public let createdAt: Date?
     public let avatar: String?
     
@@ -20,7 +21,9 @@ public struct ChatEntity: Codable, Identifiable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try values.decode(Int.self, forKey: .id)
         self.name = try values.decode(String.self, forKey: .name)
-        self.usersId = try values.decode([Int].self, forKey: .usersId)
+        self.isGroup = try values.decode(Bool.self, forKey: .isGroup)
+        let userIds = try values.decode([Int].self, forKey: .usersId)
+        self.usersId = Array(Set(userIds))
         self.messages = try? values.decode([MessageEntity].self, forKey: .messages)
         self.avatar = try? values.decode(String.self, forKey: .avatar)
         
@@ -35,6 +38,7 @@ public struct ChatEntity: Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case id
         case name
+        case isGroup = "is_group"
         case createdAt = "created_at"
         case usersId = "users"
         case messages = "message"

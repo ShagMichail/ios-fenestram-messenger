@@ -65,6 +65,11 @@ struct ChatView: View {
                 .onTapGesture {
                     UIApplication.shared.endEditing()
                 }
+                .onChange(of: viewModel.isShowNewChatView, perform: { newValue in
+                    if newValue == false {
+                        viewModel.reset()
+                    }
+                })
                 .navigationBarHidden(true)
             }
         }
@@ -168,10 +173,10 @@ struct ChatView: View {
                 
             } label: {
                 VStack(alignment: .leading) {
-                    Text(((chat.usersId.count > 2) ? chat.name : viewModel.getUserEntity(from: chat)[0].name) ?? "")
+                    Text(chat.name)
                         .foregroundColor(.white)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
-                    Text(lastMessage(chat: chat)) //?? L10n.General.unknown)
+                    Text(lastMessage(chat: chat))
                         .foregroundColor(Asset.message.swiftUIColor)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                         .lineLimit(1)

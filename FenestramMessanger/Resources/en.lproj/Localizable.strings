@@ -97,3 +97,10 @@
 "new_chat_view.select_contacts" = "Select chat members";
 "new_chat_view.confirm.name_placeholder" = "Enter a chat name";
 "new_chat_view.confirm.contacts" = "Chat Members";
+
+// MARK: - PageContactView
+"page_contact_view.chat" = "Chat";
+"page_contact_view.files" = "files";
+"page_contact_view.images" = "images";
+"page_contact_view.participants" = "participants";
+"page_contact_view.participants_title" = "Chat participants";

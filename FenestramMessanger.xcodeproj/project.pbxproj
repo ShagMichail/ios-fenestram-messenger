@@ -31,6 +31,11 @@
 		BD7783AA2872EBB50023032D /* FenestramMessangerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7783A92872EBB50023032D /* FenestramMessangerApp.swift */; };
 		BD7783AE2872EBB70023032D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD7783AD2872EBB70023032D /* Assets.xcassets */; };
 		BD7783B12872EBB70023032D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD7783B02872EBB70023032D /* Preview Assets.xcassets */; };
+		BD785F4328C202640075BC89 /* PhoneBookEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD785F4228C202640075BC89 /* PhoneBookEntity.swift */; };
+		BD785F4528C203760075BC89 /* ContactsRequestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD785F4428C203760075BC89 /* ContactsRequestRouter.swift */; };
+		BD785F4728C204F60075BC89 /* ContactsRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD785F4628C204F60075BC89 /* ContactsRequestFactory.swift */; };
+		BD785F4928C205550075BC89 /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD785F4828C205550075BC89 /* ContactsService.swift */; };
+		BD785F4B28C2123D0075BC89 /* ContactEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD785F4A28C2123D0075BC89 /* ContactEntity.swift */; };
 		BD980FB528816F940050F8B4 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980FB428816F940050F8B4 /* UIApplication+Extensions.swift */; };
 		BD980FB7288170B20050F8B4 /* Publishers+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980FB6288170B20050F8B4 /* Publishers+Extensions.swift */; };
 		BD980FB9288170CC0050F8B4 /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD980FB8288170CC0050F8B4 /* Notification+Extensions.swift */; };
@@ -166,6 +171,11 @@
 		BD7783A92872EBB50023032D /* FenestramMessangerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FenestramMessangerApp.swift; sourceTree = "<group>"; };
 		BD7783AD2872EBB70023032D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD7783B02872EBB70023032D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BD785F4228C202640075BC89 /* PhoneBookEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneBookEntity.swift; sourceTree = "<group>"; };
+		BD785F4428C203760075BC89 /* ContactsRequestRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsRequestRouter.swift; sourceTree = "<group>"; };
+		BD785F4628C204F60075BC89 /* ContactsRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsRequestFactory.swift; sourceTree = "<group>"; };
+		BD785F4828C205550075BC89 /* ContactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsService.swift; sourceTree = "<group>"; };
+		BD785F4A28C2123D0075BC89 /* ContactEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactEntity.swift; sourceTree = "<group>"; };
 		BD980FB428816F940050F8B4 /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
 		BD980FB6288170B20050F8B4 /* Publishers+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishers+Extensions.swift"; sourceTree = "<group>"; };
 		BD980FB8288170CC0050F8B4 /* Notification+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extensions.swift"; sourceTree = "<group>"; };
@@ -398,6 +408,7 @@
 				BDF2E2C2287F1B1200B7E182 /* AuthService.swift */,
 				BDF2E2E1287F1CC400B7E182 /* ProfileService.swift */,
 				BDF2E2E7287F225F00B7E182 /* ChatService.swift */,
+				BD785F4828C205550075BC89 /* ContactsService.swift */,
 			);
 			path = RestAPI;
 			sourceTree = "<group>";
@@ -544,6 +555,7 @@
 				BDF2E2C0287F1B1200B7E182 /* AuthRequestRouter.swift */,
 				BDF2E2C1287F1B1200B7E182 /* ProfileRequestRouter.swift */,
 				BDF2E2E3287F207000B7E182 /* ChatRequestRouter.swift */,
+				BD785F4428C203760075BC89 /* ContactsRequestRouter.swift */,
 			);
 			path = RequestRouter;
 			sourceTree = "<group>";
@@ -556,6 +568,7 @@
 				BDF2E2C6287F1B1200B7E182 /* AuthRequestFactory.swift */,
 				BDF2E2DC287F1C0600B7E182 /* ProfileRequestFactory.swift */,
 				BDF2E2E5287F217D00B7E182 /* ChatRequestFactory.swift */,
+				BD785F4628C204F60075BC89 /* ContactsRequestFactory.swift */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -568,6 +581,8 @@
 				BDF2E2EE287F29F800B7E182 /* MessageEntity.swift */,
 				BDB5DAB62888129B0057966B /* BaseResponseEntity.swift */,
 				FC3A2B4F28917348006E0948 /* PhotoEntity.swift */,
+				BD785F4228C202640075BC89 /* PhoneBookEntity.swift */,
+				BD785F4A28C2123D0075BC89 /* ContactEntity.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -754,26 +769,10 @@
 		FCF5A42D287897490028FBD3 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				FCF5A43128789D400028FBD3 /* Model */,
-				FCF5A42E2878975C0028FBD3 /* View */,
-			);
-			path = Contacts;
-			sourceTree = "<group>";
-		};
-		FCF5A42E2878975C0028FBD3 /* View */ = {
-			isa = PBXGroup;
-			children = (
 				FC1778D628774BA300B0D979 /* ContactsView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		FCF5A43128789D400028FBD3 /* Model */ = {
-			isa = PBXGroup;
-			children = (
 				FCF5A4342878AD2C0028FBD3 /* ContactsViewModel.swift */,
 			);
-			path = Model;
+			path = Contacts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -966,6 +965,7 @@
 				FC177875287583D000B0D979 /* DatePickerTextField.swift in Sources */,
 				BD74D89928806F860004C961 /* AppDelegate.swift in Sources */,
 				FC177889287592DB00B0D979 /* TextField+Extensions.swift in Sources */,
+				BD785F4328C202640075BC89 /* PhoneBookEntity.swift in Sources */,
 				FC17788B2875933200B0D979 /* View+Extensions.swift in Sources */,
 				BDA6EAF22881D21600C96047 /* LoadingView.swift in Sources */,
 				BD7783AA2872EBB50023032D /* FenestramMessangerApp.swift in Sources */,
@@ -992,6 +992,7 @@
 				BDF1F22728BCE94A000D8499 /* MainTabViewModel.swift in Sources */,
 				FC13AF3D287EC42600784E35 /* NewContactView.swift in Sources */,
 				BDB5DAB72888129B0057966B /* BaseResponseEntity.swift in Sources */,
+				BD785F4528C203760075BC89 /* ContactsRequestRouter.swift in Sources */,
 				FCEE882428743FFD00268971 /* PhoneView.swift in Sources */,
 				FCF5A43728798EB70028FBD3 /* ChatView.swift in Sources */,
 				FC1778B42876E25C00B0D979 /* Feature.swift in Sources */,
@@ -1010,6 +1011,7 @@
 				FC7A57152891AE3A00ABF7BF /* ImagesView.swift in Sources */,
 				BDF1F22F28BE42FA000D8499 /* NewChatConfirmView.swift in Sources */,
 				FC600B2528788E7F001CA2BD /* SettingsView.swift in Sources */,
+				BD785F4928C205550075BC89 /* ContactsService.swift in Sources */,
 				BDF2E2EA287F26E300B7E182 /* ChatEntity.swift in Sources */,
 				BDF2E2D4287F1B1200B7E182 /* RequestFactory.swift in Sources */,
 				BDF2E2D3287F1B1200B7E182 /* AbstractRequestFactory.swift in Sources */,
@@ -1024,6 +1026,7 @@
 				BD7783AA2872EBB50023032D /* FenestramMessangerApp.swift in Sources */,
 				BDF2E2D2287F1B1200B7E182 /* AuthService.swift in Sources */,
 				BDF1F23128BE430C000D8499 /* NewChatConfirmViewModel.swift in Sources */,
+				BD785F4B28C2123D0075BC89 /* ContactEntity.swift in Sources */,
 				FC1EA90228855CEF0027107E /* ChatRow.swift in Sources */,
 				BDF2E2E2287F1CC400B7E182 /* ProfileService.swift in Sources */,
 				BDDB5ADF2872ECBC002BF418 /* MainView.swift in Sources */,
@@ -1047,6 +1050,7 @@
 				BDF1F22528BCCFFC000D8499 /* Weak.swift in Sources */,
 				BDDB5AE12872ECE2002BF418 /* MainViewModel.swift in Sources */,
 				BDF2E2D0287F1B1200B7E182 /* AuthRequestRouter.swift in Sources */,
+				BD785F4728C204F60075BC89 /* ContactsRequestFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1196,6 +1200,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenestramMessanger/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires usage of camera to function property!";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Пожалуйста, предоставьте доступ к вашему списку контактов, чтобы мы могли найти их в нашем приложении";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1231,6 +1236,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenestramMessanger/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires usage of camera to function property!";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Пожалуйста, предоставьте доступ к вашему списку контактов, чтобы мы могли найти их в нашем приложении";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

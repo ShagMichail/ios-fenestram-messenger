@@ -46,7 +46,16 @@ public final class AuthController {
             }
         }
         
-        NotificationCenter.default.post(name: .loginStatusChanged, object: nil)
+        ContactsService.postContacts(contacts: PhoneBookEntity.generateModelArray()) { result in
+            switch result {
+            case .success:
+                print("post contacts success")
+            case .failure(let error):
+                print("post contacts failure with error: ", error.localizedDescription)
+            }
+            
+            NotificationCenter.default.post(name: .loginStatusChanged, object: nil)
+        }
     }
     
     public class func signOut() throws {

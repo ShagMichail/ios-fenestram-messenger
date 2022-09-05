@@ -97,3 +97,10 @@
 "new_chat_view.select_contacts" = "Выберите участников чата";
 "new_chat_view.confirm.name_placeholder" = "Введите имя чата";
 "new_chat_view.confirm.contacts" = "Участники чата";
+
+// MARK: - PageContactView
+"page_contact_view.chat" = "Чат";
+"page_contact_view.files" = "файлов";
+"page_contact_view.images" = "изображений";
+"page_contact_view.participants" = "участников";
+"page_contact_view.participants_title" = "Участники чата";

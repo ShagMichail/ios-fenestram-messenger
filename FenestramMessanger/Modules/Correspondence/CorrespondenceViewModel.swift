@@ -31,6 +31,8 @@ extension CorrespondenceView {
         @Published var textAlert = ""
         @Published var allFoto: [PhotoEntity] = []
         
+        let contacts: [UserEntity]
+        
         private var allMessages: [MessageEntity] = [] {
             didSet {
                 processingData()
@@ -51,16 +53,20 @@ extension CorrespondenceView {
         var lastMessageId: Int?
         var currentMessageId: Int?
         
-        init(chat: ChatEntity?, socketManager: SocketIOManager?) {
+        init(chat: ChatEntity?, contacts: [UserEntity], socketManager: SocketIOManager?) {
             self.chat = chat
+            self.contacts = contacts
             
             if let socketManager = socketManager {
                 self.socketManager = socketManager
                 socketManager.addObserver(self)
             }
             
-            guard let chatId = chat?.id else { return }
-            getChatUser(id: chatId)
+            if let chatId = chat?.id {
+                getChatUser(id: chatId)
+            } else {
+                createChat(chatName: contacts.first?.name ?? L10n.General.unknown, usersId: contacts.map({ $0.id }))
+            }
         }
         
         func loadMoreContent(currentItem item: MessageEntity){
@@ -126,18 +132,22 @@ extension CorrespondenceView {
         }
         
         func createChat(chatName: String, usersId: [Int]) {
-            ChatService.createChat(chatName: chatName, usersId: usersId, isGroup: usersId.count > 2) { [weak self] result in
+            isLoading = true
+            
+            ChatService.createChat(chatName: chatName, usersId: usersId, isGroup: false) { [weak self] result in
                 switch result {
                 case .success(let chat):
                     print("create chat user success")
                     self?.chat = chat
-                    self?.postMessage(chat: chat)
+                    self?.getMessages()
                 case .failure(let error):
                     print("create chat user failure with error:", error.localizedDescription)
                     self?.textTitleAlert = "create chat user with error"
                     self?.textAlert = error.localizedDescription
                     self?.presentAlert = true
                 }
+                
+                self?.isLoading = false
             }
         }
         
@@ -191,8 +201,6 @@ extension CorrespondenceView {
         
         func getUserEntityIds(contactId: Int) -> [Int] {
             var ids: [Int] = []
-            guard let curretUserId = Settings.currentUser?.id else { return ids }
-            ids.append(curretUserId)
             ids.append(contactId)
             return ids
         }

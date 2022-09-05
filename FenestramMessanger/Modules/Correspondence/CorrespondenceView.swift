@@ -23,9 +23,6 @@ struct CorrespondenceView: View {
     @State private var keyboardHeight: CGFloat = 0
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     
-    var contacts: [UserEntity]
-    var chatHistory: ChatEntity?
-    var contactId: Int = 0
     var message: String = ""
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
@@ -42,9 +39,7 @@ struct CorrespondenceView: View {
                                                              .cornerRadius(30)]
     
     init(contacts: [UserEntity], chat: ChatEntity?, socketManager: SocketIOManager?) {
-        self.chatHistory = chat
-        self.contacts = contacts
-        _viewModel = StateObject(wrappedValue: ViewModel(chat: chat, socketManager: socketManager))
+        _viewModel = StateObject(wrappedValue: ViewModel(chat: chat, contacts: contacts, socketManager: socketManager))
         UITextView.appearance().backgroundColor = .clear
     }
 
@@ -58,7 +53,7 @@ struct CorrespondenceView: View {
                 .ignoresSafeArea()
             VStack {
                 VStack {
-                    CorrespondenceNavigationView(contacts: contacts, chat: chatHistory)
+                    CorrespondenceNavigationView(contacts: viewModel.contacts, chat: viewModel.chat)
                     
                     viewModel.messagesWithTime.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
 
@@ -220,10 +215,10 @@ struct CorrespondenceView: View {
                 Spacer()
                 Button {
                     if !viewModel.textMessage.isEmpty {
-                        if chatHistory == nil {
-                            viewModel.createChat(chatName: contacts[0].name ?? "", usersId: viewModel.getUserEntityIds(contactId: contacts[0].id))
+                        if viewModel.chat == nil {
+                            viewModel.createChat(chatName: viewModel.contacts[0].name ?? "", usersId: viewModel.getUserEntityIds(contactId: viewModel.contacts[0].id))
                         } else {
-                            viewModel.postMessage(chat: chatHistory)
+                            viewModel.postMessage(chat: viewModel.chat)
                         }
                     }
                 } label: {
