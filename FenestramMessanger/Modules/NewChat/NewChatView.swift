@@ -13,6 +13,8 @@ struct NewChatView: View {
     
     @Binding var isPopToChatListView: Bool
     
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
     init(isPopToChatListView: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: ViewModel())
         _isPopToChatListView = isPopToChatListView
@@ -52,7 +54,11 @@ struct NewChatView: View {
                         NavigationLink {
                             NewChatConfirmView(selectedContacts: viewModel.getSelectedContacts(), isPopToChatListView: $isPopToChatListView)
                         } label: {
-                            Asset.nextButtonIcon.swiftUIImage
+                            if isColorThema == false {
+                                Asset.nextButtonBlueIcon.swiftUIImage
+                            } else {
+                                Asset.nextButtonGreenIcon.swiftUIImage
+                            }
                         }
                     }
                 }

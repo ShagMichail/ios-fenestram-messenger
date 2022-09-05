@@ -15,6 +15,8 @@ struct NewChatConfirmView: View {
     
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     
+    @AppStorage ("isColorThema") var isColorThema: Bool?
+    
     init(selectedContacts: [UserEntity], isPopToChatListView: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: ViewModel(selectedContacts: selectedContacts))
         _isPopToChatListView = isPopToChatListView
@@ -47,7 +49,11 @@ struct NewChatConfirmView: View {
                                 self.isPopToChatListView = false
                             }
                         } label: {
-                            Asset.doneButtonIcon.swiftUIImage
+                            if isColorThema == false {
+                                Asset.doneButtonBlueIcon.swiftUIImage
+                            } else {
+                                Asset.doneButtonGreenIcon.swiftUIImage
+                            }
                         }
                     }
                 }

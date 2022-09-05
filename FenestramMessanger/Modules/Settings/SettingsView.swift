@@ -89,7 +89,7 @@ struct SettingsView: View {
                 .foregroundColor(Color.white)
                 .padding(.leading)
             Spacer()
-            if isColorThema ?? false {
+            if isColorThema ?? true {
                 Button {
                     isColorThema = false
                 } label: {

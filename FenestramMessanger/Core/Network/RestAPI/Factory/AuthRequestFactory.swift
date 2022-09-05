@@ -25,6 +25,9 @@ final class AuthRequestFactory: AbstractRequestFactory {
                 completion(.failure(NetworkError.serverError))
                 return
             }
+            if response.request?.url?.absoluteString.contains("refresh") ?? false {
+                print("ffff")
+            }
             switch statusCode {
             case 200 ... 399:
                 if let data = response.data {
