@@ -59,7 +59,7 @@ struct ChatView: View {
                         }
                     }
                     if viewModel.presentAlert {
-                        AlertView(show: $viewModel.presentAlert, text: $viewModel.textAlert)
+                        AlertView(show: $viewModel.presentAlert, text: viewModel.textAlert)
                     }
                 }
                 .onTapGesture {

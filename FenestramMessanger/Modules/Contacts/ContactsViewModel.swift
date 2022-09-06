@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Network
 
 extension ContactsView {
     @MainActor
@@ -26,6 +27,7 @@ extension ContactsView {
         @Published var textAlert = ""
         
         private(set) var socketManager: SocketIOManager?
+        private let monitor = NWPathMonitor()
         
         init(socketManager: SocketIOManager?) {
             self.socketManager = socketManager

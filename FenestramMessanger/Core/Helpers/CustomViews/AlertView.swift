@@ -10,55 +10,67 @@ import SwiftUI
 struct AlertView: View {
     
     @Binding var show: Bool
-    @Binding var text: String
+    let text: String
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .center)) {
-            ZStack {
-                Asset.photoBack.swiftUIColor
+            VStack {
                 VStack {
                     Asset.alert.swiftUIImage
                         .resizable()
                         .frame(width: 300, height: 175)
-                    VStack(alignment: .leading) {
+                    
+                    VStack(alignment: .center) {
                         Text(L10n.General.errorTitle)
-                            .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 18))
+                            .font(FontFamily.Poppins.bold.swiftUIFont(size: 18))
                             .foregroundColor(Asset.red.swiftUIColor)
                         Spacer().frame(height: 10)
                         
                         Text(text)
-                            .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
+                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                             .foregroundColor(Asset.red.swiftUIColor)
-                    }.padding(.leading, -50)
-                    Spacer()
+                            .multilineTextAlignment(.center)
+                    }
+                    .padding(.vertical, 32)
+                    
                     Button {
                         show.toggle()
                     } label: {
-                        
-                        Text(L10n.General.close)
-                            .frame(width: 252, height: 35.0)
-                            .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 14))
-                            .foregroundColor(Asset.text.swiftUIColor)
-                            .background(Asset.buttonAlert.swiftUIColor)
-                            .cornerRadius(6)
-                    }.onTapGesture {
+                        VStack {
+                            Text(L10n.General.close)
+                                .frame(width: 252, height: 35.0)
+                                .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 14))
+                                .foregroundColor(Asset.text.swiftUIColor)
+                        }
+                        .frame(height: 48)
+                        .background(Asset.buttonAlert.swiftUIColor)
+                        .cornerRadius(6)
+                    }
+                    .onTapGesture {
                         withAnimation {
                             show.toggle()
                         }
                     }
                 }
                 .padding(.vertical, 25)
+                
+                .padding(.horizontal, 24)
             }
-            .frame(maxWidth: 300, maxHeight: 452)
+            .background(Asset.photoBack.swiftUIColor)
             .cornerRadius(25)
         }
         .edgesIgnoringSafeArea(.all)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        
         .background(
             Color.primary.opacity(0.35) )
     }
     
+}
+
+struct AlertView_Previews: PreviewProvider {
+    static var previews: some View {
+        AlertView(show: .constant(true), text: L10n.Error.tokenEmpty)
+    }
 }
 
 struct BlurView : UIViewRepresentable {
