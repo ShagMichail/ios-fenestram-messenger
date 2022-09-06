@@ -78,7 +78,18 @@ extension AppDelegate: MessagingDelegate {
             object: nil,
             userInfo: dataDict
         )
-        // TODO: If necessary send token to application server.
-        // Note: This callback is fired at each app startup and whenever a new token is generated.
+        
+        if let fcmToken = fcmToken {
+            Settings.firebaseToken = fcmToken
+            
+            AuthService.setFirebaseToken(firebaseToken: fcmToken) { result in
+                switch result {
+                case .success:
+                    print("set firebase token success")
+                case .failure(let error):
+                    print("set firebase token failure with error: ", error.localizedDescription)
+                }
+            }
+        }
     }
 }

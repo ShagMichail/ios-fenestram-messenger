@@ -7,6 +7,7 @@
 
 import SwiftUI
 import BottomSheet
+import Kingfisher
 
 enum BookBottomSheetPosition: CGFloat, CaseIterable {
     case middle = 450, bottom = 300, hidden = 0
@@ -23,7 +24,6 @@ struct ChatView: View {
     @State var flag = false
     @State var chatUser: ChatEntity?
     @State var correspondence = false
-    @State var contacts: [UserEntity] = []
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
@@ -42,6 +42,14 @@ struct ChatView: View {
                 ZStack {
                     Asset.thema.swiftUIColor
                         .ignoresSafeArea()
+                    
+                    NavigationLink(isActive: $viewModel.isShowNewChatView) {
+                        NewChatView(isPopToChatListView: $viewModel.isShowNewChatView)
+                    } label: {
+                        EmptyView()
+                    }
+
+
                     VStack {
                         getHeader()
                         if viewModel.isLoading {
@@ -57,6 +65,11 @@ struct ChatView: View {
                 .onTapGesture {
                     UIApplication.shared.endEditing()
                 }
+                .onChange(of: viewModel.isShowNewChatView, perform: { newValue in
+                    if newValue == false {
+                        viewModel.reset()
+                    }
+                })
                 .navigationBarHidden(true)
             }
         }
@@ -74,7 +87,7 @@ struct ChatView: View {
             NavigationLink() {
                 //Search chats
             } label: {
-                Image(systemName: "magnifyingglass").foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                Image(systemName: "magnifyingglass").foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                     .font(.system(size: 20))
             }
         }
@@ -127,6 +140,15 @@ struct ChatView: View {
             }
             .padding(.bottom, 1)
             
+            VStack {
+                Spacer()
+                
+                HStack {
+                    Spacer()
+                    
+                    getButtonNewChat()
+                }
+            }
         }.bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: [.noDragIndicator, .allowContentDrag, .swipeToDismiss, .tapToDismiss, .absolutePositionValue, .background({ AnyView(Asset.buttonAlert.swiftUIColor) }), .cornerRadius(30)], headerContent: {
             
             getHeaderBottomSheet()
@@ -141,20 +163,33 @@ struct ChatView: View {
                 bottomSheetPosition = .bottom
                 chatUser = chat
             } label: {
-                Asset.photo.swiftUIImage
-                    .resizable()
-                    .frame(width: 40.0, height: 40.0)
-                    .padding(.horizontal)
+                VStack {
+                    if let avatarString = chat.isGroup ? chat.avatar : viewModel.getContact(with: chat)?.avatar,
+                       let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                       !avatarString.isEmpty {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 40.0, height: 40.0)
+                            .clipShape(Circle())
+                    } else {
+                        Asset.photo.swiftUIImage
+                            .resizable()
+                            .frame(width: 40.0, height: 40.0)
+                    }
+                }
+                .padding(.horizontal)
             }
+            
             NavigationLink {
                 CorrespondenceView(contacts: viewModel.getUserEntity(from: chat), chat: chat, socketManager: viewModel.socketManager)
                 
             } label: {
                 VStack(alignment: .leading) {
-                    Text(((chat.usersId.count > 2) ? chat.name : viewModel.getUserEntity(from: chat)[0].name) ?? "")
+                    Text(chat.isGroup ? chat.name : viewModel.getContact(with: chat)?.name ?? L10n.General.unknown)
                         .foregroundColor(.white)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
-                    Text(lastMessage(chat: chat)) //?? L10n.General.unknown)
+                    Text(lastMessage(chat: chat))
                         .foregroundColor(Asset.message.swiftUIColor)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                         .lineLimit(1)
@@ -171,11 +206,10 @@ struct ChatView: View {
                         print("ddd")
                     }, label: {
                         Image(systemName: "checkmark")
-                            .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                            .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                     })
                     .padding(.trailing, 0.0)
                     .disabled(true)
-                    
                 }
             }
         }.padding(.horizontal)
@@ -184,17 +218,29 @@ struct ChatView: View {
     private func getHeaderBottomSheet() -> some View {
         VStack {
             HStack {
-                Asset.photo.swiftUIImage
-                    .resizable()
-                    .frame(width: 80.0, height: 80.0)
-                    .padding(.horizontal)
+                VStack {
+                    if let avatarString = (chatUser?.isGroup ?? false) ? chatUser?.avatar : viewModel.getContact(with: chatUser)?.avatar,
+                       let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                       !avatarString.isEmpty {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 80.0, height: 80.0)
+                            .clipShape(Circle())
+                    } else {
+                        Asset.photo.swiftUIImage
+                            .resizable()
+                            .frame(width: 80.0, height: 80.0)
+                    }
+                }
+                .padding(.horizontal)
                 
                 VStack(alignment: .leading) {
                     Text(((chatUser?.usersId.count ?? 2 > 2) ? chatUser?.name : viewModel.getUserEntity(from: chatUser).first?.name) ?? "")
                         .foregroundColor(.white)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                     Text(viewModel.getNicNameUsers(chat: chatUser))
-                        .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                        .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                 }
                 Spacer()
@@ -297,7 +343,24 @@ struct ChatView: View {
                 )
                 .foregroundColor(Asset.buttonAlert.swiftUIColor)
             image.swiftUIImage
-                .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                .foregroundColor((isColorThema == false) ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
+        }
+    }
+    
+    private func getButtonNewChat() -> some View {
+        Button {
+            viewModel.isShowNewChatView = true
+        } label: {
+            ZStack {
+                Asset.addButtonIcon.swiftUIImage
+                    .padding(.bottom, 10)
+                    .padding(.trailing, 10)
+                    .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
+                Image(systemName: "plus")
+                    .font(.title)
+                    .padding(.bottom, 17)
+                    .padding(.trailing, 10)
+            }
         }
     }
     

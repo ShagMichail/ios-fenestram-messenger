@@ -94,7 +94,7 @@ struct AccountView: View {
                 }
                 .padding(.all, 5.0)
                 .foregroundColor(.white)
-                .background(LinearGradient(gradient: Gradient(colors: [(isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)]), startPoint: .leading, endPoint: .trailing))
+                .background(LinearGradient(gradient: Gradient(colors: [(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(40)
                 .frame(width: 50.0, height: 100.0, alignment: .center)
                 .actionSheet(isPresented: $viewModel.showSheet) {
@@ -151,7 +151,7 @@ struct AccountView: View {
                         Button(action: {
                             print("ddd")
                         }, label: {
-                            Image(systemName: "checkmark").foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                            Image(systemName: "checkmark").foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                         })
                         .padding(.trailing, 10.0)
                         .disabled(true)
@@ -194,7 +194,7 @@ struct AccountView: View {
                             print("ddd")
                         }, label: {
                             Image(systemName: "checkmark")
-                                .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                                .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                         })
                         .padding(.trailing, 10.0)
                         .disabled(true)
@@ -224,7 +224,7 @@ struct AccountView: View {
                             print("ddd")
                         }, label: {
                             Image(systemName: "checkmark")
-                                .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                                .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                         })
                         .padding(.trailing, 10.0)
                         .disabled(true)
@@ -276,7 +276,7 @@ struct AccountView: View {
                             print("ddd")
                         }, label: {
                             Image(systemName: "checkmark")
-                                .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                                .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                         })
                         .padding(.trailing, 10.0)
                         .disabled(true)
@@ -295,7 +295,7 @@ struct AccountView: View {
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background( (viewModel.name.count != 0 && viewModel.nicName.count != 0 && viewModel.birthday != nil && viewModel.textEmailOk) ? (isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor) : Asset.buttonDis.swiftUIColor)
+                    .background( (viewModel.name.count != 0 && viewModel.nicName.count != 0 && viewModel.birthday != nil && viewModel.textEmailOk) ? (isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor) : Asset.buttonDis.swiftUIColor)
                     .cornerRadius(6)
             }.disabled((viewModel.name.count == 0 || viewModel.nicName.count == 0 || viewModel.birthday == nil || viewModel.textEmailOk == false))
             

@@ -22,7 +22,7 @@ struct AlertView: View {
                         .resizable()
                         .frame(width: 300, height: 175)
                     VStack(alignment: .leading) {
-                        Text("Произошла ошибка")
+                        Text(L10n.General.errorTitle)
                             .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 18))
                             .foregroundColor(Asset.red.swiftUIColor)
                         Spacer().frame(height: 10)

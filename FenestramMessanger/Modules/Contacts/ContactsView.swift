@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ContactsView: View {
     
@@ -108,24 +109,25 @@ struct ContactsView: View {
     
     private func getContentView() -> some View {
         ZStack {
-            VStack (alignment: .trailing) {
+            VStack(alignment: .trailing) {
                 ScrollView(showsIndicators: false) {
-                    if viewModel.filteredContacts.count > 0 {
-                        ForEach(viewModel.filteredContacts) { contact in
-                            getContactsRow(contact: contact)
+                    LazyVStack {
+                        if viewModel.filteredContacts.count > 0 {
+                            ForEach(viewModel.filteredContacts) { contact in
+                                getContactsRow(contact: contact)
+                            }
+                        } else {
+                            HStack {
+                                Text(L10n.ContactView.contactDontExist)
+                                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
+                                    .foregroundColor(Color.white)
+                                    .padding(.horizontal)
+                            }.frame(width: UIScreen.screenWidth)
                         }
-                    } else {
-                        HStack {
-                            Text(L10n.ContactView.contactDontExist)
-                                .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
-                                .foregroundColor(Color.white)
-                                .padding(.horizontal)
-                        }.frame(width: UIScreen.screenWidth)
                     }
                 }
                 .padding(.bottom, -85)
                 getButtonNewContact()
-                
             }
         }
     }
@@ -138,7 +140,7 @@ struct ContactsView: View {
                 Asset.addButtonIcon.swiftUIImage
                     .padding(.bottom, 10)
                     .padding(.trailing, 10)
-                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                    .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                 Image(systemName: "plus")
                     .font(.title)
                     .padding(.bottom, 17)
@@ -149,25 +151,31 @@ struct ContactsView: View {
     
     private func getContactsRow(contact: UserEntity) -> some View {
         NavigationLink() {
-            CorrespondenceView(contacts: [contact], chat: viewModel.filterChat(contact: contact), socketManager: viewModel.socketManager).navigationBarHidden(true)
+            CorrespondenceView(contacts: [contact], chat: nil, socketManager: viewModel.socketManager).navigationBarHidden(true)
         } label: {
-            HStack() {
-                Asset.photo.swiftUIImage
-                    .resizable()
-                    .frame(width: 40.0, height: 40.0)
-                    .padding(.horizontal)
+            HStack {
+                VStack {
+                    if let avatarString = contact.avatar,
+                       let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                       !avatarString.isEmpty {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 40.0, height: 40.0)
+                            .clipShape(Circle())
+                    } else {
+                        Asset.photo.swiftUIImage
+                            .resizable()
+                            .frame(width: 40.0, height: 40.0)
+                    }
+                }
+                .padding(.horizontal)
                 
                 Text(contact.name ?? L10n.General.unknown)
                     .foregroundColor(.white)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
                 
                 Spacer()
-                
-                if viewModel.filterHaveChat(contact: contact) {
-                    Asset.chat.swiftUIImage
-                        .padding(.horizontal)
-                }
-                
             }.padding(.horizontal)
         }
     }
@@ -192,7 +200,7 @@ struct ContactsView: View {
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                    .background((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                     .cornerRadius(6)
             }
             .padding(.bottom, 50)

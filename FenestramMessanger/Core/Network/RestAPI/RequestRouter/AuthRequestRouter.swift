@@ -12,11 +12,15 @@ public enum AuthRequestRouter: AbstractRequestRouter {
     case sendCode(parameters: Parameters)
     case login(parameters: Parameters)
     case refresh(parameters: Parameters)
+    case setFirebaseToken(parameters: Parameters)
+    case deleteFirebaseToken(firebaseToken: String)
     
     var method: HTTPMethod {
         switch self {
-        case .sendCode, .login, .refresh:
+        case .sendCode, .login, .refresh, .setFirebaseToken:
             return .post
+        case .deleteFirebaseToken:
+            return .delete
         }
     }
     
@@ -28,6 +32,10 @@ public enum AuthRequestRouter: AbstractRequestRouter {
             return "api/\(Constants.apiVersion)/authorization/login"
         case .refresh:
             return "api/\(Constants.apiVersion)/authorization/refresh"
+        case .setFirebaseToken:
+            return "api/\(Constants.apiVersion)/authorization/firebase_token"
+        case .deleteFirebaseToken(let firebaseToken):
+            return "api/\(Constants.apiVersion)/authorization/firebase_token/\(firebaseToken)"
         }
     }
     
@@ -36,6 +44,15 @@ public enum AuthRequestRouter: AbstractRequestRouter {
         case .sendCode, .login, .refresh:
             return ["Content-Type": "application/json",
                     "accept": "*/*"]
+        case .setFirebaseToken, .deleteFirebaseToken:
+            guard let token = try? AuthController.getToken() else {
+                return ["Content-Type": "application/json",
+                        "accept": "*/*"]
+            }
+            
+            return ["Content-Type": "application/json",
+                    "accept": "*/*",
+                    "Authorization": "Bearer \(token)"]
         }
     }
     
@@ -58,8 +75,10 @@ public enum AuthRequestRouter: AbstractRequestRouter {
         urlRequest.httpMethod = method.rawValue
         urlRequest.headers = headers
         switch self {
-        case .sendCode(let parameters), .login(let parameters), .refresh(let parameters):
+        case .sendCode(let parameters), .login(let parameters), .refresh(let parameters), .setFirebaseToken(let parameters):
             urlRequest = try CustomPatchEncding().encode(urlRequest, with: parameters)
+        case .deleteFirebaseToken:
+            urlRequest = try URLEncoding.default.encode(urlRequest, with: nil)
         }
         return urlRequest
     }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PageContactView: View {
     
@@ -14,7 +15,7 @@ struct PageContactView: View {
     
     @State var uiTabarController: UITabBarController?
     
-    var contact: [UserEntity]
+    var contacts: [UserEntity]
     var chat: ChatEntity?
     
     @StateObject private var viewModel: ViewModel
@@ -23,9 +24,9 @@ struct PageContactView: View {
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
-    init(contact: [UserEntity], chat: ChatEntity?) {
+    init(contacts: [UserEntity], chat: ChatEntity?) {
         _viewModel = StateObject(wrappedValue: ViewModel())
-        self.contact = contact
+        self.contacts = contacts
         self.chat = chat
     }
    
@@ -33,39 +34,39 @@ struct PageContactView: View {
     //MARK: - Body
     
     var body: some View {
-        
-        VStack{
-            ZStack{
-                Asset.tabBar.swiftUIColor.ignoresSafeArea()
+        ZStack {
+            Asset.dark1.swiftUIColor
+                .ignoresSafeArea()
+            
+            ScrollView(.vertical, showsIndicators: false) {
                 VStack {
+                    Spacer()
+                        .frame(height: 24)
+                    
                     getNameAndPhoto()
                     
                     Spacer().frame(height: 30.0)
                     
                     getButtonPhoneVideo()
+                    
+                    if chat?.isGroup ?? false {
+                        Spacer().frame(height: 16.0)
+                        
+                        getParticipantsList()
+                    }
+                    
+                    Spacer().frame(height: 16.0)
+                    
+                    getListFiles()
+                    
+                    Spacer().frame(height: 16.0)
+                    
+                    getPhotoFiles()
                 }
+                .padding(.horizontal, 32)
             }
-        }.onBackSwipe {
-            presentationMode.wrappedValue.dismiss()
         }
-        Spacer().frame(height: 0)
-        ZStack {
-            Asset.buttonAlert.swiftUIColor
-            
-            getListFiles()
-            
-        }.onBackSwipe {
-            presentationMode.wrappedValue.dismiss()
-        }
-        
-        Spacer().frame(height: 0)
-        
-        ZStack {
-            Asset.buttonAlert.swiftUIColor.ignoresSafeArea()
-            
-            getPhotoFiles()
-            
-        }.onBackSwipe {
+        .onBackSwipe {
             presentationMode.wrappedValue.dismiss()
         }
         .introspectTabBarController { (UITabBarController) in
@@ -79,19 +80,44 @@ struct PageContactView: View {
     
     //MARK: - Views
     
+    private func getPhoto() -> some View {
+        VStack {
+            if let avatarString = (chat?.isGroup ?? false) ? chat?.avatar : contacts.first?.avatar,
+               let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+               !avatarString.isEmpty {
+                KFImage(url)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 80.0, height: 80.0)
+                    .clipShape(Circle())
+            } else {
+                Asset.photo.swiftUIImage
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 80.0, height: 80.0)
+                    .clipShape(Circle())
+            }
+        }
+        .padding(.trailing)
+    }
+    
     private func getNameAndPhoto() -> some View {
         HStack {
-            Asset.photo.swiftUIImage
-                .resizable()
-                .frame(width: 80.0, height: 80.0)
-                .padding(.horizontal)
+            getPhoto()
+                
             VStack(alignment: .leading) {
-                Text((contact.count > 2) ? chat?.name ?? "" : contact[0].name ?? " ")
+                Text((chat?.isGroup ?? false) ? (chat?.name ?? L10n.General.unknown) : (contacts.first?.name ?? L10n.General.unknown))
                     .foregroundColor(.white)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
-                Text("@\(contact[0].nickname ?? " ")")
-                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
+                if chat?.isGroup ?? false {
+                    Text("\(L10n.PageContactView.chat) - \(contacts.count + 1) \(L10n.PageContactView.participants)")
+                        .font(FontFamily.Poppins.medium.swiftUIFont(size: 14))
+                        .foregroundColor(Asset.grey2.swiftUIColor)
+                } else {
+                    Text("@\(contacts.first?.nickname ?? " ")")
+                        .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
+                }
             }
             Spacer()
         }
@@ -125,32 +151,87 @@ struct PageContactView: View {
                 )
                 .foregroundColor(Asset.buttonAlert.swiftUIColor)
             image.swiftUIImage
-                .foregroundColor((isColorThema == false) ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor)
+                .foregroundColor((isColorThema == false) ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
+        }
+    }
+    
+    private func getParticipantsList() -> some View {
+        VStack {
+            ZStack {
+                Asset.dark2.swiftUIColor
+                
+                HStack {
+                    Text(L10n.PageContactView.participantsTitle)
+                        .font(FontFamily.Poppins.extraBold.swiftUIFont(size: 14))
+                        .foregroundColor(.white)
+                    
+                    Spacer()
+                }
+                .padding(.horizontal, 32)
+            }
+            .frame(height: 45)
+            .padding(.horizontal, -32)
+            
+            Spacer().frame(height: 16.0)
+            
+            ForEach(contacts) { contact in
+                HStack {
+                    VStack {
+                        if let avatarString = contact.avatar,
+                           let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                           !avatarString.isEmpty {
+                            KFImage(url)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 32, height: 32)
+                                .clipShape(Circle())
+                        } else {
+                            Asset.photo.swiftUIImage
+                                .resizable()
+                                .frame(width: 32, height: 32)
+                        }
+                    }
+                    .padding(.trailing, 8)
+ 
+                    Text(contact.name ?? L10n.General.unknown)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                        .foregroundColor(.white)
+                    
+                    Spacer()
+                }
+            }
         }
     }
     
     private func getListFiles() -> some View {
         VStack {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(L10n.ChatView.recentFiles)
-                        .font(.system(size: 14))
-                        .foregroundColor(.white)
-                    Text("\(viewModel.allFiles.count) файлов")
-                        .font(.system(size: 12))
-                        .foregroundColor(Asset.fileText.swiftUIColor)
-                }
-                Spacer()
+            ZStack {
+                Asset.dark2.swiftUIColor
                 
-                NavigationLink(destination: FileView().navigationBarHidden(true)){
-                    Image(systemName: "chevron.down")
-                        .frame(width: 10, height: 10)
-                        .foregroundColor(Asset.fileText.swiftUIColor)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(L10n.ChatView.recentFiles)
+                            .font(FontFamily.Poppins.extraBold.swiftUIFont(size: 14))
+                            .foregroundColor(.white)
+                        Text("\(viewModel.allFiles.count) \(L10n.PageContactView.files)")
+                            .font(FontFamily.Poppins.medium.swiftUIFont(size: 12))
+                            .foregroundColor(Asset.fileText.swiftUIColor)
+                    }
+                    
+                    Spacer()
+                    
+                    NavigationLink(destination: FileView().navigationBarHidden(true)){
+                        Image(systemName: "chevron.down")
+                            .frame(width: 10, height: 10)
+                            .foregroundColor(Asset.fileText.swiftUIColor)
+                    }
                 }
-            }.padding(.leading, 50.0)
-                .padding(.trailing, 50.0)
+                .padding(.horizontal, 32)
+            }
+            .frame(height: 60)
+            .padding(.horizontal, -32)
             
-            Spacer().frame(height: 25.0)
+            Spacer().frame(height: 16.0)
             
             ForEach(viewModel.recentFile) { files in
                 Button(action: {
@@ -158,56 +239,48 @@ struct PageContactView: View {
                 }, label: {
                     HStack {
                         Asset.file.swiftUIImage
-                            .resizable()
-                            .frame(width: 20.0, height: 20.0)
-                            .padding(.horizontal)
+                            .padding(.trailing, 6)
+                        
                         Text(files.title)
-                            .font(.system(size: 14))
-                            .foregroundColor(Asset.fileText.swiftUIColor)
+                            .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 14))
+                            .foregroundColor(Asset.grey2.swiftUIColor)
+                        
                         Spacer()
-                        HStack {
-                            Image(systemName: "circle.fill")
-                                .font(.system(size: 2))
-                                .foregroundColor(Asset.fileText.swiftUIColor)
-                            Spacer()
-                                .frame(width: 3.0)
-                            Image(systemName: "circle.fill")
-                                .font(.system(size: 2))
-                                .foregroundColor(Asset.fileText.swiftUIColor)
-                            Spacer()
-                                .frame(width: 3.0)
-                            Image(systemName: "circle.fill")
-                                .font(.system(size: 2))
-                                .foregroundColor(Asset.fileText.swiftUIColor)
-                        }
+                        
+                        Asset.dotsHorizontalIcon.swiftUIImage
                     }
-                }).padding(.leading, 35.0)
-                    .padding(.trailing, 50.0)
+                })
             }
         }
     }
     
     private func getPhotoFiles() -> some View {
         VStack {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(L10n.ChatView.recentImage)
-                        .font(.system(size: 14))
-                        .foregroundColor(.white)
-                    Text("\(viewModel.allPhoto.count) изображений")
-                        .font(.system(size: 12))
-                        .foregroundColor(Asset.fileText.swiftUIColor)
+            ZStack {
+                Asset.dark2.swiftUIColor
+                
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(L10n.ChatView.recentImage)
+                            .font(FontFamily.Poppins.extraBold.swiftUIFont(size: 14))
+                            .foregroundColor(.white)
+                        Text("\(viewModel.allPhoto.count) \(L10n.PageContactView.images)")
+                            .font(FontFamily.Poppins.medium.swiftUIFont(size: 12))
+                            .foregroundColor(Asset.fileText.swiftUIColor)
+                    }
+                    Spacer()
+                    NavigationLink(destination: ImagesView(images: viewModel.allPhoto).navigationBarHidden(true)){
+                        Image(systemName: "chevron.down")
+                            .frame(width: 10, height: 10)
+                            .foregroundColor(Asset.fileText.swiftUIColor)
+                    }
                 }
-                Spacer()
-                NavigationLink(destination: ImagesView(images: viewModel.allPhoto).navigationBarHidden(true)){
-                    Image(systemName: "chevron.down")
-                        .frame(width: 10, height: 10)
-                        .foregroundColor(Asset.fileText.swiftUIColor)
-                }
-            }.padding(.leading, 50.0)
-                .padding(.trailing, 50.0)
+                .padding(.horizontal, 32)
+            }
+            .frame(height: 60)
+            .padding(.horizontal, -32)
             
-            Spacer().frame(height: 15.0)
+            Spacer().frame(height: 16.0)
             
             HStack {
                 ForEach(viewModel.recentPhotoFirst) { photo in
@@ -257,6 +330,7 @@ struct PageContactView: View {
                     Spacer().frame(width: 10)
                 }
             }
-        }.padding(.bottom, 20)
+        }
+        .padding(.bottom, 20)
     }
 }

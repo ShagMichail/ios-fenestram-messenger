@@ -14,6 +14,7 @@
 "general.unknown" = "Неизвестно";
 "general.loading" = "Идет загрузка...";
 "general.close" = "Закрыть";
+"general.error_title" = "Произошла ошибка";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "Здесь будет отображаться список ваших чатов";
@@ -57,6 +58,7 @@
 "profile_view.nickname" = "Никнейм";
 "profile_view.birthday" = "Дата рождения";
 "profile_view.email" = "Эл. почта";
+"profile_view.update_error_title" = "Ошибка обновления профиля";
 
 // MARK: - MainTabView
 "main_tab_view.contacts" = "Контакты";
@@ -90,3 +92,22 @@
 "correspondence_view.foto" = "Фото";
 "correspondence_view.image" = "Галерея";
 "correspondence_view.file" = "Файл";
+
+// MARK: - NewChatView
+"new_chat_view.title" = "Создание чата";
+"new_chat_view.select_contacts" = "Выберите участников чата";
+"new_chat_view.confirm.name_placeholder" = "Введите имя чата";
+"new_chat_view.confirm.contacts" = "Участники чата";
+
+// MARK: - PageContactView
+"page_contact_view.chat" = "Чат";
+"page_contact_view.files" = "файлов";
+"page_contact_view.images" = "изображений";
+"page_contact_view.participants" = "участников";
+"page_contact_view.participants_title" = "Участники чата";
+
+// MARK: - Error
+"error.user_does_not_exist" = "Пользователь не существует";
+"error.birthday_empty" = "Необходимо выбрать дату рождения";
+"error.avatar_empty" = "Необходимо выбрать фотографию";
+"error.token_empty" = "Ошибка аутентификационных данных";

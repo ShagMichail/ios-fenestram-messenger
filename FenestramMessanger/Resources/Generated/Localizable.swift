@@ -70,6 +70,17 @@ internal enum L10n {
     internal static let textMessage = L10n.tr("Localizable", "correspondence_view.text_message")
   }
 
+  internal enum Error {
+    /// Необходимо выбрать фотографию
+    internal static let avatarEmpty = L10n.tr("Localizable", "error.avatar_empty")
+    /// Необходимо выбрать дату рождения
+    internal static let birthdayEmpty = L10n.tr("Localizable", "error.birthday_empty")
+    /// Ошибка аутентификационных данных
+    internal static let tokenEmpty = L10n.tr("Localizable", "error.token_empty")
+    /// Пользователь не существует
+    internal static let userDoesNotExist = L10n.tr("Localizable", "error.user_does_not_exist")
+  }
+
   internal enum General {
     /// Отмена
     internal static let cancel = L10n.tr("Localizable", "general.cancel")
@@ -77,6 +88,8 @@ internal enum L10n {
     internal static let close = L10n.tr("Localizable", "general.close")
     /// Готово
     internal static let done = L10n.tr("Localizable", "general.done")
+    /// Произошла ошибка
+    internal static let errorTitle = L10n.tr("Localizable", "general.error_title")
     /// Идет загрузка...
     internal static let loading = L10n.tr("Localizable", "general.loading")
     /// Далее
@@ -94,6 +107,19 @@ internal enum L10n {
     internal static let contacts = L10n.tr("Localizable", "main_tab_view.contacts")
     /// Профиль
     internal static let profile = L10n.tr("Localizable", "main_tab_view.profile")
+  }
+
+  internal enum NewChatView {
+    /// Выберите участников чата
+    internal static let selectContacts = L10n.tr("Localizable", "new_chat_view.select_contacts")
+    /// Создание чата
+    internal static let title = L10n.tr("Localizable", "new_chat_view.title")
+    internal enum Confirm {
+      /// Участники чата
+      internal static let contacts = L10n.tr("Localizable", "new_chat_view.confirm.contacts")
+      /// Введите имя чата
+      internal static let namePlaceholder = L10n.tr("Localizable", "new_chat_view.confirm.name_placeholder")
+    }
   }
 
   internal enum NewContactView {
@@ -134,6 +160,19 @@ internal enum L10n {
     internal static let thirdDescription = L10n.tr("Localizable", "onboarding_view.third_description")
   }
 
+  internal enum PageContactView {
+    /// Чат
+    internal static let chat = L10n.tr("Localizable", "page_contact_view.chat")
+    /// файлов
+    internal static let files = L10n.tr("Localizable", "page_contact_view.files")
+    /// изображений
+    internal static let images = L10n.tr("Localizable", "page_contact_view.images")
+    /// участников
+    internal static let participants = L10n.tr("Localizable", "page_contact_view.participants")
+    /// Участники чата
+    internal static let participantsTitle = L10n.tr("Localizable", "page_contact_view.participants_title")
+  }
+
   internal enum PhoneView {
     /// Номер телефона
     internal static let phoneNumber = L10n.tr("Localizable", "phone_view.phone_number")
@@ -148,6 +187,8 @@ internal enum L10n {
     internal static let email = L10n.tr("Localizable", "profile_view.email")
     /// Никнейм
     internal static let nickname = L10n.tr("Localizable", "profile_view.nickname")
+    /// Ошибка обновления профиля
+    internal static let updateErrorTitle = L10n.tr("Localizable", "profile_view.update_error_title")
     internal enum SelectPhoto {
       /// Камера
       internal static let camera = L10n.tr("Localizable", "profile_view.select_photo.camera")

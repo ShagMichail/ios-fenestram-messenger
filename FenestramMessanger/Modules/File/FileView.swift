@@ -66,7 +66,7 @@ struct FileView: View {
         HStack {
             ZStack {
                 RoundedRectangle(cornerRadius: 30)
-                    .foregroundColor((isColorThema == false ? Asset.blue.swiftUIColor : Asset.green.swiftUIColor))
+                    .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                     .frame(width: 32, height: 32)
                 Asset.fileWhite.swiftUIImage
                     .resizable()
