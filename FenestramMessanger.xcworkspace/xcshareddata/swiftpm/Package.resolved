@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/MojtabaHs/iPhoneNumberField.git",
       "state" : {
-        "revision" : "a6b5fcc6c9b085285932fe4fe754086ab92409cb",
-        "version" : "0.6.1"
+        "revision" : "08140a73b6923f07df313fbc71034c70d431a5c9",
+        "version" : "0.10.0"
       }
     },
     {

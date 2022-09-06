@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PhoneNumberKit
 
 extension PhoneView {
     @MainActor
@@ -17,7 +18,7 @@ extension PhoneView {
         @Published var textPhone = "" {
             didSet {
                 if textPhone.prefix(1) != "+" {
-                    textPhone = "+7" + textPhone
+                    textPhone = "+" + textPhone
                 }
                 
                 formattedPhone = textPhone
@@ -33,13 +34,15 @@ extension PhoneView {
         @Published var isEditing: Bool = false
         @Published public var numberCount = false
         
+        private let phoneNumberKit = PhoneNumberKit()
+        
         
         //MARK: - Query functions
         
         func checkPhone() -> Bool {
             print("formatted phone: ", formattedPhone)
             
-            return formattedPhone.count == 12
+            return (try? phoneNumberKit.parse(formattedPhone)) != nil
         }
         
         func checkCode() {

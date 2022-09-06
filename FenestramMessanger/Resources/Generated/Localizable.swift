@@ -187,8 +187,6 @@ internal enum L10n {
     internal static let email = L10n.tr("Localizable", "profile_view.email")
     /// Никнейм
     internal static let nickname = L10n.tr("Localizable", "profile_view.nickname")
-    /// Ошибка обновления профиля
-    internal static let updateErrorTitle = L10n.tr("Localizable", "profile_view.update_error_title")
     internal enum SelectPhoto {
       /// Камера
       internal static let camera = L10n.tr("Localizable", "profile_view.select_photo.camera")
