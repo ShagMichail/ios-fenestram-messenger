@@ -81,7 +81,7 @@ struct ProfileView: View {
                     }
                 }
                 if viewModel.presentAlert {
-                    AlertView(show: $viewModel.presentAlert, textTitle: $viewModel.textTitleAlert, text: $viewModel.textAlert)
+                    AlertView(show: $viewModel.presentAlert, text: $viewModel.textAlert)
                 }
             }
             .onTapGesture {

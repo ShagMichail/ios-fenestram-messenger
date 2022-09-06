@@ -10,7 +10,6 @@ import SwiftUI
 struct AlertView: View {
     
     @Binding var show: Bool
-    @Binding var textTitle: String
     @Binding var text: String
     
     var body: some View {

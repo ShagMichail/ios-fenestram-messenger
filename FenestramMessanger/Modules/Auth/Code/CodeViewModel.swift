@@ -24,7 +24,6 @@ extension CodeView {
         @Published public var okCode = false
         
         @Published var presentAlert = false
-        @Published var textTitleAlert = ""
         @Published var textAlert = ""
         
         init(phoneNumber: String) {
@@ -50,14 +49,18 @@ extension CodeView {
                         self?.okCode = true
                     }
                     catch let error {
-
                         print("sign in failure with error: ", error.localizedDescription)
-                        self?.textTitleAlert = "sign in failure with error"
                         self?.textAlert = error.localizedDescription
                         self?.presentAlert = true
                     }
                 case .failure(let error):
                     print("login failure with error: ", error.localizedDescription)
+                    if error.localizedDescription == NetworkError.internetError.errorDescription {
+                        self?.textAlert = error.localizedDescription
+                        self?.presentAlert = true
+                        return
+                    }
+                    
                     self?.errorCode = true
                 }
             }
