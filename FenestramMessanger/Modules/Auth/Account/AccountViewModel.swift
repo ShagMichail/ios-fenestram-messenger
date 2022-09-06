@@ -49,7 +49,7 @@ extension AccountView {
             guard let birthdateTimeInterval = birthday?.timeIntervalSince1970 else {
                 print("birthday is empty!")
                 self.textTitleAlert = " "
-                self.textAlert = "birthday is empty!"
+                self.textAlert = L10n.Error.birthdayEmpty
                 self.presentAlert = true
                 return
             }
@@ -57,7 +57,7 @@ extension AccountView {
             guard let avatar = image else {
                 print("avatar is empty!")
                 self.textTitleAlert = " "
-                self.textAlert = "avatar is empty!"
+                self.textAlert = L10n.Error.avatarEmpty
                 self.presentAlert = true
                 return
             }
@@ -76,7 +76,7 @@ extension AccountView {
                         guard var userWithInfo = Settings.currentUser else {
                             print("user doesn't exist")
                             self.textTitleAlert = " "
-                            self.textAlert = "user doesn't exist"
+                            self.textAlert = L10n.Error.userDoesNotExist
                             self.presentAlert = true
                             return
                         }
@@ -91,7 +91,7 @@ extension AccountView {
                               let refreshToken = try? AuthController.getRefreshToken() else {
                             print("Can't take token")
                             self.textTitleAlert = " "
-                            self.textAlert = "Can't take token"
+                            self.textAlert = L10n.Error.tokenEmpty
                             self.presentAlert = true
                             return
                         }
@@ -103,13 +103,13 @@ extension AccountView {
                         }
                         catch let error {
                             print("update profile failure with error: ", error.localizedDescription)
-                            self.textTitleAlert = "update profile failure with error"
+                            self.textTitleAlert = L10n.ProfileView.updateErrorTitle
                             self.textAlert = error.localizedDescription
                             self.presentAlert = true
                         }
                     case .failure(let error):
                         print("update profile failure with error: ", error.localizedDescription)
-                        self.textTitleAlert = "update profile failure with error"
+                        self.textTitleAlert = L10n.ProfileView.updateErrorTitle
                         self.textAlert = error.localizedDescription
                         self.presentAlert = true
                     }

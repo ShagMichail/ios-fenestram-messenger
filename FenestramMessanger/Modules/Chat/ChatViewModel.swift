@@ -90,7 +90,7 @@ extension ChatView {
             guard let currentUserId = Settings.currentUser?.id else {
                 print("current user doesn't exist")
                 self.textTitleAlert = " "
-                self.textAlert = "current user doesn't exist"
+                self.textAlert = L10n.Error.userDoesNotExist
                 self.presentAlert = true
                 return
             }

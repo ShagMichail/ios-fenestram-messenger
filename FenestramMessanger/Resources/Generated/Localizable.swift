@@ -70,6 +70,17 @@ internal enum L10n {
     internal static let textMessage = L10n.tr("Localizable", "correspondence_view.text_message")
   }
 
+  internal enum Error {
+    /// Необходимо выбрать фотографию
+    internal static let avatarEmpty = L10n.tr("Localizable", "error.avatar_empty")
+    /// Необходимо выбрать дату рождения
+    internal static let birthdayEmpty = L10n.tr("Localizable", "error.birthday_empty")
+    /// Ошибка аутентификационных данных
+    internal static let tokenEmpty = L10n.tr("Localizable", "error.token_empty")
+    /// Пользователь не существует
+    internal static let userDoesNotExist = L10n.tr("Localizable", "error.user_does_not_exist")
+  }
+
   internal enum General {
     /// Отмена
     internal static let cancel = L10n.tr("Localizable", "general.cancel")
@@ -176,6 +187,8 @@ internal enum L10n {
     internal static let email = L10n.tr("Localizable", "profile_view.email")
     /// Никнейм
     internal static let nickname = L10n.tr("Localizable", "profile_view.nickname")
+    /// Ошибка обновления профиля
+    internal static let updateErrorTitle = L10n.tr("Localizable", "profile_view.update_error_title")
     internal enum SelectPhoto {
       /// Камера
       internal static let camera = L10n.tr("Localizable", "profile_view.select_photo.camera")
