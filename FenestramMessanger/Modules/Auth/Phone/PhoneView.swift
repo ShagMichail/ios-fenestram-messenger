@@ -100,14 +100,15 @@ struct PhoneView: View {
     
     private func getTextField() -> some View {
         VStack {
-            iPhoneNumberField("", text: $viewModel.textPhone)
+            iPhoneNumberField("", text: $viewModel.textPhone, configuration: { textField in
+                textField.keyboardType = .numberPad
+            })
                 .flagHidden(false)
                 .prefixHidden(false)
                 .foregroundColor(Asset.text.swiftUIColor)
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                 .multilineTextAlignment(.leading)
                 .accentColor(Asset.text.swiftUIColor)
-                .keyboardType(.numberPad)
                 .textContentType(.telephoneNumber)
                 .padding(.horizontal, 16)
         }
