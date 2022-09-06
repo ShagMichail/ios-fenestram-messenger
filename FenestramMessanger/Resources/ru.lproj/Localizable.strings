@@ -80,6 +80,7 @@
 "code_view.enter_code" = "Введите код из СМС";
 "code_view.incorrect_password" = "Неверный код";
 "code_view.send_again" = "Отправить заново?";
+"code_view.send_again_after" = "Отправить заново через %d с";
 
 // MARK: - PhoneView
 "phone_view.phone_number" = "Номер телефона";

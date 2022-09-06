@@ -56,8 +56,10 @@ struct CodeView: View {
             Text("FENESTRAM")
                 .font(FontFamily.Montserrat.semiBold.swiftUIFont(size: 18))
                 .foregroundColor(.white)
+            
             Spacer()
                 .frame(height: 100.0)
+            
             VStack (alignment: .trailing){
                 VStack(alignment: .leading){
                     Text(L10n.CodeView.enterCode)
@@ -74,6 +76,7 @@ struct CodeView: View {
             
             Spacer()
                 .frame(height: 50.0)
+            
             getButton()
            
         }
@@ -108,20 +111,27 @@ struct CodeView: View {
             if viewModel.errorCode {
                 Text(L10n.CodeView.incorrectPassword)
                     .foregroundColor(Asset.red.swiftUIColor)
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
+                
                 Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
+                    self.viewModel.sendAgain()
                 }) {
                     Text(L10n.CodeView.sendAgain)
-                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
+                        .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 12))
                         .foregroundColor(Color.red)
                 }
             } else {
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    Text(L10n.CodeView.sendAgain)
-                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 15))
+                if viewModel.showSendAgainButton {
+                    Button(action: {
+                        self.viewModel.sendAgain()
+                    }) {
+                        Text(L10n.CodeView.sendAgain)
+                            .font(FontFamily.Poppins.medium.swiftUIFont(size: 12))
+                            .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
+                    }
+                } else {
+                    Text(L10n.CodeView.sendAgainAfter(viewModel.timer))
+                        .font(FontFamily.Poppins.medium.swiftUIFont(size: 12))
                         .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                 }
             }

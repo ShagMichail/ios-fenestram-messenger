@@ -40,6 +40,10 @@ internal enum L10n {
     internal static let incorrectPassword = L10n.tr("Localizable", "code_view.incorrect_password")
     /// Отправить заново?
     internal static let sendAgain = L10n.tr("Localizable", "code_view.send_again")
+    /// Отправить заново через %d с
+    internal static func sendAgainAfter(_ p1: Int) -> String {
+      return L10n.tr("Localizable", "code_view.send_again_after", p1)
+    }
   }
 
   internal enum ContactView {

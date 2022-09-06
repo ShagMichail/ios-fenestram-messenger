@@ -80,6 +80,7 @@
 "code_view.enter_code" = "Enter code from SMS";
 "code_view.incorrect_password" = "Invalid code";
 "code_view.send_again" = "Send again?";
+"code_view.send_again_after" = "Send again in %d seconds";
 
 // MARK: - PhoneView
 "phone_view.phone_number" = "Phone number";
