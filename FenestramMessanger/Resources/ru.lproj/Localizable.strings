@@ -58,7 +58,6 @@
 "profile_view.nickname" = "Никнейм";
 "profile_view.birthday" = "Дата рождения";
 "profile_view.email" = "Эл. почта";
-"profile_view.update_error_title" = "Ошибка обновления профиля";
 "profile_view.save_success" = "Профиль успешно сохранен";
 
 // MARK: - MainTabView
@@ -82,6 +81,7 @@
 "code_view.enter_code" = "Введите код из СМС";
 "code_view.incorrect_password" = "Неверный код";
 "code_view.send_again" = "Отправить заново?";
+"code_view.send_again_after" = "Отправить заново через %d с";
 
 // MARK: - PhoneView
 "phone_view.phone_number" = "Номер телефона";

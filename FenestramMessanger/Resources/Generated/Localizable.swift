@@ -40,6 +40,10 @@ internal enum L10n {
     internal static let incorrectPassword = L10n.tr("Localizable", "code_view.incorrect_password")
     /// Отправить заново?
     internal static let sendAgain = L10n.tr("Localizable", "code_view.send_again")
+    /// Отправить заново через %d с
+    internal static func sendAgainAfter(_ p1: Int) -> String {
+      return L10n.tr("Localizable", "code_view.send_again_after", p1)
+    }
   }
 
   internal enum ContactView {
@@ -195,8 +199,6 @@ internal enum L10n {
     internal static let nickname = L10n.tr("Localizable", "profile_view.nickname")
     /// Профиль успешно сохранен
     internal static let saveSuccess = L10n.tr("Localizable", "profile_view.save_success")
-    /// Ошибка обновления профиля
-    internal static let updateErrorTitle = L10n.tr("Localizable", "profile_view.update_error_title")
     internal enum SelectPhoto {
       /// Камера
       internal static let camera = L10n.tr("Localizable", "profile_view.select_photo.camera")

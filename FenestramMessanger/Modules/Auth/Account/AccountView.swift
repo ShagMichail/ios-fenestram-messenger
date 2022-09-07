@@ -59,7 +59,7 @@ struct AccountView: View {
             .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
             
             if viewModel.presentAlert {
-                AlertView(show: $viewModel.presentAlert, textTitle: $viewModel.textTitleAlert, text: $viewModel.textAlert)
+                AlertView(show: $viewModel.presentAlert, text: viewModel.textAlert)
             }
         }
         .onTapGesture {
