@@ -54,9 +54,10 @@ struct SettingsView: View {
                 
                 getColorThemaSettings()
                 
-                Spacer().frame(height: 40)
-                
-                getInfoSettings()
+                // TODO: Пока не нужно
+//                Spacer().frame(height: 40)
+//
+//                getInfoSettings()
                 
                 Spacer().frame(height: 40)
                 
