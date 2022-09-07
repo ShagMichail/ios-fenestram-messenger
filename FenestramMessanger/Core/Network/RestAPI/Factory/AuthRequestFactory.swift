@@ -22,7 +22,7 @@ final class AuthRequestFactory: AbstractRequestFactory {
                                completion: @escaping (Result<T, Error>) -> Void) where T : Codable {
         self.request(requestOptions).response { response in
             guard let statusCode = response.response?.statusCode else {
-                completion(.failure(NetworkError.serverError))
+                completion(.failure(NetworkError.internetError))
                 return
             }
             switch statusCode {
@@ -57,7 +57,7 @@ final class AuthRequestFactory: AbstractRequestFactory {
                             completion: @escaping (Result<Bool, Error>) -> Void) {
         self.request(requestOptions).response { (response) in
             guard let statusCode = response.response?.statusCode else {
-                completion(.failure(NetworkError.serverError))
+                completion(.failure(NetworkError.internetError))
                 return
             }
             switch statusCode {

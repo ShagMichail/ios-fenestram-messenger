@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Network
 
 extension ContactsView {
     @MainActor
@@ -23,10 +24,10 @@ extension ContactsView {
         @Published var filteredContacts: [UserEntity] = []
         @Published var isLoading: Bool = false
         @Published var presentAlert = false
-        @Published var textTitleAlert = ""
         @Published var textAlert = ""
         
         private(set) var socketManager: SocketIOManager?
+        private let monitor = NWPathMonitor()
         
         init(socketManager: SocketIOManager?) {
             self.socketManager = socketManager
@@ -39,7 +40,6 @@ extension ContactsView {
         private func getContacts() {
             guard let currentUserId = Settings.currentUser?.id else {
                 print("current user doesn't exist")
-                self.textTitleAlert = " "
                 self.textAlert = L10n.Error.userDoesNotExist
                 self.presentAlert = true
                 return
@@ -54,7 +54,6 @@ extension ContactsView {
                     self?.allContacts = contacts.compactMap({$0.user}).filter({ $0.id != currentUserId })
                 case .failure(let error):
                     print("get contacts failure with error: ", error.localizedDescription)
-                    self?.textTitleAlert = "get contacts failure with error"
                     self?.textAlert = error.localizedDescription
                     self?.presentAlert = true
                 }

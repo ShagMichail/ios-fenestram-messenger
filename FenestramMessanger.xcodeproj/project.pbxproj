@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		57B6A98428A42D7C0051429F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57B6A98328A42D7C0051429F /* GoogleService-Info.plist */; };
 		6D3B8991ABEEC255BD8A2A57 /* Pods_FenestramMessanger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F33D57429665AA5A47D624DD /* Pods_FenestramMessanger.framework */; };
+		BD0D3ADC28C767E4004096A1 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = BD0D3ADB28C767E4004096A1 /* iPhoneNumberField */; };
 		BD74D88428805A880004C961 /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD74D87228805A860004C961 /* Montserrat-Black.ttf */; };
 		BD74D88528805A880004C961 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD74D87328805A860004C961 /* Montserrat-Bold.ttf */; };
 		BD74D88628805A880004C961 /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD74D87428805A860004C961 /* Montserrat-MediumItalic.ttf */; };
@@ -141,7 +142,6 @@
 		FCD305A2288968FD00491220 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD305A1288968FC00491220 /* AlertView.swift */; };
 		FCEE882428743FFD00268971 /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE882328743FFC00268971 /* PhoneView.swift */; };
 		FCEE88262874400700268971 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE88252874400700268971 /* CodeView.swift */; };
-		FCEE88292874409B00268971 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = FCEE88282874409B00268971 /* iPhoneNumberField */; };
 		FCF5A4352878AD2C0028FBD3 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF5A4342878AD2C0028FBD3 /* ContactsViewModel.swift */; };
 		FCF5A43728798EB70028FBD3 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF5A43628798EB70028FBD3 /* ChatView.swift */; };
 		FCF5A43B287DB5170028FBD3 /* OnboardingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF5A43A287DB5170028FBD3 /* OnboardingContainerView.swift */; };
@@ -295,8 +295,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCEE88292874409B00268971 /* iPhoneNumberField in Frameworks */,
 				FCD3059D2886ADCB00491220 /* BottomSheet in Frameworks */,
+				BD0D3ADC28C767E4004096A1 /* iPhoneNumberField in Frameworks */,
 				BD785F4E28C61D080075BC89 /* Kingfisher in Frameworks */,
 				FC17786C2875831700B0D979 /* Introspect in Frameworks */,
 				6D3B8991ABEEC255BD8A2A57 /* Pods_FenestramMessanger.framework in Frameworks */,
@@ -809,12 +809,12 @@
 			);
 			name = FenestramMessanger;
 			packageProductDependencies = (
-				FCEE88282874409B00268971 /* iPhoneNumberField */,
 				FC17786B2875831700B0D979 /* Introspect */,
 				BDF2E2DF287F1C1C00B7E182 /* Alamofire */,
 				BD980FBC288176280050F8B4 /* SocketIO */,
 				FCD3059C2886ADCB00491220 /* BottomSheet */,
 				BD785F4D28C61D080075BC89 /* Kingfisher */,
+				BD0D3ADB28C767E4004096A1 /* iPhoneNumberField */,
 			);
 			productName = FenestramMessanger;
 			productReference = BD7783A62872EBB50023032D /* FenestramMessanger.app */;
@@ -847,12 +847,12 @@
 			);
 			mainGroup = BD77839D2872EBB50023032D;
 			packageReferences = (
-				FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
 				FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket" */,
 				FCD3059B2886ADCA00491220 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 				BD785F4C28C61D080075BC89 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				BD0D3ADA28C767E4004096A1 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
 			);
 			productRefGroup = BD7783A72872EBB50023032D /* Products */;
 			projectDirPath = "";
@@ -1301,6 +1301,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		BD0D3ADA28C767E4004096A1 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MojtabaHs/iPhoneNumberField";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
 		BD785F4C28C61D080075BC89 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -1341,17 +1349,14 @@
 				kind = branch;
 			};
 		};
-		FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/MojtabaHs/iPhoneNumberField.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.6.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BD0D3ADB28C767E4004096A1 /* iPhoneNumberField */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BD0D3ADA28C767E4004096A1 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */;
+			productName = iPhoneNumberField;
+		};
 		BD785F4D28C61D080075BC89 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BD785F4C28C61D080075BC89 /* XCRemoteSwiftPackageReference "Kingfisher" */;
@@ -1376,11 +1381,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FCD3059B2886ADCA00491220 /* XCRemoteSwiftPackageReference "BottomSheet" */;
 			productName = BottomSheet;
-		};
-		FCEE88282874409B00268971 /* iPhoneNumberField */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FCEE88272874409B00268971 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */;
-			productName = iPhoneNumberField;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
