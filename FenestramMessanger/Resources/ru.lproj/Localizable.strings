@@ -111,3 +111,6 @@
 "error.birthday_empty" = "Необходимо выбрать дату рождения";
 "error.avatar_empty" = "Необходимо выбрать фотографию";
 "error.token_empty" = "Ошибка аутентификационных данных";
+"error.name_empty" = "Имя не может быть пустым";
+"error.email_incorrect" = "Некорректная электронная почта";
+"error.nickname_empty" = "Никнейм не может быть пустым";

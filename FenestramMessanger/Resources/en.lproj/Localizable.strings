@@ -111,3 +111,6 @@
 "error.birthday_empty" = "You must select a birthday";
 "error.avatar_empty" = "You must select a photo";
 "error.token_empty" = "Authentication data error";
+"error.name_empty" = "Name cannot be empty";
+"error.email_incorrect" = "Email incorrect";
+"error.nickname_empty" = "Nickname cannot be empty";
