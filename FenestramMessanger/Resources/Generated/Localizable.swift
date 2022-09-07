@@ -53,8 +53,12 @@ internal enum L10n {
     internal static let contactDontExist = L10n.tr("Localizable", "contact_view.contact_dont_exist")
     /// Телефонная книга пуста. Хотите добавить контакты?
     internal static let emptyText = L10n.tr("Localizable", "contact_view.empty_text")
+    /// пригласить
+    internal static let invateContact = L10n.tr("Localizable", "contact_view.invate_contact")
     /// Контакты
     internal static let title = L10n.tr("Localizable", "contact_view.title")
+    /// Пока не зарегистрированы в приложении
+    internal static let unregisterContactsTitle = L10n.tr("Localizable", "contact_view.unregister_contacts_title")
     internal enum Search {
       /// Поиск контакта
       internal static let placeholder = L10n.tr("Localizable", "contact_view.search.placeholder")
@@ -111,6 +115,11 @@ internal enum L10n {
     internal static let contacts = L10n.tr("Localizable", "main_tab_view.contacts")
     /// Профиль
     internal static let profile = L10n.tr("Localizable", "main_tab_view.profile")
+  }
+
+  internal enum MfMessageComposeView {
+    /// Привет, предлагаю тебе присоединиться ко мне в чат Fenestram! Чтобы бы мы всегда оставались на связи.
+    internal static let message = L10n.tr("Localizable", "mf_message_compose_view.message")
   }
 
   internal enum NewChatView {

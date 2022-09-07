@@ -10,6 +10,7 @@
 		57B6A98428A42D7C0051429F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57B6A98328A42D7C0051429F /* GoogleService-Info.plist */; };
 		6D3B8991ABEEC255BD8A2A57 /* Pods_FenestramMessanger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F33D57429665AA5A47D624DD /* Pods_FenestramMessanger.framework */; };
 		BD0D3ADC28C767E4004096A1 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = BD0D3ADB28C767E4004096A1 /* iPhoneNumberField */; };
+		BD0D3AE128C8C333004096A1 /* MFMessageComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0D3AE028C8C333004096A1 /* MFMessageComposeView.swift */; };
 		BD74D88428805A880004C961 /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD74D87228805A860004C961 /* Montserrat-Black.ttf */; };
 		BD74D88528805A880004C961 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD74D87328805A860004C961 /* Montserrat-Bold.ttf */; };
 		BD74D88628805A880004C961 /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD74D87428805A860004C961 /* Montserrat-MediumItalic.ttf */; };
@@ -152,6 +153,7 @@
 		1734F72B5ABD583B612C09E0 /* Pods-FenestramMessanger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FenestramMessanger.debug.xcconfig"; path = "Target Support Files/Pods-FenestramMessanger/Pods-FenestramMessanger.debug.xcconfig"; sourceTree = "<group>"; };
 		57B6A98328A42D7C0051429F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BD08ACD528B8CC88000F923D /* FenestramMessanger.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FenestramMessanger.entitlements; sourceTree = "<group>"; };
+		BD0D3AE028C8C333004096A1 /* MFMessageComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFMessageComposeView.swift; sourceTree = "<group>"; };
 		BD74D87228805A860004C961 /* Montserrat-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.ttf"; sourceTree = "<group>"; };
 		BD74D87328805A860004C961 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		BD74D87428805A860004C961 /* Montserrat-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-MediumItalic.ttf"; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 				FC3A2B56289174EF006E0948 /* FileNavigationView.swift */,
 				FC7A57162891AE5700ABF7BF /* ImagesNavigationView.swift */,
 				FC305CC3289AE731001ED651 /* CustomTextField.swift */,
+				BD0D3AE028C8C333004096A1 /* MFMessageComposeView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -1069,6 +1072,7 @@
 				BDF2E2DB287F1B1200B7E182 /* NetworkError.swift in Sources */,
 				BDF1F22528BCCFFC000D8499 /* Weak.swift in Sources */,
 				BDDB5AE12872ECE2002BF418 /* MainViewModel.swift in Sources */,
+				BD0D3AE128C8C333004096A1 /* MFMessageComposeView.swift in Sources */,
 				BDF2E2D0287F1B1200B7E182 /* AuthRequestRouter.swift in Sources */,
 				BD785F4728C204F60075BC89 /* ContactsRequestFactory.swift in Sources */,
 			);

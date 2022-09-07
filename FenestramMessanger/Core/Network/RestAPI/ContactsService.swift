@@ -44,15 +44,9 @@ public class ContactsService {
         var contactsAPI: [[String: Any]] = []
         contacts.forEach { contact in
             contact.phoneNumbers.forEach { phoneNumber in
-                let formattedPhoneNumber = phoneNumber
-                    .replacingOccurrences(of: "(", with: "")
-                    .replacingOccurrences(of: ")", with: "")
-                    .replacingOccurrences(of: "-", with: "")
-                    .replacingOccurrences(of: " ", with: "")
-                
                 contactsAPI.append([
                     "name": "\(contact.givenName) \(contact.familyName)",
-                    "phone": formattedPhoneNumber
+                    "phone": phoneNumber
                 ])
             }
         }

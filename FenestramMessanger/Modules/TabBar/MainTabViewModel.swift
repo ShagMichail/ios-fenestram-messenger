@@ -14,6 +14,7 @@ extension MainTabView {
         
         init(socketManager: SocketIOManager?) {
             self.socketManager = socketManager
+            socketManager?.checkConnect()
         }
     }
 }

@@ -42,6 +42,8 @@
 "contact_view.contact_dont_exist" = "This contact does not exist";
 "contact_view.add_contact" = "Add Contact";
 "contact_view.empty_text" = "The phonebook is empty. Would you like to add contacts?";
+"contact_view.unregister_contacts_title" = "Users are not registered in the application";
+"contact_view.invate_contact" = "invate";
 
 // MARK: - SettingsView
 "settings_view.title" = "Settings";
@@ -111,3 +113,6 @@
 "error.birthday_empty" = "You must select a birthday";
 "error.avatar_empty" = "You must select a photo";
 "error.token_empty" = "Authentication data error";
+
+// MARK: - MFMessageComposeView
+"mf_message_compose_view.message" = "Hello, I invite you to join me in the Fenestram chat! So that we can always stay in touch.";
