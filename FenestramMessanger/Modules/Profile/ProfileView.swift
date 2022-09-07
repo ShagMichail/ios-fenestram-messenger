@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import Kingfisher
+import AlertToast
 
 struct ProfileView: View {
     
@@ -88,6 +89,9 @@ struct ProfileView: View {
                 UIApplication.shared.endEditing()
             }
             .navigationBarHidden(true)
+            .toast(isPresenting: $viewModel.showSuccessToast, duration: 1, tapToDismiss: true) {
+                AlertToast(displayMode: .alert, type: .complete(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor), title: L10n.ProfileView.saveSuccess)
+            }
         }
     }
     

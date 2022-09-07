@@ -42,6 +42,8 @@ extension ProfileView {
         
         @Published var editProfile = false
         
+        @Published var showSuccessToast: Bool = false
+        
         init() {
             getProfile()
         }
@@ -138,6 +140,7 @@ extension ProfileView {
                         self.profile = userWithInfo
                         print("update profile success")
                         self.editProfile.toggle()
+                        self.showSuccessToast = true
                     }
                     catch let error {
                         print("update profile failure with error: ", error.localizedDescription)

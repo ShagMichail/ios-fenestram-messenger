@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		57B6A98428A42D7C0051429F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57B6A98328A42D7C0051429F /* GoogleService-Info.plist */; };
 		6D3B8991ABEEC255BD8A2A57 /* Pods_FenestramMessanger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F33D57429665AA5A47D624DD /* Pods_FenestramMessanger.framework */; };
+		BD0D3ADF28C8B07E004096A1 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = BD0D3ADE28C8B07E004096A1 /* AlertToast */; };
 		BD74D88428805A880004C961 /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD74D87228805A860004C961 /* Montserrat-Black.ttf */; };
 		BD74D88528805A880004C961 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD74D87328805A860004C961 /* Montserrat-Bold.ttf */; };
 		BD74D88628805A880004C961 /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD74D87428805A860004C961 /* Montserrat-MediumItalic.ttf */; };
@@ -300,6 +301,7 @@
 				BD785F4E28C61D080075BC89 /* Kingfisher in Frameworks */,
 				FC17786C2875831700B0D979 /* Introspect in Frameworks */,
 				6D3B8991ABEEC255BD8A2A57 /* Pods_FenestramMessanger.framework in Frameworks */,
+				BD0D3ADF28C8B07E004096A1 /* AlertToast in Frameworks */,
 				BD980FBD288176280050F8B4 /* SocketIO in Frameworks */,
 				BDF2E2E0287F1C1C00B7E182 /* Alamofire in Frameworks */,
 			);
@@ -815,6 +817,7 @@
 				BD980FBC288176280050F8B4 /* SocketIO */,
 				FCD3059C2886ADCB00491220 /* BottomSheet */,
 				BD785F4D28C61D080075BC89 /* Kingfisher */,
+				BD0D3ADE28C8B07E004096A1 /* AlertToast */,
 			);
 			productName = FenestramMessanger;
 			productReference = BD7783A62872EBB50023032D /* FenestramMessanger.app */;
@@ -853,6 +856,7 @@
 				BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket" */,
 				FCD3059B2886ADCA00491220 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 				BD785F4C28C61D080075BC89 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				BD0D3ADD28C8B07D004096A1 /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			productRefGroup = BD7783A72872EBB50023032D /* Products */;
 			projectDirPath = "";
@@ -1301,6 +1305,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		BD0D3ADD28C8B07D004096A1 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		BD785F4C28C61D080075BC89 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -1352,6 +1364,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BD0D3ADE28C8B07E004096A1 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BD0D3ADD28C8B07D004096A1 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
 		BD785F4D28C61D080075BC89 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BD785F4C28C61D080075BC89 /* XCRemoteSwiftPackageReference "Kingfisher" */;

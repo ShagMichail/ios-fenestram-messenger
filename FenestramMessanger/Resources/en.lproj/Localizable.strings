@@ -59,6 +59,7 @@
 "profile_view.birthday" = "Birthday";
 "profile_view.email" = "Email";
 "profile_view.update_error_title" = "Update profile failure";
+"profile_view.save_success" = "Profile saved successfully";
 
 // MARK: - MainTabView
 "main_tab_view.contacts" = "Contacts";
