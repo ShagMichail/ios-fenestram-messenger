@@ -53,18 +53,30 @@ extension ContactsView {
         
         //MARK: - Query functions
         
-        private func getContacts() {
+        func getContacts() {
             isLoading = true
             
             ContactsService.getContacts { [weak self] result in
                 switch result {
                 case .success(let contacts):
                     print("get contacts success")
+                    guard let currentUserId = Settings.currentUser?.id else {
+                        print("get current user failure")
+                        return
+                    }
+                    
                     var registerUsers: [UserEntity] = []
                     var unregisterContacts: [ContactEntity] = []
                     
                     contacts.forEach { contact in
+                        if contact.name.contains("Тест") {
+                            print("dddd")
+                        }
                         if let user = contact.user {
+                            guard user.id != currentUserId else {
+                                return
+                            }
+                            
                             registerUsers.append(user)
                         } else {
                             unregisterContacts.append(contact)

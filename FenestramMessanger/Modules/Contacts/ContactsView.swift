@@ -156,7 +156,7 @@ struct ContactsView: View {
     private func getButtonNewContact() -> some View {
         NavigationLink() {
             NewContactView(updateCompletion: {
-                
+                viewModel.getContacts()
             })
         } label: {
             ZStack {
@@ -258,7 +258,7 @@ struct ContactsView: View {
             
             NavigationLink() {
                 NewContactView(updateCompletion: {
-                    
+                    viewModel.getContacts()
                 })
             } label: {
                 Text(L10n.ContactView.addContact)

@@ -7,7 +7,7 @@
 
 import SwiftUI
 import iPhoneNumberField
-//import AlertToast
+import AlertToast
 
 struct NewContactView: View {
     
@@ -107,9 +107,14 @@ struct NewContactView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: title)
         .navigationBarItems(leading: btnBack)
-//        .toast(isPresenting: $showErrorToast, duration: 2, tapToDismiss: true) {
-//            AlertToast(displayMode: .alert, type: .error(Asset.red.swiftUIColor), title: "")
-//        }
+        .toast(isPresenting: $showSuccessToast, duration: 1, tapToDismiss: true, alert: {
+            AlertToast(displayMode: .alert, type: .complete(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor), title: L10n.NewContactView.Toast.successText)
+        }, completion: {
+            self.updateCompletion?()
+        })
+        .toast(isPresenting: $showErrorToast, duration: 2, tapToDismiss: true) {
+            AlertToast(displayMode: .alert, type: .error(Asset.red.swiftUIColor), title: L10n.NewContactView.Toast.failureText)
+        }
     }
     
     
