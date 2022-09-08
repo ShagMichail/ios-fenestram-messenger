@@ -30,9 +30,6 @@ extension ProfileView {
         @Published var showImagePicker: Bool = false
         
         @Published var isEmailValid : Bool   = false
-        
-        @Published var nameOk = false
-        @Published var nicNameOk = false
         @Published var textEmailOk = false
         
         @Published var isLoading: Bool = false
@@ -44,6 +41,8 @@ extension ProfileView {
         
         @Published var editProfile = false
         
+        @Published var showSuccessToast: Bool = false
+        
         init() {
             getProfile()
         }
@@ -52,6 +51,20 @@ extension ProfileView {
         //MARK: - Query functions
         
         func saveInfo() {
+            guard !name.isEmpty else {
+                print("name is empty!")
+                self.textAlert = L10n.Error.nameEmpty
+                self.presentAlert = true
+                return
+            }
+            
+            guard !nicName.isEmpty else {
+                print("nickname is empty!")
+                self.textAlert = L10n.Error.nicknameEmpty
+                self.presentAlert = true
+                return
+            }
+            
             guard let birthdateTimeInterval = birthday?.timeIntervalSince1970 else {
                 print("birthday is empty!")
                 self.textAlert = L10n.Error.birthdayEmpty
@@ -59,61 +72,77 @@ extension ProfileView {
                 return
             }
             
-            guard let avatar = image else {
-                print("avatar is empty!")
-                self.textAlert = L10n.Error.avatarEmpty
+            guard textFieldValidatorEmail(textEmail) else {
+                print("email incorrect!")
+                self.textAlert = L10n.Error.emailIncorrect
                 self.presentAlert = true
                 return
             }
             
-            uploadFile(image: avatar) { [weak self] avatarURL in
-                guard let self = self else { return }
+            if let avatar = image {
+                uploadFile(image: avatar) { [weak self] avatarURL in
+                    guard let self = self else { return }
+                    
+                    self.updateProfile(name: self.name, nickname: self.nicName, email: self.textEmail, birthdateTimeInterval: birthdateTimeInterval, avatarURL: avatarURL)
+                }
+            } else {
+                if let avatarURL = profile?.avatar {
+                    self.updateProfile(name: self.name, nickname: self.nicName, email: self.textEmail, birthdateTimeInterval: birthdateTimeInterval, avatarURL: avatarURL)
+                } else {
+                    print("avatar is empty!")
+                    self.textAlert = L10n.Error.avatarEmpty
+                    self.presentAlert = true
+                    return
+                }
+            }
+        }
+        
+        private func updateProfile(name: String, nickname: String, email: String, birthdateTimeInterval: TimeInterval, avatarURL: String) {
+            ProfileService.updateProfile(name: self.name, nickname: self.nicName, email: self.textEmail, birthdate: birthdateTimeInterval, avatar: avatarURL) { [weak self] result in
+                guard let self = self else {
+                    print("self doesn't exist")
+                    return
+                }
                 
-                ProfileService.updateProfile(name: self.name, nickname: self.nicName, email: self.textEmail, birthdate: birthdateTimeInterval, avatar: avatarURL) { [weak self] result in
-                    guard let self = self else {
-                        print("self doesn't exist")
+                switch result {
+                case .success:
+                    guard var userWithInfo = Settings.currentUser else {
+                        print("user doesn't exist")
+                        self.textAlert = L10n.Error.userDoesNotExist
+                        self.presentAlert = true
                         return
                     }
                     
-                    switch result {
-                    case .success:
-                        guard var userWithInfo = Settings.currentUser else {
-                            print("user doesn't exist")
-                            self.textAlert = L10n.Error.userDoesNotExist
-                            self.presentAlert = true
-                            return
-                        }
-                        
-                        userWithInfo.name = self.name
-                        userWithInfo.nickname = self.nicName
-                        userWithInfo.email = self.textEmail
-                        userWithInfo.birthdate = birthdateTimeInterval.description
-                        userWithInfo.avatar = avatarURL
-                        
-                        guard let accessToken = try? AuthController.getToken(),
-                              let refreshToken = try? AuthController.getRefreshToken() else {
-                            print("Can't take token")
-                            self.textAlert = L10n.Error.tokenEmpty
-                            self.presentAlert = true
-                            return
-                        }
-                        
-                        do {
-                            try AuthController.signIn(userWithInfo, accessToken: accessToken, refreshToken: refreshToken)
-                            self.profile = userWithInfo
-                            print("update profile success")
-                            self.editProfile.toggle()
-                        }
-                        catch let error {
-                            print("update profile failure with error: ", error.localizedDescription)
-                            self.textAlert = error.localizedDescription
-                            self.presentAlert = true
-                        }
-                    case .failure(let error):
+                    userWithInfo.name = self.name
+                    userWithInfo.nickname = self.nicName
+                    userWithInfo.email = self.textEmail
+                    userWithInfo.birthdate = birthdateTimeInterval.description
+                    userWithInfo.avatar = avatarURL
+                    
+                    guard let accessToken = try? AuthController.getToken(),
+                          let refreshToken = try? AuthController.getRefreshToken() else {
+                        print("Can't take token")
+                        self.textAlert = L10n.Error.tokenEmpty
+                        self.presentAlert = true
+                        return
+                    }
+                    
+                    do {
+                        try AuthController.signIn(userWithInfo, accessToken: accessToken, refreshToken: refreshToken)
+                        self.profile = userWithInfo
+                        print("update profile success")
+                        self.editProfile.toggle()
+                        self.showSuccessToast = true
+                    }
+                    catch let error {
                         print("update profile failure with error: ", error.localizedDescription)
                         self.textAlert = error.localizedDescription
                         self.presentAlert = true
                     }
+                case .failure(let error):
+                    print("update profile failure with error: ", error.localizedDescription)
+                    self.textAlert = error.localizedDescription
+                    self.presentAlert = true
                 }
             }
         }
@@ -199,6 +228,7 @@ extension ProfileView {
             self.nicName = profile.nickname ?? ""
             self.birthday = profile.birthday
             self.textEmail = profile.email ?? ""
+            self.image = nil
         }
     }
 }

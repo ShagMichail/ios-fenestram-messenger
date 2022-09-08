@@ -58,6 +58,7 @@
 "profile_view.nickname" = "Никнейм";
 "profile_view.birthday" = "Дата рождения";
 "profile_view.email" = "Эл. почта";
+"profile_view.save_success" = "Профиль успешно сохранен";
 
 // MARK: - MainTabView
 "main_tab_view.contacts" = "Контакты";
@@ -111,3 +112,6 @@
 "error.birthday_empty" = "Необходимо выбрать дату рождения";
 "error.avatar_empty" = "Необходимо выбрать фотографию";
 "error.token_empty" = "Ошибка аутентификационных данных";
+"error.name_empty" = "Имя не может быть пустым";
+"error.email_incorrect" = "Некорректная электронная почта";
+"error.nickname_empty" = "Никнейм не может быть пустым";
