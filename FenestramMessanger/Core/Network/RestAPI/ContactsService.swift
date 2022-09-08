@@ -64,4 +64,24 @@ public class ContactsService {
             completion(result)
         }
     }
+    
+    public static func postContacts(name: String, phoneNumber: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        let parameters: [String: Any] = [
+            "contacts": [
+                [
+                    "name": name,
+                    "phone": phoneNumber
+                ]
+            ]
+        ]
+        
+        if let prettyPrintedData = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) {
+            print("post contacts parameters:")
+            print(String(bytes: prettyPrintedData, encoding: String.Encoding.utf8) ?? "NIL")
+        }
+        
+        sendRequest(requestOptions: .postContacts(phoneNumbers: parameters)) { result in
+            completion(result)
+        }
+    }
 }

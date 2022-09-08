@@ -162,6 +162,12 @@ internal enum L10n {
       /// Номер телефона
       internal static let title = L10n.tr("Localizable", "new_contact_view.phone_number.title")
     }
+    internal enum Toast {
+      /// Не удалось создать контакт
+      internal static let failureText = L10n.tr("Localizable", "new_contact_view.toast.failure_text")
+      /// Контакт успешно создан
+      internal static let successText = L10n.tr("Localizable", "new_contact_view.toast.success_text")
+    }
   }
 
   internal enum OnboardingView {

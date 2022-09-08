@@ -36,6 +36,9 @@
 "new_contact_view.phone_number.empty_error" = "No phone number added";
 "new_contact_view.phone_number.incorrect_error" = "Invalid phone number";
 
+"new_contact_view.toast.success_text" = "Contact created successfully";
+"new_contact_view.toast.failure_text" = "Failed to create a contact";
+
 // MARK: - ContactsView
 "contact_view.title" = "Contacts";
 "contact_view.search.placeholder" = "Search for a contact";

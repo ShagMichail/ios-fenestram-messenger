@@ -36,6 +36,9 @@
 "new_contact_view.phone_number.empty_error" = "Нe добавлен номер телефона";
 "new_contact_view.phone_number.incorrect_error" = "Нeкорректный номер телефона";
 
+"new_contact_view.toast.success_text" = "Контакт успешно создан";
+"new_contact_view.toast.failure_text" = "Не удалось создать контакт";
+
 // MARK: - ContactsView
 "contact_view.title" = "Контакты";
 "contact_view.search.placeholder" = "Поиск контакта";

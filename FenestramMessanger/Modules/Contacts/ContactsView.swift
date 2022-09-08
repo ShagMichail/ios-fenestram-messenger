@@ -155,7 +155,9 @@ struct ContactsView: View {
     
     private func getButtonNewContact() -> some View {
         NavigationLink() {
-            NewContactView()
+            NewContactView(updateCompletion: {
+                
+            })
         } label: {
             ZStack {
                 Asset.addButtonIcon.swiftUIImage
@@ -255,7 +257,9 @@ struct ContactsView: View {
             Spacer()
             
             NavigationLink() {
-                NewContactView()
+                NewContactView(updateCompletion: {
+                    
+                })
             } label: {
                 Text(L10n.ContactView.addContact)
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
