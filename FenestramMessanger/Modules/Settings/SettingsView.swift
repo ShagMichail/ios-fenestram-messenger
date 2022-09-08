@@ -54,7 +54,7 @@ struct SettingsView: View {
                 
                 getColorThemaSettings()
                 
-                // TODO: Пока не нужно
+                // TODO: Ждем реализации дизайна экрана
 //                Spacer().frame(height: 40)
 //
 //                getInfoSettings()
