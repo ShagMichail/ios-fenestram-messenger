@@ -69,9 +69,6 @@ extension ContactsView {
                     var unregisterContacts: [ContactEntity] = []
                     
                     contacts.forEach { contact in
-                        if contact.name.contains("Тест") {
-                            print("dddd")
-                        }
                         if let user = contact.user {
                             guard user.id != currentUserId else {
                                 return
