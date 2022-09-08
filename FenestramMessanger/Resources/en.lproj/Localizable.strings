@@ -63,6 +63,7 @@
 "profile_view.nickname" = "Nickname";
 "profile_view.birthday" = "Birthday";
 "profile_view.email" = "Email";
+"profile_view.save_success" = "Profile saved successfully";
 
 // MARK: - MainTabView
 "main_tab_view.contacts" = "Contacts";
@@ -116,6 +117,9 @@
 "error.birthday_empty" = "You must select a birthday";
 "error.avatar_empty" = "You must select a photo";
 "error.token_empty" = "Authentication data error";
+"error.name_empty" = "Name cannot be empty";
+"error.email_incorrect" = "Email incorrect";
+"error.nickname_empty" = "Nickname cannot be empty";
 
 // MARK: - MFMessageComposeView
 "mf_message_compose_view.message" = "Hello, I invite you to join me in the Fenestram chat! So that we can always stay in touch.";

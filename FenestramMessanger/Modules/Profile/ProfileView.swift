@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import Kingfisher
+import AlertToast
 
 struct ProfileView: View {
     
@@ -88,6 +89,9 @@ struct ProfileView: View {
                 UIApplication.shared.endEditing()
             }
             .navigationBarHidden(true)
+            .toast(isPresenting: $viewModel.showSuccessToast, duration: 1, tapToDismiss: true) {
+                AlertToast(displayMode: .alert, type: .complete(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor), title: L10n.ProfileView.saveSuccess)
+            }
         }
     }
     
@@ -119,8 +123,8 @@ struct ProfileView: View {
         .padding(.leading, UIScreen.screenWidth - 90)
     }
     
-    private func getImage() -> some View {
-        ZStack (alignment: .trailing) {
+    private func getAvatar() -> some View {
+        VStack {
             if let setImage = viewModel.image {
                 Image(uiImage: setImage)
                     .resizable()
@@ -142,38 +146,44 @@ struct ProfileView: View {
                     .frame(width: 120, height: 120)
                     .clipShape(Circle())
             }
-            
+        }
+    }
+    
+    private func getImage() -> some View {
+        VStack {
             if viewModel.editProfile {
                 Button(action: {
                     viewModel.showSheet = true
                 }) {
-                    HStack {
-                        Image(systemName: "plus")
-                            .font(.title)
-                    }
-                    .padding(.all, 5.0)
-                    .foregroundColor(.white)
-                    .background(LinearGradient(gradient: Gradient(colors: [(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)]), startPoint: .leading, endPoint: .trailing))
-                    .cornerRadius(40)
-                    .frame(width: 50.0, height: 100.0, alignment: .center)
-                    .actionSheet(isPresented: $viewModel.showSheet) {
-                        ActionSheet(title: Text(L10n.ProfileView.SelectPhoto.title), message: Text(L10n.ProfileView.SelectPhoto.message), buttons: [
-                            .default(Text(L10n.ProfileView.SelectPhoto.photoLibrary)) {
-                                viewModel.showImagePicker = true
-                                self.sourceType = .photoLibrary
-                            },
-                            .default(Text(L10n.ProfileView.SelectPhoto.camera)) {
-                                viewModel.showImagePicker = true
-                                self.sourceType = .camera
-                            },
-                            .cancel()
-                        ])
+                    ZStack(alignment: .bottomTrailing) {
+                        getAvatar()
+                        
+                        HStack {
+                            Image(systemName: "plus")
+                                .font(.title)
+                        }
+                        .padding(.all, 5.0)
+                        .foregroundColor(.white)
+                        .background(LinearGradient(gradient: Gradient(colors: [(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)]), startPoint: .leading, endPoint: .trailing))
+                        .cornerRadius(40)
                     }
                 }
-                .padding(.bottom, -84)
-                .padding(.trailing, -7)
+                .actionSheet(isPresented: $viewModel.showSheet) {
+                    ActionSheet(title: Text(L10n.ProfileView.SelectPhoto.title), message: Text(L10n.ProfileView.SelectPhoto.message), buttons: [
+                        .default(Text(L10n.ProfileView.SelectPhoto.photoLibrary)) {
+                            viewModel.showImagePicker = true
+                            self.sourceType = .photoLibrary
+                        },
+                        .default(Text(L10n.ProfileView.SelectPhoto.camera)) {
+                            viewModel.showImagePicker = true
+                            self.sourceType = .camera
+                        },
+                        .cancel()
+                    ])
+                }
+            } else {
+                getAvatar()
             }
-            
         }
         .sheet(isPresented: $viewModel.showImagePicker) {
             ImagePicker(image: $viewModel.image, isShown: $viewModel.showImagePicker, sourceType: self.sourceType)}
@@ -246,6 +256,7 @@ struct ProfileView: View {
                     .multilineTextAlignment(.leading)
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
+                    .disabled(!viewModel.editProfile)
                 }
             }.background(border)
         }
@@ -267,6 +278,7 @@ struct ProfileView: View {
                         .padding(.trailing, 5)
                         .frame( height: 46.0)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
+                        .disabled(!viewModel.editProfile)
                 }
             }.background(border)
         }
@@ -308,6 +320,7 @@ struct ProfileView: View {
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.emailAddress)
                     .ignoresSafeArea(.keyboard)
+                    .disabled(!viewModel.editProfile)
                 }
             }.background(border)
         }
@@ -316,6 +329,7 @@ struct ProfileView: View {
     private func getButton() -> some View {
         HStack {
             Button(action: {
+                viewModel.cancelChanges()
                 viewModel.editProfile.toggle()
             }) {
                 Text(L10n.General.cancel)

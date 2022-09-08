@@ -83,6 +83,12 @@ internal enum L10n {
     internal static let avatarEmpty = L10n.tr("Localizable", "error.avatar_empty")
     /// Необходимо выбрать дату рождения
     internal static let birthdayEmpty = L10n.tr("Localizable", "error.birthday_empty")
+    /// Некорректная электронная почта
+    internal static let emailIncorrect = L10n.tr("Localizable", "error.email_incorrect")
+    /// Имя не может быть пустым
+    internal static let nameEmpty = L10n.tr("Localizable", "error.name_empty")
+    /// Никнейм не может быть пустым
+    internal static let nicknameEmpty = L10n.tr("Localizable", "error.nickname_empty")
     /// Ошибка аутентификационных данных
     internal static let tokenEmpty = L10n.tr("Localizable", "error.token_empty")
     /// Пользователь не существует
@@ -206,6 +212,8 @@ internal enum L10n {
     internal static let email = L10n.tr("Localizable", "profile_view.email")
     /// Никнейм
     internal static let nickname = L10n.tr("Localizable", "profile_view.nickname")
+    /// Профиль успешно сохранен
+    internal static let saveSuccess = L10n.tr("Localizable", "profile_view.save_success")
     internal enum SelectPhoto {
       /// Камера
       internal static let camera = L10n.tr("Localizable", "profile_view.select_photo.camera")
