@@ -52,12 +52,13 @@ struct ChatView: View {
 
                     VStack {
                         getHeader()
-                        if viewModel.isLoading {
+                        if viewModel.isLoading && viewModel.page == 1 {
                             LoadingView()
                         } else {
                             viewModel.chatList.isEmpty ? AnyView(getEmptyView()) : AnyView(getList())
                         }
                     }
+                    
                     if viewModel.presentAlert {
                         AlertView(show: $viewModel.presentAlert, text: viewModel.textAlert)
                     }
@@ -122,12 +123,17 @@ struct ChatView: View {
         ZStack {
             ScrollView(showsIndicators: false) {
                 if viewModel.chatList.count > 0 {
-                    ForEach(viewModel.chatList) { chat in
+                    LazyVStack {
+                        ForEach(viewModel.chatList) { chat in
+                            getChatRow(chat: chat)
+                                .onAppear() {
+                                    viewModel.loadMoreContent(currentItem: chat)
+                                }
+                        }
                         
-                        getChatRow(chat: chat)
-                            .onAppear() {
-                                viewModel.loadMoreContent(currentItem: chat)
-                            }
+                        if viewModel.isLoading && viewModel.page > 1 {
+                            ProgressView()
+                        }
                     }
                 } else {
                     HStack {
@@ -137,6 +143,9 @@ struct ChatView: View {
                             .padding(.horizontal)
                     }.frame(width: UIScreen.screenWidth)
                 }
+                
+                Spacer()
+                    .frame(height: 92)
             }
             .padding(.bottom, 1)
             

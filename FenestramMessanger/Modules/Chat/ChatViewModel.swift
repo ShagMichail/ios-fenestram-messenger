@@ -34,7 +34,7 @@ extension ChatView {
         @Published var isShowNewChatView: Bool = false
         
         private var totalPages = 0
-        private var page : Int = 1
+        private(set) var page : Int = 1
         
         private(set) var socketManager: SocketIOManager?
         
@@ -50,7 +50,7 @@ extension ChatView {
         //MARK: - PAGINATION
         
         func loadMoreContent(currentItem item: ChatEntity){
-            let thresholdIndex = self.chatList.index(self.chatList.endIndex, offsetBy: -1)
+            let thresholdIndex = self.chatList.last?.id
             if thresholdIndex == item.id, (page + 1) <= totalPages {
                 page += 1
                 getChatList()
@@ -72,8 +72,10 @@ extension ChatView {
             ChatService.getChats(page: page) { [weak self] result in
                 switch result {
                 case .success(let chatList):
-                    self?.totalPages = chatList.total ?? 0
-                    self?.chatList = chatList.data ?? []
+                    self?.totalPages = Int((Float(chatList.total ?? 0) / 10).rounded(.up))
+                    var buffer = self?.chatList ?? []
+                    buffer.append(contentsOf: chatList.data ?? [])
+                    self?.chatList = buffer
                     print("Get chat ava", chatList.data)
                 case .failure(let error):
                     print("get chat list failure with error:", error.localizedDescription)

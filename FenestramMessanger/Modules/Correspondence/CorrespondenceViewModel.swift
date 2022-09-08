@@ -113,7 +113,7 @@ extension CorrespondenceView {
             ChatService.getMessages(chatId: chatId, page: page) { [weak self] result in
                 switch result {
                 case .success(let chatList):
-                    self?.totalPages = (chatList.total ?? 0) / 10
+                    self?.totalPages = Int((Float(chatList.total ?? 0) / 10).rounded(.up))
                     print("first element: ", self?.allMessages.first ?? "no element")
                     self?.currentMessageId = self?.allMessages.first?.id
                     var buffer = self?.allMessages ?? []
