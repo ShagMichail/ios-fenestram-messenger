@@ -46,7 +46,7 @@ extension CorrespondenceView {
         
         private lazy var dateFormatter: DateFormatter = {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMMM"
+            dateFormatter.dateFormat = "d MMMM"
             return dateFormatter
         }()
         
