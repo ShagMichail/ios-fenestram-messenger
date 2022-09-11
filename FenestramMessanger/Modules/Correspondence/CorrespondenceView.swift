@@ -78,7 +78,7 @@ struct CorrespondenceView: View {
                         isShown: $viewModel.showImagePicker,
                         sourceType: self.sourceType)}
         .navigationBarHidden(true)
-        .onBackSwipe { presentationMode.wrappedValue.dismiss() }
+        .onBackSwipe(perform: { presentationMode.wrappedValue.dismiss() }, isEnabled: !viewModel.isLoading) 
         .onTapGesture { UIApplication.shared.endEditing() }
             /// Bottom sheet for attachment
         .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: bottomSheetOptions,

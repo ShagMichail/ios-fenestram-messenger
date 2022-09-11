@@ -50,6 +50,9 @@ extension CorrespondenceView {
             return dateFormatter
         }()
         
+        private var loadMoreDispatchWorkItem: DispatchWorkItem?
+        private var stopLoadMoreCount: Int = 0
+        
         var lastMessageId: Int?
         var currentMessageId: Int?
         
@@ -69,19 +72,31 @@ extension CorrespondenceView {
             }
         }
         
-        func loadMoreContent(currentItem item: MessageEntity){
+        func loadMoreContent(currentItem item: MessageEntity) {
             let thresholdIndex = self.allMessages.first?.id
             
             if thresholdIndex == item.id, (self.page + 1) <= self.totalPages {
-                self.page += 1
-                self.getMessages()
-            }
-        }
-        
-        func loadMoreContent(){
-            if (self.page + 1) <= self.totalPages {
-                self.page += 1
-                self.getMessages()
+                self.stopLoadMoreCount = 0
+                
+                loadMoreDispatchWorkItem = DispatchWorkItem(block: { [weak self] in
+                    guard let self = self else { return }
+                    
+                    self.page += 1
+                    self.getMessages()
+                })
+                
+                if let loadMoreDispatchWorkItem = loadMoreDispatchWorkItem {
+                    self.isLoading = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: loadMoreDispatchWorkItem)
+                }
+            } else {
+                if let loadMoreDispatchWorkItem = loadMoreDispatchWorkItem, stopLoadMoreCount > 0 {
+                    loadMoreDispatchWorkItem.cancel()
+                    self.loadMoreDispatchWorkItem = nil
+                    self.isLoading = false
+                } else {
+                    stopLoadMoreCount += 1
+                }
             }
         }
         

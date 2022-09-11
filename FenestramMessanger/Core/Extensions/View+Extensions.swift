@@ -60,15 +60,14 @@ extension View {
     }
     
     
-    func onBackSwipe(perform action: @escaping () -> Void) -> some View {
+    func onBackSwipe(perform action: @escaping () -> Void, isEnabled: Bool = true) -> some View {
         gesture(
             DragGesture()
                 .onEnded({ value in
-                    if value.startLocation.x < UIScreen.screenWidth && value.translation.width > 20 {
+                    if value.startLocation.x < UIScreen.screenWidth && value.translation.width > 20 && isEnabled {
                         action()
                     }
                 })
         )
     }
-    
 }
