@@ -55,13 +55,19 @@ struct CorrespondenceView: View {
                 VStack {
                     CorrespondenceNavigationView(contacts: viewModel.contacts, chat: viewModel.chat)
                     
-                    viewModel.messagesWithTime.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
+                    if viewModel.isLoading && viewModel.page == 1 {
+                        LoadingView()
+                    } else {
+                        viewModel.messagesWithTime.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
 
-                    Spacer()
-                    if $viewModel.allFoto.count != 0 {
-                        getPhotoMessage()
+                        Spacer()
+                        
+                        if $viewModel.allFoto.count != 0 {
+                            getPhotoMessage()
+                        }
+                        
+                        getMessageTextEditor()
                     }
-                    getMessageTextEditor()
                 }
                 Spacer().frame(height: 16)
                 
@@ -86,7 +92,7 @@ struct CorrespondenceView: View {
         ScrollViewReader { proxy in
             ScrollView() {
                 LazyVStack {
-                    if viewModel.isLoading {
+                    if viewModel.isLoading && viewModel.page > 1 {
                         HStack {
                             Spacer()
                             

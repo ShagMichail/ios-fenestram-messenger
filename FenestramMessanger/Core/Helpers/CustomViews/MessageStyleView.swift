@@ -17,14 +17,21 @@ struct MessageStyleView: View {
     var body: some View {
         if isCurrentUser {
             VStack(alignment: .trailing) {
-                Text(message.message)
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                    .foregroundColor(.white)
-                    .padding(10)
-                    .foregroundColor(Color.white)
-                    .background(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
-                    .cornerRadius(10)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
+                VStack {
+                    if #available(iOS 15.0, *) {
+                        Text(message.message)
+                            .textSelection(.enabled)
+                            
+                    } else {
+                        Text(message.message)
+                    }
+                }
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                .foregroundColor(.white)
+                .padding(10)
+                .background(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
+                .cornerRadius(10)
+                .frame(maxWidth: .infinity, alignment: .trailing)
                 
                 Spacer().frame(height: 5)
                 
@@ -61,12 +68,19 @@ struct MessageStyleView: View {
                             .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                             .foregroundColor(Asset.grey1.swiftUIColor)
                         
-                        Text(message.message)
-                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                            .foregroundColor(.white)
+                        VStack {
+                            if #available(iOS 15.0, *) {
+                                Text(message.message)
+                                    .textSelection(.enabled)
+                                
+                            } else {
+                                Text(message.message)
+                            }
+                        }
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                        .foregroundColor(.white)
                     }
                     .padding(10)
-                    .foregroundColor(Color.white)
                     .background(Asset.tabBar.swiftUIColor)
                     .cornerRadius(10)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -82,14 +96,21 @@ struct MessageStyleView: View {
             }
         } else {
             VStack(alignment: .leading) {
-                Text(message.message)
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                    .foregroundColor(.white)
-                    .padding(10)
-                    .foregroundColor(Color.white)
-                    .background(Asset.tabBar.swiftUIColor)
-                    .cornerRadius(10)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                VStack {
+                    if #available(iOS 15.0, *) {
+                        Text(message.message)
+                            .textSelection(.enabled)
+                        
+                    } else {
+                        Text(message.message)
+                    }
+                }
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                .foregroundColor(.white)
+                .padding(10)
+                .background(Asset.tabBar.swiftUIColor)
+                .cornerRadius(10)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Spacer().frame(height: 5)
                 

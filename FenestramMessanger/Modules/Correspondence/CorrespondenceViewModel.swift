@@ -42,7 +42,7 @@ extension CorrespondenceView {
         private var socketManager: SocketIOManager?
         
         private var totalPages = 0
-        private var page: Int = 1
+        private(set) var page: Int = 1
         
         private lazy var dateFormatter: DateFormatter = {
             let dateFormatter = DateFormatter()

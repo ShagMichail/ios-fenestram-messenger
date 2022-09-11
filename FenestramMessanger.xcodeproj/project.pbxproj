@@ -1305,20 +1305,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		BD0D3ADD28C8B07D004096A1 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/elai950/AlertToast";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		BD0D3ADA28C767E4004096A1 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MojtabaHs/iPhoneNumberField";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.9.0;
+			};
+		};
+		BD0D3ADD28C8B07D004096A1 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 		BD785F4C28C61D080075BC89 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
@@ -1364,15 +1364,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		BD0D3ADE28C8B07E004096A1 /* AlertToast */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BD0D3ADD28C8B07D004096A1 /* XCRemoteSwiftPackageReference "AlertToast" */;
-			productName = AlertToast;
-		};
 		BD0D3ADB28C767E4004096A1 /* iPhoneNumberField */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BD0D3ADA28C767E4004096A1 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */;
 			productName = iPhoneNumberField;
+		};
+		BD0D3ADE28C8B07E004096A1 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BD0D3ADD28C8B07D004096A1 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
 		};
 		BD785F4D28C61D080075BC89 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
