@@ -13,6 +13,7 @@ struct ImagesView: View {
     //MARK: - Properties
     
     @State var uiTabarController: UITabBarController?
+    @State private var selectedImage: UIImage?
     
     private var columns: [GridItem] = [
         GridItem(.fixed(UIScreen.screenWidth/3)),
@@ -35,6 +36,23 @@ struct ImagesView: View {
                 ImagesNavigationView()
                 getListPhoto()
             }
+            
+            if let selectedImage = selectedImage {
+                ZStack {
+                    Color.black
+                        .opacity(0.3)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            self.selectedImage = nil
+                        }
+                    
+                    Image(uiImage: selectedImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 200, height: 200)
+                        .cornerRadius(20)
+                }
+            }
         }
         .introspectTabBarController { (UITabBarController) in
             UITabBarController.tabBar.isHidden = true
@@ -42,6 +60,7 @@ struct ImagesView: View {
         }.onDisappear{
             uiTabarController?.tabBar.isHidden = false
         }
+        .navigationBarHidden(true)
     }
     
     
@@ -53,6 +72,9 @@ struct ImagesView: View {
                 ForEach(images) { image in
                     Image(uiImage: image.image)
                         .resizable()
+                        .onTapGesture {
+                            selectedImage = image.image
+                        }
                 }
             }
         }

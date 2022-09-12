@@ -303,12 +303,8 @@ struct PageContactView: View {
                             .font(FontFamily.Poppins.medium.swiftUIFont(size: 12))
                             .foregroundColor(Asset.fileText.swiftUIColor)
                     }
+                    
                     Spacer()
-                    NavigationLink(destination: ImagesView(images: viewModel.allPhoto).navigationBarHidden(true)){
-                        Image(systemName: "chevron.down")
-                            .frame(width: 10, height: 10)
-                            .foregroundColor(Asset.fileText.swiftUIColor)
-                    }
                 }
                 .padding(.horizontal, 32)
             }
@@ -342,19 +338,21 @@ struct PageContactView: View {
                     }, label: {
                         HStack {
                             if photo.id == 5 && viewModel.allPhoto.count > 6 {
-                                ZStack {
-                                    Image(uiImage: photo.image)
-                                        .resizable()
-                                        .frame(width: 90, height: 90, alignment: .leading)
-                                        .cornerRadius(15)
-                                    
-                                    ZStack{
-                                        RoundedRectangle(cornerRadius: 15)
-                                            .frame(width: 90, height: 90)
-                                            .foregroundColor(Color.primary.opacity(0.35))
-                                        Text("\(viewModel.allPhoto.count - 6)+")
-                                            .foregroundColor(Color.white)
-                                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 24))
+                                NavigationLink(destination: ImagesView(images: viewModel.allPhoto)){
+                                    ZStack {
+                                        Image(uiImage: photo.image)
+                                            .resizable()
+                                            .frame(width: 90, height: 90, alignment: .leading)
+                                            .cornerRadius(15)
+                                        
+                                        ZStack{
+                                            RoundedRectangle(cornerRadius: 15)
+                                                .frame(width: 90, height: 90)
+                                                .foregroundColor(Color.primary.opacity(0.35))
+                                            Text("\(viewModel.allPhoto.count - 6)+")
+                                                .foregroundColor(Color.white)
+                                                .font(FontFamily.Poppins.regular.swiftUIFont(size: 24))
+                                        }
                                     }
                                 }
                             } else {
