@@ -50,6 +50,8 @@ struct DatePickerTextField: UIViewRepresentable {
     func updateUIView(_ uiView: UITextField, context: Context) {
         if let selectedDate = date {
             uiView.text = Date.dateFormatter.string(from: selectedDate)
+        } else {
+            uiView.text = nil
         }
     }
     

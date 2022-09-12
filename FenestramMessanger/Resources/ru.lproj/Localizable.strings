@@ -59,6 +59,8 @@
 "profile_view.birthday" = "Дата рождения";
 "profile_view.email" = "Эл. почта";
 "profile_view.save_success" = "Профиль успешно сохранен";
+"profile_view.save_error" = "Не удалось сохранить профиль";
+"profile_view.save_progress" = "Идет сохранение...";
 
 // MARK: - MainTabView
 "main_tab_view.contacts" = "Контакты";

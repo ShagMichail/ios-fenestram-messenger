@@ -21,8 +21,8 @@ class RequestFactory {
         let configuration = URLSessionConfiguration.default
         configuration.httpShouldSetCookies = false
         configuration.urlCache = nil
-        configuration.timeoutIntervalForRequest = 60
-        configuration.timeoutIntervalForResource = 120
+        configuration.timeoutIntervalForRequest = 20
+        configuration.timeoutIntervalForResource = 60
         self.sessionManager = Session(configuration: configuration)
     }
     

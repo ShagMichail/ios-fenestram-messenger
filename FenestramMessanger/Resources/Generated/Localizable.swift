@@ -197,6 +197,10 @@ internal enum L10n {
     internal static let email = L10n.tr("Localizable", "profile_view.email")
     /// Никнейм
     internal static let nickname = L10n.tr("Localizable", "profile_view.nickname")
+    /// Не удалось сохранить профиль
+    internal static let saveError = L10n.tr("Localizable", "profile_view.save_error")
+    /// Идет сохранение...
+    internal static let saveProgress = L10n.tr("Localizable", "profile_view.save_progress")
     /// Профиль успешно сохранен
     internal static let saveSuccess = L10n.tr("Localizable", "profile_view.save_success")
     internal enum SelectPhoto {

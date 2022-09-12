@@ -59,6 +59,8 @@
 "profile_view.birthday" = "Birthday";
 "profile_view.email" = "Email";
 "profile_view.save_success" = "Profile saved successfully";
+"profile_view.save_error" = "Couldn't save profile";
+"profile_view.save_progress" = "Saving in progress...";
 
 // MARK: - MainTabView
 "main_tab_view.contacts" = "Contacts";
