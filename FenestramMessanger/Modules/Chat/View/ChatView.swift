@@ -85,12 +85,13 @@ struct ChatView: View {
                 .foregroundColor(Color.white)
                 .font(FontFamily.Montserrat.semiBold.swiftUIFont(size: 22))
             Spacer()
-            NavigationLink() {
-                //Search chats
-            } label: {
-                Image(systemName: "magnifyingglass").foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
-                    .font(.system(size: 20))
-            }
+            // TODO: Ждем реализации поиска чатов на бэке
+//            NavigationLink() {
+//                //Search chats
+//            } label: {
+//                Image(systemName: "magnifyingglass").foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
+//                    .font(.system(size: 20))
+//            }
         }
         .padding()
     }
