@@ -16,7 +16,7 @@ extension ContactsView {
         //MARK: - Properties
         
         @Published var searchText = ""
-        @Published var registerUsers: [UserEntity] = [] {
+        @Published var registerContacts: [ContactEntity] = [] {
             didSet {
                 filterContent()
             }
@@ -26,8 +26,8 @@ extension ContactsView {
                 filterContent()
             }
         }
-        @Published var filteredUsers: [UserEntity] = []
-        @Published var filteredContacts: [ContactEntity] = []
+        @Published var filteredRegisterContacts: [ContactEntity] = []
+        @Published var filteredUnregisterContacts: [ContactEntity] = []
         @Published var isLoading: Bool = false
         @Published var presentAlert = false
         @Published var textAlert = ""
@@ -65,7 +65,7 @@ extension ContactsView {
                         return
                     }
                     
-                    var registerUsers: [UserEntity] = []
+                    var registerUsers: [ContactEntity] = []
                     var unregisterContacts: [ContactEntity] = []
                     
                     contacts.forEach { contact in
@@ -74,13 +74,13 @@ extension ContactsView {
                                 return
                             }
                             
-                            registerUsers.append(user)
+                            registerUsers.append(contact)
                         } else {
                             unregisterContacts.append(contact)
                         }
                     }
                     
-                    self?.registerUsers = registerUsers
+                    self?.registerContacts = registerUsers
                     self?.unregisterContacts = unregisterContacts
                 case .failure(let error):
                     print("get contacts failure with error: ", error.localizedDescription)
@@ -111,28 +111,26 @@ extension ContactsView {
             let lowercasedSearchText = searchText.lowercased()
             
             if searchText.count > 0 {
-                var matchingUsers: [UserEntity] = []
-                var matchingContacts: [ContactEntity] = []
+                var matchingRegisterContacts: [ContactEntity] = []
+                var matchingUnregisterContacts: [ContactEntity] = []
                 
-                registerUsers.forEach { user in
-                    guard let searchContent = user.name else { return }
-                    
-                    if searchContent.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil {
-                        matchingUsers.append(user)
+                registerContacts.forEach { contact in
+                    if contact.name.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil || contact.phone.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil {
+                        matchingRegisterContacts.append(contact)
                     }
                 }
                 
                 unregisterContacts.forEach { contact in
-                    if contact.name.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil {
-                        matchingContacts.append(contact)
+                    if contact.name.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil || contact.phone.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil {
+                        matchingUnregisterContacts.append(contact)
                     }
                 }
                 
-                self.filteredUsers = matchingUsers
-                self.filteredContacts = matchingContacts
+                self.filteredRegisterContacts = matchingRegisterContacts
+                self.filteredUnregisterContacts = matchingUnregisterContacts
             } else {
-                filteredUsers = registerUsers
-                filteredContacts = unregisterContacts
+                filteredRegisterContacts = registerContacts
+                filteredUnregisterContacts = unregisterContacts
             }
         }
         

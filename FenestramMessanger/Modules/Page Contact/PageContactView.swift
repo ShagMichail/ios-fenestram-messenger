@@ -15,7 +15,7 @@ struct PageContactView: View {
     
     @State var uiTabarController: UITabBarController?
     
-    var contacts: [UserEntity]
+    var contacts: [ContactEntity]
     var chat: ChatEntity?
     
     @StateObject private var viewModel: ViewModel
@@ -24,7 +24,7 @@ struct PageContactView: View {
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
-    init(contacts: [UserEntity], chat: ChatEntity?) {
+    init(contacts: [ContactEntity], chat: ChatEntity?) {
         _viewModel = StateObject(wrappedValue: ViewModel())
         self.contacts = contacts
         self.chat = chat
@@ -108,7 +108,7 @@ struct PageContactView: View {
     
     private func getPhoto() -> some View {
         VStack {
-            if let avatarString = (chat?.isGroup ?? false) ? chat?.avatar : contacts.first?.avatar,
+            if let avatarString = (chat?.isGroup ?? false) ? chat?.avatar : contacts.first?.user?.avatar,
                let url = URL(string: Constants.baseNetworkURLClear + avatarString),
                !avatarString.isEmpty {
                 KFImage(url)
@@ -147,7 +147,7 @@ struct PageContactView: View {
                         .font(FontFamily.Poppins.medium.swiftUIFont(size: 14))
                         .foregroundColor(Asset.grey2.swiftUIColor)
                 } else {
-                    Text("@\(contacts.first?.nickname ?? " ")")
+                    Text("@\(contacts.first?.user?.nickname ?? " ")")
                         .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                 }
@@ -210,7 +210,7 @@ struct PageContactView: View {
             ForEach(contacts) { contact in
                 HStack {
                     VStack {
-                        if let avatarString = contact.avatar,
+                        if let avatarString = contact.user?.avatar,
                            let url = URL(string: Constants.baseNetworkURLClear + avatarString),
                            !avatarString.isEmpty {
                             KFImage(url)
@@ -233,7 +233,7 @@ struct PageContactView: View {
                     }
                     .padding(.trailing, 8)
  
-                    Text(contact.name ?? L10n.General.unknown)
+                    Text(contact.name)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                         .foregroundColor(.white)
                     

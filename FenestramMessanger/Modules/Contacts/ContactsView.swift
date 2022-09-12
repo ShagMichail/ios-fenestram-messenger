@@ -46,7 +46,7 @@ struct ContactsView: View {
                     if viewModel.isLoading {
                         LoadingView()
                     } else {
-                        if viewModel.registerUsers.count != 0 {
+                        if viewModel.registerContacts.count != 0 {
                             getSearchView()
                             
                             Spacer().frame(height: 20.0)
@@ -112,12 +112,12 @@ struct ContactsView: View {
             VStack(alignment: .trailing) {
                 ScrollView(showsIndicators: false) {
                     LazyVStack {
-                        if viewModel.filteredUsers.count > 0 || viewModel.filteredContacts.count > 0 {
-                            ForEach(viewModel.filteredUsers) { user in
-                                getUserRow(user: user)
+                        if viewModel.filteredRegisterContacts.count > 0 || viewModel.filteredUnregisterContacts.count > 0 {
+                            ForEach(viewModel.filteredRegisterContacts) { contact in
+                                getContactRow(contact: contact, isRegister: true)
                             }
                             
-                            if viewModel.filteredContacts.count > 0 {
+                            if viewModel.filteredUnregisterContacts.count > 0 {
                                 ZStack {
                                     Asset.dark1.swiftUIColor
                                         .ignoresSafeArea()
@@ -130,8 +130,8 @@ struct ContactsView: View {
                                 .padding(.top, 32)
                                 .padding(.bottom, 16)
                                 
-                                ForEach(viewModel.filteredContacts) { contact in
-                                    getContactRow(contact: contact)
+                                ForEach(viewModel.filteredUnregisterContacts) { contact in
+                                    getContactRow(contact: contact, isRegister: false)
                                 }
                             }
                         } else {
@@ -172,46 +172,23 @@ struct ContactsView: View {
         }
     }
     
-    private func getUserRow(user: UserEntity) -> some View {
-        NavigationLink() {
-            CorrespondenceView(contacts: [user], chat: nil, socketManager: viewModel.socketManager).navigationBarHidden(true)
-        } label: {
-            HStack {
-                VStack {
-                    if let avatarString = user.avatar,
-                       let url = URL(string: Constants.baseNetworkURLClear + avatarString),
-                       !avatarString.isEmpty {
-                        KFImage(url)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 40.0, height: 40.0)
-                            .clipShape(Circle())
-                    } else {
-                        Asset.photo.swiftUIImage
-                            .resizable()
-                            .frame(width: 40.0, height: 40.0)
-                    }
-                }
-                .padding(.horizontal)
-                
-                Text(user.name ?? L10n.General.unknown)
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
-                    .foregroundColor(.white)
-                
-                Spacer()
-            }
-            .padding(.horizontal)
-        }
-    }
-    
-    private func getContactRow(contact: ContactEntity) -> some View {
-        HStack {
+    private func getContactRow(contact: ContactEntity, isRegister: Bool) -> some View {
+        let contentView = HStack {
             VStack {
-                Image(uiImage: viewModel.getUnregisterContactAvatar(contact: contact))
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 40.0, height: 40.0)
-                    .clipShape(Circle())
+                if let avatarURL = contact.user?.avatar,
+                   let url = URL(string: Constants.baseNetworkURLClear + avatarURL) {
+                    KFImage(url)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 40.0, height: 40.0)
+                        .clipShape(Circle())
+                } else {
+                    Image(uiImage: viewModel.getUnregisterContactAvatar(contact: contact))
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 40.0, height: 40.0)
+                        .clipShape(Circle())
+                }
             }
             .padding(.horizontal)
             
@@ -222,24 +199,36 @@ struct ContactsView: View {
             
             Spacer()
             
-            Button {
-                viewModel.selectedContact = contact
-                viewModel.isShowMFMessageView = true
-            } label: {
-                VStack {
-                    Text(L10n.ContactView.invateContact)
-                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
-                        .foregroundColor(Asset.grey1.swiftUIColor)
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 4)
+            if !isRegister {
+                Button {
+                    viewModel.selectedContact = contact
+                    viewModel.isShowMFMessageView = true
+                } label: {
+                    VStack {
+                        Text(L10n.ContactView.invateContact)
+                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
+                            .foregroundColor(Asset.grey1.swiftUIColor)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 4)
+                    }
+                    .background(Asset.dark1.swiftUIColor)
+                    .cornerRadius(4)
                 }
-                .background(Asset.dark1.swiftUIColor)
-                .cornerRadius(4)
             }
         }
         .padding(.horizontal)
         .sheet(isPresented: $viewModel.isShowMFMessageView) {
             MFMessageComposeView(recipients: [viewModel.selectedContact?.phone ?? ""], isShown: $viewModel.isShowMFMessageView)
+        }
+        
+        if isRegister {
+            return AnyView(NavigationLink {
+                CorrespondenceView(contacts: [contact], chat: nil, socketManager: viewModel.socketManager).navigationBarHidden(true)
+            } label: {
+                contentView
+            })
+        } else {
+            return AnyView(contentView)
         }
     }
     

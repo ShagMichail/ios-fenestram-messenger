@@ -15,7 +15,7 @@ extension ChatView {
         //MARK: - Properties
         
         @Published var chatList: [ChatEntity] = []
-        @Published var allContacts: [UserEntity] = []
+        @Published var allContacts: [ContactEntity] = []
         
         @Published var presentAlert = false
         @Published var textAlert = ""
@@ -101,7 +101,7 @@ extension ChatView {
                 switch result {
                 case .success(let contacts):
                     print("get contacts success")
-                    self?.allContacts = contacts.compactMap({$0.user}).filter({ $0.id != currentUserId })
+                    self?.allContacts = contacts.filter({ $0.user?.id != currentUserId })
                 case .failure(let error):
                     print("get contacts failure with error: ", error.localizedDescription)
                     self?.textAlert = error.localizedDescription
@@ -111,7 +111,7 @@ extension ChatView {
             }
         }
         
-        func getContact(with chat: ChatEntity?) -> UserEntity? {
+        func getContact(with chat: ChatEntity?) -> ContactEntity? {
             guard let userId = Settings.currentUser?.id,
                   let contactId = chat?.usersId.first(where: { $0 != userId }),
                   !(chat?.isGroup ?? false) else { return nil }
@@ -144,12 +144,12 @@ extension ChatView {
             }
         }
         
-        func getUserEntity(from chat: ChatEntity?) -> [UserEntity] {
-            var correspondent: [UserEntity] = []
+        func getUserEntity(from chat: ChatEntity?) -> [ContactEntity] {
+            var correspondent: [ContactEntity] = []
             guard let allUsers = chat?.usersId else { return correspondent }
             for i in allUsers {
                 for k in allContacts {
-                    if k.id != Settings.currentUser?.id && k.id == i {
+                    if k.user?.id != Settings.currentUser?.id && k.user?.id == i {
                         correspondent.append(k)
                     }
                 }
@@ -166,7 +166,7 @@ extension ChatView {
                 for userId in index ... allContacts.endIndex - 1 {
                     if userChatId.hashValue == allContacts[userId].id.hashValue {
                         result.append("@")
-                        result.append(allContacts[userId].nickname ?? "")
+                        result.append(allContacts[userId].user?.nickname ?? "")
                         result.append(" ")
                     }
                 }

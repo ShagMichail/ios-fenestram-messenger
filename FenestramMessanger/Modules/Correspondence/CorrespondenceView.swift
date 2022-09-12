@@ -38,7 +38,7 @@ struct CorrespondenceView: View {
                                                              .background({ AnyView(Asset.buttonAlert.swiftUIColor) }),
                                                              .cornerRadius(30)]
     
-    init(contacts: [UserEntity], chat: ChatEntity?, socketManager: SocketIOManager?) {
+    init(contacts: [ContactEntity], chat: ChatEntity?, socketManager: SocketIOManager?) {
         _viewModel = StateObject(wrappedValue: ViewModel(chat: chat, contacts: contacts, socketManager: socketManager))
         UITextView.appearance().backgroundColor = .clear
     }
@@ -223,7 +223,7 @@ struct CorrespondenceView: View {
                 Button {
                     if !viewModel.textMessage.isEmpty {
                         if viewModel.chat == nil {
-                            viewModel.createChat(chatName: viewModel.contacts[0].name ?? "", usersId: viewModel.getUserEntityIds(contactId: viewModel.contacts[0].id))
+                            viewModel.createChat(chatName: viewModel.contacts[0].name, usersId: viewModel.getUserEntityIds(contactId: viewModel.contacts[0].id))
                         } else {
                             viewModel.postMessage(chat: viewModel.chat)
                         }

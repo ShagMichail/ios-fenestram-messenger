@@ -31,7 +31,7 @@ extension CorrespondenceView {
         @Published var textAlert = ""
         @Published var allFoto: [PhotoEntity] = []
         
-        let contacts: [UserEntity]
+        let contacts: [ContactEntity]
         
         private var allMessages: [MessageEntity] = [] {
             didSet {
@@ -56,7 +56,7 @@ extension CorrespondenceView {
         var lastMessageId: Int?
         var currentMessageId: Int?
         
-        init(chat: ChatEntity?, contacts: [UserEntity], socketManager: SocketIOManager?) {
+        init(chat: ChatEntity?, contacts: [ContactEntity], socketManager: SocketIOManager?) {
             self.chat = chat
             self.contacts = contacts
             
