@@ -33,6 +33,9 @@ extension ChatView {
         
         @Published var isShowNewChatView: Bool = false
         
+        @Published var selectedImage: Image?
+        var selectedImageURL: URL?
+        
         private var totalPages = 0
         private(set) var page : Int = 1
         
@@ -144,12 +147,12 @@ extension ChatView {
             }
         }
         
-        func getUserEntity(from chat: ChatEntity?) -> [ContactEntity] {
+        func getContactsEntity(from chat: ChatEntity?) -> [ContactEntity] {
             var correspondent: [ContactEntity] = []
             guard let allUsers = chat?.usersId else { return correspondent }
             for i in allUsers {
                 for k in allContacts {
-                    if k.user?.id != Settings.currentUser?.id && k.user?.id == i {
+                    if k.id != Settings.currentUser?.id && k.id == i {
                         correspondent.append(k)
                     }
                 }

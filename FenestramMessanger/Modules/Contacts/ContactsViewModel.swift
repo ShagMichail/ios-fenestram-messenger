@@ -32,8 +32,21 @@ extension ContactsView {
         @Published var presentAlert = false
         @Published var textAlert = ""
         
+        @Published var allFiles: [File] = [
+            File(title: "FFFFF", data: "22.02.22", volume: "10 MB"),
+            File(title: "fffff", data: "22.02.22", volume: "10 MB"),
+            File(title: "aaaaa", data: "22.02.22", volume: "10 MB"),
+            File(title: "ggggg", data: "22.02.22", volume: "10 MB"),
+            File(title: "kkkkk", data: "22.02.22", volume: "10 MB"),
+            File(title: "qqqqq", data: "22.02.22", volume: "10 MB")
+        ]
+        @Published var recentFile: [File] = []
+        
         @Published var isShowMFMessageView: Bool = false
         var selectedContact: ContactEntity?
+        
+        @Published var selectedImage: Image?
+        var selectedImageURL: URL?
         
         private(set) var socketManager: SocketIOManager?
         private let monitor = NWPathMonitor()
@@ -48,6 +61,8 @@ extension ContactsView {
             postContacts { [weak self] in
                 self?.getContacts()
             }
+            
+            fillterFile()
         }
         
         
@@ -92,19 +107,6 @@ extension ContactsView {
             }
         }
         
-        private func postContacts(completion: @escaping () -> ()) {
-            ContactsService.postContacts(contacts: phoneBookContacts) { result in
-                switch result {
-                case .success:
-                    print("post contact success")
-                case .failure(let error):
-                    print("post contact failure witj error: ", error.localizedDescription)
-                }
-                
-                completion()
-            }
-        }
-        
         //MARK: - Auxiliary functions
         
         func filterContent() {
@@ -138,6 +140,30 @@ extension ContactsView {
             guard let phoneBookContact = phoneBookContacts.first(where: { $0.phoneNumbers.contains(contact.phone) }) else { return Asset.photo.image }
             
             return phoneBookContact.image
+        }
+        
+        private func postContacts(completion: @escaping () -> ()) {
+            ContactsService.postContacts(contacts: phoneBookContacts) { result in
+                switch result {
+                case .success:
+                    print("post contact success")
+                case .failure(let error):
+                    print("post contact failure witj error: ", error.localizedDescription)
+                }
+                
+                completion()
+            }
+        }
+        
+        private func fillterFile() {
+            let files = allFiles
+            var index = 0
+            if files.count > 3  {
+                for _ in 0...2  {
+                    recentFile.append(files[index])
+                    index += 1
+                }
+            }
         }
     }
 }
