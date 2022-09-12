@@ -36,12 +36,17 @@
 "new_contact_view.phone_number.empty_error" = "Нe добавлен номер телефона";
 "new_contact_view.phone_number.incorrect_error" = "Нeкорректный номер телефона";
 
+"new_contact_view.toast.success_text" = "Контакт успешно создан";
+"new_contact_view.toast.failure_text" = "Не удалось создать контакт";
+
 // MARK: - ContactsView
 "contact_view.title" = "Контакты";
 "contact_view.search.placeholder" = "Поиск контакта";
 "contact_view.contact_dont_exist" = "Данного контакта не существует";
 "contact_view.add_contact" = "Добавить контакт";
 "contact_view.empty_text" = "Телефонная книга пуста. Хотите добавить контакты?";
+"contact_view.unregister_contacts_title" = "Пока не зарегистрированы в приложении";
+"contact_view.invate_contact" = "пригласить";
 
 // MARK: - SettingsView
 "settings_view.title" = "Настройки";
@@ -117,3 +122,6 @@
 "error.name_empty" = "Имя не может быть пустым";
 "error.email_incorrect" = "Некорректная электронная почта";
 "error.nickname_empty" = "Никнейм не может быть пустым";
+
+// MARK: - MFMessageComposeView
+"mf_message_compose_view.message" = "Привет, предлагаю тебе присоединиться ко мне в чат Fenestram! Чтобы бы мы всегда оставались на связи.";

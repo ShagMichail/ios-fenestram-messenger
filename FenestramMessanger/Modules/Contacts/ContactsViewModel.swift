@@ -16,42 +16,72 @@ extension ContactsView {
         //MARK: - Properties
         
         @Published var searchText = ""
-        @Published var allContacts: [UserEntity] = [] {
+        @Published var registerUsers: [UserEntity] = [] {
             didSet {
                 filterContent()
             }
         }
-        @Published var filteredContacts: [UserEntity] = []
+        @Published var unregisterContacts: [ContactEntity] = [] {
+            didSet {
+                filterContent()
+            }
+        }
+        @Published var filteredUsers: [UserEntity] = []
+        @Published var filteredContacts: [ContactEntity] = []
         @Published var isLoading: Bool = false
         @Published var presentAlert = false
         @Published var textAlert = ""
         
+        @Published var isShowMFMessageView: Bool = false
+        var selectedContact: ContactEntity?
+        
         private(set) var socketManager: SocketIOManager?
         private let monitor = NWPathMonitor()
         
+        private let phoneBookContacts: [PhoneBookEntity]
+                                        
         init(socketManager: SocketIOManager?) {
             self.socketManager = socketManager
-            getContacts()
+            socketManager?.checkConnect()
+            self.phoneBookContacts = PhoneBookEntity.generateModelArray()
+            
+            postContacts { [weak self] in
+                self?.getContacts()
+            }
         }
         
         
         //MARK: - Query functions
         
-        private func getContacts() {
-            guard let currentUserId = Settings.currentUser?.id else {
-                print("current user doesn't exist")
-                self.textAlert = L10n.Error.userDoesNotExist
-                self.presentAlert = true
-                return
-            }
-            
+        func getContacts() {
             isLoading = true
             
             ContactsService.getContacts { [weak self] result in
                 switch result {
                 case .success(let contacts):
                     print("get contacts success")
-                    self?.allContacts = contacts.compactMap({$0.user}).filter({ $0.id != currentUserId })
+                    guard let currentUserId = Settings.currentUser?.id else {
+                        print("get current user failure")
+                        return
+                    }
+                    
+                    var registerUsers: [UserEntity] = []
+                    var unregisterContacts: [ContactEntity] = []
+                    
+                    contacts.forEach { contact in
+                        if let user = contact.user {
+                            guard user.id != currentUserId else {
+                                return
+                            }
+                            
+                            registerUsers.append(user)
+                        } else {
+                            unregisterContacts.append(contact)
+                        }
+                    }
+                    
+                    self?.registerUsers = registerUsers
+                    self?.unregisterContacts = unregisterContacts
                 case .failure(let error):
                     print("get contacts failure with error: ", error.localizedDescription)
                     self?.textAlert = error.localizedDescription
@@ -62,26 +92,54 @@ extension ContactsView {
             }
         }
         
+        private func postContacts(completion: @escaping () -> ()) {
+            ContactsService.postContacts(contacts: phoneBookContacts) { result in
+                switch result {
+                case .success:
+                    print("post contact success")
+                case .failure(let error):
+                    print("post contact failure witj error: ", error.localizedDescription)
+                }
+                
+                completion()
+            }
+        }
+        
         //MARK: - Auxiliary functions
         
         func filterContent() {
             let lowercasedSearchText = searchText.lowercased()
             
             if searchText.count > 0 {
-                var matchingCoffees: [UserEntity] = []
+                var matchingUsers: [UserEntity] = []
+                var matchingContacts: [ContactEntity] = []
                 
-                allContacts.forEach { contact in
-                    guard let searchContent = contact.name else { return }
+                registerUsers.forEach { user in
+                    guard let searchContent = user.name else { return }
                     
                     if searchContent.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil {
-                        matchingCoffees.append(contact)
+                        matchingUsers.append(user)
                     }
                 }
                 
-                self.filteredContacts = matchingCoffees
+                unregisterContacts.forEach { contact in
+                    if contact.name.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil {
+                        matchingContacts.append(contact)
+                    }
+                }
+                
+                self.filteredUsers = matchingUsers
+                self.filteredContacts = matchingContacts
             } else {
-                filteredContacts = allContacts
+                filteredUsers = registerUsers
+                filteredContacts = unregisterContacts
             }
+        }
+        
+        func getUnregisterContactAvatar(contact: ContactEntity) -> UIImage {
+            guard let phoneBookContact = phoneBookContacts.first(where: { $0.phoneNumbers.contains(contact.phone) }) else { return Asset.photo.image }
+            
+            return phoneBookContact.image
         }
     }
 }

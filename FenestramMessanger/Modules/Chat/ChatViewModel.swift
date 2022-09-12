@@ -40,6 +40,7 @@ extension ChatView {
         
         init(socketManager: SocketIOManager?) {
             self.socketManager = socketManager
+            socketManager?.checkConnect()
             socketManager?.addObserver(self)
             getContacts()
             getChatList()

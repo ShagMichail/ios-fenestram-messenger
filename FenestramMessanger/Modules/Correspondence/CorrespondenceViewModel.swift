@@ -62,6 +62,7 @@ extension CorrespondenceView {
             
             if let socketManager = socketManager {
                 self.socketManager = socketManager
+                socketManager.checkConnect()
                 socketManager.addObserver(self)
             }
             
@@ -221,6 +222,10 @@ extension CorrespondenceView {
         }
         
         func receiveMessage(_ message: MessageEntity) {
+            guard let chatId = chat?.id,
+                  let messageChatId = message.chatId,
+                  chatId == messageChatId else { return }
+            
             allMessages.append(message)
             processingData()
         }

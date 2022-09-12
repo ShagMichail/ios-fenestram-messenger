@@ -39,13 +39,19 @@ final public class PhoneBookEntity : NSObject {
             let givenName = contact.givenName
             let familyName = contact.familyName
             let emailAddress = contact.emailAddresses.first?.value ?? ""
-            let phoneNumbers: [String] = contact.phoneNumbers.map{ $0.value.stringValue }
+            let phoneNumbers: [String] = contact.phoneNumbers
+                .map { $0.value.stringValue
+                        .replacingOccurrences(of: "(", with: "")
+                        .replacingOccurrences(of: ")", with: "")
+                        .replacingOccurrences(of: "-", with: "")
+                        .replacingOccurrences(of: " ", with: "")
+                }
             let identifier = contact.identifier
             var image = UIImage()
-            if contact.thumbnailImageData != nil{
-                image = UIImage(data: contact.thumbnailImageData!)!
-
-            } else if contact.thumbnailImageData == nil ,givenName.isEmpty || familyName.isEmpty {
+            if let data = contact.thumbnailImageData,
+               let imageFromData = UIImage(data: data) {
+                image = imageFromData
+            } else {
                 image = Asset.photo.image
             }
             contactsData.append(PhoneBookEntity(givenName: givenName,

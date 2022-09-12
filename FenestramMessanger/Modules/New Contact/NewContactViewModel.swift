@@ -17,7 +17,19 @@ extension NewContactView {
         
         @Published var name = ""
         @Published var lastName = ""
-        @Published var textPhone = ""
+        @Published var textPhone = "" {
+            didSet {
+                if textPhone.prefix(1) != "+" {
+                    textPhone = "+" + textPhone
+                }
+                
+                formattedPhone = textPhone
+                    .replacingOccurrences(of: " ", with: "")
+                    .replacingOccurrences(of: "(", with: "")
+                    .replacingOccurrences(of: ")", with: "")
+                    .replacingOccurrences(of: "-", with: "")
+            }
+        }
         
         @Published var isTappedName = false
         @Published var isTappedLastName = false
@@ -26,5 +38,20 @@ extension NewContactView {
         @Published var contact: UserEntity? = nil
         
         @Published var isTappedGlobal = false
+        
+        private(set) var formattedPhone: String = ""
+        
+        func addContact(completion: @escaping (Bool) -> ()) {
+            ContactsService.postContacts(name: name + (lastName.isEmpty ? "" : " \(lastName)"), phoneNumber: formattedPhone) { result in
+                switch result {
+                case .success:
+                    print("add contact success")
+                    completion(true)
+                case .failure(let error):
+                    print("add contact failure with error: ", error)
+                    completion(false)
+                }
+            }
+        }
     }
 }
