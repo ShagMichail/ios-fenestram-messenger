@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lucaszischka/BottomSheet",
       "state" : {
-        "branch" : "main",
-        "revision" : "23f37fd59f899df4d4f423ed99e3b7e5411d1e2f"
+        "revision" : "39f59cd641dfb407cb4033966e3be51237011da4",
+        "version" : "2.8.0"
       }
     },
     {
@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/siteline/SwiftUI-Introspect.git",
       "state" : {
-        "branch" : "master",
-        "revision" : "7ef0df639079491ee1aaf6b83b6fd4d08df80393"
+        "revision" : "f2616860a41f9d9932da412a8978fec79c06fe24",
+        "version" : "0.1.4"
       }
     }
   ],

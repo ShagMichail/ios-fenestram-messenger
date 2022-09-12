@@ -1309,56 +1309,56 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MojtabaHs/iPhoneNumberField";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.0;
+				kind = exactVersion;
+				version = 0.10.0;
 			};
 		};
 		BD0D3ADD28C8B07D004096A1 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/elai950/AlertToast";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.3.7;
 			};
 		};
 		BD785F4C28C61D080075BC89 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
+				kind = exactVersion;
+				version = 7.3.2;
 			};
 		};
 		BD980FBB288176280050F8B4 /* XCRemoteSwiftPackageReference "socket" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 16.0.0;
+				kind = exactVersion;
+				version = 16.0.1;
 			};
 		};
 		BDF2E2DE287F1C1C00B7E182 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				kind = exactVersion;
+				version = 5.6.1;
 			};
 		};
 		FC17786A2875831700B0D979 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = exactVersion;
+				version = 0.1.4;
 			};
 		};
 		FCD3059B2886ADCA00491220 /* XCRemoteSwiftPackageReference "BottomSheet" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lucaszischka/BottomSheet";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = exactVersion;
+				version = 2.8.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
