@@ -40,6 +40,9 @@ extension PageContactView {
         @Published var recentPhotoFirst: [PhotoEntity] = []
         @Published var recentPhotoSecond: [PhotoEntity] = []
         
+        @Published var selectedImage: Image?
+        var selectedImageURL: URL?
+        
         var index = 0
         
         init() {

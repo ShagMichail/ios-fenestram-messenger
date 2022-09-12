@@ -65,6 +65,32 @@ struct PageContactView: View {
                 }
                 .padding(.horizontal, 32)
             }
+            
+            if let selectedImage = viewModel.selectedImage {
+                ZStack {
+                    Color.black
+                        .opacity(0.3)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            self.viewModel.selectedImage = nil
+                            self.viewModel.selectedImageURL = nil
+                        }
+                    
+                    if let url = viewModel.selectedImageURL {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 200, height: 200)
+                            .cornerRadius(20)
+                    } else {
+                        selectedImage
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 200, height: 200)
+                            .cornerRadius(20)
+                    }
+                }
+            }
         }
         .onBackSwipe {
             presentationMode.wrappedValue.dismiss()
@@ -90,12 +116,19 @@ struct PageContactView: View {
                     .scaledToFill()
                     .frame(width: 80.0, height: 80.0)
                     .clipShape(Circle())
+                    .onTapGesture {
+                        viewModel.selectedImageURL = url
+                        viewModel.selectedImage = Asset.photo.swiftUIImage
+                    }
             } else {
                 Asset.photo.swiftUIImage
                     .resizable()
                     .scaledToFill()
                     .frame(width: 80.0, height: 80.0)
                     .clipShape(Circle())
+                    .onTapGesture {
+                        viewModel.selectedImage = Asset.photo.swiftUIImage
+                    }
             }
         }
         .padding(.trailing)
@@ -185,10 +218,17 @@ struct PageContactView: View {
                                 .scaledToFill()
                                 .frame(width: 32, height: 32)
                                 .clipShape(Circle())
+                                .onTapGesture {
+                                    viewModel.selectedImageURL = url
+                                    viewModel.selectedImage = Asset.photo.swiftUIImage
+                                }
                         } else {
                             Asset.photo.swiftUIImage
                                 .resizable()
                                 .frame(width: 32, height: 32)
+                                .onTapGesture {
+                                    viewModel.selectedImage = Asset.photo.swiftUIImage
+                                }
                         }
                     }
                     .padding(.trailing, 8)
@@ -292,6 +332,9 @@ struct PageContactView: View {
                                 .resizable()
                                 .frame(width: 90, height: 90, alignment: .leading)
                                 .cornerRadius(15)
+                                .onTapGesture {
+                                    viewModel.selectedImage = Image(uiImage: photo.image)
+                                }
                         }
                     })
                     Spacer().frame(width: 10)
@@ -324,6 +367,9 @@ struct PageContactView: View {
                                     .resizable()
                                     .frame(width: 90, height: 90, alignment: .leading)
                                     .cornerRadius(15)
+                                    .onTapGesture {
+                                        viewModel.selectedImage = Image(uiImage: photo.image)
+                                    }
                             }
                         }
                     })
