@@ -64,7 +64,7 @@ final class SocketIOManager {
     
     func checkConnect() {
         if manager.status != .connected {
-            manager.reconnect()
+            connect()
         }
     }
     

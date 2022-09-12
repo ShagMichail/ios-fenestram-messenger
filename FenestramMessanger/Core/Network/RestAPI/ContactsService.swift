@@ -44,21 +44,35 @@ public class ContactsService {
         var contactsAPI: [[String: Any]] = []
         contacts.forEach { contact in
             contact.phoneNumbers.forEach { phoneNumber in
-                let formattedPhoneNumber = phoneNumber
-                    .replacingOccurrences(of: "(", with: "")
-                    .replacingOccurrences(of: ")", with: "")
-                    .replacingOccurrences(of: "-", with: "")
-                    .replacingOccurrences(of: " ", with: "")
-                
                 contactsAPI.append([
                     "name": "\(contact.givenName) \(contact.familyName)",
-                    "phone": formattedPhoneNumber
+                    "phone": phoneNumber
                 ])
             }
         }
         
         let parameters: [String: Any] = [
             "contacts": contactsAPI
+        ]
+        
+        if let prettyPrintedData = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) {
+            print("post contacts parameters:")
+            print(String(bytes: prettyPrintedData, encoding: String.Encoding.utf8) ?? "NIL")
+        }
+        
+        sendRequest(requestOptions: .postContacts(phoneNumbers: parameters)) { result in
+            completion(result)
+        }
+    }
+    
+    public static func postContacts(name: String, phoneNumber: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        let parameters: [String: Any] = [
+            "contacts": [
+                [
+                    "name": name,
+                    "phone": phoneNumber
+                ]
+            ]
         ]
         
         if let prettyPrintedData = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) {
