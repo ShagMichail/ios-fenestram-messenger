@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct NewChatConfirmView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -136,6 +137,9 @@ struct NewChatConfirmView: View {
                             .foregroundColor(Asset.grey1.swiftUIColor)
                     }
                     .padding()
+                    .onReceive(Just(viewModel.chatName)) { _ in
+                        viewModel.limitText(20)
+                    }
             }
         }
         .sheet(isPresented: $viewModel.showImagePicker) {
