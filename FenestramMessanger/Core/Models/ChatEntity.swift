@@ -12,6 +12,7 @@ public struct ChatEntity: Codable, Identifiable {
     
     public let name: String
     public let usersId: [Int]
+    public let users: [UserEntity]?
     public let isGroup: Bool
     public var messages: [MessageEntity]?
     public let createdAt: Date?
@@ -24,6 +25,7 @@ public struct ChatEntity: Codable, Identifiable {
         self.isGroup = try values.decode(Bool.self, forKey: .isGroup)
         let userIds = try values.decode([Int].self, forKey: .usersId)
         self.usersId = Array(Set(userIds))
+        self.users = try? values.decode([UserEntity].self, forKey: .users)
         self.messages = try? values.decode([MessageEntity].self, forKey: .messages)
         self.avatar = try? values.decode(String.self, forKey: .avatar)
         
@@ -41,6 +43,7 @@ public struct ChatEntity: Codable, Identifiable {
         case isGroup = "is_group"
         case createdAt = "created_at"
         case usersId = "users"
+        case users = "chatUsers"
         case messages = "message"
         case avatar
     }

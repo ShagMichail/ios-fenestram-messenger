@@ -15,9 +15,6 @@ struct PageContactView: View {
     
     @State var uiTabarController: UITabBarController?
     
-    var contacts: [ContactEntity]
-    var chat: ChatEntity?
-    
     @StateObject private var viewModel: ViewModel
     
     @Environment(\.presentationMode) var presentationMode
@@ -25,9 +22,7 @@ struct PageContactView: View {
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
     init(contacts: [ContactEntity], chat: ChatEntity?) {
-        _viewModel = StateObject(wrappedValue: ViewModel())
-        self.contacts = contacts
-        self.chat = chat
+        _viewModel = StateObject(wrappedValue: ViewModel(contacts: contacts, chat: chat))
     }
    
     
@@ -49,7 +44,7 @@ struct PageContactView: View {
                     
                     getButtonPhoneVideo()
                     
-                    if chat?.isGroup ?? false {
+                    if viewModel.chat?.isGroup ?? false {
                         Spacer().frame(height: 16.0)
                         
                         getParticipantsList()
@@ -108,7 +103,7 @@ struct PageContactView: View {
     
     private func getPhoto() -> some View {
         VStack {
-            if let avatarString = (chat?.isGroup ?? false) ? chat?.avatar : contacts.first?.user?.avatar,
+            if let avatarString = (viewModel.chat?.isGroup ?? false) ? viewModel.chat?.avatar : viewModel.contacts.first?.user?.avatar,
                let url = URL(string: Constants.baseNetworkURLClear + avatarString),
                !avatarString.isEmpty {
                 KFImage(url)
@@ -139,15 +134,15 @@ struct PageContactView: View {
             getPhoto()
                 
             VStack(alignment: .leading) {
-                Text((chat?.isGroup ?? false) ? (chat?.name ?? L10n.General.unknown) : (contacts.first?.name ?? L10n.General.unknown))
+                Text((viewModel.chat?.isGroup ?? false) ? (viewModel.chat?.name ?? L10n.General.unknown) : (viewModel.contacts.first?.name ?? L10n.General.unknown))
                     .foregroundColor(.white)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
-                if chat?.isGroup ?? false {
-                    Text("\(L10n.PageContactView.chat) - \(contacts.count + 1) \(L10n.PageContactView.participants)")
+                if viewModel.chat?.isGroup ?? false {
+                    Text("\(L10n.PageContactView.chat) - \(viewModel.participants.count) \(L10n.PageContactView.participants)")
                         .font(FontFamily.Poppins.medium.swiftUIFont(size: 14))
                         .foregroundColor(Asset.grey2.swiftUIColor)
                 } else {
-                    Text("@\(contacts.first?.user?.nickname ?? " ")")
+                    Text("@\(viewModel.contacts.first?.user?.nickname ?? " ")")
                         .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                 }
@@ -207,10 +202,10 @@ struct PageContactView: View {
             
             Spacer().frame(height: 16.0)
             
-            ForEach(contacts) { contact in
+            ForEach(viewModel.participants) { participant in
                 HStack {
                     VStack {
-                        if let avatarString = contact.user?.avatar,
+                        if let avatarString = participant.avatar,
                            let url = URL(string: Constants.baseNetworkURLClear + avatarString),
                            !avatarString.isEmpty {
                             KFImage(url)
@@ -232,8 +227,8 @@ struct PageContactView: View {
                         }
                     }
                     .padding(.trailing, 8)
- 
-                    Text(contact.name)
+                    
+                    Text(viewModel.getName(to: participant))
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                         .foregroundColor(.white)
                     

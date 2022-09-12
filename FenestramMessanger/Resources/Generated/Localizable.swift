@@ -196,6 +196,8 @@ internal enum L10n {
     internal static let participants = L10n.tr("Localizable", "page_contact_view.participants")
     /// Участники чата
     internal static let participantsTitle = L10n.tr("Localizable", "page_contact_view.participants_title")
+    ///  (вы)
+    internal static let you = L10n.tr("Localizable", "page_contact_view.you")
   }
 
   internal enum PhoneView {

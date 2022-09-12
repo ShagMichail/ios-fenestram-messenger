@@ -208,7 +208,7 @@ extension CorrespondenceView {
             self.messagesWithTime = buffer
         }
         
-        func lastMessage(message: MessageEntity) -> Bool {
+        func isMessageFromCurrentUser(message: MessageEntity) -> Bool {
             if message.fromUserId == Settings.currentUser?.id {
                 return true
             }

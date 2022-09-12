@@ -113,6 +113,7 @@
 "page_contact_view.images" = "изображений";
 "page_contact_view.participants" = "участников";
 "page_contact_view.participants_title" = "Участники чата";
+"page_contact_view.you" = " (вы)";
 
 // MARK: - Error
 "error.user_does_not_exist" = "Пользователь не существует";

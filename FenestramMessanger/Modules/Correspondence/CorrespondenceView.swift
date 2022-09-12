@@ -111,8 +111,8 @@ struct CorrespondenceView: View {
                         
                         ForEach(value, id: \.id) { message in
                             HStack(alignment: .bottom, spacing: 15) {
-                                MessageStyleView(isCurrentUser: viewModel.lastMessage(message: message),
-                                                 isGroupChat: viewModel.chat?.isGroup ?? false,
+                                MessageStyleView(chat: viewModel.chat,
+                                                 contacts: viewModel.contacts,
                                                  message: message)
                             }
                             .id(message.id)
@@ -124,7 +124,6 @@ struct CorrespondenceView: View {
                     }
                 }
             }
-            .disabled(viewModel.isLoading)
             .onChange(of: viewModel.messagesWithTime, perform: { newValue in
                 guard let key = newValue.keys.max(),
                       let lastMessageId = newValue[key]?.last?.id else { return }
