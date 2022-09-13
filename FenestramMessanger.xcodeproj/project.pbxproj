@@ -1222,7 +1222,7 @@
 				CODE_SIGN_ENTITLEMENTS = FenestramMessanger/FenestramMessanger.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"FenestramMessanger/Preview Content\"";
 				DEVELOPMENT_TEAM = 829NTVC59C;
 				ENABLE_PREVIEWS = YES;
@@ -1260,7 +1260,7 @@
 				CODE_SIGN_ENTITLEMENTS = FenestramMessanger/FenestramMessanger.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"FenestramMessanger/Preview Content\"";
 				DEVELOPMENT_TEAM = 829NTVC59C;
 				ENABLE_PREVIEWS = YES;
