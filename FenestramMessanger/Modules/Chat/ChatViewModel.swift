@@ -15,7 +15,7 @@ extension ChatView {
         //MARK: - Properties
         
         @Published var chatList: [ChatEntity] = []
-        @Published var allContacts: [UserEntity] = []
+        @Published var allContacts: [ContactEntity] = []
         
         @Published var presentAlert = false
         @Published var textAlert = ""
@@ -33,8 +33,11 @@ extension ChatView {
         
         @Published var isShowNewChatView: Bool = false
         
+        @Published var selectedImage: Image?
+        var selectedImageURL: URL?
+        
         private var totalPages = 0
-        private var page : Int = 1
+        private(set) var page : Int = 1
         
         private(set) var socketManager: SocketIOManager?
         
@@ -51,7 +54,7 @@ extension ChatView {
         //MARK: - PAGINATION
         
         func loadMoreContent(currentItem item: ChatEntity){
-            let thresholdIndex = self.chatList.index(self.chatList.endIndex, offsetBy: -1)
+            let thresholdIndex = self.chatList.last?.id
             if thresholdIndex == item.id, (page + 1) <= totalPages {
                 page += 1
                 getChatList()
@@ -73,8 +76,10 @@ extension ChatView {
             ChatService.getChats(page: page) { [weak self] result in
                 switch result {
                 case .success(let chatList):
-                    self?.totalPages = chatList.total ?? 0
-                    self?.chatList = chatList.data ?? []
+                    self?.totalPages = Int((Float(chatList.total ?? 0) / 10).rounded(.up))
+                    var buffer = self?.chatList ?? []
+                    buffer.append(contentsOf: chatList.data ?? [])
+                    self?.chatList = buffer
                     print("Get chat ava", chatList.data)
                 case .failure(let error):
                     print("get chat list failure with error:", error.localizedDescription)
@@ -99,7 +104,7 @@ extension ChatView {
                 switch result {
                 case .success(let contacts):
                     print("get contacts success")
-                    self?.allContacts = contacts.compactMap({$0.user}).filter({ $0.id != currentUserId })
+                    self?.allContacts = contacts.filter({ $0.user?.id != currentUserId })
                 case .failure(let error):
                     print("get contacts failure with error: ", error.localizedDescription)
                     self?.textAlert = error.localizedDescription
@@ -109,7 +114,7 @@ extension ChatView {
             }
         }
         
-        func getContact(with chat: ChatEntity?) -> UserEntity? {
+        func getContact(with chat: ChatEntity?) -> ContactEntity? {
             guard let userId = Settings.currentUser?.id,
                   let contactId = chat?.usersId.first(where: { $0 != userId }),
                   !(chat?.isGroup ?? false) else { return nil }
@@ -142,8 +147,8 @@ extension ChatView {
             }
         }
         
-        func getUserEntity(from chat: ChatEntity?) -> [UserEntity] {
-            var correspondent: [UserEntity] = []
+        func getContactsEntity(from chat: ChatEntity?) -> [ContactEntity] {
+            var correspondent: [ContactEntity] = []
             guard let allUsers = chat?.usersId else { return correspondent }
             for i in allUsers {
                 for k in allContacts {
@@ -164,7 +169,7 @@ extension ChatView {
                 for userId in index ... allContacts.endIndex - 1 {
                     if userChatId.hashValue == allContacts[userId].id.hashValue {
                         result.append("@")
-                        result.append(allContacts[userId].nickname ?? "")
+                        result.append(allContacts[userId].user?.nickname ?? "")
                         result.append(" ")
                     }
                 }

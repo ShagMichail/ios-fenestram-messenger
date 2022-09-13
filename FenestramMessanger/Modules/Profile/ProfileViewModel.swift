@@ -42,6 +42,8 @@ extension ProfileView {
         @Published var editProfile = false
         
         @Published var showSuccessToast: Bool = false
+        @Published var showErrorToast: Bool = false
+        @Published var showSaveProgressToast: Bool = false
         
         init() {
             getProfile()
@@ -80,6 +82,8 @@ extension ProfileView {
             }
             
             if let avatar = image {
+                showSaveProgressToast = true
+                
                 uploadFile(image: avatar) { [weak self] avatarURL in
                     guard let self = self else { return }
                     
@@ -87,6 +91,7 @@ extension ProfileView {
                 }
             } else {
                 if let avatarURL = profile?.avatar {
+                    self.showSaveProgressToast = true
                     self.updateProfile(name: self.name, nickname: self.nicName, email: self.textEmail, birthdateTimeInterval: birthdateTimeInterval, avatarURL: avatarURL)
                 } else {
                     print("avatar is empty!")
@@ -108,6 +113,7 @@ extension ProfileView {
                 case .success:
                     guard var userWithInfo = Settings.currentUser else {
                         print("user doesn't exist")
+                        self.showSaveProgressToast = false
                         self.textAlert = L10n.Error.userDoesNotExist
                         self.presentAlert = true
                         return
@@ -122,6 +128,7 @@ extension ProfileView {
                     guard let accessToken = try? AuthController.getToken(),
                           let refreshToken = try? AuthController.getRefreshToken() else {
                         print("Can't take token")
+                        self.showSaveProgressToast = false
                         self.textAlert = L10n.Error.tokenEmpty
                         self.presentAlert = true
                         return
@@ -131,16 +138,19 @@ extension ProfileView {
                         try AuthController.signIn(userWithInfo, accessToken: accessToken, refreshToken: refreshToken)
                         self.profile = userWithInfo
                         print("update profile success")
+                        self.showSaveProgressToast = false
                         self.editProfile.toggle()
                         self.showSuccessToast = true
                     }
                     catch let error {
                         print("update profile failure with error: ", error.localizedDescription)
+                        self.showSaveProgressToast = false
                         self.textAlert = error.localizedDescription
                         self.presentAlert = true
                     }
                 case .failure(let error):
                     print("update profile failure with error: ", error.localizedDescription)
+                    self.showSaveProgressToast = false
                     self.textAlert = error.localizedDescription
                     self.presentAlert = true
                 }
@@ -163,6 +173,8 @@ extension ProfileView {
                     self.birthday = profile.birthday
                 case .failure(let error):
                     print("get profile failure with error: ", error.localizedDescription)
+                    self.textAlert = error.localizedDescription
+                    self.presentAlert = true
                 }
                 
                 self.isLoading = false
@@ -182,12 +194,14 @@ extension ProfileView {
                 }
                 catch let error {
                     print("error: ", error.localizedDescription)
+                    self.showSaveProgressToast = false
+                    self.showErrorToast = true
                 }
             }
         }
         
         private func upload(imagePathURL: URL, success: @escaping (String) -> ()) {
-            FilesService.upload(imageURL: imagePathURL) { result in
+            FilesService.upload(imageURL: imagePathURL) { [weak self] result in
                 switch result {
                 case .success(let fileData):
                     print("JSON: ", fileData)
@@ -199,10 +213,14 @@ extension ProfileView {
                     }
                     catch let error {
                         print("error: ", error.localizedDescription)
+                        self?.showSaveProgressToast = false
+                        self?.showErrorToast = true
                     }
                     
                 case .failure(let error):
                     print("error: ", error.localizedDescription)
+                    self?.showSaveProgressToast = false
+                    self?.showErrorToast = true
                 }
             }
         }
@@ -221,6 +239,11 @@ extension ProfileView {
         
         func cancelChanges() {
             guard let profile = profile else {
+                self.name = ""
+                self.nicName = ""
+                self.birthday = nil
+                self.textEmail = ""
+                self.image = nil
                 return
             }
             

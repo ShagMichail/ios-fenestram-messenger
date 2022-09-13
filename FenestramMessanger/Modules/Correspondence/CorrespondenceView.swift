@@ -38,7 +38,7 @@ struct CorrespondenceView: View {
                                                              .background({ AnyView(Asset.buttonAlert.swiftUIColor) }),
                                                              .cornerRadius(30)]
     
-    init(contacts: [UserEntity], chat: ChatEntity?, socketManager: SocketIOManager?) {
+    init(contacts: [ContactEntity], chat: ChatEntity?, socketManager: SocketIOManager?) {
         _viewModel = StateObject(wrappedValue: ViewModel(chat: chat, contacts: contacts, socketManager: socketManager))
         UITextView.appearance().backgroundColor = .clear
     }
@@ -55,13 +55,19 @@ struct CorrespondenceView: View {
                 VStack {
                     CorrespondenceNavigationView(contacts: viewModel.contacts, chat: viewModel.chat)
                     
-                    viewModel.messagesWithTime.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
+                    if viewModel.isLoading && viewModel.page == 1 {
+                        LoadingView()
+                    } else {
+                        viewModel.messagesWithTime.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
 
-                    Spacer()
-                    if $viewModel.allFoto.count != 0 {
-                        getPhotoMessage()
+                        Spacer()
+                        
+                        if $viewModel.allFoto.count != 0 {
+                            getPhotoMessage()
+                        }
+                        
+                        getMessageTextEditor()
                     }
-                    getMessageTextEditor()
                 }
                 Spacer().frame(height: 16)
                 
@@ -72,7 +78,7 @@ struct CorrespondenceView: View {
                         isShown: $viewModel.showImagePicker,
                         sourceType: self.sourceType)}
         .navigationBarHidden(true)
-        .onBackSwipe { presentationMode.wrappedValue.dismiss() }
+        .onBackSwipe(perform: { presentationMode.wrappedValue.dismiss() }, isEnabled: !viewModel.isLoading) 
         .onTapGesture { UIApplication.shared.endEditing() }
             /// Bottom sheet for attachment
         .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: bottomSheetOptions,
@@ -86,7 +92,7 @@ struct CorrespondenceView: View {
         ScrollViewReader { proxy in
             ScrollView() {
                 LazyVStack {
-                    if viewModel.isLoading {
+                    if viewModel.isLoading && viewModel.page > 1 {
                         HStack {
                             Spacer()
                             
@@ -105,8 +111,8 @@ struct CorrespondenceView: View {
                         
                         ForEach(value, id: \.id) { message in
                             HStack(alignment: .bottom, spacing: 15) {
-                                MessageStyleView(isCurrentUser: viewModel.lastMessage(message: message),
-                                                 isGroupChat: viewModel.chat?.isGroup ?? false,
+                                MessageStyleView(chat: viewModel.chat,
+                                                 contacts: viewModel.contacts,
                                                  message: message)
                             }
                             .id(message.id)
@@ -118,7 +124,6 @@ struct CorrespondenceView: View {
                     }
                 }
             }
-            .disabled(viewModel.isLoading)
             .onChange(of: viewModel.messagesWithTime, perform: { newValue in
                 guard let key = newValue.keys.max(),
                       let lastMessageId = newValue[key]?.last?.id else { return }
@@ -217,7 +222,7 @@ struct CorrespondenceView: View {
                 Button {
                     if !viewModel.textMessage.isEmpty {
                         if viewModel.chat == nil {
-                            viewModel.createChat(chatName: viewModel.contacts[0].name ?? "", usersId: viewModel.getUserEntityIds(contactId: viewModel.contacts[0].id))
+                            viewModel.createChat(chatName: viewModel.contacts[0].name, usersId: viewModel.getUserEntityIds(contactId: viewModel.contacts[0].id))
                         } else {
                             viewModel.postMessage(chat: viewModel.chat)
                         }

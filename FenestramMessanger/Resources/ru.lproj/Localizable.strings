@@ -20,6 +20,7 @@
 "chat_view.empty_text" = "Здесь будет отображаться список ваших чатов";
 "chat_view.recent_files" = "Недавние файлы";
 "chat_view.recent_image" = "Изображения";
+"chat_view.files" = "%d файлов";
 
 // MARK: - NewContactView
 "new_contact_view.title" = "Добавить контакт";
@@ -47,6 +48,7 @@
 "contact_view.empty_text" = "Телефонная книга пуста. Хотите добавить контакты?";
 "contact_view.unregister_contacts_title" = "Пока не зарегистрированы в приложении";
 "contact_view.invate_contact" = "пригласить";
+"contact_view.files" = "%d файлов";
 
 // MARK: - SettingsView
 "settings_view.title" = "Настройки";
@@ -64,6 +66,8 @@
 "profile_view.birthday" = "Дата рождения";
 "profile_view.email" = "Эл. почта";
 "profile_view.save_success" = "Профиль успешно сохранен";
+"profile_view.save_error" = "Не удалось сохранить профиль";
+"profile_view.save_progress" = "Идет сохранение...";
 
 // MARK: - MainTabView
 "main_tab_view.contacts" = "Контакты";
@@ -111,6 +115,7 @@
 "page_contact_view.images" = "изображений";
 "page_contact_view.participants" = "участников";
 "page_contact_view.participants_title" = "Участники чата";
+"page_contact_view.you" = " (вы)";
 
 // MARK: - Error
 "error.user_does_not_exist" = "Пользователь не существует";

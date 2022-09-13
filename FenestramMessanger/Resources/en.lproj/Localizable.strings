@@ -20,6 +20,7 @@
 "chat_view.empty_text" = "A list of your chats will be displayed here";
 "chat_view.recent_files" = "Recent files";
 "chat_view.recent_image" = "Images";
+"chat_view.files" = "%d files";
 
 // MARK: - NewContactView
 "new_contact_view.title" = "Add Contact";
@@ -47,6 +48,7 @@
 "contact_view.empty_text" = "The phonebook is empty. Would you like to add contacts?";
 "contact_view.unregister_contacts_title" = "Users are not registered in the application";
 "contact_view.invate_contact" = "invate";
+"contact_view.files" = "%d files";
 
 // MARK: - SettingsView
 "settings_view.title" = "Settings";
@@ -64,6 +66,8 @@
 "profile_view.birthday" = "Birthday";
 "profile_view.email" = "Email";
 "profile_view.save_success" = "Profile saved successfully";
+"profile_view.save_error" = "Couldn't save profile";
+"profile_view.save_progress" = "Saving in progress...";
 
 // MARK: - MainTabView
 "main_tab_view.contacts" = "Contacts";
@@ -111,6 +115,7 @@
 "page_contact_view.images" = "images";
 "page_contact_view.participants" = "participants";
 "page_contact_view.participants_title" = "Chat participants";
+"page_contact_view.you" = " (you)";
 
 // MARK: - Error
 "error.user_does_not_exist" = "User doesn't exist";

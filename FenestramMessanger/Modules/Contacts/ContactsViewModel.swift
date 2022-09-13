@@ -16,7 +16,7 @@ extension ContactsView {
         //MARK: - Properties
         
         @Published var searchText = ""
-        @Published var registerUsers: [UserEntity] = [] {
+        @Published var registerContacts: [ContactEntity] = [] {
             didSet {
                 filterContent()
             }
@@ -26,14 +26,27 @@ extension ContactsView {
                 filterContent()
             }
         }
-        @Published var filteredUsers: [UserEntity] = []
-        @Published var filteredContacts: [ContactEntity] = []
+        @Published var filteredRegisterContacts: [ContactEntity] = []
+        @Published var filteredUnregisterContacts: [ContactEntity] = []
         @Published var isLoading: Bool = false
         @Published var presentAlert = false
         @Published var textAlert = ""
         
+        @Published var allFiles: [File] = [
+            File(title: "FFFFF", data: "22.02.22", volume: "10 MB"),
+            File(title: "fffff", data: "22.02.22", volume: "10 MB"),
+            File(title: "aaaaa", data: "22.02.22", volume: "10 MB"),
+            File(title: "ggggg", data: "22.02.22", volume: "10 MB"),
+            File(title: "kkkkk", data: "22.02.22", volume: "10 MB"),
+            File(title: "qqqqq", data: "22.02.22", volume: "10 MB")
+        ]
+        @Published var recentFile: [File] = []
+        
         @Published var isShowMFMessageView: Bool = false
         var selectedContact: ContactEntity?
+        
+        @Published var selectedImage: Image?
+        var selectedImageURL: URL?
         
         private(set) var socketManager: SocketIOManager?
         private let monitor = NWPathMonitor()
@@ -48,6 +61,8 @@ extension ContactsView {
             postContacts { [weak self] in
                 self?.getContacts()
             }
+            
+            fillterFile()
         }
         
         
@@ -65,7 +80,7 @@ extension ContactsView {
                         return
                     }
                     
-                    var registerUsers: [UserEntity] = []
+                    var registerUsers: [ContactEntity] = []
                     var unregisterContacts: [ContactEntity] = []
                     
                     contacts.forEach { contact in
@@ -74,13 +89,13 @@ extension ContactsView {
                                 return
                             }
                             
-                            registerUsers.append(user)
+                            registerUsers.append(contact)
                         } else {
                             unregisterContacts.append(contact)
                         }
                     }
                     
-                    self?.registerUsers = registerUsers
+                    self?.registerContacts = registerUsers
                     self?.unregisterContacts = unregisterContacts
                 case .failure(let error):
                     print("get contacts failure with error: ", error.localizedDescription)
@@ -90,6 +105,41 @@ extension ContactsView {
                 
                 self?.isLoading = false
             }
+        }
+        
+        //MARK: - Auxiliary functions
+        
+        func filterContent() {
+            let lowercasedSearchText = searchText.lowercased()
+            
+            if searchText.count > 0 {
+                var matchingRegisterContacts: [ContactEntity] = []
+                var matchingUnregisterContacts: [ContactEntity] = []
+                
+                registerContacts.forEach { contact in
+                    if contact.name.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil || contact.phone.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil {
+                        matchingRegisterContacts.append(contact)
+                    }
+                }
+                
+                unregisterContacts.forEach { contact in
+                    if contact.name.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil || contact.phone.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil {
+                        matchingUnregisterContacts.append(contact)
+                    }
+                }
+                
+                self.filteredRegisterContacts = matchingRegisterContacts
+                self.filteredUnregisterContacts = matchingUnregisterContacts
+            } else {
+                filteredRegisterContacts = registerContacts
+                filteredUnregisterContacts = unregisterContacts
+            }
+        }
+        
+        func getUnregisterContactAvatar(contact: ContactEntity) -> UIImage {
+            guard let phoneBookContact = phoneBookContacts.first(where: { $0.phoneNumbers.contains(contact.phone) }) else { return Asset.photo.image }
+            
+            return phoneBookContact.image
         }
         
         private func postContacts(completion: @escaping () -> ()) {
@@ -105,41 +155,15 @@ extension ContactsView {
             }
         }
         
-        //MARK: - Auxiliary functions
-        
-        func filterContent() {
-            let lowercasedSearchText = searchText.lowercased()
-            
-            if searchText.count > 0 {
-                var matchingUsers: [UserEntity] = []
-                var matchingContacts: [ContactEntity] = []
-                
-                registerUsers.forEach { user in
-                    guard let searchContent = user.name else { return }
-                    
-                    if searchContent.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil {
-                        matchingUsers.append(user)
-                    }
+        private func fillterFile() {
+            let files = allFiles
+            var index = 0
+            if files.count > 3  {
+                for _ in 0...2  {
+                    recentFile.append(files[index])
+                    index += 1
                 }
-                
-                unregisterContacts.forEach { contact in
-                    if contact.name.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil {
-                        matchingContacts.append(contact)
-                    }
-                }
-                
-                self.filteredUsers = matchingUsers
-                self.filteredContacts = matchingContacts
-            } else {
-                filteredUsers = registerUsers
-                filteredContacts = unregisterContacts
             }
-        }
-        
-        func getUnregisterContactAvatar(contact: ContactEntity) -> UIImage {
-            guard let phoneBookContact = phoneBookContacts.first(where: { $0.phoneNumbers.contains(contact.phone) }) else { return Asset.photo.image }
-            
-            return phoneBookContact.image
         }
     }
 }

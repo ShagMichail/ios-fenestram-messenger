@@ -15,19 +15,14 @@ struct PageContactView: View {
     
     @State var uiTabarController: UITabBarController?
     
-    var contacts: [UserEntity]
-    var chat: ChatEntity?
-    
     @StateObject private var viewModel: ViewModel
     
     @Environment(\.presentationMode) var presentationMode
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
-    init(contacts: [UserEntity], chat: ChatEntity?) {
-        _viewModel = StateObject(wrappedValue: ViewModel())
-        self.contacts = contacts
-        self.chat = chat
+    init(contacts: [ContactEntity], chat: ChatEntity?) {
+        _viewModel = StateObject(wrappedValue: ViewModel(contacts: contacts, chat: chat))
     }
    
     
@@ -49,7 +44,7 @@ struct PageContactView: View {
                     
                     getButtonPhoneVideo()
                     
-                    if chat?.isGroup ?? false {
+                    if viewModel.chat?.isGroup ?? false {
                         Spacer().frame(height: 16.0)
                         
                         getParticipantsList()
@@ -64,6 +59,32 @@ struct PageContactView: View {
                     getPhotoFiles()
                 }
                 .padding(.horizontal, 32)
+            }
+            
+            if let selectedImage = viewModel.selectedImage {
+                ZStack {
+                    Color.black
+                        .opacity(0.3)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            self.viewModel.selectedImage = nil
+                            self.viewModel.selectedImageURL = nil
+                        }
+                    
+                    if let url = viewModel.selectedImageURL {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 200, height: 200)
+                            .cornerRadius(20)
+                    } else {
+                        selectedImage
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 200, height: 200)
+                            .cornerRadius(20)
+                    }
+                }
             }
         }
         .onBackSwipe {
@@ -82,7 +103,7 @@ struct PageContactView: View {
     
     private func getPhoto() -> some View {
         VStack {
-            if let avatarString = (chat?.isGroup ?? false) ? chat?.avatar : contacts.first?.avatar,
+            if let avatarString = (viewModel.chat?.isGroup ?? false) ? viewModel.chat?.avatar : viewModel.contacts.first?.user?.avatar,
                let url = URL(string: Constants.baseNetworkURLClear + avatarString),
                !avatarString.isEmpty {
                 KFImage(url)
@@ -90,12 +111,19 @@ struct PageContactView: View {
                     .scaledToFill()
                     .frame(width: 80.0, height: 80.0)
                     .clipShape(Circle())
+                    .onTapGesture {
+                        viewModel.selectedImageURL = url
+                        viewModel.selectedImage = Asset.photo.swiftUIImage
+                    }
             } else {
                 Asset.photo.swiftUIImage
                     .resizable()
                     .scaledToFill()
                     .frame(width: 80.0, height: 80.0)
                     .clipShape(Circle())
+                    .onTapGesture {
+                        viewModel.selectedImage = Asset.photo.swiftUIImage
+                    }
             }
         }
         .padding(.trailing)
@@ -106,15 +134,15 @@ struct PageContactView: View {
             getPhoto()
                 
             VStack(alignment: .leading) {
-                Text((chat?.isGroup ?? false) ? (chat?.name ?? L10n.General.unknown) : (contacts.first?.name ?? L10n.General.unknown))
+                Text((viewModel.chat?.isGroup ?? false) ? (viewModel.chat?.name ?? L10n.General.unknown) : (viewModel.contacts.first?.name ?? L10n.General.unknown))
                     .foregroundColor(.white)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
-                if chat?.isGroup ?? false {
-                    Text("\(L10n.PageContactView.chat) - \(contacts.count + 1) \(L10n.PageContactView.participants)")
+                if viewModel.chat?.isGroup ?? false {
+                    Text("\(L10n.PageContactView.chat) - \(viewModel.participants.count) \(L10n.PageContactView.participants)")
                         .font(FontFamily.Poppins.medium.swiftUIFont(size: 14))
                         .foregroundColor(Asset.grey2.swiftUIColor)
                 } else {
-                    Text("@\(contacts.first?.nickname ?? " ")")
+                    Text("@\(viewModel.contacts.first?.user?.nickname ?? " ")")
                         .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                 }
@@ -174,10 +202,10 @@ struct PageContactView: View {
             
             Spacer().frame(height: 16.0)
             
-            ForEach(contacts) { contact in
+            ForEach(viewModel.participants) { participant in
                 HStack {
                     VStack {
-                        if let avatarString = contact.avatar,
+                        if let avatarString = participant.avatar,
                            let url = URL(string: Constants.baseNetworkURLClear + avatarString),
                            !avatarString.isEmpty {
                             KFImage(url)
@@ -185,15 +213,22 @@ struct PageContactView: View {
                                 .scaledToFill()
                                 .frame(width: 32, height: 32)
                                 .clipShape(Circle())
+                                .onTapGesture {
+                                    viewModel.selectedImageURL = url
+                                    viewModel.selectedImage = Asset.photo.swiftUIImage
+                                }
                         } else {
                             Asset.photo.swiftUIImage
                                 .resizable()
                                 .frame(width: 32, height: 32)
+                                .onTapGesture {
+                                    viewModel.selectedImage = Asset.photo.swiftUIImage
+                                }
                         }
                     }
                     .padding(.trailing, 8)
- 
-                    Text(contact.name ?? L10n.General.unknown)
+                    
+                    Text(viewModel.getName(to: participant))
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                         .foregroundColor(.white)
                     
@@ -268,12 +303,8 @@ struct PageContactView: View {
                             .font(FontFamily.Poppins.medium.swiftUIFont(size: 12))
                             .foregroundColor(Asset.fileText.swiftUIColor)
                     }
+                    
                     Spacer()
-                    NavigationLink(destination: ImagesView(images: viewModel.allPhoto).navigationBarHidden(true)){
-                        Image(systemName: "chevron.down")
-                            .frame(width: 10, height: 10)
-                            .foregroundColor(Asset.fileText.swiftUIColor)
-                    }
                 }
                 .padding(.horizontal, 32)
             }
@@ -292,6 +323,9 @@ struct PageContactView: View {
                                 .resizable()
                                 .frame(width: 90, height: 90, alignment: .leading)
                                 .cornerRadius(15)
+                                .onTapGesture {
+                                    viewModel.selectedImage = Image(uiImage: photo.image)
+                                }
                         }
                     })
                     Spacer().frame(width: 10)
@@ -304,19 +338,21 @@ struct PageContactView: View {
                     }, label: {
                         HStack {
                             if photo.id == 5 && viewModel.allPhoto.count > 6 {
-                                ZStack {
-                                    Image(uiImage: photo.image)
-                                        .resizable()
-                                        .frame(width: 90, height: 90, alignment: .leading)
-                                        .cornerRadius(15)
-                                    
-                                    ZStack{
-                                        RoundedRectangle(cornerRadius: 15)
-                                            .frame(width: 90, height: 90)
-                                            .foregroundColor(Color.primary.opacity(0.35))
-                                        Text("\(viewModel.allPhoto.count - 6)+")
-                                            .foregroundColor(Color.white)
-                                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 24))
+                                NavigationLink(destination: ImagesView(images: viewModel.allPhoto)){
+                                    ZStack {
+                                        Image(uiImage: photo.image)
+                                            .resizable()
+                                            .frame(width: 90, height: 90, alignment: .leading)
+                                            .cornerRadius(15)
+                                        
+                                        ZStack{
+                                            RoundedRectangle(cornerRadius: 15)
+                                                .frame(width: 90, height: 90)
+                                                .foregroundColor(Color.primary.opacity(0.35))
+                                            Text("\(viewModel.allPhoto.count - 6)+")
+                                                .foregroundColor(Color.white)
+                                                .font(FontFamily.Poppins.regular.swiftUIFont(size: 24))
+                                        }
                                     }
                                 }
                             } else {
@@ -324,6 +360,9 @@ struct PageContactView: View {
                                     .resizable()
                                     .frame(width: 90, height: 90, alignment: .leading)
                                     .cornerRadius(15)
+                                    .onTapGesture {
+                                        viewModel.selectedImage = Image(uiImage: photo.image)
+                                    }
                             }
                         }
                     })

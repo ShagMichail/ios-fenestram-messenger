@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct NewChatView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -110,9 +111,20 @@ struct NewChatView: View {
                             }
                             
                             HStack {
-                                Asset.photo.swiftUIImage
-                                    .resizable()
-                                    .frame(width: 32, height: 32)
+                                if let avatarString = contact.avatar,
+                                   let url = URL(string: Constants.baseNetworkURLClear + avatarString) {
+                                    KFImage(url)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 32, height: 32)
+                                        .clipShape(Circle())
+                                } else {
+                                    Asset.photo.swiftUIImage
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 32, height: 32)
+                                        .clipShape(Circle())
+                                }
                                 
                                 Text(contact.name ?? L10n.General.unknown)
                                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))

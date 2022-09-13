@@ -92,6 +92,12 @@ struct ProfileView: View {
             .toast(isPresenting: $viewModel.showSuccessToast, duration: 1, tapToDismiss: true) {
                 AlertToast(displayMode: .alert, type: .complete(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor), title: L10n.ProfileView.saveSuccess)
             }
+            .toast(isPresenting: $viewModel.showErrorToast, duration: 2, tapToDismiss: true) {
+                AlertToast(displayMode: .alert, type: .error(Asset.red.swiftUIColor), title: L10n.ProfileView.saveError)
+            }
+            .toast(isPresenting: $viewModel.showSaveProgressToast, duration: 40, tapToDismiss: false) {
+                AlertToast(displayMode: .alert, type: .loading, title: L10n.ProfileView.saveProgress)
+            }
         }
     }
     
@@ -102,6 +108,10 @@ struct ProfileView: View {
         HStack(){
             
             Button {
+                if viewModel.editProfile {
+                    viewModel.cancelChanges()
+                }
+                
                 viewModel.editProfile.toggle()
             } label: {
                 Asset.edit.swiftUIImage
