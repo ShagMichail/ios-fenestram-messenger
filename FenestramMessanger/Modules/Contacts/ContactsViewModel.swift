@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Network
+import ContactsUI
 
 extension ContactsView {
     @MainActor
@@ -48,8 +49,9 @@ extension ContactsView {
         @Published var selectedImage: Image?
         var selectedImageURL: URL?
         
+        @Published var isAccessContactDenied: Bool = false
+        
         private(set) var socketManager: SocketIOManager?
-        private let monitor = NWPathMonitor()
         
         private let phoneBookContacts: [PhoneBookEntity]
                                         
@@ -62,11 +64,33 @@ extension ContactsView {
                 self?.getContacts()
             }
             
+            chechAccessToContacts()
+            
             fillterFile()
         }
         
         
         //MARK: - Query functions
+        
+        func openSettings() {
+            guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
+            
+            UIApplication.shared.open(settingsURL)
+        }
+        
+        func chechAccessToContacts() {
+            let contactStore = CNContactStore()
+            
+            contactStore.requestAccess(for: .contacts) { [weak self] isAccess, error in
+                if let error = error {
+                    print("access to contact failure with error: ", error)
+                    self?.isAccessContactDenied = true
+                    return
+                }
+                
+                self?.isAccessContactDenied = !isAccess
+            }
+        }
         
         func getContacts() {
             isLoading = true

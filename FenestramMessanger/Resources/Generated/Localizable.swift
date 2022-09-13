@@ -51,6 +51,8 @@ internal enum L10n {
   }
 
   internal enum ContactView {
+    /// Вы не разрешили приложению доступ к контактам
+    internal static let accessDeniedText = L10n.tr("Localizable", "contact_view.access_denied_text")
     /// Добавить контакт
     internal static let addContact = L10n.tr("Localizable", "contact_view.add_contact")
     /// Данного контакта не существует
@@ -104,6 +106,8 @@ internal enum L10n {
   }
 
   internal enum General {
+    /// Разрешить
+    internal static let accept = L10n.tr("Localizable", "general.accept")
     /// Отмена
     internal static let cancel = L10n.tr("Localizable", "general.cancel")
     /// Закрыть

@@ -15,6 +15,7 @@
 "general.loading" = "Loading...";
 "general.close" = "Close";
 "general.error_title" = "Error";
+"general.accept" = "Accept";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "A list of your chats will be displayed here";
@@ -49,6 +50,7 @@
 "contact_view.unregister_contacts_title" = "Users are not registered in the application";
 "contact_view.invate_contact" = "invate";
 "contact_view.files" = "%d files";
+"contact_view.access_denied_text" = "You have not allowed the app to access your contacts";
 
 // MARK: - SettingsView
 "settings_view.title" = "Settings";
