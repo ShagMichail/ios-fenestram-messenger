@@ -20,6 +20,7 @@
 "chat_view.empty_text" = "A list of your chats will be displayed here";
 "chat_view.recent_files" = "Recent files";
 "chat_view.recent_image" = "Images";
+"chat_view.files" = "%d files";
 
 // MARK: - NewContactView
 "new_contact_view.title" = "Add Contact";
@@ -36,12 +37,18 @@
 "new_contact_view.phone_number.empty_error" = "No phone number added";
 "new_contact_view.phone_number.incorrect_error" = "Invalid phone number";
 
+"new_contact_view.toast.success_text" = "Contact created successfully";
+"new_contact_view.toast.failure_text" = "Failed to create a contact";
+
 // MARK: - ContactsView
 "contact_view.title" = "Contacts";
 "contact_view.search.placeholder" = "Search for a contact";
 "contact_view.contact_dont_exist" = "This contact does not exist";
 "contact_view.add_contact" = "Add Contact";
 "contact_view.empty_text" = "The phonebook is empty. Would you like to add contacts?";
+"contact_view.unregister_contacts_title" = "Users are not registered in the application";
+"contact_view.invate_contact" = "invate";
+"contact_view.files" = "%d files";
 
 // MARK: - SettingsView
 "settings_view.title" = "Settings";
@@ -58,6 +65,9 @@
 "profile_view.nickname" = "Nickname";
 "profile_view.birthday" = "Birthday";
 "profile_view.email" = "Email";
+"profile_view.save_success" = "Profile saved successfully";
+"profile_view.save_error" = "Couldn't save profile";
+"profile_view.save_progress" = "Saving in progress...";
 
 // MARK: - MainTabView
 "main_tab_view.contacts" = "Contacts";
@@ -80,6 +90,7 @@
 "code_view.enter_code" = "Enter code from SMS";
 "code_view.incorrect_password" = "Invalid code";
 "code_view.send_again" = "Send again?";
+"code_view.send_again_after" = "Send again in %d seconds";
 
 // MARK: - PhoneView
 "phone_view.phone_number" = "Phone number";
@@ -104,3 +115,16 @@
 "page_contact_view.images" = "images";
 "page_contact_view.participants" = "participants";
 "page_contact_view.participants_title" = "Chat participants";
+"page_contact_view.you" = " (you)";
+
+// MARK: - Error
+"error.user_does_not_exist" = "User doesn't exist";
+"error.birthday_empty" = "You must select a birthday";
+"error.avatar_empty" = "You must select a photo";
+"error.token_empty" = "Authentication data error";
+"error.name_empty" = "Name cannot be empty";
+"error.email_incorrect" = "Email incorrect";
+"error.nickname_empty" = "Nickname cannot be empty";
+
+// MARK: - MFMessageComposeView
+"mf_message_compose_view.message" = "Hello, I invite you to join me in the Fenestram chat! So that we can always stay in touch.";

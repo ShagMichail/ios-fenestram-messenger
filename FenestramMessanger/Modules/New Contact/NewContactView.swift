@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
+import iPhoneNumberField
+import AlertToast
 
 struct NewContactView: View {
     
     
     //MARK: - Properties
-    
-    let maskPhone = "+X XXX XXX-XX-XX"
     
     var borderName: some View {
         RoundedRectangle(cornerRadius: 6)
@@ -58,8 +58,14 @@ struct NewContactView: View {
     
     @StateObject private var viewModel: ViewModel
     
-    init() {
+    @State private var showSuccessToast: Bool = false
+    @State private var showErrorToast: Bool = false
+    
+    let updateCompletion: (() -> ())?
+    
+    init(updateCompletion: (() -> ())?) {
         _viewModel = StateObject(wrappedValue: ViewModel())
+        self.updateCompletion = updateCompletion
     }
     
     
@@ -67,22 +73,30 @@ struct NewContactView: View {
     
     var body: some View {
         ZStack {
-            Asset.thema.swiftUIColor
+            Asset.background.swiftUIColor
                 .ignoresSafeArea()
             
             VStack {
                 Rectangle()
-                    .foregroundColor(Asset.buttonDis.swiftUIColor)
-                    .frame(width: UIScreen.screenWidth, height: 100.0)
+                    .foregroundColor(Asset.dark1.swiftUIColor)
+                    .frame(height: 100.0)
                     .ignoresSafeArea()
+                
                 Spacer()
             }
+            
             VStack {
                 getName()
+                    .padding(.bottom, 24)
+                
                 getLastName()
+                    .padding(.bottom, 24)
+                
                 getPhone()
-                Spacer().frame(height: 40.0)
+                    .padding(.bottom, 64)
+                
                 getButton()
+                
                 Spacer()
             }
             .padding()
@@ -93,6 +107,14 @@ struct NewContactView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: title)
         .navigationBarItems(leading: btnBack)
+        .toast(isPresenting: $showSuccessToast, duration: 1, tapToDismiss: true, alert: {
+            AlertToast(displayMode: .alert, type: .complete(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor), title: L10n.NewContactView.Toast.successText)
+        }, completion: {
+            self.updateCompletion?()
+        })
+        .toast(isPresenting: $showErrorToast, duration: 2, tapToDismiss: true) {
+            AlertToast(displayMode: .alert, type: .error(Asset.red.swiftUIColor), title: L10n.NewContactView.Toast.failureText)
+        }
     }
     
     
@@ -102,8 +124,9 @@ struct NewContactView: View {
         VStack (alignment: .trailing){
             VStack(alignment: .leading){
                 Text(L10n.NewContactView.Name.title)
-                    .font(.headline)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                     .foregroundColor((viewModel.name.count == 0 && viewModel.isTappedGlobal == true) ? Asset.red.swiftUIColor : Asset.text.swiftUIColor)
+                
                 Spacer().frame(height: 3.0 )
                 
                 ZStack {
@@ -119,13 +142,16 @@ struct NewContactView: View {
                             viewModel.isTappedName = false
                         }
                         .placeholder(when: viewModel.name.isEmpty && viewModel.isTappedName == false) {
-                            Text(L10n.NewContactView.Name.placeholder).foregroundColor(Asset.text.swiftUIColor).contrast(0)
+                            Text(L10n.NewContactView.Name.placeholder)
+                                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                                .foregroundColor(Asset.text.swiftUIColor.opacity(0.87))
                             
                         }
                         .textFieldStyle(PlainTextFieldStyle())
                         .padding(.vertical, 12)
                         .padding(.leading, 10)
                         .padding(.trailing, 5)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                         .foregroundColor(Asset.text.swiftUIColor)
                         .multilineTextAlignment(.leading)
                         .accentColor(Asset.text.swiftUIColor)
@@ -146,9 +172,11 @@ struct NewContactView: View {
     private func getLastName() -> some View {
         VStack(alignment: .leading){
             Text(L10n.NewContactView.LastName.title)
-                .font(.headline)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                 .foregroundColor(Asset.text.swiftUIColor)
+            
             Spacer().frame(height: 3.0 )
+            
             ZStack {
                 HStack (spacing: 5) {
                     TextField("", text: $viewModel.lastName) { (status) in
@@ -161,12 +189,15 @@ struct NewContactView: View {
                         viewModel.isTappedLastName = false
                     }
                     .placeholder(when: viewModel.lastName.isEmpty) {
-                        Text(L10n.NewContactView.LastName.placeholder).foregroundColor(Asset.text.swiftUIColor).contrast(0)
+                        Text(L10n.NewContactView.LastName.placeholder)
+                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                            .foregroundColor(Asset.text.swiftUIColor.opacity(0.87))
                     }
                     .textFieldStyle(PlainTextFieldStyle())
                     .padding(.vertical, 12)
                     .padding(.leading, 10)
                     .padding(.trailing, 5)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                     .foregroundColor(Asset.text.swiftUIColor)
                     .multilineTextAlignment(.leading)
                     .accentColor(Asset.text.swiftUIColor)
@@ -180,37 +211,31 @@ struct NewContactView: View {
         VStack (alignment: .trailing) {
             VStack(alignment: .leading) {
                 Text(L10n.NewContactView.PhoneNumber.title)
-                    .font(.headline)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                     .foregroundColor(((viewModel.textPhone.count == 0 &&  viewModel.isTappedGlobal == true) || (viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0)) ? Asset.red.swiftUIColor : Asset.text.swiftUIColor)
                 
                 Spacer().frame(height: 3.0 )
                 
-                TextField("", text: Binding<String>(get: {
-                    format(with: self.maskPhone, phone: viewModel.textPhone)
-                }, set: {
-                    viewModel.textPhone = $0
-                })) { (status) in
-                    if status {
-                        viewModel.isTappedPhoneNumber = true
-                        viewModel.isTappedGlobal = true
-                    } else {
-                        viewModel.isTappedPhoneNumber = false
-                    }
-                } onCommit: {
-                    viewModel.isTappedPhoneNumber = false
-                }
-                .placeholder(when: viewModel.textPhone.isEmpty && viewModel.isTappedPhoneNumber == false) {
-                    Text(L10n.NewContactView.PhoneNumber.placeholder).foregroundColor(((viewModel.textPhone.count == 0 &&  viewModel.isTappedGlobal == true) || (viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0)) ? Asset.red.swiftUIColor : Asset.text.swiftUIColor)
-                    
-                }
+                iPhoneNumberField("", text: $viewModel.textPhone, configuration: { textField in
+                    textField.keyboardType = .numberPad
+                    textField.font = FontFamily.Poppins.regular.font(size: 14)
+                })
+                .flagHidden(false)
+                .prefixHidden(false)
+                .foregroundColor(((viewModel.textPhone.count == 0 &&  viewModel.isTappedGlobal == true) || (viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0)) ? Asset.red.swiftUIColor : Asset.text.swiftUIColor.opacity(0.87))
+                .accentColor(Asset.text.swiftUIColor)
+                .multilineTextAlignment(.leading)
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding(.vertical, 12)
                 .padding(.horizontal, 16)
-                .foregroundColor(((viewModel.textPhone.count == 0 &&  viewModel.isTappedGlobal == true) || (viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0)) ? Asset.red.swiftUIColor : Asset.text.swiftUIColor)
                 .background(borderPhone)
-                .multilineTextAlignment(.leading)
-                .accentColor(Asset.text.swiftUIColor)
-                .keyboardType(.phonePad)
+                .placeholder(when: viewModel.textPhone.isEmpty) {
+                    Text(L10n.NewContactView.PhoneNumber.placeholder)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                        .foregroundColor(((viewModel.textPhone.count == 0 &&  viewModel.isTappedGlobal == true) || (viewModel.textPhone.count != 16 && viewModel.textPhone.count != 0)) ? Asset.red.swiftUIColor : Asset.text.swiftUIColor)
+                        .padding(.leading, 48)
+                    
+                }
             }
             
             if viewModel.textPhone.count == 0 && viewModel.isTappedGlobal == true {
@@ -234,21 +259,27 @@ struct NewContactView: View {
     private func getButton() -> some View {
         VStack {
             Button(action: {
-                
+                viewModel.addContact { success in
+                    if success {
+                        showSuccessToast = true
+                    } else {
+                        showErrorToast = true
+                    }
+                }
             }) {
                 Text(L10n.General.done)
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background( (viewModel.name.count != 0 && (viewModel.textPhone.count != 0 && viewModel.textPhone.count == 16 ) ? (isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor) : Asset.buttonDis.swiftUIColor))
+                    .background( (viewModel.name.count != 0 && (viewModel.textPhone.count != 0 && viewModel.textPhone.count == 16 ) ? (isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor) : Asset.dark2.swiftUIColor))
                     .cornerRadius(6)
-            }.disabled((viewModel.name.count == 0 || viewModel.textPhone.count != 16))
+            }.disabled((viewModel.name.count == 0 || (viewModel.textPhone.count == 0 && viewModel.textPhone.count != 16 )))
         }
     }
 }
 
 struct NewContactView_Previews: PreviewProvider {
     static var previews: some View {
-        NewContactView()
+        NewContactView(updateCompletion: nil)
     }
 }

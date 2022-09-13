@@ -40,13 +40,38 @@ extension PageContactView {
         @Published var recentPhotoFirst: [PhotoEntity] = []
         @Published var recentPhotoSecond: [PhotoEntity] = []
         
+        @Published var selectedImage: Image?
+        var selectedImageURL: URL?
+        
+        let chat: ChatEntity?
+        let contacts: [ContactEntity]
+        let participants: [UserEntity]
+        
         var index = 0
         
-        init() {
+        init(contacts: [ContactEntity], chat: ChatEntity?) {
+            self.contacts = contacts
+            self.chat = chat
+            self.participants = chat?.users ?? contacts.compactMap({ $0.user })
+ 
             fillterFile()
             fillterPhotoFirst()
             fillterPhotoSecond()
         }
+        
+        func getContact(user: UserEntity) -> ContactEntity? {
+            return contacts.first(where: { $0.user?.id == user.id })
+        }
+        
+        func getName(to participant: UserEntity) -> String {
+            let name = getContact(user: participant)?.name ?? participant.name ?? L10n.General.unknown
+            
+            if Settings.currentUser?.id == participant.id {
+                return name + L10n.PageContactView.you
+            } else {
+                return name
+            }
+         }
         
         
         //MARK: - Auxiliary functions

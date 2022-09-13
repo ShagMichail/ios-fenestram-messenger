@@ -12,7 +12,7 @@ struct CorrespondenceNavigationView: View {
     
     @State var showSheet = false
     
-    var contacts: [UserEntity]
+    var contacts: [ContactEntity]
     var chat: ChatEntity?
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -56,7 +56,7 @@ struct CorrespondenceNavigationView: View {
             PageContactView(contacts: contacts, chat: chat).navigationBarHidden(true)
         } label: {
             HStack {
-                if let avatarString = (chat?.isGroup ?? false) ? chat?.avatar : contacts.first?.avatar,
+                if let avatarString = (chat?.isGroup ?? false) ? chat?.avatar : contacts.first?.user?.avatar,
                    let url = URL(string: Constants.baseNetworkURLClear + avatarString),
                    !avatarString.isEmpty {
                     KFImage(url)

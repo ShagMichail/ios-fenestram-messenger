@@ -31,7 +31,7 @@ extension CorrespondenceView {
         @Published var textAlert = ""
         @Published var allFoto: [PhotoEntity] = []
         
-        let contacts: [UserEntity]
+        let contacts: [ContactEntity]
         
         private var allMessages: [MessageEntity] = [] {
             didSet {
@@ -42,23 +42,27 @@ extension CorrespondenceView {
         private var socketManager: SocketIOManager?
         
         private var totalPages = 0
-        private var page: Int = 1
+        private(set) var page: Int = 1
         
         private lazy var dateFormatter: DateFormatter = {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMMM"
+            dateFormatter.dateFormat = "d MMMM"
             return dateFormatter
         }()
+        
+        private var loadMoreDispatchWorkItem: DispatchWorkItem?
+        private var stopLoadMoreCount: Int = 0
         
         var lastMessageId: Int?
         var currentMessageId: Int?
         
-        init(chat: ChatEntity?, contacts: [UserEntity], socketManager: SocketIOManager?) {
+        init(chat: ChatEntity?, contacts: [ContactEntity], socketManager: SocketIOManager?) {
             self.chat = chat
             self.contacts = contacts
             
             if let socketManager = socketManager {
                 self.socketManager = socketManager
+                socketManager.checkConnect()
                 socketManager.addObserver(self)
             }
             
@@ -69,19 +73,31 @@ extension CorrespondenceView {
             }
         }
         
-        func loadMoreContent(currentItem item: MessageEntity){
+        func loadMoreContent(currentItem item: MessageEntity) {
             let thresholdIndex = self.allMessages.first?.id
             
             if thresholdIndex == item.id, (self.page + 1) <= self.totalPages {
-                self.page += 1
-                self.getMessages()
-            }
-        }
-        
-        func loadMoreContent(){
-            if (self.page + 1) <= self.totalPages {
-                self.page += 1
-                self.getMessages()
+                self.stopLoadMoreCount = 0
+                
+                loadMoreDispatchWorkItem = DispatchWorkItem(block: { [weak self] in
+                    guard let self = self else { return }
+                    
+                    self.page += 1
+                    self.getMessages()
+                })
+                
+                if let loadMoreDispatchWorkItem = loadMoreDispatchWorkItem {
+                    self.isLoading = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: loadMoreDispatchWorkItem)
+                }
+            } else {
+                if let loadMoreDispatchWorkItem = loadMoreDispatchWorkItem, stopLoadMoreCount > 0 {
+                    loadMoreDispatchWorkItem.cancel()
+                    self.loadMoreDispatchWorkItem = nil
+                    self.isLoading = false
+                } else {
+                    stopLoadMoreCount += 1
+                }
             }
         }
         
@@ -113,7 +129,7 @@ extension CorrespondenceView {
             ChatService.getMessages(chatId: chatId, page: page) { [weak self] result in
                 switch result {
                 case .success(let chatList):
-                    self?.totalPages = (chatList.total ?? 0) / 10
+                    self?.totalPages = Int((Float(chatList.total ?? 0) / 10).rounded(.up))
                     print("first element: ", self?.allMessages.first ?? "no element")
                     self?.currentMessageId = self?.allMessages.first?.id
                     var buffer = self?.allMessages ?? []
@@ -192,7 +208,7 @@ extension CorrespondenceView {
             self.messagesWithTime = buffer
         }
         
-        func lastMessage(message: MessageEntity) -> Bool {
+        func isMessageFromCurrentUser(message: MessageEntity) -> Bool {
             if message.fromUserId == Settings.currentUser?.id {
                 return true
             }
@@ -206,6 +222,10 @@ extension CorrespondenceView {
         }
         
         func receiveMessage(_ message: MessageEntity) {
+            guard let chatId = chat?.id,
+                  let messageChatId = message.chatId,
+                  chatId == messageChatId else { return }
+            
             allMessages.append(message)
             processingData()
         }

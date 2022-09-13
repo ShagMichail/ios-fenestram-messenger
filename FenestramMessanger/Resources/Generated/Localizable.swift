@@ -27,6 +27,10 @@ internal enum L10n {
   internal enum ChatView {
     /// Здесь будет отображаться список ваших чатов
     internal static let emptyText = L10n.tr("Localizable", "chat_view.empty_text")
+    /// %d файлов
+    internal static func files(_ p1: Int) -> String {
+      return L10n.tr("Localizable", "chat_view.files", p1)
+    }
     /// Недавние файлы
     internal static let recentFiles = L10n.tr("Localizable", "chat_view.recent_files")
     /// Изображения
@@ -40,6 +44,10 @@ internal enum L10n {
     internal static let incorrectPassword = L10n.tr("Localizable", "code_view.incorrect_password")
     /// Отправить заново?
     internal static let sendAgain = L10n.tr("Localizable", "code_view.send_again")
+    /// Отправить заново через %d с
+    internal static func sendAgainAfter(_ p1: Int) -> String {
+      return L10n.tr("Localizable", "code_view.send_again_after", p1)
+    }
   }
 
   internal enum ContactView {
@@ -49,8 +57,16 @@ internal enum L10n {
     internal static let contactDontExist = L10n.tr("Localizable", "contact_view.contact_dont_exist")
     /// Телефонная книга пуста. Хотите добавить контакты?
     internal static let emptyText = L10n.tr("Localizable", "contact_view.empty_text")
+    /// %d файлов
+    internal static func files(_ p1: Int) -> String {
+      return L10n.tr("Localizable", "contact_view.files", p1)
+    }
+    /// пригласить
+    internal static let invateContact = L10n.tr("Localizable", "contact_view.invate_contact")
     /// Контакты
     internal static let title = L10n.tr("Localizable", "contact_view.title")
+    /// Пока не зарегистрированы в приложении
+    internal static let unregisterContactsTitle = L10n.tr("Localizable", "contact_view.unregister_contacts_title")
     internal enum Search {
       /// Поиск контакта
       internal static let placeholder = L10n.tr("Localizable", "contact_view.search.placeholder")
@@ -68,6 +84,23 @@ internal enum L10n {
     internal static let message = L10n.tr("Localizable", "correspondence_view.message")
     /// Ваше сообщение
     internal static let textMessage = L10n.tr("Localizable", "correspondence_view.text_message")
+  }
+
+  internal enum Error {
+    /// Необходимо выбрать фотографию
+    internal static let avatarEmpty = L10n.tr("Localizable", "error.avatar_empty")
+    /// Необходимо выбрать дату рождения
+    internal static let birthdayEmpty = L10n.tr("Localizable", "error.birthday_empty")
+    /// Некорректная электронная почта
+    internal static let emailIncorrect = L10n.tr("Localizable", "error.email_incorrect")
+    /// Имя не может быть пустым
+    internal static let nameEmpty = L10n.tr("Localizable", "error.name_empty")
+    /// Никнейм не может быть пустым
+    internal static let nicknameEmpty = L10n.tr("Localizable", "error.nickname_empty")
+    /// Ошибка аутентификационных данных
+    internal static let tokenEmpty = L10n.tr("Localizable", "error.token_empty")
+    /// Пользователь не существует
+    internal static let userDoesNotExist = L10n.tr("Localizable", "error.user_does_not_exist")
   }
 
   internal enum General {
@@ -96,6 +129,11 @@ internal enum L10n {
     internal static let contacts = L10n.tr("Localizable", "main_tab_view.contacts")
     /// Профиль
     internal static let profile = L10n.tr("Localizable", "main_tab_view.profile")
+  }
+
+  internal enum MfMessageComposeView {
+    /// Привет, предлагаю тебе присоединиться ко мне в чат Fenestram! Чтобы бы мы всегда оставались на связи.
+    internal static let message = L10n.tr("Localizable", "mf_message_compose_view.message")
   }
 
   internal enum NewChatView {
@@ -138,6 +176,12 @@ internal enum L10n {
       /// Номер телефона
       internal static let title = L10n.tr("Localizable", "new_contact_view.phone_number.title")
     }
+    internal enum Toast {
+      /// Не удалось создать контакт
+      internal static let failureText = L10n.tr("Localizable", "new_contact_view.toast.failure_text")
+      /// Контакт успешно создан
+      internal static let successText = L10n.tr("Localizable", "new_contact_view.toast.success_text")
+    }
   }
 
   internal enum OnboardingView {
@@ -160,6 +204,8 @@ internal enum L10n {
     internal static let participants = L10n.tr("Localizable", "page_contact_view.participants")
     /// Участники чата
     internal static let participantsTitle = L10n.tr("Localizable", "page_contact_view.participants_title")
+    ///  (вы)
+    internal static let you = L10n.tr("Localizable", "page_contact_view.you")
   }
 
   internal enum PhoneView {
@@ -176,6 +222,12 @@ internal enum L10n {
     internal static let email = L10n.tr("Localizable", "profile_view.email")
     /// Никнейм
     internal static let nickname = L10n.tr("Localizable", "profile_view.nickname")
+    /// Не удалось сохранить профиль
+    internal static let saveError = L10n.tr("Localizable", "profile_view.save_error")
+    /// Идет сохранение...
+    internal static let saveProgress = L10n.tr("Localizable", "profile_view.save_progress")
+    /// Профиль успешно сохранен
+    internal static let saveSuccess = L10n.tr("Localizable", "profile_view.save_success")
     internal enum SelectPhoto {
       /// Камера
       internal static let camera = L10n.tr("Localizable", "profile_view.select_photo.camera")

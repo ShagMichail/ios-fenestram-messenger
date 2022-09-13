@@ -18,8 +18,10 @@ struct MainTabView: View {
     
     init(socketManager: SocketIOManager?) {
         _viewModel = StateObject(wrappedValue: ViewModel(socketManager: socketManager))
-        UITabBar.appearance().backgroundColor = Asset.tabBar.color
-        UITabBar.appearance().unselectedItemTintColor = Asset.photoBack.color
+        UITabBar.appearance().backgroundColor = Asset.dark1.color
+        UITabBar.appearance().unselectedItemTintColor = Asset.grey1.color
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: FontFamily.Poppins.regular.font(size: 14)], for: .normal)
+        UITabBar.appearance().heightAnchor.constraint(equalToConstant: 80).isActive = true
     }
     
     //MARK: - Body
@@ -31,11 +33,14 @@ struct MainTabView: View {
                 .tabItem {
                     if selectionTabView == 0 {
                         Asset.contactsSelected.swiftUIImage
-                            .frame(width: 20, height: 20)
+                            .resizable()
+                            .frame(width: 24, height: 24)
                     } else {
                         Asset.contacts.swiftUIImage
-                            .frame(width: 20, height: 20)
+                            .resizable()
+                            .frame(width: 24, height: 24)
                     }
+                    
                     Text(L10n.MainTabView.contacts)
                 }
                 .tag(0)
@@ -45,11 +50,14 @@ struct MainTabView: View {
                 .tabItem {
                     if selectionTabView == 1 {
                         Asset.chatSelected.swiftUIImage
-                            .frame(width: 20, height: 20)
+                            .resizable()
+                            .frame(width: 24, height: 24)
                     } else {
                         Asset.chat.swiftUIImage
-                            .frame(width: 20, height: 20)
+                            .resizable()
+                            .frame(width: 24, height: 24)
                     }
+                    
                     Text(L10n.MainTabView.chat)
                 }
                 .tag(1)
@@ -59,11 +67,14 @@ struct MainTabView: View {
                 .tabItem {
                     if selectionTabView == 2 {
                         Asset.profileSelected.swiftUIImage
-                            .frame(width: 20, height: 20)
+                            .resizable()
+                            .frame(width: 24, height: 24)
                     } else {
                         Asset.profile.swiftUIImage
-                            .frame(width: 20, height: 20)
+                            .resizable()
+                            .frame(width: 24, height: 24)
                     }
+                    
                     Text(L10n.MainTabView.profile)
                 }
                 .tag(2)

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import BottomSheet
 
 struct ContactsView: View {
     
@@ -18,6 +19,10 @@ struct ContactsView: View {
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
     @StateObject private var viewModel: ViewModel
+    
+    @State var correspondence = false
+    @State var bottomSheetPosition: BookBottomSheetPosition = .hidden
+    @State var selectedContact: ContactEntity?
     
     init(socketManager: SocketIOManager?) {
         _viewModel = StateObject(wrappedValue: ViewModel(socketManager: socketManager))
@@ -46,7 +51,7 @@ struct ContactsView: View {
                     if viewModel.isLoading {
                         LoadingView()
                     } else {
-                        if viewModel.allContacts.count != 0 {
+                        if viewModel.registerContacts.count != 0 {
                             getSearchView()
                             
                             Spacer().frame(height: 20.0)
@@ -58,8 +63,34 @@ struct ContactsView: View {
                     }
                 }
                 
+                if let selectedImage = viewModel.selectedImage {
+                    ZStack {
+                        Color.black
+                            .opacity(0.3)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                self.viewModel.selectedImage = nil
+                                self.viewModel.selectedImageURL = nil
+                            }
+                        
+                        if let url = viewModel.selectedImageURL {
+                            KFImage(url)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 200, height: 200)
+                                .cornerRadius(20)
+                        } else {
+                            selectedImage
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 200, height: 200)
+                                .cornerRadius(20)
+                        }
+                    }
+                }
+                
                 if viewModel.presentAlert {
-                    AlertView(show: $viewModel.presentAlert, textTitle: $viewModel.textTitleAlert, text: $viewModel.textAlert)
+                    AlertView(show: $viewModel.presentAlert, text: viewModel.textAlert)
                 }
                 
             }.onTapGesture {
@@ -112,9 +143,27 @@ struct ContactsView: View {
             VStack(alignment: .trailing) {
                 ScrollView(showsIndicators: false) {
                     LazyVStack {
-                        if viewModel.filteredContacts.count > 0 {
-                            ForEach(viewModel.filteredContacts) { contact in
-                                getContactsRow(contact: contact)
+                        if viewModel.filteredRegisterContacts.count > 0 || viewModel.filteredUnregisterContacts.count > 0 {
+                            ForEach(viewModel.filteredRegisterContacts) { contact in
+                                getContactRow(contact: contact, isRegister: true)
+                            }
+                            
+                            if viewModel.filteredUnregisterContacts.count > 0 {
+                                ZStack {
+                                    Asset.dark1.swiftUIColor
+                                        .ignoresSafeArea()
+                                    
+                                    Text(L10n.ContactView.unregisterContactsTitle)
+                                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                                        .foregroundColor(Asset.grey1.swiftUIColor)
+                                }
+                                .frame(height: 34)
+                                .padding(.top, 32)
+                                .padding(.bottom, 16)
+                                
+                                ForEach(viewModel.filteredUnregisterContacts) { contact in
+                                    getContactRow(contact: contact, isRegister: false)
+                                }
                             }
                         } else {
                             HStack {
@@ -125,16 +174,27 @@ struct ContactsView: View {
                             }.frame(width: UIScreen.screenWidth)
                         }
                     }
+                    
+                    Spacer()
+                        .frame(height: 96)
                 }
                 .padding(.bottom, -85)
                 getButtonNewContact()
+            }
+            .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: [.noDragIndicator, .allowContentDrag, .swipeToDismiss, .tapToDismiss, .absolutePositionValue, .background({ AnyView(Asset.buttonAlert.swiftUIColor) }), .cornerRadius(30)], headerContent: {
+                
+                getHeaderBottomSheet()
+            }) {
+                getBodyBottomSheet()
             }
         }
     }
     
     private func getButtonNewContact() -> some View {
         NavigationLink() {
-            NewContactView()
+            NewContactView(updateCompletion: {
+                viewModel.getContacts()
+            })
         } label: {
             ZStack {
                 Asset.addButtonIcon.swiftUIImage
@@ -149,34 +209,68 @@ struct ContactsView: View {
         }
     }
     
-    private func getContactsRow(contact: UserEntity) -> some View {
-        NavigationLink() {
-            CorrespondenceView(contacts: [contact], chat: nil, socketManager: viewModel.socketManager).navigationBarHidden(true)
-        } label: {
-            HStack {
+    private func getContactRow(contact: ContactEntity, isRegister: Bool) -> some View {
+        let contentView = HStack {
+            Button {
+                bottomSheetPosition = .bottom
+                selectedContact = contact
+            } label: {
                 VStack {
-                    if let avatarString = contact.avatar,
-                       let url = URL(string: Constants.baseNetworkURLClear + avatarString),
-                       !avatarString.isEmpty {
+                    if let avatarURL = contact.user?.avatar,
+                       let url = URL(string: Constants.baseNetworkURLClear + avatarURL) {
                         KFImage(url)
                             .resizable()
                             .scaledToFill()
                             .frame(width: 40.0, height: 40.0)
                             .clipShape(Circle())
                     } else {
-                        Asset.photo.swiftUIImage
+                        Image(uiImage: viewModel.getUnregisterContactAvatar(contact: contact))
                             .resizable()
+                            .scaledToFill()
                             .frame(width: 40.0, height: 40.0)
+                            .clipShape(Circle())
                     }
                 }
                 .padding(.horizontal)
+            }
+            
+            Text(contact.name)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                .foregroundColor(.white)
                 
-                Text(contact.name ?? L10n.General.unknown)
-                    .foregroundColor(.white)
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
-                
-                Spacer()
-            }.padding(.horizontal)
+            
+            Spacer()
+            
+            if !isRegister {
+                Button {
+                    viewModel.selectedContact = contact
+                    viewModel.isShowMFMessageView = true
+                } label: {
+                    VStack {
+                        Text(L10n.ContactView.invateContact)
+                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
+                            .foregroundColor(Asset.grey1.swiftUIColor)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 4)
+                    }
+                    .background(Asset.dark1.swiftUIColor)
+                    .cornerRadius(4)
+                }
+            }
+        }
+        .padding(.horizontal)
+        .sheet(isPresented: $viewModel.isShowMFMessageView) {
+            MFMessageComposeView(recipients: [viewModel.selectedContact?.phone ?? ""], isShown: $viewModel.isShowMFMessageView)
+        }
+        
+        if isRegister {
+            return AnyView(NavigationLink {
+                CorrespondenceView(contacts: [contact], chat: nil, socketManager: viewModel.socketManager).navigationBarHidden(true)
+            } label: {
+                contentView
+            })
+        } else {
+            return AnyView(contentView)
         }
     }
     
@@ -194,7 +288,9 @@ struct ContactsView: View {
             Spacer()
             
             NavigationLink() {
-                NewContactView()
+                NewContactView(updateCompletion: {
+                    viewModel.getContacts()
+                })
             } label: {
                 Text(L10n.ContactView.addContact)
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
@@ -204,6 +300,151 @@ struct ContactsView: View {
                     .cornerRadius(6)
             }
             .padding(.bottom, 50)
+        }
+    }
+    
+    private func getHeaderBottomSheet() -> some View {
+        VStack {
+            HStack {
+                VStack {
+                    if let avatarString = selectedContact?.user?.avatar,
+                       let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                       !avatarString.isEmpty {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 80.0, height: 80.0)
+                            .clipShape(Circle())
+                            .onTapGesture {
+                                viewModel.selectedImageURL = url
+                                viewModel.selectedImage = Asset.photo.swiftUIImage
+                            }
+                    } else if let contact = selectedContact {
+                        Image(uiImage: viewModel.getUnregisterContactAvatar(contact: contact))
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 80.0, height: 80.0)
+                            .clipShape(Circle())
+                            .onTapGesture {
+                                viewModel.selectedImage = Image(uiImage: viewModel.getUnregisterContactAvatar(contact: contact))
+                            }
+                    } else {
+                        Asset.photo.swiftUIImage
+                            .resizable()
+                            .frame(width: 80.0, height: 80.0)
+                            .onTapGesture {
+                                viewModel.selectedImage = Asset.photo.swiftUIImage
+                            }
+                    }
+                }
+                .padding(.horizontal)
+                
+                Text(selectedContact?.name ?? L10n.General.unknown)
+                    .foregroundColor(.white)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
+                
+                Spacer()
+            }
+            Spacer().frame(height: 30.0)
+            HStack {
+                Button {
+                } label: {
+                    buttonsViewProperty(image: Asset.videoButton)
+                }
+                
+                Spacer().frame(width: 54.0)
+                
+                Button {
+                } label: {
+                    buttonsViewProperty(image: Asset.phoneButton)
+                }
+                Spacer().frame(width: 54.0)
+                
+                NavigationLink(isActive: $correspondence) {
+                    CorrespondenceView(contacts: selectedContact != nil ? [selectedContact!] : [], chat: nil, socketManager: viewModel.socketManager)
+                } label:{
+                    Button {
+                        bottomSheetPosition = .hidden
+                        self.correspondence.toggle()
+                    } label: {
+                        buttonsViewProperty(image: Asset.messageButton)
+                    }
+                    
+                }
+                
+            }
+        }
+    }
+    
+    private func getBodyBottomSheet() -> some View {
+        VStack {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(L10n.ChatView.recentFiles)
+                        .font(.system(size: 14))
+                        .foregroundColor(.white)
+                    Text(L10n.ContactView.files(viewModel.allFiles.count))
+                        .font(.system(size: 12))
+                        .foregroundColor(Asset.fileText.swiftUIColor)
+                }
+                Spacer()
+                Image(systemName: "chevron.down")
+                    .frame(width: 10, height: 10)
+                    .foregroundColor(Asset.fileText.swiftUIColor)
+            }.padding(.leading, 50.0)
+                .padding(.trailing, 50.0)
+            
+            Spacer().frame(height: 25.0)
+            
+            ForEach(viewModel.recentFile) { files in
+                Button(action: {
+                    
+                }, label: {
+                    HStack {
+                        Asset.file.swiftUIImage
+                            .resizable()
+                            .frame(width: 20.0, height: 20.0)
+                            .padding(.horizontal)
+                        Text(files.title)
+                            .font(.system(size: 14))
+                            .foregroundColor(Asset.fileText.swiftUIColor)
+                        
+                        Spacer()
+                        
+                        HStack {
+                            Image(systemName: "circle.fill")
+                                .font(.system(size: 2))
+                                .foregroundColor(Asset.fileText.swiftUIColor)
+                            Spacer()
+                                .frame(width: 3.0)
+                            Image(systemName: "circle.fill")
+                                .font(.system(size: 2))
+                                .foregroundColor(Asset.fileText.swiftUIColor)
+                            Spacer()
+                                .frame(width: 3.0)
+                            Image(systemName: "circle.fill")
+                                .font(.system(size: 2))
+                                .foregroundColor(Asset.fileText.swiftUIColor)
+                        }
+                    }
+                }).padding(.leading, 35.0)
+                    .padding(.trailing, 50.0)
+                Spacer().frame(height: 20)
+            }
+        }
+    }
+    
+    private func buttonsViewProperty(image: ImageAsset) -> some View {
+        ZStack{
+            RoundedRectangle(cornerRadius: 30)
+                .frame(width: 60, height: 60, alignment: .center)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 30)
+                        .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
+                )
+                .foregroundColor(Asset.buttonAlert.swiftUIColor)
+            image.swiftUIImage
+                .foregroundColor((isColorThema == false) ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
         }
     }
 }

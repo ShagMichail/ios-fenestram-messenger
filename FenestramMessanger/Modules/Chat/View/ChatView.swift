@@ -52,14 +52,41 @@ struct ChatView: View {
 
                     VStack {
                         getHeader()
-                        if viewModel.isLoading {
+                        if viewModel.isLoading && viewModel.page == 1 {
                             LoadingView()
                         } else {
                             viewModel.chatList.isEmpty ? AnyView(getEmptyView()) : AnyView(getList())
                         }
                     }
+                    
+                    if let selectedImage = viewModel.selectedImage {
+                        ZStack {
+                            Color.black
+                                .opacity(0.3)
+                                .ignoresSafeArea()
+                                .onTapGesture {
+                                    self.viewModel.selectedImage = nil
+                                    self.viewModel.selectedImageURL = nil
+                                }
+                            
+                            if let url = viewModel.selectedImageURL {
+                                KFImage(url)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 200, height: 200)
+                                    .cornerRadius(20)
+                            } else {
+                                selectedImage
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 200, height: 200)
+                                    .cornerRadius(20)
+                            }
+                        }
+                    }
+                    
                     if viewModel.presentAlert {
-                        AlertView(show: $viewModel.presentAlert, textTitle: $viewModel.textTitleAlert, text: $viewModel.textAlert)
+                        AlertView(show: $viewModel.presentAlert, text: viewModel.textAlert)
                     }
                 }
                 .onTapGesture {
@@ -84,12 +111,13 @@ struct ChatView: View {
                 .foregroundColor(Color.white)
                 .font(FontFamily.Montserrat.semiBold.swiftUIFont(size: 22))
             Spacer()
-            NavigationLink() {
-                //Search chats
-            } label: {
-                Image(systemName: "magnifyingglass").foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
-                    .font(.system(size: 20))
-            }
+            // TODO: Ждем реализации поиска чатов на бэке
+//            NavigationLink() {
+//                //Search chats
+//            } label: {
+//                Image(systemName: "magnifyingglass").foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
+//                    .font(.system(size: 20))
+//            }
         }
         .padding()
     }
@@ -122,12 +150,17 @@ struct ChatView: View {
         ZStack {
             ScrollView(showsIndicators: false) {
                 if viewModel.chatList.count > 0 {
-                    ForEach(viewModel.chatList) { chat in
+                    LazyVStack {
+                        ForEach(viewModel.chatList) { chat in
+                            getChatRow(chat: chat)
+                                .onAppear() {
+                                    viewModel.loadMoreContent(currentItem: chat)
+                                }
+                        }
                         
-                        getChatRow(chat: chat)
-                            .onAppear() {
-                                viewModel.loadMoreContent(currentItem: chat)
-                            }
+                        if viewModel.isLoading && viewModel.page > 1 {
+                            ProgressView()
+                        }
                     }
                 } else {
                     HStack {
@@ -137,6 +170,9 @@ struct ChatView: View {
                             .padding(.horizontal)
                     }.frame(width: UIScreen.screenWidth)
                 }
+                
+                Spacer()
+                    .frame(height: 92)
             }
             .padding(.bottom, 1)
             
@@ -164,7 +200,7 @@ struct ChatView: View {
                 chatUser = chat
             } label: {
                 VStack {
-                    if let avatarString = chat.isGroup ? chat.avatar : viewModel.getContact(with: chat)?.avatar,
+                    if let avatarString = chat.isGroup ? chat.avatar : viewModel.getContact(with: chat)?.user?.avatar,
                        let url = URL(string: Constants.baseNetworkURLClear + avatarString),
                        !avatarString.isEmpty {
                         KFImage(url)
@@ -182,13 +218,14 @@ struct ChatView: View {
             }
             
             NavigationLink {
-                CorrespondenceView(contacts: viewModel.getUserEntity(from: chat), chat: chat, socketManager: viewModel.socketManager)
+                CorrespondenceView(contacts: viewModel.getContactsEntity(from: chat), chat: chat, socketManager: viewModel.socketManager)
                 
             } label: {
                 VStack(alignment: .leading) {
-                    Text(chat.isGroup ? chat.name : viewModel.getContact(with: chat)?.name ?? L10n.General.unknown)
+                    Text(chat.isGroup ? chat.name : viewModel.getContact(with: chat)?.name ?? chat.users?.first?.name ?? L10n.General.unknown)
                         .foregroundColor(.white)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                    
                     Text(lastMessage(chat: chat))
                         .foregroundColor(Asset.message.swiftUIColor)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
@@ -219,7 +256,7 @@ struct ChatView: View {
         VStack {
             HStack {
                 VStack {
-                    if let avatarString = (chatUser?.isGroup ?? false) ? chatUser?.avatar : viewModel.getContact(with: chatUser)?.avatar,
+                    if let avatarString = (chatUser?.isGroup ?? false) ? chatUser?.avatar : viewModel.getContact(with: chatUser)?.user?.avatar,
                        let url = URL(string: Constants.baseNetworkURLClear + avatarString),
                        !avatarString.isEmpty {
                         KFImage(url)
@@ -227,16 +264,23 @@ struct ChatView: View {
                             .scaledToFill()
                             .frame(width: 80.0, height: 80.0)
                             .clipShape(Circle())
+                            .onTapGesture {
+                                viewModel.selectedImageURL = url
+                                viewModel.selectedImage = Asset.photo.swiftUIImage
+                            }
                     } else {
                         Asset.photo.swiftUIImage
                             .resizable()
                             .frame(width: 80.0, height: 80.0)
+                            .onTapGesture {
+                                viewModel.selectedImage = Asset.photo.swiftUIImage
+                            }
                     }
                 }
                 .padding(.horizontal)
                 
                 VStack(alignment: .leading) {
-                    Text(((chatUser?.usersId.count ?? 2 > 2) ? chatUser?.name : viewModel.getUserEntity(from: chatUser).first?.name) ?? "")
+                    Text(((chatUser?.isGroup ?? false) ? chatUser?.name : viewModel.getContactsEntity(from: chatUser).first?.name ?? chatUser?.users?.first?.name) ?? L10n.General.unknown)
                         .foregroundColor(.white)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                     Text(viewModel.getNicNameUsers(chat: chatUser))
@@ -248,7 +292,6 @@ struct ChatView: View {
             Spacer().frame(height: 30.0)
             HStack {
                 Button {
-                    print("fff")
                 } label: {
                     buttonsViewProperty(image: Asset.videoButton)
                 }
@@ -256,14 +299,13 @@ struct ChatView: View {
                 Spacer().frame(width: 54.0)
                 
                 Button {
-                    print("fff")
                 } label: {
                     buttonsViewProperty(image: Asset.phoneButton)
                 }
                 Spacer().frame(width: 54.0)
                 
                 NavigationLink(isActive: $correspondence) {
-                    CorrespondenceView(contacts: viewModel.getUserEntity(from: chatUser), chat: chatUser, socketManager: viewModel.socketManager)
+                    CorrespondenceView(contacts: viewModel.getContactsEntity(from: chatUser), chat: chatUser, socketManager: viewModel.socketManager)
                 } label:{
                     Button {
                         bottomSheetPosition = .hidden
@@ -284,7 +326,7 @@ struct ChatView: View {
                     Text(L10n.ChatView.recentFiles)
                         .font(.system(size: 14))
                         .foregroundColor(.white)
-                    Text("\(viewModel.allFiles.count) файлов")
+                    Text(L10n.ChatView.files(viewModel.allFiles.count))
                         .font(.system(size: 12))
                         .foregroundColor(Asset.fileText.swiftUIColor)
                 }
@@ -367,7 +409,7 @@ struct ChatView: View {
     //MARK: - Cell setup functions
 
     private func lastMessage(chat: ChatEntity) -> String {
-        guard let lastIndex = chat.messages?.last else {return ""}
+        guard let lastIndex = chat.messages?.last else { return "" }
         return lastIndex.message
     }
     

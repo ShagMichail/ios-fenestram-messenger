@@ -34,5 +34,11 @@ extension NewChatConfirmView {
                 }
             }
         }
+        
+        func limitText(_ upper: Int) {
+            if chatName.count > upper {
+                chatName = String(chatName.prefix(upper))
+            }
+        }
     }
 }

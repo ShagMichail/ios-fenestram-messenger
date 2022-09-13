@@ -24,8 +24,12 @@ extension CodeView {
         @Published public var okCode = false
         
         @Published var presentAlert = false
-        @Published var textTitleAlert = ""
         @Published var textAlert = ""
+        
+        @Published var showSendAgainButton: Bool = true
+        @Published var sendAgainButtonDisabled: Bool = false
+        
+        @Published private(set) var timer: Int = 0
         
         init(phoneNumber: String) {
             let phoneNumber = phoneNumber
@@ -33,10 +37,32 @@ extension CodeView {
                 .replacingOccurrences(of: "-", with: "")
             
             self.phoneNumber = phoneNumber
+            self.startTimer()
         }
         
         
         //MARK: - Query functions
+        
+        func sendAgain() {
+            sendAgainButtonDisabled = true
+            
+            AuthService.sendCode(phoneNumber: phoneNumber) { [weak self] result in
+                guard let self = self else { return }
+                
+                switch result {
+                case .success:
+                    print("send code success")
+                    self.startTimer()
+                    self.errorCode = false
+                case .failure(let error):
+                    print("send code failure with error: ", error.localizedDescription)
+                    self.textAlert = error.localizedDescription
+                    self.presentAlert = true
+                }
+                
+                self.sendAgainButtonDisabled = false
+            }
+        }
         
         func login() {
             AuthService.login(phoneNumber: phoneNumber, oneTimeCode: textCode) { [weak self] result in
@@ -50,19 +76,42 @@ extension CodeView {
                         self?.okCode = true
                     }
                     catch let error {
-
                         print("sign in failure with error: ", error.localizedDescription)
-                        self?.textTitleAlert = "sign in failure with error"
                         self?.textAlert = error.localizedDescription
                         self?.presentAlert = true
                     }
                 case .failure(let error):
                     print("login failure with error: ", error.localizedDescription)
+                    if error.localizedDescription == NetworkError.internetError.errorDescription {
+                        self?.textAlert = error.localizedDescription
+                        self?.presentAlert = true
+                        return
+                    }
+                    
                     self?.errorCode = true
                 }
             }
         }
         
+        private func startTimer() {
+            timer = 59
+            showSendAgainButton = false
+            tickTimer()
+        }
+        
+        private func tickTimer() {
+            if timer <= 0 {
+                showSendAgainButton = true
+                return
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                guard let self = self else { return }
+                
+                self.timer -= 1
+                self.tickTimer()
+            }
+        }
         
         //MARK: - Auxiliary functions
         

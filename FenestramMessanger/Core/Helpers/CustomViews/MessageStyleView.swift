@@ -9,22 +9,33 @@ import SwiftUI
 import Kingfisher
 
 struct MessageStyleView: View {
-    var isCurrentUser: Bool
-    var isGroupChat: Bool
-    var message: MessageEntity
+    let chat: ChatEntity?
+    let contacts: [ContactEntity]
+    let message: MessageEntity
     @AppStorage ("isColorThema") var isColorThema: Bool?
+    
+    private var isCurrentUser: Bool {
+        return Settings.currentUser?.id == message.fromUserId
+    }
     
     var body: some View {
         if isCurrentUser {
             VStack(alignment: .trailing) {
-                Text(message.message)
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                    .foregroundColor(.white)
-                    .padding(10)
-                    .foregroundColor(Color.white)
-                    .background(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
-                    .cornerRadius(10)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
+                VStack {
+                    if #available(iOS 15.0, *) {
+                        Text(message.message)
+                            .textSelection(.enabled)
+                            
+                    } else {
+                        Text(message.message)
+                    }
+                }
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                .foregroundColor(.white)
+                .padding(10)
+                .background(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
+                .cornerRadius(10)
+                .frame(maxWidth: .infinity, alignment: .trailing)
                 
                 Spacer().frame(height: 5)
                 
@@ -39,7 +50,7 @@ struct MessageStyleView: View {
                         .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                 }
             }
-        } else if isGroupChat {
+        } else if chat?.isGroup ?? false {
             HStack {
                 if let avatarString = message.fromUser?.avatar,
                    let url = URL(string: Constants.baseNetworkURLClear + avatarString) {
@@ -57,16 +68,23 @@ struct MessageStyleView: View {
                 
                 VStack(alignment: .leading) {
                     VStack(alignment: .leading) {
-                        Text(message.fromUser?.name ?? L10n.General.unknown)
+                        Text(getUserName(user: message.fromUser))
                             .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                             .foregroundColor(Asset.grey1.swiftUIColor)
                         
-                        Text(message.message)
-                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                            .foregroundColor(.white)
+                        VStack {
+                            if #available(iOS 15.0, *) {
+                                Text(message.message)
+                                    .textSelection(.enabled)
+                                
+                            } else {
+                                Text(message.message)
+                            }
+                        }
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                        .foregroundColor(.white)
                     }
                     .padding(10)
-                    .foregroundColor(Color.white)
                     .background(Asset.tabBar.swiftUIColor)
                     .cornerRadius(10)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -82,14 +100,21 @@ struct MessageStyleView: View {
             }
         } else {
             VStack(alignment: .leading) {
-                Text(message.message)
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                    .foregroundColor(.white)
-                    .padding(10)
-                    .foregroundColor(Color.white)
-                    .background(Asset.tabBar.swiftUIColor)
-                    .cornerRadius(10)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                VStack {
+                    if #available(iOS 15.0, *) {
+                        Text(message.message)
+                            .textSelection(.enabled)
+                        
+                    } else {
+                        Text(message.message)
+                    }
+                }
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                .foregroundColor(.white)
+                .padding(10)
+                .background(Asset.tabBar.swiftUIColor)
+                .cornerRadius(10)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Spacer().frame(height: 5)
                 
@@ -99,6 +124,21 @@ struct MessageStyleView: View {
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
                 }
             }
+        }
+    }
+    
+    private func getUserName(user: UserEntity?) -> String {
+        guard let user = user else {
+            return L10n.General.unknown
+        }
+
+        let contact = contacts.first(where: { $0.user?.id == user.id })
+        let name = contact?.name ?? user.name ?? L10n.General.unknown
+        
+        if Settings.currentUser?.id == user.id {
+            return name + L10n.PageContactView.you
+        } else {
+            return name
         }
     }
     
