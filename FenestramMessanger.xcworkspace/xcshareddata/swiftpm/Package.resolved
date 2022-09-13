@@ -15,7 +15,7 @@
       "location" : "https://github.com/lucaszischka/BottomSheet",
       "state" : {
         "branch" : "main",
-        "revision" : "23f37fd59f899df4d4f423ed99e3b7e5411d1e2f"
+        "revision" : "18b6164b0176b99608d50ef8b5257abfbec2a4d4"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/MojtabaHs/iPhoneNumberField.git",
       "state" : {
-        "revision" : "a6b5fcc6c9b085285932fe4fe754086ab92409cb",
-        "version" : "0.6.1"
+        "revision" : "08140a73b6923f07df313fbc71034c70d431a5c9",
+        "version" : "0.10.0"
       }
     },
     {
@@ -69,7 +69,7 @@
       "location" : "https://github.com/siteline/SwiftUI-Introspect.git",
       "state" : {
         "branch" : "master",
-        "revision" : "7ef0df639079491ee1aaf6b83b6fd4d08df80393"
+        "revision" : "d3cbf32788250741d397cfb5bcd532c37aa1096d"
       }
     }
   ],
