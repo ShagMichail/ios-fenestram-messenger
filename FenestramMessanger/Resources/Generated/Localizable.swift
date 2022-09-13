@@ -27,6 +27,10 @@ internal enum L10n {
   internal enum ChatView {
     /// Здесь будет отображаться список ваших чатов
     internal static let emptyText = L10n.tr("Localizable", "chat_view.empty_text")
+    /// %d файлов
+    internal static func files(_ p1: Int) -> String {
+      return L10n.tr("Localizable", "chat_view.files", p1)
+    }
     /// Недавние файлы
     internal static let recentFiles = L10n.tr("Localizable", "chat_view.recent_files")
     /// Изображения
@@ -53,6 +57,10 @@ internal enum L10n {
     internal static let contactDontExist = L10n.tr("Localizable", "contact_view.contact_dont_exist")
     /// Телефонная книга пуста. Хотите добавить контакты?
     internal static let emptyText = L10n.tr("Localizable", "contact_view.empty_text")
+    /// %d файлов
+    internal static func files(_ p1: Int) -> String {
+      return L10n.tr("Localizable", "contact_view.files", p1)
+    }
     /// пригласить
     internal static let invateContact = L10n.tr("Localizable", "contact_view.invate_contact")
     /// Контакты

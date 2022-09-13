@@ -292,7 +292,6 @@ struct ChatView: View {
             Spacer().frame(height: 30.0)
             HStack {
                 Button {
-                    print("fff")
                 } label: {
                     buttonsViewProperty(image: Asset.videoButton)
                 }
@@ -300,7 +299,6 @@ struct ChatView: View {
                 Spacer().frame(width: 54.0)
                 
                 Button {
-                    print("fff")
                 } label: {
                     buttonsViewProperty(image: Asset.phoneButton)
                 }
@@ -328,7 +326,7 @@ struct ChatView: View {
                     Text(L10n.ChatView.recentFiles)
                         .font(.system(size: 14))
                         .foregroundColor(.white)
-                    Text("\(viewModel.allFiles.count) файлов")
+                    Text(L10n.ChatView.files(viewModel.allFiles.count))
                         .font(.system(size: 12))
                         .foregroundColor(Asset.fileText.swiftUIColor)
                 }

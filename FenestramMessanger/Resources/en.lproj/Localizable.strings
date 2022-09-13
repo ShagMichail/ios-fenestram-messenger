@@ -20,6 +20,7 @@
 "chat_view.empty_text" = "A list of your chats will be displayed here";
 "chat_view.recent_files" = "Recent files";
 "chat_view.recent_image" = "Images";
+"chat_view.files" = "%d files";
 
 // MARK: - NewContactView
 "new_contact_view.title" = "Add Contact";
@@ -47,6 +48,7 @@
 "contact_view.empty_text" = "The phonebook is empty. Would you like to add contacts?";
 "contact_view.unregister_contacts_title" = "Users are not registered in the application";
 "contact_view.invate_contact" = "invate";
+"contact_view.files" = "%d files";
 
 // MARK: - SettingsView
 "settings_view.title" = "Settings";

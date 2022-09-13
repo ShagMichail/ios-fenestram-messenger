@@ -348,7 +348,6 @@ struct ContactsView: View {
             Spacer().frame(height: 30.0)
             HStack {
                 Button {
-                    print("fff")
                 } label: {
                     buttonsViewProperty(image: Asset.videoButton)
                 }
@@ -356,7 +355,6 @@ struct ContactsView: View {
                 Spacer().frame(width: 54.0)
                 
                 Button {
-                    print("fff")
                 } label: {
                     buttonsViewProperty(image: Asset.phoneButton)
                 }
@@ -385,7 +383,7 @@ struct ContactsView: View {
                     Text(L10n.ChatView.recentFiles)
                         .font(.system(size: 14))
                         .foregroundColor(.white)
-                    Text("\(viewModel.allFiles.count) файлов")
+                    Text(L10n.ContactView.files(viewModel.allFiles.count))
                         .font(.system(size: 12))
                         .foregroundColor(Asset.fileText.swiftUIColor)
                 }
@@ -410,7 +408,9 @@ struct ContactsView: View {
                         Text(files.title)
                             .font(.system(size: 14))
                             .foregroundColor(Asset.fileText.swiftUIColor)
+                        
                         Spacer()
+                        
                         HStack {
                             Image(systemName: "circle.fill")
                                 .font(.system(size: 2))

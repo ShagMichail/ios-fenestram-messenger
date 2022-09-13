@@ -20,6 +20,7 @@
 "chat_view.empty_text" = "Здесь будет отображаться список ваших чатов";
 "chat_view.recent_files" = "Недавние файлы";
 "chat_view.recent_image" = "Изображения";
+"chat_view.files" = "%d файлов";
 
 // MARK: - NewContactView
 "new_contact_view.title" = "Добавить контакт";
@@ -47,6 +48,7 @@
 "contact_view.empty_text" = "Телефонная книга пуста. Хотите добавить контакты?";
 "contact_view.unregister_contacts_title" = "Пока не зарегистрированы в приложении";
 "contact_view.invate_contact" = "пригласить";
+"contact_view.files" = "%d файлов";
 
 // MARK: - SettingsView
 "settings_view.title" = "Настройки";
