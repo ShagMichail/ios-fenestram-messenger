@@ -237,6 +237,18 @@ extension ProfileView {
             return emailPredicate.evaluate(with: string)
         }
         
+        func limitNameText(_ upper: Int) {
+            if name.count > upper {
+                name = String(name.prefix(upper))
+            }
+        }
+        
+        func limitNicNameText(_ upper: Int) {
+            if nicName.count > upper {
+                nicName = String(nicName.prefix(upper))
+            }
+        }
+        
         func cancelChanges() {
             guard let profile = profile else {
                 self.name = ""

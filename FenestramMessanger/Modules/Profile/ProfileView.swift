@@ -226,6 +226,9 @@ struct ProfileView: View {
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
                     .textContentType(.name)
+                    .onReceive(Just(viewModel.name)) { _ in
+                        viewModel.limitNameText(20)
+                    }
                 }
             }.background(border)
         }
@@ -267,6 +270,9 @@ struct ProfileView: View {
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
                     .disabled(!viewModel.editProfile)
+                    .onReceive(Just(viewModel.nicName)) { _ in
+                        viewModel.limitNicNameText(20)
+                    }
                 }
             }.background(border)
         }
@@ -288,7 +294,7 @@ struct ProfileView: View {
                         .padding(.trailing, 5)
                         .frame( height: 46.0)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
-                        .disabled(!viewModel.editProfile)
+//                        .disabled(!viewModel.editProfile)
                 }
             }.background(border)
         }

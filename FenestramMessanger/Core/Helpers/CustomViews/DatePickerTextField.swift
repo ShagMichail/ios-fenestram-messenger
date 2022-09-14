@@ -13,10 +13,9 @@ struct DatePickerTextField: UIViewRepresentable {
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .wheels
         if let date = date {
-            datePicker.date = date
+            datePicker.setDate(date, animated: false)
         }
         datePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -10, to: Date())
-        datePicker.addTarget(self.helper, action: #selector(self.helper.dateValueChanged), for: .valueChanged)
         
         textField.placeholder = placeholder
         textField.inputView = datePicker
@@ -32,14 +31,8 @@ struct DatePickerTextField: UIViewRepresentable {
         toolbar.setItems([flexibleSpace, doneButton], animated: true)
         textField.inputAccessoryView = toolbar
         
-        helper.onDateValueChanged = {
-            date = datePicker.date
-        }
-        
         helper.onDoneButtonTapped = {
-            if date == nil {
-                date = datePicker.date
-            }
+            date = datePicker.date
             
             textField.resignFirstResponder()
         }
@@ -48,10 +41,13 @@ struct DatePickerTextField: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UITextField, context: Context) {
+        let datePicker = (uiView.inputView as? UIDatePicker)
         if let selectedDate = date {
             uiView.text = Date.dateFormatter.string(from: selectedDate)
+            datePicker?.setDate(selectedDate, animated: true)
         } else {
             uiView.text = nil
+            datePicker?.setDate(datePicker?.maximumDate ?? Date(), animated: false)
         }
     }
     
@@ -60,12 +56,7 @@ struct DatePickerTextField: UIViewRepresentable {
     }
     
     class Helper {
-        public var onDateValueChanged: (() -> Void)?
         public var onDoneButtonTapped: (() -> Void)?
-        
-        @objc func dateValueChanged() {
-            onDateValueChanged?()
-        }
         
         @objc func doneButtonTapped() {
             onDoneButtonTapped?()
