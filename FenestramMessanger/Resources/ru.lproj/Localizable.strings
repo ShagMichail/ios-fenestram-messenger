@@ -15,6 +15,7 @@
 "general.loading" = "Идет загрузка...";
 "general.close" = "Закрыть";
 "general.error_title" = "Произошла ошибка";
+"general.accept" = "Разрешить";
 "general.no_internet_connection" = "Нет соединения с интернетом";
 
 // MARK: - ChatView
@@ -69,6 +70,7 @@
 "profile_view.save_success" = "Профиль успешно сохранен";
 "profile_view.save_error" = "Не удалось сохранить профиль";
 "profile_view.save_progress" = "Идет сохранение...";
+"profile_view.need_access_to_camera" = "Необходимо разрешить доступ приложению к камере";
 
 // MARK: - MainTabView
 "main_tab_view.contacts" = "Контакты";

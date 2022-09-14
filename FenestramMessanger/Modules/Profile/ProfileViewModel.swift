@@ -8,6 +8,15 @@
 import SwiftUI
 
 extension ProfileView {
+    
+    enum NeedAccessErrorType: Identifiable {
+        var id: Int {
+            return hashValue
+        }
+        
+        case camera
+    }
+    
     @MainActor
     final class ViewModel: ObservableObject {
         
@@ -45,12 +54,20 @@ extension ProfileView {
         @Published var showErrorToast: Bool = false
         @Published var showSaveProgressToast: Bool = false
         
+        @Published var isNeedAccessError: NeedAccessErrorType?
+        
         init() {
             getProfile()
         }
         
         
         //MARK: - Query functions
+        
+        func openAppSettings() {
+            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+            
+            UIApplication.shared.open(url)
+        }
         
         func saveInfo() {
             guard !name.isEmpty else {

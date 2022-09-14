@@ -104,6 +104,8 @@ internal enum L10n {
   }
 
   internal enum General {
+    /// Разрешить
+    internal static let accept = L10n.tr("Localizable", "general.accept")
     /// Отмена
     internal static let cancel = L10n.tr("Localizable", "general.cancel")
     /// Закрыть
@@ -255,6 +257,8 @@ internal enum L10n {
     internal static let birthday = L10n.tr("Localizable", "profile_view.birthday")
     /// Эл. почта
     internal static let email = L10n.tr("Localizable", "profile_view.email")
+    /// Необходимо разрешить доступ приложению к камере
+    internal static let needAccessToCamera = L10n.tr("Localizable", "profile_view.need_access_to_camera")
     /// Никнейм
     internal static let nickname = L10n.tr("Localizable", "profile_view.nickname")
     /// Не удалось сохранить профиль

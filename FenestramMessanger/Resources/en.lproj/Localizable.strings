@@ -15,6 +15,7 @@
 "general.loading" = "Loading...";
 "general.close" = "Close";
 "general.error_title" = "Error";
+"general.accept" = "Accept";
 "general.no_internet_connection" = "No internet connection";
 
 // MARK: - ChatView
@@ -69,6 +70,7 @@
 "profile_view.save_success" = "Profile saved successfully";
 "profile_view.save_error" = "Couldn't save profile";
 "profile_view.save_progress" = "Saving in progress...";
+"profile_view.need_access_to_camera" = "You need to allow the app to access the camera";
 
 // MARK: - MainTabView
 "main_tab_view.contacts" = "Contacts";
