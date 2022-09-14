@@ -15,7 +15,8 @@ struct ImagesNavigationView: View {
   
     var body: some View {
         ZStack {
-            Asset.buttonDis.swiftUIColor.ignoresSafeArea()
+            Asset.dark1.swiftUIColor.ignoresSafeArea()
+            
             HStack {
                 btnBack
                 title

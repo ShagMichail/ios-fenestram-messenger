@@ -32,7 +32,7 @@ struct PhoneView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Asset.thema.swiftUIColor
+                Asset.background.swiftUIColor
                     .ignoresSafeArea()
                 
                 getBase()

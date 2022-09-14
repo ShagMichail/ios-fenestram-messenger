@@ -15,6 +15,7 @@
 "general.loading" = "Loading...";
 "general.close" = "Close";
 "general.error_title" = "Error";
+"general.no_internet_connection" = "No internet connection";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "A list of your chats will be displayed here";
@@ -128,3 +129,18 @@
 
 // MARK: - MFMessageComposeView
 "mf_message_compose_view.message" = "Hello, I invite you to join me in the Fenestram chat! So that we can always stay in touch.";
+
+// MARK: - NetworkError
+"network_error.localized_error.error_description.server_error" = "Server error. Please try again later";
+"network_error.localized_error.error_description.response_error" = "Oops, something went wrong";
+"network_error.localized_error.error_description.internet_error" = "No internet connection";
+"network_error.localized_error.error_description.user_already_exists" = "User with this address already exists";
+"network_error.localized_error.error_description.run_of_space" = "Run out of space";
+"network_error.localized_error.error_description.session_timed_out" = "Your session has timed out";
+
+"network_error.localized_error.recovery_suggestion.server_error" = "Server unavailable";
+"network_error.localized_error.recovery_suggestion.response_error" = "Check your input is correct";
+"network_error.localized_error.recovery_suggestion.internet_error" = "Please check your internet connection";
+"network_error.localized_error.recovery_suggestion.user_already_exists" = "Account registered please use password recovery";
+"network_error.localized_error.recovery_suggestion.run_of_space" = "Please free up space on your phone";
+"network_error.localized_error.recovery_suggestion.session_timed_out" = "Failed to get new authentication data";

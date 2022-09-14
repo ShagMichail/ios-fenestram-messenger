@@ -42,7 +42,7 @@ struct ContactsView: View {
     var body: some View {
         NavigationView {
             ZStack{
-                Asset.thema.swiftUIColor
+                Asset.background.swiftUIColor
                     .ignoresSafeArea()
                 
                 VStack(alignment: .leading) {

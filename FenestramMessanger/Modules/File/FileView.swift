@@ -29,7 +29,8 @@ struct FileView: View {
     var body: some View {
         
         ZStack {
-            Asset.thema.swiftUIColor.ignoresSafeArea()
+            Asset.background.swiftUIColor.ignoresSafeArea()
+            
             VStack {
                 FileNavigationView()
                 Spacer().frame(height: 20)

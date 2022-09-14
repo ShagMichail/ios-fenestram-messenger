@@ -40,7 +40,7 @@ struct ChatView: View {
         NavigationView {
             GeometryReader { geometry in
                 ZStack {
-                    Asset.thema.swiftUIColor
+                    Asset.background.swiftUIColor
                         .ignoresSafeArea()
                     
                     NavigationLink(isActive: $viewModel.isShowNewChatView) {
@@ -222,7 +222,7 @@ struct ChatView: View {
                 
             } label: {
                 VStack(alignment: .leading) {
-                    Text(chat.isGroup ? chat.name : viewModel.getContact(with: chat)?.name ?? chat.users?.first?.name ?? L10n.General.unknown)
+                    Text(chat.isGroup ? chat.name : viewModel.getContact(with: chat)?.name ?? chat.users?.first?.name ?? chat.name)
                         .foregroundColor(.white)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                     
@@ -280,7 +280,7 @@ struct ChatView: View {
                 .padding(.horizontal)
                 
                 VStack(alignment: .leading) {
-                    Text(((chatUser?.isGroup ?? false) ? chatUser?.name : viewModel.getContactsEntity(from: chatUser).first?.name ?? chatUser?.users?.first?.name) ?? L10n.General.unknown)
+                    Text(((chatUser?.isGroup ?? false) ? chatUser?.name : viewModel.getContactsEntity(from: chatUser).first?.name ?? chatUser?.users?.first?.name ?? chatUser?.name) ?? L10n.General.unknown)
                         .foregroundColor(.white)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                     Text(viewModel.getNicNameUsers(chat: chatUser))

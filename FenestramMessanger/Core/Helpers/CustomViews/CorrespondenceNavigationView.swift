@@ -22,7 +22,7 @@ struct CorrespondenceNavigationView: View {
     
     var body: some View {
         ZStack {
-            Asset.buttonDis.swiftUIColor
+            Asset.dark2.swiftUIColor
                 .ignoresSafeArea()
             
             HStack {
