@@ -32,10 +32,13 @@ extension MainView {
             }
             
             monitor.pathUpdateHandler = { [weak self] path in
-                self?.isOnline = path.usesInterfaceType(.cellular) || path.usesInterfaceType(.wifi)
+                DispatchQueue.main.async {
+                    self?.isOnline = path.usesInterfaceType(.cellular) || path.usesInterfaceType(.wifi)
+                }
             }
             
-            monitor.start(queue: .main)
+            let queue = DispatchQueue(label: "Monitor")
+            monitor.start(queue: queue)
         }
         
         
