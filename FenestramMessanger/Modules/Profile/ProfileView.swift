@@ -294,7 +294,7 @@ struct ProfileView: View {
                         .padding(.trailing, 5)
                         .frame( height: 46.0)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
-//                        .disabled(!viewModel.editProfile)
+                        .disabled(!viewModel.editProfile)
                 }
             }.background(border)
         }
