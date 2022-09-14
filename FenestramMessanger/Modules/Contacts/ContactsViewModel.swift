@@ -64,7 +64,7 @@ extension ContactsView {
                 self?.getContacts()
             }
             
-            chechAccessToContacts()
+            checkAccessToContacts()
             
             fillterFile()
         }
@@ -78,7 +78,7 @@ extension ContactsView {
             UIApplication.shared.open(settingsURL)
         }
         
-        func chechAccessToContacts() {
+        func checkAccessToContacts() {
             let contactStore = CNContactStore()
             
             contactStore.requestAccess(for: .contacts) { [weak self] isAccess, error in
