@@ -51,6 +51,7 @@
 "contact_view.unregister_contacts_title" = "Пока не зарегистрированы в приложении";
 "contact_view.invate_contact" = "пригласить";
 "contact_view.files" = "%d файлов";
+"contact_view.access_denied_text" = "Вы не разрешили приложению доступ к контактам";
 
 // MARK: - SettingsView
 "settings_view.title" = "Настройки";

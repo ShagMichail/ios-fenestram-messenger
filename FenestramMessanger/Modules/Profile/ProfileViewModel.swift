@@ -237,7 +237,8 @@ extension ProfileView {
                 case .failure(let error):
                     print("error: ", error.localizedDescription)
                     self?.showSaveProgressToast = false
-                    self?.showErrorToast = true
+                    self?.textAlert = error.localizedDescription
+                    self?.presentAlert = true
                 }
             }
         }

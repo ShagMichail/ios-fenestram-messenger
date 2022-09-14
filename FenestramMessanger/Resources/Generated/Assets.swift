@@ -38,6 +38,8 @@ internal enum Asset {
   internal static let onboardingSecond = ImageAsset(name: "onboardingSecond")
   internal static let onboardingThird = ImageAsset(name: "onboardingThird")
   internal static let severicons = ImageAsset(name: "Severicons")
+  internal static let accessDeniedBanner = ImageAsset(name: "access_denied_banner")
+  internal static let accessDeniedTextColor = ColorAsset(name: "access_denied_text_color")
   internal static let addButtonIcon = ImageAsset(name: "add_button_icon")
   internal static let alert = ImageAsset(name: "alert")
   internal static let blueTick = ImageAsset(name: "blue_tick")

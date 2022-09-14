@@ -43,6 +43,12 @@ extension CodeView {
         
         //MARK: - Query functions
         
+        func limitText(_ upper: Int) {
+            if textCode.count > upper {
+                textCode = String(textCode.prefix(upper))
+            }
+        }
+        
         func sendAgain() {
             sendAgainButtonDisabled = true
             
