@@ -17,6 +17,7 @@ struct ContactsView: View {
     var chat: ChatEntity?
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
+    @Environment(\.scenePhase) var scenePhase
     
     @StateObject private var viewModel: ViewModel
     
@@ -51,7 +52,9 @@ struct ContactsView: View {
                     if viewModel.isLoading {
                         LoadingView()
                     } else {
-                        if viewModel.registerContacts.count != 0 {
+                        if viewModel.isAccessContactDenied {
+                            getAccessDeniedView()
+                        } else if viewModel.registerContacts.count != 0 {
                             getSearchView()
                             
                             Spacer().frame(height: 20.0)
@@ -95,6 +98,11 @@ struct ContactsView: View {
                 
             }.onTapGesture {
                 UIApplication.shared.endEditing()
+            }
+            .onChange(of: scenePhase) { newPhase in
+                if newPhase == .active {
+                    viewModel.checkAccessToContacts()
+                }
             }
             .navigationBarHidden(true)
         }
@@ -274,6 +282,35 @@ struct ContactsView: View {
         }
     }
     
+    private func getAccessDeniedView() -> some View {
+        VStack(alignment: .center) {
+            Spacer()
+            Asset.accessDeniedBanner.swiftUIImage
+                .resizable()
+                .frame(width: 300, height: 300)
+            
+            Text(L10n.ContactView.accessDeniedText)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                .foregroundColor(Asset.accessDeniedTextColor.swiftUIColor)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 24)
+            
+            Spacer()
+            
+            Button {
+                viewModel.openSettings()
+            } label: {
+                Text(L10n.General.accept)
+                    .frame(width: UIScreen.screenWidth - 30, height: 45.0)
+                    .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
+                    .foregroundColor(.white)
+                    .background((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
+                    .cornerRadius(6)
+            }
+            .padding(.bottom, 50)
+        }
+    }
+    
     private func getEmptyView() -> some View {
         VStack(alignment: .center) {
             Spacer()
@@ -282,6 +319,7 @@ struct ContactsView: View {
                 .frame(width: 300, height: 300)
             
             Text(L10n.ContactView.emptyText)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                 .foregroundColor(Asset.photoBack.swiftUIColor)
                 .multilineTextAlignment(.center)
             

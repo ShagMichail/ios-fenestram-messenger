@@ -62,7 +62,7 @@ struct CorrespondenceView: View {
 
                         Spacer()
                         
-                        if $viewModel.allFoto.count != 0 {
+                        if viewModel.allFoto.count != 0 {
                             getPhotoMessage()
                         }
                         
