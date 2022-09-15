@@ -4,7 +4,9 @@
 //
 //  Created by Михаил Шаговитов on 13.07.2022.
 //
+
 import SwiftUI
+import PhoneNumberKit
 
 extension NewContactView {
     @MainActor
@@ -19,7 +21,13 @@ extension NewContactView {
         @Published var lastName = ""
         @Published var textPhone = "" {
             didSet {
-                if textPhone.prefix(1) != "+" {
+                guard textPhone.count > 0 else {
+                    return
+                }
+                
+                if textPhone == "8" {
+                    textPhone = "+7"
+                } else if textPhone.prefix(1) != "+" {
                     textPhone = "+" + textPhone
                 }
                 
@@ -40,6 +48,12 @@ extension NewContactView {
         @Published var isTappedGlobal = false
         
         private(set) var formattedPhone: String = ""
+        
+        private let phoneNumberKit = PhoneNumberKit()
+        
+        func checkPhoneNumber() -> Bool {
+            return (try? phoneNumberKit.parse(formattedPhone)) != nil
+        }
         
         func addContact(completion: @escaping (Bool) -> ()) {
             ContactsService.postContacts(name: name + (lastName.isEmpty ? "" : " \(lastName)"), phoneNumber: formattedPhone) { result in
