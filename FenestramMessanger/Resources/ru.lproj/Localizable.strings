@@ -23,6 +23,7 @@
 "chat_view.recent_files" = "Недавние файлы";
 "chat_view.recent_image" = "Изображения";
 "chat_view.files" = "%d файлов";
+"chat_view.message.image" = "Изображение";
 
 // MARK: - NewContactView
 "new_contact_view.title" = "Добавить контакт";
@@ -108,6 +109,11 @@
 "correspondence_view.foto" = "Фото";
 "correspondence_view.image" = "Галерея";
 "correspondence_view.file" = "Файл";
+"correspondence_view.toast.upload_image.full_success" = "Изображения успешно отправлены";
+"correspondence_view.toast.upload_image.part_success" = "Удалось отправить %d изображений из %d";
+"correspondence_view.toast.upload_image.error" = "Не удалось отправить изображения";
+"correspondence_view.toast.upload_image.progress" = "Идет отправка изображений...";
+"correspondence_view.message_view.failed_get_image" = "--не удалось получить изображение--";
 
 // MARK: - NewChatView
 "new_chat_view.title" = "Создание чата";

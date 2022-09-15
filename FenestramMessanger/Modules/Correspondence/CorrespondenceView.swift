@@ -9,6 +9,8 @@ import SwiftUI
 import Combine
 import BottomSheet
 import Network
+import AlertToast
+import Kingfisher
 
 enum CorrespondenceBottomSheetPosition: CGFloat, CaseIterable {
     case bottom = 220, hidden = 0
@@ -42,7 +44,7 @@ struct CorrespondenceView: View {
         _viewModel = StateObject(wrappedValue: ViewModel(chat: chat, contacts: contacts, socketManager: socketManager))
         UITextView.appearance().backgroundColor = .clear
     }
-
+    
     
     //MARK: - Body
     
@@ -60,7 +62,7 @@ struct CorrespondenceView: View {
                         LoadingView()
                     } else {
                         viewModel.messagesWithTime.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
-
+                        
                         Spacer()
                         
                         if viewModel.allFoto.count != 0 {
@@ -70,8 +72,34 @@ struct CorrespondenceView: View {
                         getMessageTextEditor()
                     }
                 }
-                Spacer().frame(height: 16)
                 
+                Spacer().frame(height: 16)
+            }
+            
+            if let selectedImage = viewModel.selectedImage {
+                ZStack {
+                    Color.black
+                        .opacity(0.3)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            self.viewModel.selectedImage = nil
+                            self.viewModel.selectedImageURL = nil
+                        }
+                    
+                    if let url = viewModel.selectedImageURL {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 200, height: 200)
+                            .cornerRadius(20)
+                    } else {
+                        selectedImage
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 200, height: 200)
+                            .cornerRadius(20)
+                    }
+                }
             }
         }
         .sheet(isPresented: $viewModel.showImagePicker) {
@@ -79,11 +107,20 @@ struct CorrespondenceView: View {
                         isShown: $viewModel.showImagePicker,
                         sourceType: self.sourceType)}
         .navigationBarHidden(true)
-        .onBackSwipe(perform: { presentationMode.wrappedValue.dismiss() }, isEnabled: !viewModel.isLoading) 
+        .onBackSwipe(perform: { presentationMode.wrappedValue.dismiss() }, isEnabled: !viewModel.isLoading)
         .onTapGesture { UIApplication.shared.endEditing() }
-            /// Bottom sheet for attachment
+        /// Bottom sheet for attachment
         .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: bottomSheetOptions,
-                     headerContent: { getBottomSheet()}) {}
+                     headerContent: { getBottomSheet()}, mainContent: {})
+        .toast(isPresenting: $viewModel.showUploadImageSuccessToast, duration: 1, tapToDismiss: true) {
+            AlertToast(displayMode: .alert, type: .complete(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor), title: viewModel.successUploadImageMessage)
+        }
+        .toast(isPresenting: $viewModel.showUploadImageErrorToast, duration: 2, tapToDismiss: true) {
+            AlertToast(displayMode: .alert, type: .error(Asset.red.swiftUIColor), title: L10n.CorrespondenceView.Toast.UploadImage.error)
+        }
+        .toast(isPresenting: $viewModel.showUploadImageProgressToast, duration: 120, tapToDismiss: false) {
+            AlertToast(displayMode: .alert, type: .loading, title: L10n.CorrespondenceView.Toast.UploadImage.progress)
+        }
     }
     
     
@@ -114,7 +151,11 @@ struct CorrespondenceView: View {
                             HStack(alignment: .bottom, spacing: 15) {
                                 MessageStyleView(chat: viewModel.chat,
                                                  contacts: viewModel.contacts,
-                                                 message: message)
+                                                 message: message,
+                                                 onClickImage: { url in
+                                    viewModel.selectedImageURL = url
+                                    viewModel.selectedImage = Asset.photo.swiftUIImage
+                                })
                             }
                             .id(message.id)
                             .padding(.all, 15)
@@ -221,11 +262,14 @@ struct CorrespondenceView: View {
                 
                 Spacer()
                 Button {
-                    if !viewModel.textMessage.isEmpty {
+                    if !viewModel.textMessage.isEmpty || !viewModel.allFoto.isEmpty {
                         if viewModel.chat == nil {
                             viewModel.createChat(chatName: viewModel.contacts[0].name, usersId: viewModel.getUserEntityIds(contactId: viewModel.contacts[0].id))
                         } else {
-                            viewModel.postMessage(chat: viewModel.chat)
+                            if !viewModel.textMessage.isEmpty {
+                                viewModel.postTextMessage()
+                            }
+                            viewModel.postImageMessage()
                         }
                     }
                 } label: {

@@ -9,6 +9,7 @@ import Foundation
 
 public enum MessageType: String, Codable {
     case text = "text"
+    case image = "image"
 }
 
 public struct MessageResponse: Codable {

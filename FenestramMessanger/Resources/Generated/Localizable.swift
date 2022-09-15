@@ -35,6 +35,10 @@ internal enum L10n {
     internal static let recentFiles = L10n.tr("Localizable", "chat_view.recent_files")
     /// Изображения
     internal static let recentImage = L10n.tr("Localizable", "chat_view.recent_image")
+    internal enum Message {
+      /// Изображение
+      internal static let image = L10n.tr("Localizable", "chat_view.message.image")
+    }
   }
 
   internal enum CodeView {
@@ -86,6 +90,24 @@ internal enum L10n {
     internal static let message = L10n.tr("Localizable", "correspondence_view.message")
     /// Ваше сообщение
     internal static let textMessage = L10n.tr("Localizable", "correspondence_view.text_message")
+    internal enum MessageView {
+      /// --не удалось получить изображение--
+      internal static let failedGetImage = L10n.tr("Localizable", "correspondence_view.message_view.failed_get_image")
+    }
+    internal enum Toast {
+      internal enum UploadImage {
+        /// Не удалось отправить изображения
+        internal static let error = L10n.tr("Localizable", "correspondence_view.toast.upload_image.error")
+        /// Изображения успешно отправлены
+        internal static let fullSuccess = L10n.tr("Localizable", "correspondence_view.toast.upload_image.full_success")
+        /// Удалось отправить %d изображений из %d
+        internal static func partSuccess(_ p1: Int, _ p2: Int) -> String {
+          return L10n.tr("Localizable", "correspondence_view.toast.upload_image.part_success", p1, p2)
+        }
+        /// Идет отправка изображений...
+        internal static let progress = L10n.tr("Localizable", "correspondence_view.toast.upload_image.progress")
+      }
+    }
   }
 
   internal enum Error {

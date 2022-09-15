@@ -72,7 +72,7 @@ struct CorrespondenceNavigationView: View {
                 
                 
                 VStack(alignment: .leading) {
-                    Text((chat?.isGroup ?? false) ? (chat?.name ?? L10n.General.unknown) : (contacts.first?.name ?? L10n.General.unknown))
+                    Text((chat?.isGroup ?? false) ? (chat?.name ?? L10n.General.unknown) : (contacts.first?.name ?? chat?.name ?? L10n.General.unknown))
                         .foregroundColor(Color.white)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                     

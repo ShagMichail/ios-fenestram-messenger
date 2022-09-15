@@ -410,7 +410,14 @@ struct ChatView: View {
 
     private func lastMessage(chat: ChatEntity) -> String {
         guard let lastIndex = chat.messages?.last else { return "" }
-        return lastIndex.message
+        
+        switch lastIndex.messageType {
+        case .text:
+            return lastIndex.message
+        case .image:
+            return L10n.ChatView.Message.image
+        }
+        
     }
     
     private func lastMessageTime(chat: ChatEntity) -> String {

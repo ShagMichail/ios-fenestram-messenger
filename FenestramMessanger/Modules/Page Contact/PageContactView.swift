@@ -134,7 +134,7 @@ struct PageContactView: View {
             getPhoto()
                 
             VStack(alignment: .leading) {
-                Text((viewModel.chat?.isGroup ?? false) ? (viewModel.chat?.name ?? L10n.General.unknown) : (viewModel.contacts.first?.name ?? L10n.General.unknown))
+                Text((viewModel.chat?.isGroup ?? false) ? (viewModel.chat?.name ?? L10n.General.unknown) : (viewModel.contacts.first?.name ?? viewModel.chat?.name ?? L10n.General.unknown))
                     .foregroundColor(.white)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                 if viewModel.chat?.isGroup ?? false {
