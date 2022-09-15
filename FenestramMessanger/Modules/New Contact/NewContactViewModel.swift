@@ -67,5 +67,17 @@ extension NewContactView {
                 }
             }
         }
+        
+        func limitFirstNameText(_ upper: Int) {
+            if name.count > upper {
+                name = String(name.prefix(upper))
+            }
+        }
+        
+        func limitLastNameText(_ upper: Int) {
+            if lastName.count > upper {
+                lastName = String(lastName.prefix(upper))
+            }
+        }
     }
 }

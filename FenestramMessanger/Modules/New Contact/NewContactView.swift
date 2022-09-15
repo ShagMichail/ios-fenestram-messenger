@@ -8,6 +8,7 @@
 import SwiftUI
 import iPhoneNumberField
 import AlertToast
+import Combine
 
 struct NewContactView: View {
     
@@ -156,6 +157,9 @@ struct NewContactView: View {
                         .multilineTextAlignment(.leading)
                         .accentColor(Asset.text.swiftUIColor)
                         .keyboardType(.default)
+                        .onReceive(Just(viewModel.name)) { _ in
+                            viewModel.limitFirstNameText(20)
+                        }
                     }
                 }.background(borderName)
             }
@@ -202,6 +206,9 @@ struct NewContactView: View {
                     .multilineTextAlignment(.leading)
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
+                    .onReceive(Just(viewModel.lastName)) { _ in
+                        viewModel.limitLastNameText(20)
+                    }
                 }
             }.background(borderLastName)
         }
