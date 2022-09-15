@@ -26,29 +26,18 @@ struct SettingsView: View {
     init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
     }
-        
-    var title : some View {
-        Text(L10n.SettingsView.title)
-            .foregroundColor(Color.white)
-            .font(FontFamily.Poppins.regular.swiftUIFont(size: 20))
-    }
     
     
     //MARK: - Body
     
     var body: some View {
         ZStack {
-            Asset.thema.swiftUIColor
+            Asset.background.swiftUIColor
                 .ignoresSafeArea()
             
             VStack(alignment: .leading) {
-                Rectangle()
-                    .foregroundColor(Asset.buttonDis.swiftUIColor)
-                    .frame(width: UIScreen.screenWidth, height: 100.0)
-                    .ignoresSafeArea()
-                Spacer()
-            }
-            VStack(alignment: .leading) {
+                
+                getHeaderView()
                 
                 Spacer().frame(height: 20)
                 
@@ -64,20 +53,48 @@ struct SettingsView: View {
                 getOutSettings()
                 
                 Spacer()
-            }.padding()
+            }
+            .padding(.horizontal, 24)
+            
             Spacer()
         }
-        .navigationBarItems(leading: title)
         .introspectTabBarController { (UITabBarController) in
             UITabBarController.tabBar.isHidden = true
             uiTabarController = UITabBarController
         }.onDisappear{
             uiTabarController?.tabBar.isHidden = false
         }
+        .navigationBarHidden(true)
     }
     
     
     //MARK: - Views
+    
+    private func getHeaderView() -> some View {
+        ZStack(alignment: .leading) {
+            Asset.dark1.swiftUIColor
+                .ignoresSafeArea()
+            
+            HStack {
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(Color.white)
+                    }
+                }
+                .padding(.trailing, 16)
+                
+                Text(L10n.SettingsView.title)
+                    .font(FontFamily.Poppins.bold.swiftUIFont(size: 18))
+                    .foregroundColor(Color.white)
+            }
+            .padding(.horizontal, 24)
+        }
+        .frame(height: 50)
+        .padding(.horizontal, -24)
+    }
     
     private func getColorThemaSettings() -> some View {
         HStack{

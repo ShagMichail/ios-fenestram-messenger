@@ -17,7 +17,13 @@ extension PhoneView {
         
         @Published var textPhone = "" {
             didSet {
-                if textPhone.prefix(1) != "+" {
+                guard textPhone.count > 0 else {
+                    return
+                }
+                
+                if textPhone == "8" {
+                    textPhone = "+7"
+                } else if textPhone.prefix(1) != "+" {
                     textPhone = "+" + textPhone
                 }
                 

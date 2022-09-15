@@ -16,9 +16,12 @@ struct NewChatView: View {
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
-    init(isPopToChatListView: Binding<Bool>) {
+    let onNeedUpdateChatList: () -> ()
+    
+    init(isPopToChatListView: Binding<Bool>, onNeedUpdateChatList: @escaping () -> ()) {
         _viewModel = StateObject(wrappedValue: ViewModel())
         _isPopToChatListView = isPopToChatListView
+        self.onNeedUpdateChatList = onNeedUpdateChatList
     }
     
     var body: some View {
@@ -53,7 +56,7 @@ struct NewChatView: View {
                         Spacer()
                         
                         NavigationLink {
-                            NewChatConfirmView(selectedContacts: viewModel.getSelectedContacts(), isPopToChatListView: $isPopToChatListView)
+                            NewChatConfirmView(selectedContacts: viewModel.getSelectedContacts(), isPopToChatListView: $isPopToChatListView, onNeedUpdateChatList: onNeedUpdateChatList)
                         } label: {
                             if isColorThema == false {
                                 Asset.nextButtonBlueIcon.swiftUIImage
@@ -152,6 +155,6 @@ struct NewChatView: View {
 
 struct NewChatView_Previews: PreviewProvider {
     static var previews: some View {
-        NewChatView(isPopToChatListView: .constant(true))
+        NewChatView(isPopToChatListView: .constant(true), onNeedUpdateChatList: {})
     }
 }

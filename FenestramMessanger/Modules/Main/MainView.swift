@@ -25,17 +25,36 @@ struct MainView: View {
     //MARK: - Body
     
     var body: some View {
-        if viewModel.isSignIn {
-            if (isAlreadySetProfile ?? false) || !(Settings.currentUser?.isInfoEmpty ?? true) {
-                MainTabView(socketManager: viewModel.socketManager)
-                    .navigationBarHidden(true)
-            } else {
-                AccountView()
-                    .navigationBarHidden(true)
+        ZStack {
+            Asset.background.swiftUIColor
+                .ignoresSafeArea()
+            
+            VStack {
+                if !viewModel.isOnline {
+                    HStack {
+                        Text(L10n.General.noInternetConnection)
+                            .font(FontFamily.Poppins.medium.swiftUIFont(size: 16))
+                            .foregroundColor(.white)
+                            .padding()
+                    }
+                    .frame(height: 40)
+                    .background(Asset.red.swiftUIColor)
+                    .cornerRadius(8)
+                }
+                
+                if viewModel.isSignIn {
+                    if (isAlreadySetProfile ?? false) || !(Settings.currentUser?.isInfoEmpty ?? true) {
+                        MainTabView(socketManager: viewModel.socketManager)
+                            .navigationBarHidden(true)
+                    } else {
+                        AccountView()
+                            .navigationBarHidden(true)
+                    }
+                } else {
+                    PhoneView()
+                        .navigationBarHidden(true)
+                }
             }
-        } else {
-            PhoneView()
-                .navigationBarHidden(true)
         }
     }
 }

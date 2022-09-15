@@ -31,7 +31,8 @@ struct ImagesView: View {
     
     var body: some View {
         ZStack {
-            Asset.thema.swiftUIColor.ignoresSafeArea()
+            Asset.background.swiftUIColor.ignoresSafeArea()
+            
             VStack {
                 ImagesNavigationView()
                 getListPhoto()

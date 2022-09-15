@@ -9,6 +9,8 @@ import SwiftUI
 import Combine
 import BottomSheet
 import Network
+import AlertToast
+import Kingfisher
 
 enum CorrespondenceBottomSheetPosition: CGFloat, CaseIterable {
     case bottom = 220, hidden = 0
@@ -35,22 +37,23 @@ struct CorrespondenceView: View {
                                                              .allowContentDrag,
                                                              .swipeToDismiss, .tapToDismiss,
                                                              .absolutePositionValue,
-                                                             .background({ AnyView(Asset.buttonAlert.swiftUIColor) }),
+                                                             .background({ AnyView(Asset.dark1.swiftUIColor) }),
                                                              .cornerRadius(30)]
     
     init(contacts: [ContactEntity], chat: ChatEntity?, socketManager: SocketIOManager?) {
         _viewModel = StateObject(wrappedValue: ViewModel(chat: chat, contacts: contacts, socketManager: socketManager))
         UITextView.appearance().backgroundColor = .clear
     }
-
+    
     
     //MARK: - Body
     
     var body: some View {
         
         ZStack {
-            Asset.thema.swiftUIColor
+            Asset.background.swiftUIColor
                 .ignoresSafeArea()
+            
             VStack {
                 VStack {
                     CorrespondenceNavigationView(contacts: viewModel.contacts, chat: viewModel.chat)
@@ -59,18 +62,44 @@ struct CorrespondenceView: View {
                         LoadingView()
                     } else {
                         viewModel.messagesWithTime.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
-
+                        
                         Spacer()
                         
-                        if $viewModel.allFoto.count != 0 {
+                        if viewModel.allFoto.count != 0 {
                             getPhotoMessage()
                         }
                         
                         getMessageTextEditor()
                     }
                 }
-                Spacer().frame(height: 16)
                 
+                Spacer().frame(height: 16)
+            }
+            
+            if let selectedImage = viewModel.selectedImage {
+                ZStack {
+                    Color.black
+                        .opacity(0.3)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            self.viewModel.selectedImage = nil
+                            self.viewModel.selectedImageURL = nil
+                        }
+                    
+                    if let url = viewModel.selectedImageURL {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 200, height: 200)
+                            .cornerRadius(20)
+                    } else {
+                        selectedImage
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 200, height: 200)
+                            .cornerRadius(20)
+                    }
+                }
             }
         }
         .sheet(isPresented: $viewModel.showImagePicker) {
@@ -78,11 +107,20 @@ struct CorrespondenceView: View {
                         isShown: $viewModel.showImagePicker,
                         sourceType: self.sourceType)}
         .navigationBarHidden(true)
-        .onBackSwipe(perform: { presentationMode.wrappedValue.dismiss() }, isEnabled: !viewModel.isLoading) 
+        .onBackSwipe(perform: { presentationMode.wrappedValue.dismiss() }, isEnabled: !viewModel.isLoading)
         .onTapGesture { UIApplication.shared.endEditing() }
-            /// Bottom sheet for attachment
+        /// Bottom sheet for attachment
         .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: bottomSheetOptions,
-                     headerContent: { getBottomSheet()}) {}
+                     headerContent: { getBottomSheet()}, mainContent: {})
+        .toast(isPresenting: $viewModel.showUploadImageSuccessToast, duration: 1, tapToDismiss: true) {
+            AlertToast(displayMode: .alert, type: .complete(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor), title: viewModel.successUploadImageMessage)
+        }
+        .toast(isPresenting: $viewModel.showUploadImageErrorToast, duration: 2, tapToDismiss: true) {
+            AlertToast(displayMode: .alert, type: .error(Asset.red.swiftUIColor), title: L10n.CorrespondenceView.Toast.UploadImage.error)
+        }
+        .toast(isPresenting: $viewModel.showUploadImageProgressToast, duration: 120, tapToDismiss: false) {
+            AlertToast(displayMode: .alert, type: .loading, title: L10n.CorrespondenceView.Toast.UploadImage.progress)
+        }
     }
     
     
@@ -113,7 +151,11 @@ struct CorrespondenceView: View {
                             HStack(alignment: .bottom, spacing: 15) {
                                 MessageStyleView(chat: viewModel.chat,
                                                  contacts: viewModel.contacts,
-                                                 message: message)
+                                                 message: message,
+                                                 onClickImage: { url in
+                                    viewModel.selectedImageURL = url
+                                    viewModel.selectedImage = Asset.photo.swiftUIImage
+                                })
                             }
                             .id(message.id)
                             .padding(.all, 15)
@@ -196,7 +238,7 @@ struct CorrespondenceView: View {
                     .accentColor(Asset.text.swiftUIColor)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                     .background(RoundedRectangle(cornerRadius: 10)
-                        .foregroundColor(Asset.tabBar.swiftUIColor)
+                        .foregroundColor(Asset.dark1.swiftUIColor)
                         .frame(width: UIScreen.screenWidth - 24))
                     .padding(.leading , 50)
                     .padding(.trailing , 50)
@@ -205,7 +247,7 @@ struct CorrespondenceView: View {
             }
             .padding(.horizontal)
             .background(RoundedRectangle(cornerRadius: 10)
-                .foregroundColor(Asset.tabBar.swiftUIColor)
+                .foregroundColor(Asset.dark1.swiftUIColor)
                 .frame(width: UIScreen.screenWidth - 24, height: 55))
             
             HStack(alignment: .bottom){
@@ -220,11 +262,14 @@ struct CorrespondenceView: View {
                 
                 Spacer()
                 Button {
-                    if !viewModel.textMessage.isEmpty {
+                    if !viewModel.textMessage.isEmpty || !viewModel.allFoto.isEmpty {
                         if viewModel.chat == nil {
                             viewModel.createChat(chatName: viewModel.contacts[0].name, usersId: viewModel.getUserEntityIds(contactId: viewModel.contacts[0].id))
                         } else {
-                            viewModel.postMessage(chat: viewModel.chat)
+                            if !viewModel.textMessage.isEmpty {
+                                viewModel.postTextMessage()
+                            }
+                            viewModel.postImageMessage()
                         }
                     }
                 } label: {
@@ -243,6 +288,7 @@ struct CorrespondenceView: View {
     private func getBottomSheet() -> some View {
         HStack {
             Spacer()
+            
             VStack(alignment: .center) {
                 NavigationLink(destination: FileView().navigationBarHidden(true)) {
                     buttonsViewProperty(image: Asset.fileButton)
@@ -266,7 +312,9 @@ struct CorrespondenceView: View {
                     .foregroundColor(Color.white)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
             }
+            
             Spacer()
+            
             VStack {
                 Button {
                     viewModel.showImagePicker = true
@@ -279,6 +327,7 @@ struct CorrespondenceView: View {
                     .foregroundColor(Color.white)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
             }
+            
             Spacer()
         }
     }
@@ -287,11 +336,8 @@ struct CorrespondenceView: View {
         ZStack{
             RoundedRectangle(cornerRadius: 30)
                 .frame(width: 60, height: 60, alignment: .center)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 30)
-                        .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
-                )
-                .foregroundColor(Asset.buttonAlert.swiftUIColor)
+                .foregroundColor(Asset.background0.swiftUIColor)
+            
             image.swiftUIImage
                 .foregroundColor((isColorThema == false) ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
         }

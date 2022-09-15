@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import Kingfisher
 
 struct NewChatConfirmView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -18,9 +19,12 @@ struct NewChatConfirmView: View {
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
-    init(selectedContacts: [UserEntity], isPopToChatListView: Binding<Bool>) {
+    let onNeedUpdateChatList: () -> ()
+    
+    init(selectedContacts: [UserEntity], isPopToChatListView: Binding<Bool>, onNeedUpdateChatList: @escaping () -> ()) {
         _viewModel = StateObject(wrappedValue: ViewModel(selectedContacts: selectedContacts))
         _isPopToChatListView = isPopToChatListView
+        self.onNeedUpdateChatList = onNeedUpdateChatList
     }
     
     var body: some View {
@@ -46,9 +50,10 @@ struct NewChatConfirmView: View {
                         Spacer()
                         
                         Button {
-                            viewModel.createChat() {
+                            viewModel.createChat(success: {
+                                onNeedUpdateChatList()
                                 self.isPopToChatListView = false
-                            }
+                            })
                         } label: {
                             if isColorThema == false {
                                 Asset.doneButtonBlueIcon.swiftUIImage
@@ -168,9 +173,20 @@ struct NewChatConfirmView: View {
             LazyVStack {
                 ForEach(viewModel.selectedContacts) { contact in
                     HStack {
-                        Asset.photo.swiftUIImage
-                            .resizable()
-                            .frame(width: 32, height: 32)
+                        if let avatarString = contact.avatar,
+                           let url = URL(string: Constants.baseNetworkURLClear + avatarString) {
+                            KFImage(url)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 32, height: 32)
+                                .clipShape(Circle())
+                        } else {
+                            Asset.photo.swiftUIImage
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 32, height: 32)
+                                .clipShape(Circle())
+                        }
                         
                         Text(contact.name ?? L10n.General.unknown)
                             .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
@@ -187,6 +203,6 @@ struct NewChatConfirmView: View {
 
 struct NewChatConfirmView_Previews: PreviewProvider {
     static var previews: some View {
-        NewChatConfirmView(selectedContacts: [], isPopToChatListView: .constant(true))
+        NewChatConfirmView(selectedContacts: [], isPopToChatListView: .constant(true), onNeedUpdateChatList: {})
     }
 }

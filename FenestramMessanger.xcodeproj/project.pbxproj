@@ -1228,7 +1228,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenestramMessanger/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires usage of camera to function property!";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Пожалуйста предоставьте доступ к камере телефона";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Пожалуйста, предоставьте доступ к вашему списку контактов, чтобы мы могли найти их в нашем приложении";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1266,7 +1266,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenestramMessanger/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires usage of camera to function property!";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Пожалуйста предоставьте доступ к камере телефона";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Пожалуйста, предоставьте доступ к вашему списку контактов, чтобы мы могли найти их в нашем приложении";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

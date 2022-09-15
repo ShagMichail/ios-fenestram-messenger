@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 import Kingfisher
 import AlertToast
+import AVFoundation
 
 struct ProfileView: View {
     
@@ -38,7 +39,7 @@ struct ProfileView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Asset.thema.swiftUIColor
+                Asset.background.swiftUIColor
                     .ignoresSafeArea()
                 
                 VStack {
@@ -185,8 +186,21 @@ struct ProfileView: View {
                             self.sourceType = .photoLibrary
                         },
                         .default(Text(L10n.ProfileView.SelectPhoto.camera)) {
-                            viewModel.showImagePicker = true
-                            self.sourceType = .camera
+                            if AVCaptureDevice.authorizationStatus(for: .video) == .authorized {
+                                viewModel.showImagePicker = true
+                                self.sourceType = .camera
+                            } else {
+                                AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) -> Void in
+                                    DispatchQueue.main.async {
+                                        if granted == true {
+                                            viewModel.showImagePicker = true
+                                            self.sourceType = .camera
+                                        } else {
+                                            viewModel.isNeedAccessError = .camera
+                                        }
+                                    }
+                               })
+                            }
                         },
                         .cancel()
                     ])
@@ -197,6 +211,20 @@ struct ProfileView: View {
         }
         .sheet(isPresented: $viewModel.showImagePicker) {
             ImagePicker(image: $viewModel.image, isShown: $viewModel.showImagePicker, sourceType: self.sourceType)}
+        .alert(item: $viewModel.isNeedAccessError, content: { errorType in
+            var titleError = L10n.General.errorTitle
+            
+            switch errorType {
+            case .camera:
+                titleError = L10n.ProfileView.needAccessToCamera
+            }
+            
+            return Alert(title: Text(titleError),
+                         primaryButton: .default(Text(L10n.General.accept), action: {
+                       viewModel.openAppSettings()
+                   }),
+                         secondaryButton: .cancel(Text(L10n.General.cancel)))
+        })
     }
     
     private func editName() -> some View {
@@ -226,6 +254,9 @@ struct ProfileView: View {
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
                     .textContentType(.name)
+                    .onReceive(Just(viewModel.name)) { _ in
+                        viewModel.limitNameText(20)
+                    }
                 }
             }.background(border)
         }
@@ -267,6 +298,9 @@ struct ProfileView: View {
                     .accentColor(Asset.text.swiftUIColor)
                     .keyboardType(.default)
                     .disabled(!viewModel.editProfile)
+                    .onReceive(Just(viewModel.nicName)) { _ in
+                        viewModel.limitNicNameText(20)
+                    }
                 }
             }.background(border)
         }

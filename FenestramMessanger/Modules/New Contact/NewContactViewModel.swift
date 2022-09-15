@@ -4,7 +4,9 @@
 //
 //  Created by Михаил Шаговитов on 13.07.2022.
 //
+
 import SwiftUI
+import PhoneNumberKit
 
 extension NewContactView {
     @MainActor
@@ -19,7 +21,13 @@ extension NewContactView {
         @Published var lastName = ""
         @Published var textPhone = "" {
             didSet {
-                if textPhone.prefix(1) != "+" {
+                guard textPhone.count > 0 else {
+                    return
+                }
+                
+                if textPhone == "8" {
+                    textPhone = "+7"
+                } else if textPhone.prefix(1) != "+" {
                     textPhone = "+" + textPhone
                 }
                 
@@ -39,9 +47,25 @@ extension NewContactView {
         
         @Published var isTappedGlobal = false
         
+        @Published var presentAlert = false
+        @Published var textAlert = ""
+        
         private(set) var formattedPhone: String = ""
         
+        private let phoneNumberKit = PhoneNumberKit()
+        
+        func checkPhoneNumber() -> Bool {
+            return (try? phoneNumberKit.parse(formattedPhone)) != nil
+        }
+        
         func addContact(completion: @escaping (Bool) -> ()) {
+            if Settings.currentUser?.phoneNumber == formattedPhone {
+                UIApplication.shared.endEditing()
+                self.textAlert = L10n.NewContactView.Error.createSelfFailure
+                self.presentAlert = true
+                return
+            }
+            
             ContactsService.postContacts(name: name + (lastName.isEmpty ? "" : " \(lastName)"), phoneNumber: formattedPhone) { result in
                 switch result {
                 case .success:
@@ -51,6 +75,18 @@ extension NewContactView {
                     print("add contact failure with error: ", error)
                     completion(false)
                 }
+            }
+        }
+        
+        func limitFirstNameText(_ upper: Int) {
+            if name.count > upper {
+                name = String(name.prefix(upper))
+            }
+        }
+        
+        func limitLastNameText(_ upper: Int) {
+            if lastName.count > upper {
+                lastName = String(lastName.prefix(upper))
             }
         }
     }

@@ -34,7 +34,7 @@ struct CodeView: View {
     
     var body: some View {
         ZStack {
-            Asset.thema.swiftUIColor
+            Asset.background.swiftUIColor
                 .ignoresSafeArea()
             
             getBase()
@@ -141,11 +141,7 @@ struct CodeView: View {
     private func getTextField() -> some View {
         VStack {
             if viewModel.errorCode {
-                TextField("", text: Binding<String>(get: {
-                    format(with: self.maskCode, phone: viewModel.textCode)
-                }, set: {
-                    viewModel.textCode = $0
-                }))
+                TextField("", text: $viewModel.textCode)
                 .placeholder(when: viewModel.textCode.isEmpty) {
                     Text("").foregroundColor(Asset.red.swiftUIColor)
                 }
@@ -154,11 +150,7 @@ struct CodeView: View {
                 }
                 .foregroundColor(Asset.red.swiftUIColor)
             } else {
-                TextField("", text: Binding<String>(get: {
-                    format(with: self.maskCode, phone: viewModel.textCode)
-                }, set: {
-                    viewModel.textCode = $0
-                }))
+                TextField("", text: $viewModel.textCode)
                 .placeholder(when: viewModel.textCode.isEmpty) {
                     Text("").foregroundColor(Asset.text.swiftUIColor)
                 }
@@ -176,6 +168,9 @@ struct CodeView: View {
         .accentColor(Asset.text.swiftUIColor)
         .keyboardType(.numberPad)
         .textContentType(.oneTimeCode)
+        .onReceive(Just(viewModel.textCode)) { _ in
+            viewModel.limitText(4)
+        }
     }
 }
 
