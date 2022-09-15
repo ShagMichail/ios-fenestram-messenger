@@ -191,6 +191,10 @@ internal enum L10n {
   internal enum NewContactView {
     /// Добавить контакт
     internal static let title = L10n.tr("Localizable", "new_contact_view.title")
+    internal enum Error {
+      /// Нельзя добавить в контакты свой номер телефона
+      internal static let createSelfFailure = L10n.tr("Localizable", "new_contact_view.error.create_self_failure")
+    }
     internal enum LastName {
       /// (необязательно)
       internal static let placeholder = L10n.tr("Localizable", "new_contact_view.last_name.placeholder")

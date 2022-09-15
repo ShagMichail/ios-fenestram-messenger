@@ -47,6 +47,9 @@ extension NewContactView {
         
         @Published var isTappedGlobal = false
         
+        @Published var presentAlert = false
+        @Published var textAlert = ""
+        
         private(set) var formattedPhone: String = ""
         
         private let phoneNumberKit = PhoneNumberKit()
@@ -56,6 +59,13 @@ extension NewContactView {
         }
         
         func addContact(completion: @escaping (Bool) -> ()) {
+            if Settings.currentUser?.phoneNumber == formattedPhone {
+                UIApplication.shared.endEditing()
+                self.textAlert = L10n.NewContactView.Error.createSelfFailure
+                self.presentAlert = true
+                return
+            }
+            
             ContactsService.postContacts(name: name + (lastName.isEmpty ? "" : " \(lastName)"), phoneNumber: formattedPhone) { result in
                 switch result {
                 case .success:

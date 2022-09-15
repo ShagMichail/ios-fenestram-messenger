@@ -42,6 +42,8 @@
 "new_contact_view.toast.success_text" = "Контакт успешно создан";
 "new_contact_view.toast.failure_text" = "Не удалось создать контакт";
 
+"new_contact_view.error.create_self_failure" = "Нельзя добавить в контакты свой номер телефона";
+
 // MARK: - ContactsView
 "contact_view.title" = "Контакты";
 "contact_view.search.placeholder" = "Поиск контакта";

@@ -101,6 +101,10 @@ struct NewContactView: View {
                 Spacer()
             }
             .padding()
+            
+            if viewModel.presentAlert {
+                AlertView(show: $viewModel.presentAlert, text: viewModel.textAlert)
+            }
         }
         .onTapGesture {
             UIApplication.shared.endEditing()

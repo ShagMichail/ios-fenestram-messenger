@@ -42,6 +42,8 @@
 "new_contact_view.toast.success_text" = "Contact created successfully";
 "new_contact_view.toast.failure_text" = "Failed to create a contact";
 
+"new_contact_view.error.create_self_failure" = "You cannot add your phone number to contacts";
+
 // MARK: - ContactsView
 "contact_view.title" = "Contacts";
 "contact_view.search.placeholder" = "Search for a contact";
