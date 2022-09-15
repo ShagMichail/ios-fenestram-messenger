@@ -44,7 +44,9 @@ struct ChatView: View {
                         .ignoresSafeArea()
                     
                     NavigationLink(isActive: $viewModel.isShowNewChatView) {
-                        NewChatView(isPopToChatListView: $viewModel.isShowNewChatView)
+                        NewChatView(isPopToChatListView: $viewModel.isShowNewChatView, onNeedUpdateChatList: {
+                            viewModel.reset()
+                        })
                     } label: {
                         EmptyView()
                     }
@@ -92,11 +94,6 @@ struct ChatView: View {
                 .onTapGesture {
                     UIApplication.shared.endEditing()
                 }
-                .onChange(of: viewModel.isShowNewChatView, perform: { newValue in
-                    if newValue == false {
-                        viewModel.reset()
-                    }
-                })
                 .navigationBarHidden(true)
             }
         }
@@ -410,7 +407,14 @@ struct ChatView: View {
 
     private func lastMessage(chat: ChatEntity) -> String {
         guard let lastIndex = chat.messages?.last else { return "" }
-        return lastIndex.message
+        
+        switch lastIndex.messageType {
+        case .text:
+            return lastIndex.message
+        case .image:
+            return L10n.ChatView.Message.image
+        }
+        
     }
     
     private func lastMessageTime(chat: ChatEntity) -> String {

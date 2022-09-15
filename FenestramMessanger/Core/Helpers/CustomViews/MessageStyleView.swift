@@ -12,6 +12,7 @@ struct MessageStyleView: View {
     let chat: ChatEntity?
     let contacts: [ContactEntity]
     let message: MessageEntity
+    let onClickImage: (URL) -> ()
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
     private var isCurrentUser: Bool {
@@ -22,12 +23,28 @@ struct MessageStyleView: View {
         if isCurrentUser {
             VStack(alignment: .trailing) {
                 VStack {
-                    if #available(iOS 15.0, *) {
-                        Text(message.message)
-                            .textSelection(.enabled)
+                    switch message.messageType {
+                    case .text:
+                        if #available(iOS 15.0, *) {
+                            Text(message.message)
+                                .textSelection(.enabled)
                             
-                    } else {
-                        Text(message.message)
+                        } else {
+                            Text(message.message)
+                        }
+                    case .image:
+                        if let url = URL(string: Constants.baseNetworkURLClear + message.message) {
+                            KFImage(url)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100)
+                                .cornerRadius(8)
+                                .onTapGesture {
+                                    onClickImage(url)
+                                }
+                        } else {
+                            Text(L10n.CorrespondenceView.MessageView.failedGetImage)
+                        }
                     }
                 }
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
@@ -59,6 +76,9 @@ struct MessageStyleView: View {
                         .scaledToFill()
                         .frame(width: 32, height: 32)
                         .clipShape(Circle())
+                        .onTapGesture {
+                            onClickImage(url)
+                        }
                 } else {
                     Asset.photo.swiftUIImage
                         .resizable()
@@ -73,12 +93,28 @@ struct MessageStyleView: View {
                             .foregroundColor(Asset.grey1.swiftUIColor)
                         
                         VStack {
-                            if #available(iOS 15.0, *) {
-                                Text(message.message)
-                                    .textSelection(.enabled)
-                                
-                            } else {
-                                Text(message.message)
+                            switch message.messageType {
+                            case .text:
+                                if #available(iOS 15.0, *) {
+                                    Text(message.message)
+                                        .textSelection(.enabled)
+                                    
+                                } else {
+                                    Text(message.message)
+                                }
+                            case .image:
+                                if let url = URL(string: Constants.baseNetworkURLClear + message.message) {
+                                    KFImage(url)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 100, height: 100)
+                                        .cornerRadius(8)
+                                        .onTapGesture {
+                                            onClickImage(url)
+                                        }
+                                } else {
+                                    Text(L10n.CorrespondenceView.MessageView.failedGetImage)
+                                }
                             }
                         }
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
@@ -101,12 +137,28 @@ struct MessageStyleView: View {
         } else {
             VStack(alignment: .leading) {
                 VStack {
-                    if #available(iOS 15.0, *) {
-                        Text(message.message)
-                            .textSelection(.enabled)
-                        
-                    } else {
-                        Text(message.message)
+                    switch message.messageType {
+                    case .text:
+                        if #available(iOS 15.0, *) {
+                            Text(message.message)
+                                .textSelection(.enabled)
+                            
+                        } else {
+                            Text(message.message)
+                        }
+                    case .image:
+                        if let url = URL(string: Constants.baseNetworkURLClear + message.message) {
+                            KFImage(url)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100)
+                                .cornerRadius(8)
+                                .onTapGesture {
+                                    onClickImage(url)
+                                }
+                        } else {
+                            Text(L10n.CorrespondenceView.MessageView.failedGetImage)
+                        }
                     }
                 }
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))

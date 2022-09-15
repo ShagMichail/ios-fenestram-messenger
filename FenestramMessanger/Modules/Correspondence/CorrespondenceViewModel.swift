@@ -31,6 +31,14 @@ extension CorrespondenceView {
         @Published var textAlert = ""
         @Published var allFoto: [PhotoEntity] = []
         
+        @Published var showUploadImageErrorToast: Bool = false
+        @Published var showUploadImageProgressToast: Bool = false
+        var successUploadImageMessage: String = L10n.CorrespondenceView.Toast.UploadImage.fullSuccess
+        @Published var showUploadImageSuccessToast: Bool = false
+        
+        @Published var selectedImage: Image?
+        var selectedImageURL: URL?
+        
         let contacts: [ContactEntity]
         
         private var allMessages: [MessageEntity] = [] {
@@ -167,13 +175,77 @@ extension CorrespondenceView {
             }
         }
         
-        func postMessage(chat: ChatEntity?) {
-            ChatService.postMessage(chatId: chat?.id ?? 0, messageType: .text, content: textMessage) { [weak self] result in
+        func postTextMessage() {
+            guard let chatId = chat?.id else { return }
+            
+            ChatService.postMessage(chatId: chatId, messageType: .text, content: textMessage) { [weak self] result in
                 switch result {
                 case .success(_):
                     self?.textMessage = ""
                 case .failure( let error ):
                     print("\(error)")
+                }
+            }
+        }
+        
+        func postImageMessage() {
+            guard let chatId = chat?.id else { return }
+            
+            guard allFoto.count > 0 else {
+                return
+            }
+            
+            let dispatchGroup: DispatchGroup = DispatchGroup()
+            var successSendCount: Int = 0
+            
+            showUploadImageProgressToast = true
+            
+            allFoto.forEach { photo in
+                dispatchGroup.enter()
+                
+                uploadFile(image: photo.image) { urlString, error in
+                    if let error = error {
+                        print("load image failure with error: ", error)
+                        dispatchGroup.leave()
+                    } else if let urlString = urlString {
+                        print("load image success")
+                        
+                        ChatService.postMessage(chatId: chatId, messageType: .image, content: urlString) { result in
+                            switch result {
+                            case .success:
+                                print("send image message success")
+                                successSendCount += 1
+                            case .failure(let error):
+                                print("send image message failure with error: ", error)
+                            }
+                            
+                            dispatchGroup.leave()
+                        }
+                    } else {
+                        #if DEBUG
+                        fatalError("something wrong")
+                        #else
+                        print("something wrong")
+                        #endif
+                    }
+                }
+            }
+            
+            dispatchGroup.notify(queue: .main) { [weak self] in
+                guard let self = self else { return }
+                
+                self.showUploadImageProgressToast = false
+                
+                if successSendCount == 0 {
+                    self.showUploadImageErrorToast = true
+                } else if self.allFoto.count != successSendCount {
+                    self.successUploadImageMessage = L10n.CorrespondenceView.Toast.UploadImage.partSuccess(successSendCount, self.allFoto.count)
+                    self.showUploadImageSuccessToast = true
+                    self.allFoto.removeAll()
+                } else {
+                    self.successUploadImageMessage = L10n.CorrespondenceView.Toast.UploadImage.fullSuccess
+                    self.showUploadImageSuccessToast = true
+                    self.allFoto.removeAll()
                 }
             }
         }
@@ -184,6 +256,47 @@ extension CorrespondenceView {
         
         
         //MARK: - Auxiliary functions
+        
+        private func uploadFile(image: UIImage, completion: @escaping (String?, Error?) -> ()) {
+            if let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
+               let jpegData = image.jpegData(compressionQuality: 1.0) {
+                
+                let fileName = "image_\(image.hashValue).jpeg"
+                let url = documents.appendingPathComponent(fileName)
+                
+                do {
+                    try jpegData.write(to: url)
+                    upload(imagePathURL: url, completion: completion)
+                }
+                catch let error {
+                    print("error: ", error.localizedDescription)
+                    completion(nil, error)
+                }
+            }
+        }
+        
+        private func upload(imagePathURL: URL, completion: @escaping (String?, Error?) -> ()) {
+            FilesService.upload(imageURL: imagePathURL) { result in
+                switch result {
+                case .success(let fileData):
+                    print("JSON: ", fileData)
+                    
+                    completion(fileData.pathToFile, nil)
+                    
+                    do {
+                        try FileManager.default.removeItem(at: imagePathURL)
+                    }
+                    catch let error {
+                        print("error: ", error.localizedDescription)
+                        completion(nil, error)
+                    }
+                    
+                case .failure(let error):
+                    print("error: ", error.localizedDescription)
+                    completion(nil, error)
+                }
+            }
+        }
         
         private func appendPhoto() {
             guard let foto = chatImage else { return }

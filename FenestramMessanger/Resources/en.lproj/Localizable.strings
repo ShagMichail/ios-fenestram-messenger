@@ -23,6 +23,7 @@
 "chat_view.recent_files" = "Recent files";
 "chat_view.recent_image" = "Images";
 "chat_view.files" = "%d files";
+"chat_view.message.image" = "Image";
 
 // MARK: - NewContactView
 "new_contact_view.title" = "Add Contact";
@@ -41,6 +42,8 @@
 
 "new_contact_view.toast.success_text" = "Contact created successfully";
 "new_contact_view.toast.failure_text" = "Failed to create a contact";
+
+"new_contact_view.error.create_self_failure" = "You cannot add your phone number to contacts";
 
 // MARK: - ContactsView
 "contact_view.title" = "Contacts";
@@ -106,6 +109,11 @@
 "correspondence_view.foto" = "Photo";
 "correspondence_view.image" = "Gallery";
 "correspondence_view.file" = "File";
+"correspondence_view.toast.upload_image.full_success" = "Images uploaded successfully";
+"correspondence_view.toast.upload_image.part_success" = "Successfully uploaded %d images from %d";
+"correspondence_view.toast.upload_image.error" = "Failed upload images";
+"correspondence_view.toast.upload_image.progress" = "Uploading images...";
+"correspondence_view.message_view.failed_get_image" = "--failed to get image--";
 
 // MARK: - NewChatView
 "new_chat_view.title" = "New chat";
