@@ -35,7 +35,7 @@ struct CorrespondenceView: View {
                                                              .allowContentDrag,
                                                              .swipeToDismiss, .tapToDismiss,
                                                              .absolutePositionValue,
-                                                             .background({ AnyView(Asset.buttonAlert.swiftUIColor) }),
+                                                             .background({ AnyView(Asset.dark1.swiftUIColor) }),
                                                              .cornerRadius(30)]
     
     init(contacts: [ContactEntity], chat: ChatEntity?, socketManager: SocketIOManager?) {
@@ -49,8 +49,9 @@ struct CorrespondenceView: View {
     var body: some View {
         
         ZStack {
-            Asset.thema.swiftUIColor
+            Asset.background.swiftUIColor
                 .ignoresSafeArea()
+            
             VStack {
                 VStack {
                     CorrespondenceNavigationView(contacts: viewModel.contacts, chat: viewModel.chat)
@@ -196,7 +197,7 @@ struct CorrespondenceView: View {
                     .accentColor(Asset.text.swiftUIColor)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
                     .background(RoundedRectangle(cornerRadius: 10)
-                        .foregroundColor(Asset.tabBar.swiftUIColor)
+                        .foregroundColor(Asset.dark1.swiftUIColor)
                         .frame(width: UIScreen.screenWidth - 24))
                     .padding(.leading , 50)
                     .padding(.trailing , 50)
@@ -205,7 +206,7 @@ struct CorrespondenceView: View {
             }
             .padding(.horizontal)
             .background(RoundedRectangle(cornerRadius: 10)
-                .foregroundColor(Asset.tabBar.swiftUIColor)
+                .foregroundColor(Asset.dark1.swiftUIColor)
                 .frame(width: UIScreen.screenWidth - 24, height: 55))
             
             HStack(alignment: .bottom){
@@ -243,6 +244,7 @@ struct CorrespondenceView: View {
     private func getBottomSheet() -> some View {
         HStack {
             Spacer()
+            
             VStack(alignment: .center) {
                 NavigationLink(destination: FileView().navigationBarHidden(true)) {
                     buttonsViewProperty(image: Asset.fileButton)
@@ -266,7 +268,9 @@ struct CorrespondenceView: View {
                     .foregroundColor(Color.white)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
             }
+            
             Spacer()
+            
             VStack {
                 Button {
                     viewModel.showImagePicker = true
@@ -279,6 +283,7 @@ struct CorrespondenceView: View {
                     .foregroundColor(Color.white)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
             }
+            
             Spacer()
         }
     }
@@ -287,11 +292,8 @@ struct CorrespondenceView: View {
         ZStack{
             RoundedRectangle(cornerRadius: 30)
                 .frame(width: 60, height: 60, alignment: .center)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 30)
-                        .stroke(Asset.stroke.swiftUIColor, lineWidth: 1.5)
-                )
-                .foregroundColor(Asset.buttonAlert.swiftUIColor)
+                .foregroundColor(Asset.background0.swiftUIColor)
+            
             image.swiftUIImage
                 .foregroundColor((isColorThema == false) ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
         }

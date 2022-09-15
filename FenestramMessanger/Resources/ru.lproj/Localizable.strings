@@ -16,6 +16,7 @@
 "general.close" = "Закрыть";
 "general.error_title" = "Произошла ошибка";
 "general.accept" = "Разрешить";
+"general.no_internet_connection" = "Нет соединения с интернетом";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "Здесь будет отображаться список ваших чатов";
@@ -70,6 +71,7 @@
 "profile_view.save_success" = "Профиль успешно сохранен";
 "profile_view.save_error" = "Не удалось сохранить профиль";
 "profile_view.save_progress" = "Идет сохранение...";
+"profile_view.need_access_to_camera" = "Необходимо разрешить доступ приложению к камере";
 
 // MARK: - MainTabView
 "main_tab_view.contacts" = "Контакты";
@@ -130,3 +132,18 @@
 
 // MARK: - MFMessageComposeView
 "mf_message_compose_view.message" = "Привет, предлагаю тебе присоединиться ко мне в чат Fenestram! Чтобы бы мы всегда оставались на связи.";
+
+// MARK: - NetworkError
+"network_error.localized_error.error_description.server_error" = "Ошибка сервера. Пожалуйста, попробуйте позже";
+"network_error.localized_error.error_description.response_error" = "Ой, что-то пошло не так";
+"network_error.localized_error.error_description.internet_error" = "Нет соединения с интернетом";
+"network_error.localized_error.error_description.user_already_exists" = "Пользователь с этим адресом уже существует";
+"network_error.localized_error.error_description.run_of_space" = "Закончилось место";
+"network_error.localized_error.error_description.session_timed_out" = "Ваша сессия истекла";
+
+"network_error.localized_error.recovery_suggestion.server_error" = "Сервер недоступен";
+"network_error.localized_error.recovery_suggestion.response_error" = "Проверьте правильность вводимых данных";
+"network_error.localized_error.recovery_suggestion.internet_error" = "Пожалуйста, проверьте ваше интернет-соединение";
+"network_error.localized_error.recovery_suggestion.user_already_exists" = "Аккаунт зарегистрирован воспользуйтесь восстановлением пароля";
+"network_error.localized_error.recovery_suggestion.run_of_space" = "Пожалуйста, освободите место в памяти телефона";
+"network_error.localized_error.recovery_suggestion.session_timed_out" = "Не удалось получить новые аутентификационные данные";

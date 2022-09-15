@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Network
 
 extension MainView {
     @MainActor
@@ -15,7 +16,9 @@ extension MainView {
         //MARK: - Properties
         
         @Published var isSignIn: Bool
+        @Published var isOnline: Bool = false
         
+        private let monitor = NWPathMonitor()
         private(set) var socketManager: SocketIOManager?
         
         init() {
@@ -27,6 +30,15 @@ extension MainView {
                self.isSignIn {
                 self.socketManager = SocketIOManager(accessToken: token)
             }
+            
+            monitor.pathUpdateHandler = { [weak self] path in
+                DispatchQueue.main.async {
+                    self?.isOnline = path.usesInterfaceType(.cellular) || path.usesInterfaceType(.wifi)
+                }
+            }
+            
+            let queue = DispatchQueue(label: "Monitor")
+            monitor.start(queue: queue)
         }
         
         

@@ -120,6 +120,8 @@ internal enum L10n {
     internal static let loading = L10n.tr("Localizable", "general.loading")
     /// Далее
     internal static let next = L10n.tr("Localizable", "general.next")
+    /// Нет соединения с интернетом
+    internal static let noInternetConnection = L10n.tr("Localizable", "general.no_internet_connection")
     /// Пропустить
     internal static let skip = L10n.tr("Localizable", "general.skip")
     /// Неизвестно
@@ -138,6 +140,39 @@ internal enum L10n {
   internal enum MfMessageComposeView {
     /// Привет, предлагаю тебе присоединиться ко мне в чат Fenestram! Чтобы бы мы всегда оставались на связи.
     internal static let message = L10n.tr("Localizable", "mf_message_compose_view.message")
+  }
+
+  internal enum NetworkError {
+    internal enum LocalizedError {
+      internal enum ErrorDescription {
+        /// Нет соединения с интернетом
+        internal static let internetError = L10n.tr("Localizable", "network_error.localized_error.error_description.internet_error")
+        /// Ой, что-то пошло не так
+        internal static let responseError = L10n.tr("Localizable", "network_error.localized_error.error_description.response_error")
+        /// Закончилось место
+        internal static let runOfSpace = L10n.tr("Localizable", "network_error.localized_error.error_description.run_of_space")
+        /// Ошибка сервера. Пожалуйста, попробуйте позже
+        internal static let serverError = L10n.tr("Localizable", "network_error.localized_error.error_description.server_error")
+        /// Ваша сессия истекла
+        internal static let sessionTimedOut = L10n.tr("Localizable", "network_error.localized_error.error_description.session_timed_out")
+        /// Пользователь с этим адресом уже существует
+        internal static let userAlreadyExists = L10n.tr("Localizable", "network_error.localized_error.error_description.user_already_exists")
+      }
+      internal enum RecoverySuggestion {
+        /// Пожалуйста, проверьте ваше интернет-соединение
+        internal static let internetError = L10n.tr("Localizable", "network_error.localized_error.recovery_suggestion.internet_error")
+        /// Проверьте правильность вводимых данных
+        internal static let responseError = L10n.tr("Localizable", "network_error.localized_error.recovery_suggestion.response_error")
+        /// Пожалуйста, освободите место в памяти телефона
+        internal static let runOfSpace = L10n.tr("Localizable", "network_error.localized_error.recovery_suggestion.run_of_space")
+        /// Сервер недоступен
+        internal static let serverError = L10n.tr("Localizable", "network_error.localized_error.recovery_suggestion.server_error")
+        /// Не удалось получить новые аутентификационные данные
+        internal static let sessionTimedOut = L10n.tr("Localizable", "network_error.localized_error.recovery_suggestion.session_timed_out")
+        /// Аккаунт зарегистрирован воспользуйтесь восстановлением пароля
+        internal static let userAlreadyExists = L10n.tr("Localizable", "network_error.localized_error.recovery_suggestion.user_already_exists")
+      }
+    }
   }
 
   internal enum NewChatView {
@@ -224,6 +259,8 @@ internal enum L10n {
     internal static let birthday = L10n.tr("Localizable", "profile_view.birthday")
     /// Эл. почта
     internal static let email = L10n.tr("Localizable", "profile_view.email")
+    /// Необходимо разрешить доступ приложению к камере
+    internal static let needAccessToCamera = L10n.tr("Localizable", "profile_view.need_access_to_camera")
     /// Никнейм
     internal static let nickname = L10n.tr("Localizable", "profile_view.nickname")
     /// Не удалось сохранить профиль

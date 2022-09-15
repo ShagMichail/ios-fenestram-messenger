@@ -28,34 +28,34 @@ extension NetworkError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .serverError:
-            return "Ошибка сервера. Пожалуйста, попробуйте позже"
+            return L10n.NetworkError.LocalizedError.ErrorDescription.serverError
         case .responseError:
-            return "ой, что-то пошло не так"
+            return L10n.NetworkError.LocalizedError.ErrorDescription.responseError
         case .internetError:
-            return "Нет соединения с интернетом"
+            return L10n.NetworkError.LocalizedError.ErrorDescription.internetError
         case .userAlreadyExists:
-            return "Пользователь с этим адресом уже существует"
+            return L10n.NetworkError.LocalizedError.ErrorDescription.userAlreadyExists
         case .runOfSpace:
-            return "Закончилось место"
+            return L10n.NetworkError.LocalizedError.ErrorDescription.runOfSpace
         case .sessionTimedOut:
-            return "Ваша сессия истекла"
+            return L10n.NetworkError.LocalizedError.ErrorDescription.sessionTimedOut
         }
     }
     
     public var recoverySuggestion: String? {
         switch self {
         case .serverError:
-            return "Сервер недоступен"
+            return L10n.NetworkError.LocalizedError.RecoverySuggestion.serverError
         case .responseError:
-            return "Проверьте правильность вводимых данных"
+            return L10n.NetworkError.LocalizedError.RecoverySuggestion.responseError
         case .internetError:
-            return "Пожалуйста, проверьте ваше интернет-соединение"
+            return L10n.NetworkError.LocalizedError.RecoverySuggestion.internetError
         case .userAlreadyExists:
-            return "Аккаунт зарегистрирован воспользуйтесь восстановлением пароля"
+            return L10n.NetworkError.LocalizedError.RecoverySuggestion.userAlreadyExists
         case .runOfSpace:
-            return "Пожалуйста, освободите место в памяти телефона"
+            return L10n.NetworkError.LocalizedError.RecoverySuggestion.runOfSpace
         case .sessionTimedOut:
-            return "Не удалось получить новые аутентификационные данные"
+            return L10n.NetworkError.LocalizedError.RecoverySuggestion.sessionTimedOut
         }
     }
     

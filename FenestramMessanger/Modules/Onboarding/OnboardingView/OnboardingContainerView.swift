@@ -23,7 +23,7 @@ struct OnboardingContainerView: View {
     var body: some View {
         
         ZStack {
-            Asset.thema.swiftUIColor
+            Asset.background.swiftUIColor
                 .ignoresSafeArea()
             
             VStack{
@@ -93,7 +93,7 @@ struct OnboardingContainerView: View {
             Button(action: { isOnboarding = false }, label: {
                 Text(L10n.General.skip)
                     .font(FontFamily.Poppins.medium.swiftUIFont(size: 16))
-                    .foregroundColor(!(selectedPage < features.count - 1) ? Asset.thema.swiftUIColor : Asset.next.swiftUIColor)
+                    .foregroundColor(!(selectedPage < features.count - 1) ? Asset.dark2.swiftUIColor : Asset.next.swiftUIColor)
             }).disabled(!(selectedPage < features.count - 1))
         }
     }

@@ -36,7 +36,7 @@ struct AccountView: View {
     
     var body: some View {
         ZStack {
-            Asset.thema.swiftUIColor
+            Asset.background.swiftUIColor
                 .ignoresSafeArea()
             
             VStack  {
