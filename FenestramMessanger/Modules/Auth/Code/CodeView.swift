@@ -46,6 +46,7 @@ struct CodeView: View {
         .onTapGesture {
             UIApplication.shared.endEditing()
         }
+        .onBackSwipe(perform: { presentationMode.wrappedValue.dismiss() }, isEnabled: true)
     }
     
     
