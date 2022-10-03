@@ -9,11 +9,13 @@ import Foundation
 import Alamofire
 
 public enum ChatRequestRouter: AbstractRequestRouter {
-    case getChats(limit: String, page: String)
+    case getChats(queryParameters: [URLQueryItem])
     case createChat(parameters: Parameters)
     case getChat(chatId: Int)
     case postMessage(chatId: Int, parameters: Parameters)
-    case getMessages(chatId: Int, limit: String, page: String)
+    case getMessages(chatId: Int, queryParameters: [URLQueryItem])
+    case changeChatAvatar(chatId: Int, parameters: Parameters)
+    case changeChatName(chatId: Int, parameters: Parameters)
     
     var method: HTTPMethod {
         switch self {
@@ -21,6 +23,8 @@ public enum ChatRequestRouter: AbstractRequestRouter {
             return .get
         case .createChat, .postMessage:
             return .post
+        case .changeChatAvatar, .changeChatName:
+            return .patch
         }
     }
     
@@ -32,8 +36,12 @@ public enum ChatRequestRouter: AbstractRequestRouter {
             return "api/\(Constants.apiVersion)/chats/\(chatId)"
         case .postMessage(let chatId, _):
             return "api/\(Constants.apiVersion)/chats/message/\(chatId)"
-        case .getMessages(let chatId, _, _):
+        case .getMessages(let chatId, _):
             return "api/\(Constants.apiVersion)/chats/\(chatId)/messages"
+        case .changeChatAvatar(let chatId, _):
+            return "api/\(Constants.apiVersion)/chats/\(chatId)/avatar"
+        case .changeChatName(let chatId, _):
+            return "api/\(Constants.apiVersion)/chats/\(chatId)/name"
         }
     }
     
@@ -65,13 +73,12 @@ public enum ChatRequestRouter: AbstractRequestRouter {
     public func asURLRequest() throws -> URLRequest {
         var urlRequest = URLRequest(url: fullUrl)
         switch self {
-        case .createChat(let parameters), .postMessage(_, let parameters):
+        case .createChat(let parameters), .postMessage(_, let parameters), .changeChatAvatar(_, let parameters), .changeChatName(_, let parameters):
             urlRequest = try CustomPatchEncding().encode(urlRequest, with: parameters)
         case .getChat:
             urlRequest = try URLEncoding.default.encode(urlRequest, with: nil)
-        case .getChats(let limit, let page), .getMessages(_, let limit, let page):
-            let url = getFullUrl(with: [URLQueryItem(name: "limit", value: limit),
-                                        URLQueryItem(name: "page", value: page)])
+        case .getChats(let queryParameters), .getMessages(_, let queryParameters):
+            let url = getFullUrl(with: queryParameters)
             urlRequest = URLRequest(url: url)
             urlRequest = try URLEncoding.default.encode(urlRequest, with: nil)
         }

@@ -12,14 +12,22 @@ struct FenestramMessangerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     @AppStorage("isOnboarding") var isOnboarding = true
-    @AppStorage("isActiv") var isActiv = false
     @AppStorage("isColorThema") var isColorThema: Bool?
     @AppStorage("isPhoneUser") var isPhoneUser = " "
     @AppStorage("isCodeUser") var isCodeUser = " "
+    
+    @State private var isRunApp: Bool = true
 
     var body: some Scene {
         WindowGroup {
-            if isActiv {
+            if isRunApp {
+                SplashScreen()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            isRunApp = false
+                        }
+                    }
+            } else {
                 VStack {
                     if isOnboarding {
                         OnboardingContainerView()
@@ -32,11 +40,6 @@ struct FenestramMessangerApp: App {
                         isColorThema = false
                     }
                 }
-                .onDisappear {
-                    isActiv = false
-                }
-            } else {
-                SplashScreen()
             }
         }
     }

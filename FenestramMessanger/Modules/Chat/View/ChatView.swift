@@ -27,10 +27,21 @@ struct ChatView: View {
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
+    @Binding var showTabBar: Bool
+    
     @StateObject private var viewModel: ViewModel
     
-    init(socketManager: SocketIOManager?) {
+    init(socketManager: SocketIOManager?, showTabBar: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: ViewModel(socketManager: socketManager))
+        _showTabBar = showTabBar
+    }
+    
+    var border: some View {
+        RoundedRectangle(cornerRadius: 6)
+            .strokeBorder(
+                LinearGradient(colors: [Asset.border.swiftUIColor],
+                               startPoint: .topLeading,
+                               endPoint: .bottomTrailing))
     }
     
     
@@ -44,7 +55,7 @@ struct ChatView: View {
                         .ignoresSafeArea()
                     
                     NavigationLink(isActive: $viewModel.isShowNewChatView) {
-                        NewChatView(isPopToChatListView: $viewModel.isShowNewChatView, onNeedUpdateChatList: {
+                        NewChatView(isPopToChatListView: $viewModel.isShowNewChatView, showTabBar: $showTabBar, onNeedUpdateChatList: {
                             viewModel.reset()
                         })
                     } label: {
@@ -54,6 +65,11 @@ struct ChatView: View {
 
                     VStack {
                         getHeader()
+                        
+                        if !viewModel.chatList.isEmpty || !viewModel.searchText.isEmpty {
+                            getSearchView()
+                        }
+                        
                         if viewModel.isLoading && viewModel.page == 1 {
                             LoadingView()
                         } else {
@@ -104,9 +120,10 @@ struct ChatView: View {
     
     private func getHeader() -> some View {
         HStack(alignment: .center){
-            Text("FENESTRAM")
+            Text("hoolichat")
+                .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 28))
                 .foregroundColor(Color.white)
-                .font(FontFamily.Montserrat.semiBold.swiftUIFont(size: 22))
+            
             Spacer()
             // TODO: Ждем реализации поиска чатов на бэке
 //            NavigationLink() {
@@ -116,7 +133,32 @@ struct ChatView: View {
 //                    .font(.system(size: 20))
 //            }
         }
-        .padding()
+        .padding(.horizontal, 24)
+        .padding(.top, 16)
+    }
+    
+    private func getSearchView() -> some View {
+        VStack(alignment: .leading) {
+            TextField("", text: $viewModel.searchText)
+                .placeholder(when: viewModel.searchText.isEmpty) {
+                    Text(L10n.ChatView.Search.placeholder)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                        .foregroundColor(Asset.text.swiftUIColor)
+                }
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
+                .textFieldStyle(PlainTextFieldStyle())
+                .padding(16)
+                .foregroundColor(Color.white)
+            
+                .multilineTextAlignment(.leading)
+                .accentColor(Asset.text.swiftUIColor)
+                .keyboardType(.default)
+                .onChange(of: viewModel.searchText) { text in
+                    viewModel.filterContent()
+                }
+        }
+        .background(border)
+        .padding(.horizontal, 24.0)
     }
     
     private func getEmptyView() -> some View {
@@ -188,6 +230,7 @@ struct ChatView: View {
         }) {
             getBodyBottomSheet()
         }
+        .padding(.top, 16)
     }
     
     private func getChatRow(chat: ChatEntity) -> some View {
@@ -215,7 +258,7 @@ struct ChatView: View {
             }
             
             NavigationLink {
-                CorrespondenceView(contacts: viewModel.getContactsEntity(from: chat), chat: chat, socketManager: viewModel.socketManager)
+                CorrespondenceView(contacts: viewModel.getContactsEntity(from: chat), chat: chat, socketManager: viewModel.socketManager, showTabBar: $showTabBar)
                 
             } label: {
                 VStack(alignment: .leading) {
@@ -302,7 +345,7 @@ struct ChatView: View {
                 Spacer().frame(width: 54.0)
                 
                 NavigationLink(isActive: $correspondence) {
-                    CorrespondenceView(contacts: viewModel.getContactsEntity(from: chatUser), chat: chatUser, socketManager: viewModel.socketManager)
+                    CorrespondenceView(contacts: viewModel.getContactsEntity(from: chatUser), chat: chatUser, socketManager: viewModel.socketManager, showTabBar: $showTabBar)
                 } label:{
                     Button {
                         bottomSheetPosition = .hidden
@@ -395,8 +438,8 @@ struct ChatView: View {
                     .padding(.bottom, 10)
                     .padding(.trailing, 10)
                     .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
-                Image(systemName: "plus")
-                    .font(.title)
+                
+                Asset.plusIcon.swiftUIImage
                     .padding(.bottom, 17)
                     .padding(.trailing, 10)
             }
@@ -409,7 +452,7 @@ struct ChatView: View {
         guard let lastIndex = chat.messages?.last else { return "" }
         
         switch lastIndex.messageType {
-        case .text:
+        case .text, .system:
             return lastIndex.message
         case .image:
             return L10n.ChatView.Message.image
@@ -429,6 +472,6 @@ struct ChatView: View {
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView(socketManager: nil)
+        ChatView(socketManager: nil, showTabBar: .constant(true))
     }
 }

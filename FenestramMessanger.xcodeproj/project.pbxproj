@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		57B6A98428A42D7C0051429F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57B6A98328A42D7C0051429F /* GoogleService-Info.plist */; };
 		6D3B8991ABEEC255BD8A2A57 /* Pods_FenestramMessanger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F33D57429665AA5A47D624DD /* Pods_FenestramMessanger.framework */; };
+		BD081B0128E312D300E3B48D /* splashscreen_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = BD081B0028E312D300E3B48D /* splashscreen_animation.json */; };
+		BD081B0628E3163200E3B48D /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = BD081B0528E3163200E3B48D /* Lottie */; };
+		BD081B0828E3167800E3B48D /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD081B0728E3167800E3B48D /* LottieView.swift */; };
 		BD0D3ADC28C767E4004096A1 /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = BD0D3ADB28C767E4004096A1 /* iPhoneNumberField */; };
 		BD0D3ADF28C8B07E004096A1 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = BD0D3ADE28C8B07E004096A1 /* AlertToast */; };
 		BD0D3AE128C8C333004096A1 /* MFMessageComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0D3AE028C8C333004096A1 /* MFMessageComposeView.swift */; };
@@ -153,6 +156,8 @@
 		0B943E235FBEAE9164E84F34 /* Pods-FenestramMessanger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FenestramMessanger.release.xcconfig"; path = "Target Support Files/Pods-FenestramMessanger/Pods-FenestramMessanger.release.xcconfig"; sourceTree = "<group>"; };
 		1734F72B5ABD583B612C09E0 /* Pods-FenestramMessanger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FenestramMessanger.debug.xcconfig"; path = "Target Support Files/Pods-FenestramMessanger/Pods-FenestramMessanger.debug.xcconfig"; sourceTree = "<group>"; };
 		57B6A98328A42D7C0051429F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BD081B0028E312D300E3B48D /* splashscreen_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splashscreen_animation.json; sourceTree = "<group>"; };
+		BD081B0728E3167800E3B48D /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		BD08ACD528B8CC88000F923D /* FenestramMessanger.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FenestramMessanger.entitlements; sourceTree = "<group>"; };
 		BD0D3AE028C8C333004096A1 /* MFMessageComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFMessageComposeView.swift; sourceTree = "<group>"; };
 		BD74D87228805A860004C961 /* Montserrat-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.ttf"; sourceTree = "<group>"; };
@@ -300,6 +305,7 @@
 			files = (
 				FCD3059D2886ADCB00491220 /* BottomSheet in Frameworks */,
 				BD0D3ADC28C767E4004096A1 /* iPhoneNumberField in Frameworks */,
+				BD081B0628E3163200E3B48D /* Lottie in Frameworks */,
 				BD785F4E28C61D080075BC89 /* Kingfisher in Frameworks */,
 				FC17786C2875831700B0D979 /* Introspect in Frameworks */,
 				6D3B8991ABEEC255BD8A2A57 /* Pods_FenestramMessanger.framework in Frameworks */,
@@ -319,6 +325,14 @@
 				0B943E235FBEAE9164E84F34 /* Pods-FenestramMessanger.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		BD081AFF28E312C400E3B48D /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				BD081B0028E312D300E3B48D /* splashscreen_animation.json */,
+			);
+			path = Animations;
 			sourceTree = "<group>";
 		};
 		BD74D87028805A5D0004C961 /* Fonts */ = {
@@ -411,6 +425,7 @@
 				FC7A57162891AE5700ABF7BF /* ImagesNavigationView.swift */,
 				FC305CC3289AE731001ED651 /* CustomTextField.swift */,
 				BD0D3AE028C8C333004096A1 /* MFMessageComposeView.swift */,
+				BD081B0728E3167800E3B48D /* LottieView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -482,6 +497,7 @@
 		BDE74B8C28801CA000F4A775 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BD081AFF28E312C400E3B48D /* Animations */,
 				BD74D87028805A5D0004C961 /* Fonts */,
 				BDE74B8D28801CAD00F4A775 /* Generated */,
 				BD7783AD2872EBB70023032D /* Assets.xcassets */,
@@ -821,6 +837,7 @@
 				BD785F4D28C61D080075BC89 /* Kingfisher */,
 				BD0D3ADB28C767E4004096A1 /* iPhoneNumberField */,
 				BD0D3ADE28C8B07E004096A1 /* AlertToast */,
+				BD081B0528E3163200E3B48D /* Lottie */,
 			);
 			productName = FenestramMessanger;
 			productReference = BD7783A62872EBB50023032D /* FenestramMessanger.app */;
@@ -860,6 +877,7 @@
 				BD785F4C28C61D080075BC89 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				BD0D3ADA28C767E4004096A1 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
 				BD0D3ADD28C8B07D004096A1 /* XCRemoteSwiftPackageReference "AlertToast" */,
+				BD081B0428E3163200E3B48D /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = BD7783A72872EBB50023032D /* Products */;
 			projectDirPath = "";
@@ -915,6 +933,7 @@
 				BDE74B9128801D9000F4A775 /* Localizable.strings in Resources */,
 				BD7783AE2872EBB70023032D /* Assets.xcassets in Resources */,
 				BD74D89228805A880004C961 /* Montserrat-ExtraBold.ttf in Resources */,
+				BD081B0128E312D300E3B48D /* splashscreen_animation.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1007,6 +1026,7 @@
 				BDDB5ADF2872ECBC002BF418 /* MainView.swift in Sources */,
 				BD785F5228C6499F0075BC89 /* FilesRequestFactory.swift in Sources */,
 				FC13AF45287EE78B00784E35 /* ChatViewModel.swift in Sources */,
+				BD081B0828E3167800E3B48D /* LottieView.swift in Sources */,
 				FC3A2B522891743E006E0948 /* FileView.swift in Sources */,
 				FC13AF42287ECEE100784E35 /* NewContactViewModel.swift in Sources */,
 				FC600B2728788E87001CA2BD /* SettingsViewModel.swift in Sources */,
@@ -1227,6 +1247,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenestramMessanger/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Hoolichat;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Пожалуйста предоставьте доступ к камере телефона";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Пожалуйста, предоставьте доступ к вашему списку контактов, чтобы мы могли найти их в нашем приложении";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1263,6 +1284,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenestramMessanger/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Hoolichat;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Пожалуйста предоставьте доступ к камере телефона";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Пожалуйста, предоставьте доступ к вашему списку контактов, чтобы мы могли найти их в нашем приложении";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1309,6 +1331,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		BD081B0428E3163200E3B48D /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = exactVersion;
+				version = 3.4.3;
+			};
+		};
 		BD0D3ADA28C767E4004096A1 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MojtabaHs/iPhoneNumberField";
@@ -1368,6 +1398,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BD081B0528E3163200E3B48D /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BD081B0428E3163200E3B48D /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
 		BD0D3ADB28C767E4004096A1 /* iPhoneNumberField */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BD0D3ADA28C767E4004096A1 /* XCRemoteSwiftPackageReference "iPhoneNumberField" */;

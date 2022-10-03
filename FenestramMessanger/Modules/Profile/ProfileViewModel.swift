@@ -202,7 +202,7 @@ extension ProfileView {
             if let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
                let jpegData = image.jpegData(compressionQuality: 1.0) {
                 
-                let fileName = "new_chat_avatar.jpeg"
+                let fileName = "new_profile_avatar.jpeg"
                 let url = documents.appendingPathComponent(fileName)
                 
                 do {

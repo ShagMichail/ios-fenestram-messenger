@@ -18,69 +18,38 @@ struct MainTabView: View {
     
     init(socketManager: SocketIOManager?) {
         _viewModel = StateObject(wrappedValue: ViewModel(socketManager: socketManager))
-        UITabBar.appearance().backgroundColor = Asset.dark1.color
-        UITabBar.appearance().unselectedItemTintColor = Asset.grey1.color
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: FontFamily.Poppins.regular.font(size: 14)], for: .normal)
-        UITabBar.appearance().heightAnchor.constraint(equalToConstant: 80).isActive = true
     }
     
     //MARK: - Body
     
     var body: some View {
-        TabView(selection: $selectionTabView) {
-            ContactsView(socketManager: viewModel.socketManager)
-                .navigationBarHidden(true)
-                .tabItem {
-                    if selectionTabView == 0 {
-                        Asset.contactsSelected.swiftUIImage
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                    } else {
-                        Asset.contacts.swiftUIImage
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                    }
-                    
-                    Text(L10n.MainTabView.contacts)
+        VStack(spacing: 0) {
+            ZStack {
+                ForEach(TabType.allCases) { tabType in
+                    tabType.getContentView(with: viewModel.socketManager, showTabBar: $viewModel.showTabBar)
+                        .opacity(viewModel.selectedTab == tabType ? 1 : 0)
                 }
-                .tag(0)
+            }
             
-            ChatView(socketManager: viewModel.socketManager)
-                .navigationBarHidden(true)
-                .tabItem {
-                    if selectionTabView == 1 {
-                        Asset.chatSelected.swiftUIImage
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                    } else {
-                        Asset.chat.swiftUIImage
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                    }
+            if viewModel.showTabBar {
+                ZStack {
+                    Asset.dark1.swiftUIColor
                     
-                    Text(L10n.MainTabView.chat)
-                }
-                .tag(1)
-            
-            ProfileView()
-                .navigationBarHidden(true)
-                .tabItem {
-                    if selectionTabView == 2 {
-                        Asset.profileSelected.swiftUIImage
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                    } else {
-                        Asset.profile.swiftUIImage
-                            .resizable()
-                            .frame(width: 24, height: 24)
+                    HStack {
+                        ForEach(TabType.allCases) { tabType in
+                            tabType.getTabItemView(isSelected: viewModel.selectedTab == tabType)
+                                .onTapGesture {
+                                    viewModel.selectedTab = tabType
+                                }
+                        }
                     }
-                    
-                    Text(L10n.MainTabView.profile)
+                    .frame(maxWidth: .infinity)
+                    .padding(.bottom, 16)
                 }
-                .tag(2)
+                .frame(height: 96)
+            }
         }
-        .accentColor(.white)
-        .ignoresSafeArea()
+        .edgesIgnoringSafeArea(.bottom)
     }
 }
 

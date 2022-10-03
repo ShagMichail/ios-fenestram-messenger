@@ -15,8 +15,8 @@ protocol SocketIOManagerObserver: AnyObject {
 }
 
 final class SocketIOManager {
-    let manager: SocketManager
-    let socket: SocketIOClient
+    private(set) var manager: SocketManager
+    private(set) var socket: SocketIOClient
     
     private var observers: [Weak<SocketIOManagerObserver>] = []
     
@@ -33,6 +33,17 @@ final class SocketIOManager {
     
     deinit {
         manager.disconnect()
+    }
+    
+    func changeAccessToken(accessToken: String) {
+        print("access token: ", accessToken)
+        self.manager = SocketManager(socketURL: URL(string: Constants.socketURL)!, config: [
+            .log(true),
+            .extraHeaders(["Authorization": "Bearer \(accessToken)"])
+        ])
+        self.socket = self.manager.defaultSocket
+        
+        connect()
     }
     
     func connect() {

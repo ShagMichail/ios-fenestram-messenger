@@ -46,12 +46,16 @@ extension MainView {
         
         @objc
         private func handleAuthState() {
-            self.isSignIn = AuthController.isSignedIn
-            
             if let token = try? AuthController.getToken(),
-               self.isSignIn {
-                self.socketManager = SocketIOManager(accessToken: token)
+               AuthController.isSignedIn {
+                if self.socketManager == nil {
+                    self.socketManager = SocketIOManager(accessToken: token)
+                } else {
+                    self.socketManager?.changeAccessToken(accessToken: token)
+                }
             }
+            
+            self.isSignIn = AuthController.isSignedIn
         }
     }
 }

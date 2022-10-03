@@ -14,12 +14,13 @@ public enum AuthRequestRouter: AbstractRequestRouter {
     case refresh(parameters: Parameters)
     case setFirebaseToken(parameters: Parameters)
     case deleteFirebaseToken(firebaseToken: String)
+    case deleteUser(userId: Int)
     
     var method: HTTPMethod {
         switch self {
         case .sendCode, .login, .refresh, .setFirebaseToken:
             return .post
-        case .deleteFirebaseToken:
+        case .deleteFirebaseToken, .deleteUser:
             return .delete
         }
     }
@@ -36,6 +37,8 @@ public enum AuthRequestRouter: AbstractRequestRouter {
             return "api/\(Constants.apiVersion)/authorization/firebase_token"
         case .deleteFirebaseToken(let firebaseToken):
             return "api/\(Constants.apiVersion)/authorization/firebase_token/\(firebaseToken)"
+        case .deleteUser(let userId):
+            return "api/\(Constants.apiVersion)/users/\(userId)"
         }
     }
     
@@ -44,7 +47,7 @@ public enum AuthRequestRouter: AbstractRequestRouter {
         case .sendCode, .login, .refresh:
             return ["Content-Type": "application/json",
                     "accept": "*/*"]
-        case .setFirebaseToken, .deleteFirebaseToken:
+        case .setFirebaseToken, .deleteFirebaseToken, .deleteUser:
             guard let token = try? AuthController.getToken() else {
                 return ["Content-Type": "application/json",
                         "accept": "*/*"]
@@ -77,7 +80,7 @@ public enum AuthRequestRouter: AbstractRequestRouter {
         switch self {
         case .sendCode(let parameters), .login(let parameters), .refresh(let parameters), .setFirebaseToken(let parameters):
             urlRequest = try CustomPatchEncding().encode(urlRequest, with: parameters)
-        case .deleteFirebaseToken:
+        case .deleteFirebaseToken, .deleteUser:
             urlRequest = try URLEncoding.default.encode(urlRequest, with: nil)
         }
         return urlRequest
