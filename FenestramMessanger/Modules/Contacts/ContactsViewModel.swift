@@ -13,7 +13,6 @@ extension ContactsView {
     @MainActor
     final class ViewModel: ObservableObject {
         
-        
         //MARK: - Properties
         
         @Published var searchText = ""
@@ -187,6 +186,21 @@ extension ContactsView {
                     recentFile.append(files[index])
                     index += 1
                 }
+            }
+        }
+        
+        func presentInviteSheet() {
+            let activityView = UIActivityViewController(activityItems: [L10n.MfMessageComposeView.message], applicationActivities: nil)
+            
+            if #available(iOS 15.0, *) {
+                let allScenes = UIApplication.shared.connectedScenes
+                let scene = allScenes.first { $0.activationState == .foregroundActive }
+                
+                if let windowScene = scene as? UIWindowScene {
+                    windowScene.keyWindow?.rootViewController?.present(activityView, animated: true, completion: nil)
+                }
+            } else {
+                UIApplication.shared.keyWindow?.rootViewController?.present(activityView, animated: true, completion: nil)
             }
         }
     }

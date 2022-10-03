@@ -15,6 +15,8 @@ struct CorrespondenceNavigationView: View {
     var contacts: [ContactEntity]
     var chat: ChatEntity?
     
+    @Binding var showTabBar: Bool
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
    
     @AppStorage ("isColorThema") var isColorThema: Bool?
@@ -42,6 +44,7 @@ struct CorrespondenceNavigationView: View {
     
     private func getBackButton() -> some View {
         Button(action: {
+            showTabBar = true
             self.presentationMode.wrappedValue.dismiss()
         }) {
             HStack {

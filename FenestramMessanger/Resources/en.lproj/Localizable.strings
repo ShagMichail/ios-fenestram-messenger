@@ -17,6 +17,7 @@
 "general.error_title" = "Error";
 "general.accept" = "Accept";
 "general.no_internet_connection" = "No internet connection";
+"general.delete" = "Delete";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "A list of your chats will be displayed here";
@@ -24,6 +25,7 @@
 "chat_view.recent_image" = "Images";
 "chat_view.files" = "%d files";
 "chat_view.message.image" = "Image";
+"chat_view.search.placeholder" = "Search for a chat";
 
 // MARK: - NewContactView
 "new_contact_view.title" = "Add Contact";
@@ -55,12 +57,16 @@
 "contact_view.invate_contact" = "invate";
 "contact_view.files" = "%d files";
 "contact_view.access_denied_text" = "You have not allowed the app to access your contacts";
+"contact_view.invate_to_app" = "Invite to Hoolichat";
 
 // MARK: - SettingsView
 "settings_view.title" = "Settings";
 "settings_view.color" = "Change the color";
 "settings_view.info" = "About the app";
 "settings_view.exit" = "Log out of your account";
+"settings_view.delete_account" = "Delete account";
+"settings_view.delete_account_alert.title" = "Are you sure you want to delete your account?";
+"settings_view.delete_account_alert.message" = "If deleted, all your data will be permanently deleted!";
 
 // MARK: - ProfileView
 "profile_view.select_photo.title" = "Select Photo";
@@ -87,7 +93,7 @@
 "onboarding_view.third_description" = "On the other hand, the strengthening and development of the structure plays an important role in creating significant financial and administrative conditions.";
 
 // MARK: - AccountView
-"account_view.title" = "Welcome to FENESTRAM!";
+"account_view.title" = "Welcome to Hoolichat!";
 "account_view.name" = "Name";
 "account_view.nickname" = "Nickname";
 "account_view.birthday" = "Birthdate";
@@ -139,7 +145,7 @@
 "error.nickname_empty" = "Nickname cannot be empty";
 
 // MARK: - MFMessageComposeView
-"mf_message_compose_view.message" = "Hello, I invite you to join me in the Fenestram chat! So that we can always stay in touch.";
+"mf_message_compose_view.message" = "Hello, I use Hoolichat!\nYou can download it from the link ...";
 
 // MARK: - NetworkError
 "network_error.localized_error.error_description.server_error" = "Server error. Please try again later";

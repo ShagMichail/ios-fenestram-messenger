@@ -19,14 +19,17 @@ struct ContactsView: View {
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @Environment(\.scenePhase) var scenePhase
     
+    @Binding var showTabBar: Bool
+    
     @StateObject private var viewModel: ViewModel
     
     @State var correspondence = false
     @State var bottomSheetPosition: BookBottomSheetPosition = .hidden
     @State var selectedContact: ContactEntity?
     
-    init(socketManager: SocketIOManager?) {
+    init(socketManager: SocketIOManager?, showTabBar: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: ViewModel(socketManager: socketManager))
+        _showTabBar = showTabBar
     }
     
     var border: some View {
@@ -115,9 +118,8 @@ struct ContactsView: View {
         Text(L10n.ContactView.title)
             .font(FontFamily.Poppins.bold.swiftUIFont(size: 18))
             .foregroundColor(Color.white)
-            .padding(.horizontal)
-            .padding(.top)
-        
+            .padding(.horizontal, 24)
+            .padding(.top, 16)
     }
     
     private func getSearchView() -> some View {
@@ -130,9 +132,7 @@ struct ContactsView: View {
                 }
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                 .textFieldStyle(PlainTextFieldStyle())
-                .padding(.vertical, 12)
-                .padding(.leading, 10)
-                .padding(.trailing, 5)
+                .padding(16)
                 .foregroundColor(Color.white)
             
                 .multilineTextAlignment(.leading)
@@ -143,7 +143,7 @@ struct ContactsView: View {
                 }
         }
         .background(border)
-        .padding(.horizontal, 30.0)
+        .padding(.horizontal, 24.0)
     }
     
     private func getContentView() -> some View {
@@ -156,6 +156,23 @@ struct ContactsView: View {
                                 getContactRow(contact: contact, isRegister: true)
                             }
                             
+                            Button {
+                                viewModel.presentInviteSheet()
+                            } label: {
+                                ZStack {
+                                    Asset.dark2.swiftUIColor
+                                    
+                                    Text(L10n.ContactView.invateToApp)
+                                        .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 14))
+                                        .foregroundColor(Asset.blue1.swiftUIColor)
+                                }
+                                .frame(height: 40)
+                                .cornerRadius(5)
+                            }
+                            .padding(.horizontal, 24)
+                            .padding(.top, 32)
+                            .padding(.bottom, 16)
+                            
                             if viewModel.filteredUnregisterContacts.count > 0 {
                                 ZStack {
                                     Asset.dark1.swiftUIColor
@@ -166,7 +183,6 @@ struct ContactsView: View {
                                         .foregroundColor(Asset.grey1.swiftUIColor)
                                 }
                                 .frame(height: 34)
-                                .padding(.top, 32)
                                 .padding(.bottom, 16)
                                 
                                 ForEach(viewModel.filteredUnregisterContacts) { contact in
@@ -209,8 +225,8 @@ struct ContactsView: View {
                     .padding(.bottom, 10)
                     .padding(.trailing, 10)
                     .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
-                Image(systemName: "plus")
-                    .font(.title)
+                
+                Asset.plusIcon.swiftUIImage
                     .padding(.bottom, 17)
                     .padding(.trailing, 10)
             }
@@ -258,8 +274,8 @@ struct ContactsView: View {
                         Text(L10n.ContactView.invateContact)
                             .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
                             .foregroundColor(Asset.grey1.swiftUIColor)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 4)
+                            .padding(.vertical, 4)
+                            .padding(.horizontal, 8)
                     }
                     .background(Asset.dark1.swiftUIColor)
                     .cornerRadius(4)
@@ -273,7 +289,7 @@ struct ContactsView: View {
         
         if isRegister {
             return AnyView(NavigationLink {
-                CorrespondenceView(contacts: [contact], chat: nil, socketManager: viewModel.socketManager).navigationBarHidden(true)
+                CorrespondenceView(contacts: [contact], chat: nil, socketManager: viewModel.socketManager, showTabBar: $showTabBar).navigationBarHidden(true)
             } label: {
                 contentView
             })
@@ -399,7 +415,7 @@ struct ContactsView: View {
                 Spacer().frame(width: 54.0)
                 
                 NavigationLink(isActive: $correspondence) {
-                    CorrespondenceView(contacts: selectedContact != nil ? [selectedContact!] : [], chat: nil, socketManager: viewModel.socketManager)
+                    CorrespondenceView(contacts: selectedContact != nil ? [selectedContact!] : [], chat: nil, socketManager: viewModel.socketManager, showTabBar: $showTabBar)
                 } label:{
                     Button {
                         bottomSheetPosition = .hidden
@@ -489,7 +505,7 @@ struct ContactsView: View {
 
 struct ContactsView_Previews: PreviewProvider {
     static var previews: some View {
-        ContactsView(socketManager: nil)
+        ContactsView(socketManager: nil, showTabBar: .constant(true))
     }
 }
 

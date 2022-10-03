@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 extension ChatView {
     @MainActor
@@ -19,6 +20,8 @@ extension ChatView {
         
         @Published var presentAlert = false
         @Published var textAlert = ""
+        
+        @Published var searchText = ""
         
         @Published var isLoading: Bool = false
         @Published var allFiles: [File] = [
@@ -41,13 +44,24 @@ extension ChatView {
         
         private(set) var socketManager: SocketIOManager?
         
+        private let searchSubject = PassthroughSubject<Void, Never>()
+        private lazy var searchSubscription = AnyCancellable({})
+        
         init(socketManager: SocketIOManager?) {
+            defer {
+                configureEvents()
+            }
+            
             self.socketManager = socketManager
             socketManager?.checkConnect()
             socketManager?.addObserver(self)
             getContacts()
             getChatList()
             fillterFile()
+        }
+        
+        func filterContent() {
+            searchSubject.send()
         }
         
         
@@ -73,7 +87,7 @@ extension ChatView {
         private func getChatList() {
             isLoading = true
             
-            ChatService.getChats(page: page) { [weak self] result in
+            ChatService.getChats(searchText: searchText, page: page) { [weak self] result in
                 switch result {
                 case .success(let chatList):
                     self?.totalPages = Int((Float(chatList.total ?? 0) / 10).rounded(.up))
@@ -145,6 +159,14 @@ extension ChatView {
                     index += 1
                 }
             }
+        }
+        
+        private func configureEvents() {
+            searchSubscription = searchSubject
+                .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
+                .sink(receiveValue: { [weak self] newValue in
+                    self?.reset()
+                })
         }
         
         func getContactsEntity(from chat: ChatEntity?) -> [ContactEntity] {

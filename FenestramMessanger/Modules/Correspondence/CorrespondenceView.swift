@@ -31,6 +31,8 @@ struct CorrespondenceView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
+    @Binding var showTabBar: Bool
+    
     @StateObject private var viewModel: ViewModel
     
     private let bottomSheetOptions: [BottomSheet.Options] = [.noDragIndicator,
@@ -40,8 +42,9 @@ struct CorrespondenceView: View {
                                                              .background({ AnyView(Asset.dark1.swiftUIColor) }),
                                                              .cornerRadius(30)]
     
-    init(contacts: [ContactEntity], chat: ChatEntity?, socketManager: SocketIOManager?) {
+    init(contacts: [ContactEntity], chat: ChatEntity?, socketManager: SocketIOManager?, showTabBar: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: ViewModel(chat: chat, contacts: contacts, socketManager: socketManager))
+        _showTabBar = showTabBar
         UITextView.appearance().backgroundColor = .clear
     }
     
@@ -56,7 +59,7 @@ struct CorrespondenceView: View {
             
             VStack {
                 VStack {
-                    CorrespondenceNavigationView(contacts: viewModel.contacts, chat: viewModel.chat)
+                    CorrespondenceNavigationView(contacts: viewModel.contacts, chat: viewModel.chat, showTabBar: $showTabBar)
                     
                     if viewModel.isLoading && viewModel.page == 1 {
                         LoadingView()
@@ -107,8 +110,14 @@ struct CorrespondenceView: View {
                         isShown: $viewModel.showImagePicker,
                         sourceType: self.sourceType)}
         .navigationBarHidden(true)
-        .onBackSwipe(perform: { presentationMode.wrappedValue.dismiss() }, isEnabled: !viewModel.isLoading)
+        .onBackSwipe(perform: {
+            showTabBar = true
+            presentationMode.wrappedValue.dismiss()
+        }, isEnabled: !viewModel.isLoading)
         .onTapGesture { UIApplication.shared.endEditing() }
+        .onAppear {
+            showTabBar = false
+        }
         /// Bottom sheet for attachment
         .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: bottomSheetOptions,
                      headerContent: { getBottomSheet()}, mainContent: {})
@@ -228,22 +237,32 @@ struct CorrespondenceView: View {
     private func getMessageTextEditor() -> some View {
         ZStack(alignment: .bottom) {
             HStack{
-                TextEditor(text: $viewModel.textMessage)
-                    .placeholder(when: viewModel.textMessage.isEmpty) {
-                        Text(L10n.CorrespondenceView.textMessage).foregroundColor(Asset.text.swiftUIColor)
-                            .padding(.leading, 5)
+                VStack {
+                    if #available(iOS 16.0, *) {
+                        TextEditor(text: $viewModel.textMessage)
+                            .placeholder(when: viewModel.textMessage.isEmpty) {
+                                Text(L10n.CorrespondenceView.textMessage).foregroundColor(Asset.text.swiftUIColor)
+                                    .padding(.leading, 5)
+                            }
+                            .scrollContentBackground(.hidden)
+                    } else {
+                        TextEditor(text: $viewModel.textMessage)
+                            .placeholder(when: viewModel.textMessage.isEmpty) {
+                                Text(L10n.CorrespondenceView.textMessage).foregroundColor(Asset.text.swiftUIColor)
+                                    .padding(.leading, 5)
+                            }
                     }
-                    .frame(minHeight: 40, maxHeight: 150, alignment: .leading)
-                    .foregroundColor(Asset.text.swiftUIColor)
-                    .accentColor(Asset.text.swiftUIColor)
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                    .background(RoundedRectangle(cornerRadius: 10)
-                        .foregroundColor(Asset.dark1.swiftUIColor)
-                        .frame(width: UIScreen.screenWidth - 24))
-                    .padding(.leading , 50)
-                    .padding(.trailing , 50)
-                    .fixedSize(horizontal: false, vertical: true)
-                
+                }
+                .frame(minHeight: 40, maxHeight: 150, alignment: .leading)
+                .foregroundColor(Asset.text.swiftUIColor)
+                .accentColor(Asset.text.swiftUIColor)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                .background(RoundedRectangle(cornerRadius: 10)
+                    .foregroundColor(Asset.dark1.swiftUIColor)
+                    .frame(width: UIScreen.screenWidth - 24))
+                .padding(.leading , 50)
+                .padding(.trailing , 50)
+                .fixedSize(horizontal: false, vertical: true)
             }
             .padding(.horizontal)
             .background(RoundedRectangle(cornerRadius: 10)

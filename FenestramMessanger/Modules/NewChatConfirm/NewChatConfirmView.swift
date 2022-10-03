@@ -19,11 +19,14 @@ struct NewChatConfirmView: View {
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
+    @Binding var showTabBar: Bool
+    
     let onNeedUpdateChatList: () -> ()
     
-    init(selectedContacts: [UserEntity], isPopToChatListView: Binding<Bool>, onNeedUpdateChatList: @escaping () -> ()) {
+    init(selectedContacts: [UserEntity], showTabBar: Binding<Bool>, isPopToChatListView: Binding<Bool>, onNeedUpdateChatList: @escaping () -> ()) {
         _viewModel = StateObject(wrappedValue: ViewModel(selectedContacts: selectedContacts))
         _isPopToChatListView = isPopToChatListView
+        _showTabBar = showTabBar
         self.onNeedUpdateChatList = onNeedUpdateChatList
     }
     
@@ -52,6 +55,7 @@ struct NewChatConfirmView: View {
                         Button {
                             viewModel.createChat(success: {
                                 onNeedUpdateChatList()
+                                self.showTabBar = true
                                 self.isPopToChatListView = false
                             })
                         } label: {
@@ -121,12 +125,12 @@ struct NewChatConfirmView: View {
             .actionSheet(isPresented: $viewModel.showSheet) {
                 ActionSheet(title: Text(L10n.ProfileView.SelectPhoto.title), message: Text(L10n.ProfileView.SelectPhoto.message), buttons: [
                     .default(Text(L10n.ProfileView.SelectPhoto.photoLibrary)) {
-                        viewModel.showImagePicker = true
                         self.sourceType = .photoLibrary
+                        viewModel.showImagePicker = true
                     },
                     .default(Text(L10n.ProfileView.SelectPhoto.camera)) {
-                        viewModel.showImagePicker = true
                         self.sourceType = .camera
+                        viewModel.showImagePicker = true
                     },
                     .cancel()
                 ])
@@ -203,6 +207,6 @@ struct NewChatConfirmView: View {
 
 struct NewChatConfirmView_Previews: PreviewProvider {
     static var previews: some View {
-        NewChatConfirmView(selectedContacts: [], isPopToChatListView: .constant(true), onNeedUpdateChatList: {})
+        NewChatConfirmView(selectedContacts: [], showTabBar: .constant(false), isPopToChatListView: .constant(true), onNeedUpdateChatList: {})
     }
 }

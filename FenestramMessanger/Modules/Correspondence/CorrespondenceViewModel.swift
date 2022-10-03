@@ -134,7 +134,7 @@ extension CorrespondenceView {
             
             isLoading = true
             
-            ChatService.getMessages(chatId: chatId, page: page) { [weak self] result in
+            ChatService.getMessages(chatId: chatId, page: page, limit: 10) { [weak self] result in
                 switch result {
                 case .success(let chatList):
                     self?.totalPages = Int((Float(chatList.total ?? 0) / 10).rounded(.up))

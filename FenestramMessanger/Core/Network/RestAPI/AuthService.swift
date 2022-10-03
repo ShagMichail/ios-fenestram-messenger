@@ -86,4 +86,10 @@ public class AuthService {
             completion(result)
         }
     }
+    
+    public static func deleteUser(userId: Int, completion: @escaping (Result<Bool,Error>) -> Void) {
+        sendRequest(requestOptions: .deleteUser(userId: userId)) { result in
+            completion(result)
+        }
+    }
 }

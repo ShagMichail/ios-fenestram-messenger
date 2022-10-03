@@ -20,8 +20,14 @@ struct MessageStyleView: View {
     }
     
     var body: some View {
+        guard message.messageType != .system else {
+            return AnyView(Text(message.message)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                .foregroundColor(Asset.grey1.swiftUIColor))
+        }
+        
         if isCurrentUser {
-            VStack(alignment: .trailing) {
+            return AnyView(VStack(alignment: .trailing) {
                 VStack {
                     switch message.messageType {
                     case .text:
@@ -45,6 +51,8 @@ struct MessageStyleView: View {
                         } else {
                             Text(L10n.CorrespondenceView.MessageView.failedGetImage)
                         }
+                    case .system:
+                        EmptyView()
                     }
                 }
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
@@ -66,9 +74,9 @@ struct MessageStyleView: View {
                         .frame(width: 13.0, height: 13.0)
                         .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                 }
-            }
+            })
         } else if chat?.isGroup ?? false {
-            HStack {
+            return AnyView(HStack {
                 if let avatarString = message.fromUser?.avatar,
                    let url = URL(string: Constants.baseNetworkURLClear + avatarString) {
                     KFImage(url)
@@ -115,6 +123,8 @@ struct MessageStyleView: View {
                                 } else {
                                     Text(L10n.CorrespondenceView.MessageView.failedGetImage)
                                 }
+                            case .system:
+                                EmptyView()
                             }
                         }
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
@@ -133,9 +143,9 @@ struct MessageStyleView: View {
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
                     }
                 }
-            }
+            })
         } else {
-            VStack(alignment: .leading) {
+            return AnyView(VStack(alignment: .leading) {
                 VStack {
                     switch message.messageType {
                     case .text:
@@ -159,6 +169,8 @@ struct MessageStyleView: View {
                         } else {
                             Text(L10n.CorrespondenceView.MessageView.failedGetImage)
                         }
+                    case .system:
+                        EmptyView()
                     }
                 }
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
@@ -175,7 +187,7 @@ struct MessageStyleView: View {
                         .foregroundColor(Asset.message.swiftUIColor)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
                 }
-            }
+            })
         }
     }
     

@@ -16,8 +16,6 @@ struct SettingsView: View {
     @State var colorThema = false
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
-    @AppStorage("isCodeUser") var isCodeUser: String?
-    @AppStorage("isPhoneUser") var isPhoneUser: String?
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -50,13 +48,19 @@ struct SettingsView: View {
                 
                 Spacer().frame(height: 40)
                 
+                getDeleteAccountSettings()
+                
+                Spacer().frame(height: 40)
+                
                 getOutSettings()
                 
                 Spacer()
             }
             .padding(.horizontal, 24)
             
-            Spacer()
+            if viewModel.showDeleteAccountAlert {
+                getDeleteAccountAlertView()
+            }
         }
         .introspectTabBarController { (UITabBarController) in
             UITabBarController.tabBar.isHidden = true
@@ -168,10 +172,89 @@ struct SettingsView: View {
         }
     }
     
+    private func getDeleteAccountSettings() -> some View {
+        Button {
+            viewModel.showDeleteAccountAlert = true
+        } label: {
+            HStack {
+                Asset.deleteAccountIcon.swiftUIImage
+                    .resizable()
+                    .frame(width: 22.0, height: 22.0)
+                
+                Text(L10n.SettingsView.deleteAccount)
+                    .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
+                    .foregroundColor(Color.white)
+                    .padding(.leading)
+            }
+        }
+    }
+    
+    private func getDeleteAccountAlertView() -> some View {
+        ZStack {
+            Color.black
+                .opacity(0.3)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    viewModel.showDeleteAccountAlert = false
+                }
+            
+            VStack {
+                VStack {
+                    Text(L10n.SettingsView.DeleteAccountAlert.title)
+                        .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
+                        .foregroundColor(.white)
+                        .padding(.top, 42)
+                    
+                    Text(L10n.SettingsView.DeleteAccountAlert.message)
+                        .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 14))
+                        .foregroundColor(Asset.red.swiftUIColor)
+                        .padding(.top, 8)
+                    
+                    HStack {
+                        Button {
+                            viewModel.showDeleteAccountAlert = false
+                        } label: {
+                            ZStack {
+                                Asset.background0.swiftUIColor
+                                
+                                Text(L10n.General.cancel)
+                                    .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 14))
+                                    .foregroundColor(Asset.grey1.swiftUIColor)
+                            }
+                            .frame(height: 48)
+                            .cornerRadius(5)
+                        }
+                        
+                        Button {
+                            viewModel.deleteAccount()
+                        } label: {
+                            ZStack {
+                                Asset.background0.swiftUIColor
+                                
+                                Text(L10n.General.delete)
+                                    .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 14))
+                                    .foregroundColor(Asset.red.swiftUIColor)
+                            }
+                            .frame(height: 48)
+                            .cornerRadius(5)
+                        }
+                        .padding(.leading, 10)
+                    }
+                    .padding(.top, 32)
+                    .padding(.bottom, 24)
+                }
+                .padding(.horizontal, 24)
+            }
+            .background(Asset.dark1.swiftUIColor)
+            .cornerRadius(20)
+            .padding(.horizontal, 24)
+        }
+    }
+    
     private func getOutSettings() -> some View {
         HStack{
             Button {
-                viewModel.out(phone: isPhoneUser ?? "", code: isCodeUser ?? "")
+                viewModel.out()
             } label: {
                 Asset.exit.swiftUIImage
                     .resizable()
