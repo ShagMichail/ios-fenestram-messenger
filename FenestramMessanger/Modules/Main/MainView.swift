@@ -11,8 +11,6 @@ struct MainView: View {
     
     
     //MARK: - Properties
-    
-    @AppStorage("isActiv") var isActiv: Bool?
     @AppStorage("isAlreadySetProfile") var isAlreadySetProfile: Bool?
     
     @StateObject private var viewModel: ViewModel

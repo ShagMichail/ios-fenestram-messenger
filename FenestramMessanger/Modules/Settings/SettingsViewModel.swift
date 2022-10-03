@@ -14,34 +14,36 @@ extension SettingsView {
         
         //MARK: - Properties
         
-        var newPhone: String = ""
         
+        @Published var showDeleteAccountAlert: Bool = false
         
         //MARK: - Query functions
         
-        public func out(phone: String, code: String) {
-            for character in phone {
-                if character != " " && character != "-" {
-                    newPhone.append("\(character)")
+        public func deleteAccount() {
+            guard let userId = Settings.currentUser?.id else {
+                print("get user id failure")
+                return
+            }
+            
+            showDeleteAccountAlert = false
+            
+            AuthService.deleteUser(userId: userId) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.out()
+                case .failure(let error):
+                    print("delete account failure with error: ", error)
                 }
             }
-           
-            AuthService.login(phoneNumber: newPhone, oneTimeCode: code) { [weak self] result in
-                switch result {
-                case .success(_):
-                    print("login success")
-
-                    do {
-                        try AuthController.signOut()
-                        print("out success")
-                        self?.newPhone = ""
-                    }
-                    catch let error {
-                        print("out failure with error: ", error.localizedDescription)
-                    }
-                case .failure(let error):
-                    print("login failure with error: ", error.localizedDescription)
-                }
+        }
+        
+        public func out() {
+            do {
+                try AuthController.signOut()
+                print("out success")
+            }
+            catch let error {
+                print("out failure with error: ", error.localizedDescription)
             }
         }
     }

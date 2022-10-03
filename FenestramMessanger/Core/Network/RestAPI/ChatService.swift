@@ -44,8 +44,15 @@ public class ChatService {
             })
         }
     
-    public static func getChats(page: Int, limit: Int = 10, completion: @escaping (Result<BaseResponseEntity<[ChatEntity]>, Error>) -> Void) {
-        sendPaginationRequest(modelType: [ChatEntity].self, requestOptions: .getChats(limit: String(limit), page: String(page))) { result in
+    public static func getChats(searchText: String, page: Int, limit: Int = 10, completion: @escaping (Result<BaseResponseEntity<[ChatEntity]>, Error>) -> Void) {
+        var queryParameters: [URLQueryItem] = [
+            .init(name: "limit", value: limit.description),
+            .init(name: "page", value: page.description)
+        ]
+        if !searchText.isEmpty {
+            queryParameters.append(.init(name: "like", value: searchText))
+        }
+        sendPaginationRequest(modelType: [ChatEntity].self, requestOptions: .getChats(queryParameters: queryParameters)) { result in
             completion(result)
         }
     }
@@ -79,8 +86,32 @@ public class ChatService {
         }
     }
     
-    public static func getMessages(chatId: Int, page: Int, completion: @escaping (Result<BaseResponseEntity<[MessageEntity]>, Error>) -> Void) {
-        sendPaginationRequest(modelType: [MessageEntity].self, requestOptions: .getMessages(chatId: chatId, limit: String(10), page: String(page))) { result in
+    public static func getMessages(chatId: Int, page: Int, limit: Int, completion: @escaping (Result<BaseResponseEntity<[MessageEntity]>, Error>) -> Void) {
+        let queryParameters: [URLQueryItem] = [
+            .init(name: "limit", value: limit.description),
+            .init(name: "page", value: page.description)
+        ]
+        sendPaginationRequest(modelType: [MessageEntity].self, requestOptions: .getMessages(chatId: chatId, queryParameters: queryParameters)) { result in
+            completion(result)
+        }
+    }
+    
+    public static func changeChatAvatar(chatId: Int, avatarURL: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        let parameters: [String: Any] = [
+            "avatar": avatarURL
+        ]
+        
+        sendRequest(requestOptions: .changeChatAvatar(chatId: chatId, parameters: parameters)) { result in
+            completion(result)
+        }
+    }
+    
+    public static func changeChatName(chatId: Int, name: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        let parameters: [String: Any] = [
+            "name": name
+        ]
+        
+        sendRequest(requestOptions: .changeChatName(chatId: chatId, parameters: parameters)) { result in
             completion(result)
         }
     }
