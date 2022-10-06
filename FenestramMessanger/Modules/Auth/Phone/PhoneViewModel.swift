@@ -38,7 +38,8 @@ extension PhoneView {
         private(set) var formattedPhone: String = ""
         
         @Published var isEditing: Bool = false
-        @Published public var numberCount = false
+        
+        @Published var showCodeView: Bool = false
         
         private let phoneNumberKit = PhoneNumberKit()
         
@@ -51,25 +52,19 @@ extension PhoneView {
             return (try? phoneNumberKit.parse(formattedPhone)) != nil
         }
         
-        func checkCode() {
+        func checkCode(success: @escaping () -> ()) {
             print("texphone:", formattedPhone, formattedPhone.count)
-            if formattedPhone.count == 12 {
-                
-                numberCount = true
-                
-//                AuthService.sendCode(phoneNumber: textPhone) { [weak self] result in
-//                    guard let self = self else { return }
-//                    switch result {
-//                    case .success(_):
-//                        self.numberCount = true
-//                    case .failure(let error):
-//                        print("error: ", error.localizedDescription)
-//                        self.numberCount = false
-//                    }
-//                }
-            } else {
-                numberCount = false
-            }
+            success()
+            //                AuthService.sendCode(phoneNumber: textPhone) { [weak self] result in
+            //                    guard let self = self else { return }
+            //                    switch result {
+            //                    case .success(_):
+            //                        self.numberCount = true
+            //                    case .failure(let error):
+            //                        print("error: ", error.localizedDescription)
+            //                        self.numberCount = false
+            //                    }
+            //                }
         }
     }
 }

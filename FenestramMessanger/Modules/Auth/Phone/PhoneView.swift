@@ -32,6 +32,12 @@ struct PhoneView: View {
     var body: some View {
         NavigationView {
             ZStack {
+                NavigationLink(isActive: $viewModel.showCodeView) {
+                    CodeView(phoneNumber: viewModel.formattedPhone).navigationBarHidden(true)
+                } label: {
+                    EmptyView()
+                }
+                
                 Asset.background.swiftUIColor
                     .ignoresSafeArea()
                 
@@ -77,23 +83,19 @@ struct PhoneView: View {
     }
     
     private func getButton() -> some View {
-        NavigationLink(isActive: $viewModel.numberCount) {
-            CodeView(phoneNumber: viewModel.formattedPhone).navigationBarHidden(true)
-        } label: {
-            Button(action: {
-                viewModel.checkCode()
-                if viewModel.numberCount {
-                    isPhoneUser = viewModel.formattedPhone
-                }
-            }) {
-                Text(L10n.PhoneView.sendCode)
-                    .frame(width: UIScreen.screenWidth - 30, height: 45.0)
-                    .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
-                    .foregroundColor(.white)
-                    .background(viewModel.checkPhone() ?
-                                (isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor) : Asset.buttonDis.swiftUIColor)
-                    .cornerRadius(6)
+        Button(action: {
+            viewModel.checkCode() {
+                isPhoneUser = viewModel.formattedPhone
+                viewModel.showCodeView = true
             }
+        }) {
+            Text(L10n.PhoneView.sendCode)
+                .frame(width: UIScreen.screenWidth - 30, height: 45.0)
+                .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
+                .foregroundColor(.white)
+                .background(viewModel.checkPhone() ?
+                            (isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor) : Asset.buttonDis.swiftUIColor)
+                .cornerRadius(6)
         }
         .disabled(!viewModel.checkPhone())
     }
