@@ -233,7 +233,7 @@ struct NewContactView: View {
                 })
                 .flagHidden(false)
                 .prefixHidden(false)
-                .foregroundColor(((viewModel.textPhone.count == 0 &&  viewModel.isTappedGlobal == true) || !viewModel.checkPhoneNumber()) ? Asset.red.swiftUIColor : Asset.text.swiftUIColor.opacity(0.87))
+                .foregroundColor(((viewModel.textPhone.count == 0 && viewModel.isTappedGlobal == true) || !viewModel.checkPhoneNumber()) ? Asset.red.swiftUIColor : Asset.text.swiftUIColor.opacity(0.87))
                 .accentColor(Asset.text.swiftUIColor)
                 .multilineTextAlignment(.leading)
                 .textFieldStyle(PlainTextFieldStyle())
@@ -282,7 +282,7 @@ struct NewContactView: View {
                     .frame(width: UIScreen.screenWidth - 30, height: 45.0)
                     .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 16))
                     .foregroundColor(.white)
-                    .background( (viewModel.name.count != 0 && (viewModel.textPhone.count != 0 && viewModel.textPhone.count == 16 ) ? (isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor) : Asset.dark2.swiftUIColor))
+                    .background((viewModel.name.count != 0 && viewModel.checkPhoneNumber() ? (isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor) : Asset.dark2.swiftUIColor))
                     .cornerRadius(6)
             }.disabled((viewModel.name.count == 0 || !viewModel.checkPhoneNumber()))
         }

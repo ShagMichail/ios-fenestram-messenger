@@ -46,6 +46,7 @@ struct CodeView: View {
         .onTapGesture {
             UIApplication.shared.endEditing()
         }
+        .onBackSwipe(perform: { presentationMode.wrappedValue.dismiss() }, isEnabled: true)
     }
     
     
@@ -53,8 +54,8 @@ struct CodeView: View {
     
     private func getBase() -> some View {
         VStack(alignment: .center) {
-            Text("FENESTRAM")
-                .font(FontFamily.Montserrat.semiBold.swiftUIFont(size: 18))
+            Text("hoolichat")
+                .font(FontFamily.Montserrat.bold.swiftUIFont(size: 32))
                 .foregroundColor(.white)
             
             Spacer()

@@ -17,6 +17,7 @@
 "general.error_title" = "Произошла ошибка";
 "general.accept" = "Разрешить";
 "general.no_internet_connection" = "Нет соединения с интернетом";
+"general.delete" = "Удалить";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "Здесь будет отображаться список ваших чатов";
@@ -24,6 +25,7 @@
 "chat_view.recent_image" = "Изображения";
 "chat_view.files" = "%d файлов";
 "chat_view.message.image" = "Изображение";
+"chat_view.search.placeholder" = "Поиск чата";
 
 // MARK: - NewContactView
 "new_contact_view.title" = "Добавить контакт";
@@ -55,12 +57,16 @@
 "contact_view.invate_contact" = "пригласить";
 "contact_view.files" = "%d файлов";
 "contact_view.access_denied_text" = "Вы не разрешили приложению доступ к контактам";
+"contact_view.invate_to_app" = "Пригласить в Hoolichat";
 
 // MARK: - SettingsView
 "settings_view.title" = "Настройки";
 "settings_view.color" = "Изменить цвет";
 "settings_view.info" = "О приложении";
 "settings_view.exit" = "Выход из учетной записи";
+"settings_view.delete_account" = "Удалить аккаунт";
+"settings_view.delete_account_alert.title" = "Вы уверены, что хотите удалить аккаунт?";
+"settings_view.delete_account_alert.message" = "В случае удаления все ваши данные будут удалены навсегда!";
 
 // MARK: - ProfileView
 "profile_view.select_photo.title" = "Выбрать фотографию";
@@ -87,7 +93,7 @@
 "onboarding_view.third_description" = "С другой стороны укрепление и развитие структуры играет важную роль в формировании существенных финансовых и административных условий.";
 
 // MARK: - AccountView
-"account_view.title" = "Добро пожаловать в FENESTRAM!";
+"account_view.title" = "Добро пожаловать\nв Hoolichat!";
 "account_view.name" = "Имя";
 "account_view.nickname" = "Никнейм";
 "account_view.birthday" = "Дата рождения";
@@ -139,7 +145,7 @@
 "error.nickname_empty" = "Никнейм не может быть пустым";
 
 // MARK: - MFMessageComposeView
-"mf_message_compose_view.message" = "Привет, предлагаю тебе присоединиться ко мне в чат Fenestram! Чтобы бы мы всегда оставались на связи.";
+"mf_message_compose_view.message" = "Привет, я использую Hoolichat!\nЕго можно скачать по ссылке ...";
 
 // MARK: - NetworkError
 "network_error.localized_error.error_description.server_error" = "Ошибка сервера. Пожалуйста, попробуйте позже";

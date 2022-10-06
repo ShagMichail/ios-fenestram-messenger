@@ -20,7 +20,8 @@ internal enum L10n {
     internal static let name = L10n.tr("Localizable", "account_view.name")
     /// Никнейм
     internal static let nickname = L10n.tr("Localizable", "account_view.nickname")
-    /// Добро пожаловать в FENESTRAM!
+    /// Добро пожаловать
+    /// в Hoolichat!
     internal static let title = L10n.tr("Localizable", "account_view.title")
   }
 
@@ -38,6 +39,10 @@ internal enum L10n {
     internal enum Message {
       /// Изображение
       internal static let image = L10n.tr("Localizable", "chat_view.message.image")
+    }
+    internal enum Search {
+      /// Поиск чата
+      internal static let placeholder = L10n.tr("Localizable", "chat_view.search.placeholder")
     }
   }
 
@@ -69,6 +74,8 @@ internal enum L10n {
     }
     /// пригласить
     internal static let invateContact = L10n.tr("Localizable", "contact_view.invate_contact")
+    /// Пригласить в Hoolichat
+    internal static let invateToApp = L10n.tr("Localizable", "contact_view.invate_to_app")
     /// Контакты
     internal static let title = L10n.tr("Localizable", "contact_view.title")
     /// Пока не зарегистрированы в приложении
@@ -134,6 +141,8 @@ internal enum L10n {
     internal static let cancel = L10n.tr("Localizable", "general.cancel")
     /// Закрыть
     internal static let close = L10n.tr("Localizable", "general.close")
+    /// Удалить
+    internal static let delete = L10n.tr("Localizable", "general.delete")
     /// Готово
     internal static let done = L10n.tr("Localizable", "general.done")
     /// Произошла ошибка
@@ -160,7 +169,8 @@ internal enum L10n {
   }
 
   internal enum MfMessageComposeView {
-    /// Привет, предлагаю тебе присоединиться ко мне в чат Fenestram! Чтобы бы мы всегда оставались на связи.
+    /// Привет, я использую Hoolichat!
+    /// Его можно скачать по ссылке ...
     internal static let message = L10n.tr("Localizable", "mf_message_compose_view.message")
   }
 
@@ -310,12 +320,20 @@ internal enum L10n {
   internal enum SettingsView {
     /// Изменить цвет
     internal static let color = L10n.tr("Localizable", "settings_view.color")
+    /// Удалить аккаунт
+    internal static let deleteAccount = L10n.tr("Localizable", "settings_view.delete_account")
     /// Выход из учетной записи
     internal static let exit = L10n.tr("Localizable", "settings_view.exit")
     /// О приложении
     internal static let info = L10n.tr("Localizable", "settings_view.info")
     /// Настройки
     internal static let title = L10n.tr("Localizable", "settings_view.title")
+    internal enum DeleteAccountAlert {
+      /// В случае удаления все ваши данные будут удалены навсегда!
+      internal static let message = L10n.tr("Localizable", "settings_view.delete_account_alert.message")
+      /// Вы уверены, что хотите удалить аккаунт?
+      internal static let title = L10n.tr("Localizable", "settings_view.delete_account_alert.title")
+    }
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
