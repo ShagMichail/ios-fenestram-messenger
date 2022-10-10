@@ -205,29 +205,27 @@ struct PageContactView: View {
             ForEach(viewModel.participants) { participant in
                 HStack {
                     VStack {
-                        if let avatarString = participant.avatar,
-                           let url = URL(string: Constants.baseNetworkURLClear + avatarString),
-                           !avatarString.isEmpty {
-                            KFImage(url)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 32, height: 32)
-                                .clipShape(Circle())
-                                .onTapGesture {
-                                    viewModel.selectedImageURL = url
-                                    viewModel.selectedImage = Asset.photo.swiftUIImage
-                                }
-                        } else {
-                            Asset.photo.swiftUIImage
-                                .resizable()
-                                .frame(width: 32, height: 32)
-                                .onTapGesture {
-                                    viewModel.selectedImage = Asset.photo.swiftUIImage
-                                }
+                        NavigationLink {
+                            let contact = ContactEntity(id: participant.id, phone: participant.phoneNumber, name: participant.name ?? participant.phoneNumber, user: participant)
+                            let chat = viewModel.getChatWith(contact: contact)
+                            PageContactView(contacts: [contact], chat: chat)
+                        } label: {
+                            if let avatarString = participant.avatar,
+                               let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                               !avatarString.isEmpty {
+                                KFImage(url)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 32, height: 32)
+                                    .clipShape(Circle())
+                            } else {
+                                Asset.photo.swiftUIImage
+                                    .resizable()
+                                    .frame(width: 32, height: 32)
+                            }
                         }
                     }
                     .padding(.trailing, 8)
-                    
                     Text(viewModel.getName(to: participant))
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                         .foregroundColor(.white)

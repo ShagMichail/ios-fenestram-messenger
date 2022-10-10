@@ -41,6 +41,9 @@ extension PageContactView {
         @Published var recentPhotoSecond: [PhotoEntity] = []
         
         @Published var selectedImage: Image?
+        
+        var individualProfileChat: [ContactEntity: ChatEntity?] = [:]
+        
         var selectedImageURL: URL?
         
         let chat: ChatEntity?
@@ -73,7 +76,26 @@ extension PageContactView {
             }
          }
         
+        func getChatWith(contact: ContactEntity) -> ChatEntity? {
+            guard let val = individualProfileChat[contact] else { return nil }
+            return val
+        }
         
+        fileprivate func getChatWithUser(id: Int) {
+            participants.forEach { user in
+                ChatService.getChat(chatId: user.id, completion: { [weak self] result in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let chat):
+                        let contact = ContactEntity(id: user.id, phone: user.phoneNumber, name: user.name ?? user.phoneNumber, user: user)
+                        self.individualProfileChat.isEmpty ? (self.individualProfileChat = [contact: chat]) : (self.individualProfileChat[contact] = chat)
+                    case .failure(let error):
+                        print("get chat user failure with error:", error.localizedDescription)
+                    }
+                })
+            }
+            
+        }
         //MARK: - Auxiliary functions
         
         private func fillterFile() {
