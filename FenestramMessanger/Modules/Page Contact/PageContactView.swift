@@ -104,7 +104,7 @@ struct PageContactView: View {
     private func getPhoto() -> some View {
         VStack {
             if let avatarString = (viewModel.chat?.isGroup ?? false) ? viewModel.chat?.avatar : viewModel.contacts.first?.user?.avatar,
-               let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+               let url = URL(string: Constants.prodNetworkURLClear + avatarString),
                !avatarString.isEmpty {
                 KFImage(url)
                     .resizable()
@@ -210,8 +210,9 @@ struct PageContactView: View {
                             let chat = viewModel.getChatWith(contact: contact)
                             PageContactView(contacts: [contact], chat: chat)
                         } label: {
+                            let baseUrlString = Settings.isDebug ? Constants.devNetworkUrlClear : Constants.prodNetworkURLClear
                             if let avatarString = participant.avatar,
-                               let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                               let url = URL(string: baseUrlString + avatarString),
                                !avatarString.isEmpty {
                                 KFImage(url)
                                     .resizable()

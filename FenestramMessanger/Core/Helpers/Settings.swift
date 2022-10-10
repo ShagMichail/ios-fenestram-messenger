@@ -12,6 +12,7 @@ public final class Settings {
     private enum Keys: String {
         case user = "current_user"
         case firebaseToken = "firebase_token"
+        case isDebug
     }
     
     static func jsonContainer<T: Encodable>(value: T) -> [String: T] {
@@ -41,6 +42,27 @@ public final class Settings {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: Keys.firebaseToken.rawValue)
+        }
+    }
+    
+    public static var isDebug: Bool {
+        get {
+            guard let data = UserDefaults.standard.data(forKey: Keys.isDebug.rawValue) else {
+                return true
+            }
+            if let isDebug = try? JSONDecoder().decode(Bool.self, from: data) {
+                return isDebug
+            } else {
+                return true
+            }
+        }
+        set {
+            if let data = try? JSONEncoder().encode(newValue) {
+                UserDefaults.standard.set(data, forKey: Keys.isDebug.rawValue)
+            } else {
+                UserDefaults.standard.removeObject(forKey: Keys.isDebug.rawValue)
+            }
+            UserDefaults.standard.synchronize()
         }
     }
 }

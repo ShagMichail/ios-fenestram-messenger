@@ -31,6 +31,8 @@ struct ChatView: View {
     
     @StateObject private var viewModel: ViewModel
     
+    private let baseUrlString = Settings.isDebug ? Constants.devNetworkUrlClear : Constants.prodNetworkURLClear
+    
     init(socketManager: SocketIOManager?, showTabBar: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: ViewModel(socketManager: socketManager))
         _showTabBar = showTabBar
@@ -241,7 +243,7 @@ struct ChatView: View {
             } label: {
                 VStack {
                     if let avatarString = chat.isGroup ? chat.avatar : viewModel.getContact(with: chat)?.user?.avatar,
-                       let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                       let url = URL(string: baseUrlString + avatarString),
                        !avatarString.isEmpty {
                         KFImage(url)
                             .resizable()
@@ -297,7 +299,7 @@ struct ChatView: View {
             HStack {
                 VStack {
                     if let avatarString = (chatUser?.isGroup ?? false) ? chatUser?.avatar : viewModel.getContact(with: chatUser)?.user?.avatar,
-                       let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                       let url = URL(string: baseUrlString + avatarString),
                        !avatarString.isEmpty {
                         KFImage(url)
                             .resizable()

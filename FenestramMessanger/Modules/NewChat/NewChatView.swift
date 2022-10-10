@@ -124,8 +124,9 @@ struct NewChatView: View {
                             }
                             
                             HStack {
+                                let baseUrlString = Settings.isDebug ? Constants.devNetworkUrlClear : Constants.prodNetworkURLClear
                                 if let avatarString = contact.avatar,
-                                   let url = URL(string: Constants.baseNetworkURLClear + avatarString) {
+                                   let url = URL(string: baseUrlString + avatarString) {
                                     KFImage(url)
                                         .resizable()
                                         .scaledToFill()
