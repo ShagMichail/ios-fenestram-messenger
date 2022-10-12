@@ -53,6 +53,8 @@ extension MainView {
                 } else {
                     self.socketManager?.changeAccessToken(accessToken: token)
                 }
+            } else {
+                self.socketManager?.logOut()
             }
             
             self.isSignIn = AuthController.isSignedIn

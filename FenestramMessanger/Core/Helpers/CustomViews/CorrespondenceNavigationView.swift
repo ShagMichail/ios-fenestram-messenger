@@ -59,8 +59,9 @@ struct CorrespondenceNavigationView: View {
             PageContactView(contacts: contacts, chat: chat).navigationBarHidden(true)
         } label: {
             HStack {
+                let baseUrlString = Settings.isDebug ? Constants.devNetworkUrlClear : Constants.prodNetworkURLClear
                 if let avatarString = (chat?.isGroup ?? false) ? chat?.avatar : contacts.first?.user?.avatar,
-                   let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                   let url = URL(string: baseUrlString + avatarString),
                    !avatarString.isEmpty {
                     KFImage(url)
                         .resizable()

@@ -126,7 +126,6 @@
 		FC1778D928774BA300B0D979 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778D628774BA300B0D979 /* ContactsView.swift */; };
 		FC1778E12877639800B0D979 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1778E02877639800B0D979 /* MainTabView.swift */; };
 		FC1EA8FF287F3CE10027107E /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1EA8FE287F3CE10027107E /* SplashScreen.swift */; };
-		FC1EA90228855CEF0027107E /* ChatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1EA90128855CEF0027107E /* ChatRow.swift */; };
 		FC305CC4289AE731001ED651 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC305CC3289AE731001ED651 /* CustomTextField.swift */; };
 		FC3A2B4128902DDE006E0948 /* CorrespondenceNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B4028902DDE006E0948 /* CorrespondenceNavigationView.swift */; };
 		FC3A2B43289032ED006E0948 /* MessageStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3A2B42289032ED006E0948 /* MessageStyleView.swift */; };
@@ -273,7 +272,6 @@
 		FC1778D628774BA300B0D979 /* ContactsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		FC1778E02877639800B0D979 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		FC1EA8FE287F3CE10027107E /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
-		FC1EA90128855CEF0027107E /* ChatRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRow.swift; sourceTree = "<group>"; usesTabs = 0; };
 		FC305CC3289AE731001ED651 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		FC3A2B4028902DDE006E0948 /* CorrespondenceNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrespondenceNavigationView.swift; sourceTree = "<group>"; };
 		FC3A2B42289032ED006E0948 /* MessageStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStyleView.swift; sourceTree = "<group>"; };
@@ -743,7 +741,6 @@
 			isa = PBXGroup;
 			children = (
 				FCF5A43628798EB70028FBD3 /* ChatView.swift */,
-				FC1EA90128855CEF0027107E /* ChatRow.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1074,7 +1071,6 @@
 				BDF2E2D2287F1B1200B7E182 /* AuthService.swift in Sources */,
 				BDF1F23128BE430C000D8499 /* NewChatConfirmViewModel.swift in Sources */,
 				BD785F4B28C2123D0075BC89 /* ContactEntity.swift in Sources */,
-				FC1EA90228855CEF0027107E /* ChatRow.swift in Sources */,
 				BDF2E2E2287F1CC400B7E182 /* ProfileService.swift in Sources */,
 				BDDB5ADF2872ECBC002BF418 /* MainView.swift in Sources */,
 				BDF2E2D6287F1B1200B7E182 /* UserEntity.swift in Sources */,

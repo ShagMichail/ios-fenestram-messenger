@@ -9,7 +9,11 @@ import SwiftUI
 
 struct SplashScreen: View {
     var body: some View {
-        LottieView(name: Constants.Animations.splashscreen)
+        ZStack {
+            Asset.background.swiftUIColor
+                .ignoresSafeArea()
+            LottieView(name: Constants.Animations.splashscreen, loopMode: .autoReverse)
+        }
     }
 }
 
