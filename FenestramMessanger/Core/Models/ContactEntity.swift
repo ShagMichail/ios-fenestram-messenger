@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ContactEntity: Codable, Identifiable {
+public struct ContactEntity: Codable, Identifiable, Hashable {
     public let id: Int
     public let phone: String
     public let name: String

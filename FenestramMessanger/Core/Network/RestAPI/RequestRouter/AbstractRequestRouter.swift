@@ -19,7 +19,7 @@ protocol AbstractRequestRouter: URLRequestConvertible {
 extension AbstractRequestRouter {
     
     var baseUrl: URL {
-        let url = Constants.baseNetworkURL
+        let url = Settings.isDebug ? Constants.devNetworkUrl : Constants.prodNetworkURL
         return URL.init(string: url)!
     }
     
@@ -29,7 +29,7 @@ extension AbstractRequestRouter {
     
     
     func getFullUrl(with query: [URLQueryItem]) -> URL {
-        var appUrl = Constants.baseNetworkURL
+        var appUrl = baseUrl.absoluteString
         appUrl.append(path)
         var components = URLComponents(string: appUrl)
         components?.queryItems = query

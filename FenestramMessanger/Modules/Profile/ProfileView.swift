@@ -139,6 +139,7 @@ struct ProfileView: View {
     
     private func getAvatar() -> some View {
         VStack {
+            let baseUrlString = Settings.isDebug ? Constants.devNetworkUrlClear : Constants.prodNetworkURLClear
             if let setImage = viewModel.image {
                 Image(uiImage: setImage)
                     .resizable()
@@ -146,7 +147,7 @@ struct ProfileView: View {
                     .frame(width: 120, height: 120)
                     .clipShape(Circle())
             } else if let avatarString = viewModel.profile?.avatar,
-                      let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                      let url = URL(string: baseUrlString + avatarString),
                       !avatarString.isEmpty {
                 KFImage(url)
                     .resizable()

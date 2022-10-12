@@ -7,6 +7,11 @@
 
 import SwiftUI
 import Kingfisher
+import BottomSheet
+
+enum ContactBottomSheetPosition: CGFloat, CaseIterable {
+    case bottom = 240, hidden = 0
+}
 
 struct PageContactView: View {
     
@@ -14,6 +19,10 @@ struct PageContactView: View {
     //MARK: - Properties
     
     @State var uiTabarController: UITabBarController?
+    @State var bottomSheetPosition: ContactBottomSheetPosition = .hidden
+    @State var correspondence = false
+    @State var chatUser: ChatEntity?
+    @State var selectedUser: UserEntity?
     
     @StateObject private var viewModel: ViewModel
     
@@ -25,6 +34,7 @@ struct PageContactView: View {
         _viewModel = StateObject(wrappedValue: ViewModel(contacts: contacts, chat: chat))
     }
    
+    fileprivate let baseUrlString = Settings.isDebug ? Constants.devNetworkUrlClear : Constants.prodNetworkURLClear
     
     //MARK: - Body
     
@@ -87,6 +97,10 @@ struct PageContactView: View {
                 }
             }
         }
+        .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: [.noDragIndicator, .allowContentDrag, .swipeToDismiss, .tapToDismiss, .absolutePositionValue, .background({ AnyView(Asset.buttonAlert.swiftUIColor) }), .cornerRadius(30)],
+                     headerContent: {
+            getHeaderBottomSheet()
+        }) { }
         .onBackSwipe {
             presentationMode.wrappedValue.dismiss()
         }
@@ -104,7 +118,7 @@ struct PageContactView: View {
     private func getPhoto() -> some View {
         VStack {
             if let avatarString = (viewModel.chat?.isGroup ?? false) ? viewModel.chat?.avatar : viewModel.contacts.first?.user?.avatar,
-               let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+               let url = URL(string: baseUrlString + avatarString),
                !avatarString.isEmpty {
                 KFImage(url)
                     .resizable()
@@ -206,7 +220,7 @@ struct PageContactView: View {
                 HStack {
                     VStack {
                         if let avatarString = participant.avatar,
-                           let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                           let url = URL(string: baseUrlString + avatarString),
                            !avatarString.isEmpty {
                             KFImage(url)
                                 .resizable()
@@ -214,20 +228,24 @@ struct PageContactView: View {
                                 .frame(width: 32, height: 32)
                                 .clipShape(Circle())
                                 .onTapGesture {
-                                    viewModel.selectedImageURL = url
-                                    viewModel.selectedImage = Asset.photo.swiftUIImage
+                                    viewModel.getChatWithUser(id: participant.id)
+                                    bottomSheetPosition = .bottom
+                                    chatUser = viewModel.selectedChat
+                                    selectedUser = participant
                                 }
                         } else {
                             Asset.photo.swiftUIImage
                                 .resizable()
                                 .frame(width: 32, height: 32)
                                 .onTapGesture {
-                                    viewModel.selectedImage = Asset.photo.swiftUIImage
+                                    viewModel.getChatWithUser(id: participant.id)
+                                    bottomSheetPosition = .bottom
+                                    chatUser = viewModel.selectedChat
+                                    selectedUser = participant
                                 }
                         }
                     }
                     .padding(.trailing, 8)
-                    
                     Text(viewModel.getName(to: participant))
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                         .foregroundColor(.white)
@@ -371,5 +389,79 @@ struct PageContactView: View {
             }
         }
         .padding(.bottom, 20)
+    }
+    
+    private func getHeaderBottomSheet() -> some View {
+        VStack {
+            HStack {
+                VStack {
+                    if let avatarString = selectedUser?.avatar,
+                       let url = URL(string: baseUrlString + avatarString),
+                       !avatarString.isEmpty {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 80.0, height: 80.0)
+                            .clipShape(Circle())
+                            .onTapGesture {
+                                viewModel.selectedImageURL = url
+                                viewModel.selectedImage = Asset.photo.swiftUIImage
+                            }
+                    } else {
+                        Asset.photo.swiftUIImage
+                            .resizable()
+                            .frame(width: 80.0, height: 80.0)
+                            .onTapGesture {
+                                viewModel.selectedImage = Asset.photo.swiftUIImage
+                            }
+                    }
+                }
+                .padding(.horizontal)
+                
+                VStack(alignment: .leading) {
+                    Text(viewModel.getName(to: selectedUser))
+                        .foregroundColor(.white)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
+                    Text(selectedUser?.nickname ?? "@")
+                        .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
+                }
+                Spacer()
+            }
+            Spacer().frame(height: 30.0)
+            HStack {
+                Button {
+                } label: {
+                    buttonsViewProperty(image: Asset.videoButton)
+                }
+                
+                Spacer().frame(width: 54.0)
+                
+                Button {
+                } label: {
+                    buttonsViewProperty(image: Asset.phoneButton)
+                }
+                Spacer().frame(width: 54.0)
+                
+                NavigationLink(isActive: $correspondence) {
+                    // TODO: - доделать переход в личный чат с одним из участников группы
+//                    if let selectedUser = selectedUser {
+//                        let contact = ContactEntity(id: selectedUser.id, phone: selectedUser.phoneNumber, name: selectedUser.name ?? selectedUser.phoneNumber, user: selectedUser)
+//                        let chat = viewModel.getChatWith(contact: contact)
+//
+//                        CorrespondenceView(contacts: [contact], chat: chat, socketManager: nil, showTabBar: )
+//                    }
+                } label:{
+                    Button {
+                        bottomSheetPosition = .hidden
+                        self.correspondence.toggle()
+                    } label: {
+                        buttonsViewProperty(image: Asset.messageButton)
+                    }
+                    
+                }
+                
+            }
+        }
     }
 }

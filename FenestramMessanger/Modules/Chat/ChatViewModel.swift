@@ -136,6 +136,19 @@ extension ChatView {
             return allContacts.first(where: { $0.id == contactId })
         }
         
+        func getContactAvatar(with chat: ChatEntity?) -> String {
+            if let chatAvatar = chat?.avatar, !chatAvatar.isEmpty {
+                return chatAvatar
+            } else {
+                guard let userId = Settings.currentUser?.id,
+                      let contactId = chat?.usersId.first(where: { $0 != userId }),
+                      !(chat?.isGroup ?? false) else { return "" }
+                let contact = allContacts.first(where: { $0.id == contactId })
+                let avatar = contact?.user?.avatar
+                return avatar ?? ""
+            }
+        }
+        
         func receiveMessage(_ message: MessageEntity) {
             guard let chatIndex = self.chatList.firstIndex(where: { $0.id == message.chatId }) else {
                 reset()

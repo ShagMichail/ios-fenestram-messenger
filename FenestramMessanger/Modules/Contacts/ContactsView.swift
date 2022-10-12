@@ -27,6 +27,8 @@ struct ContactsView: View {
     @State var bottomSheetPosition: BookBottomSheetPosition = .hidden
     @State var selectedContact: ContactEntity?
     
+    private let baseUrlString = Settings.isDebug ? Constants.devNetworkUrlClear : Constants.prodNetworkURLClear
+    
     init(socketManager: SocketIOManager?, showTabBar: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: ViewModel(socketManager: socketManager))
         _showTabBar = showTabBar
@@ -241,7 +243,7 @@ struct ContactsView: View {
             } label: {
                 VStack {
                     if let avatarURL = contact.user?.avatar,
-                       let url = URL(string: Constants.baseNetworkURLClear + avatarURL) {
+                       let url = URL(string: baseUrlString + avatarURL) {
                         KFImage(url)
                             .resizable()
                             .scaledToFill()
@@ -362,7 +364,7 @@ struct ContactsView: View {
             HStack {
                 VStack {
                     if let avatarString = selectedContact?.user?.avatar,
-                       let url = URL(string: Constants.baseNetworkURLClear + avatarString),
+                       let url = URL(string: baseUrlString + avatarString),
                        !avatarString.isEmpty {
                         KFImage(url)
                             .resizable()

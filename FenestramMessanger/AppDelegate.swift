@@ -16,6 +16,15 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
         configurePushNotifications(for: application)
+        
+        #if DEBUG
+        Settings.isDebug = true
+        print("HERE debug")
+        #else
+        print("HERE prod")
+        Settings.isDebug = false
+        #endif
+        
         return true
     }
     

@@ -85,7 +85,7 @@ extension MainTabView {
     
     @MainActor
     final class ViewModel: ObservableObject {
-        @Published var selectedTab: TabType = .contacts
+        @Published var selectedTab: TabType = .chats
         @Published var showTabBar: Bool = true
         
         private(set) var socketManager: SocketIOManager?

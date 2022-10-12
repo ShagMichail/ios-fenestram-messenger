@@ -14,7 +14,7 @@ struct MessageStyleView: View {
     let message: MessageEntity
     let onClickImage: (URL) -> ()
     @AppStorage ("isColorThema") var isColorThema: Bool?
-    
+    private let baseUrlString = Settings.isDebug ? Constants.devNetworkUrlClear : Constants.prodNetworkURLClear
     private var isCurrentUser: Bool {
         return Settings.currentUser?.id == message.fromUserId
     }
@@ -39,7 +39,7 @@ struct MessageStyleView: View {
                             Text(message.message)
                         }
                     case .image:
-                        if let url = URL(string: Constants.baseNetworkURLClear + message.message) {
+                        if let url = URL(string: baseUrlString + message.message) {
                             KFImage(url)
                                 .resizable()
                                 .scaledToFill()
@@ -78,7 +78,7 @@ struct MessageStyleView: View {
         } else if chat?.isGroup ?? false {
             return AnyView(HStack {
                 if let avatarString = message.fromUser?.avatar,
-                   let url = URL(string: Constants.baseNetworkURLClear + avatarString) {
+                   let url = URL(string: baseUrlString + avatarString) {
                     KFImage(url)
                         .resizable()
                         .scaledToFill()
@@ -111,7 +111,7 @@ struct MessageStyleView: View {
                                     Text(message.message)
                                 }
                             case .image:
-                                if let url = URL(string: Constants.baseNetworkURLClear + message.message) {
+                                if let url = URL(string: baseUrlString + message.message) {
                                     KFImage(url)
                                         .resizable()
                                         .scaledToFill()
@@ -157,7 +157,7 @@ struct MessageStyleView: View {
                             Text(message.message)
                         }
                     case .image:
-                        if let url = URL(string: Constants.baseNetworkURLClear + message.message) {
+                        if let url = URL(string: baseUrlString + message.message) {
                             KFImage(url)
                                 .resizable()
                                 .scaledToFill()

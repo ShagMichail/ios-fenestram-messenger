@@ -177,8 +177,9 @@ struct NewChatConfirmView: View {
             LazyVStack {
                 ForEach(viewModel.selectedContacts) { contact in
                     HStack {
+                        let baseUrlString = Settings.isDebug ? Constants.devNetworkUrlClear : Constants.prodNetworkURLClear
                         if let avatarString = contact.avatar,
-                           let url = URL(string: Constants.baseNetworkURLClear + avatarString) {
+                           let url = URL(string: baseUrlString + avatarString) {
                             KFImage(url)
                                 .resizable()
                                 .scaledToFill()
