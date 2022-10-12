@@ -86,4 +86,10 @@ final class SocketIOManager {
     func removeObserver(_ observer: SocketIOManagerObserver) {
         observers.removeAll(where: { $0.value === observer })
     }
+    
+    func logOut() {
+        manager.disconnect()
+        socket.disconnect()
+        observers.removeAll()
+    }
 }

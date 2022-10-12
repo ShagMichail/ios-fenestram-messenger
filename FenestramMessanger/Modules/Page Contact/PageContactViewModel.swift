@@ -41,6 +41,7 @@ extension PageContactView {
         @Published var recentPhotoSecond: [PhotoEntity] = []
         
         @Published var selectedImage: Image?
+        @Published var selectedChat: ChatEntity?
         
         var individualProfileChat: [ContactEntity: ChatEntity?] = [:]
         
@@ -66,8 +67,14 @@ extension PageContactView {
             return contacts.first(where: { $0.user?.id == user.id })
         }
         
-        func getName(to participant: UserEntity) -> String {
-            let name = getContact(user: participant)?.name ?? participant.name ?? L10n.General.unknown
+        func getName(to participant: UserEntity?) -> String {
+            guard let participant = participant else { return "" }
+            var name: String = ""
+            if let contact = participant.name, !contact.isEmpty {
+                name = contact
+            } else {
+                name = participant.phoneNumber
+            }
             
             if Settings.currentUser?.id == participant.id {
                 return name + L10n.PageContactView.you
@@ -81,19 +88,16 @@ extension PageContactView {
             return val
         }
         
-        fileprivate func getChatWithUser(id: Int) {
-            participants.forEach { user in
-                ChatService.getChat(chatId: user.id, completion: { [weak self] result in
-                    guard let self = self else { return }
-                    switch result {
-                    case .success(let chat):
-                        let contact = ContactEntity(id: user.id, phone: user.phoneNumber, name: user.name ?? user.phoneNumber, user: user)
-                        self.individualProfileChat.isEmpty ? (self.individualProfileChat = [contact: chat]) : (self.individualProfileChat[contact] = chat)
-                    case .failure(let error):
-                        print("get chat user failure with error:", error.localizedDescription)
-                    }
-                })
-            }
+        func getChatWithUser(id: Int) {
+            ChatService.getChat(chatId: id, completion: { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let chat):
+                    self.selectedChat = chat
+                case .failure(let error):
+                    print("get chat user failure with error:", error.localizedDescription)
+                }
+            })
             
         }
         //MARK: - Auxiliary functions

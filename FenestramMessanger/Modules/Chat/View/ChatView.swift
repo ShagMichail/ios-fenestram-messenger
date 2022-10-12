@@ -242,7 +242,7 @@ struct ChatView: View {
                 chatUser = chat
             } label: {
                 VStack {
-                    if let avatarString = chat.isGroup ? chat.avatar : viewModel.getContact(with: chat)?.user?.avatar,
+                    if let avatarString = chat.isGroup ? chat.avatar : viewModel.getContactAvatar(with: chat),
                        let url = URL(string: baseUrlString + avatarString),
                        !avatarString.isEmpty {
                         KFImage(url)
@@ -298,7 +298,7 @@ struct ChatView: View {
         VStack {
             HStack {
                 VStack {
-                    if let avatarString = (chatUser?.isGroup ?? false) ? chatUser?.avatar : viewModel.getContact(with: chatUser)?.user?.avatar,
+                    if let avatarString = (chatUser?.isGroup ?? false) ? chatUser?.avatar : viewModel.getContactAvatar(with: chatUser),
                        let url = URL(string: baseUrlString + avatarString),
                        !avatarString.isEmpty {
                         KFImage(url)
