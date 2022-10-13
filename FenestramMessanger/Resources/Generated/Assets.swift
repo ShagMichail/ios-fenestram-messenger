@@ -81,6 +81,7 @@ internal enum Asset {
   internal static let red = ColorAsset(name: "red")
   internal static let search = ImageAsset(name: "search")
   internal static let send = ImageAsset(name: "send")
+  internal static let sendMessageIc = ImageAsset(name: "send_message_ic")
   internal static let color = ImageAsset(name: "color")
   internal static let exit = ImageAsset(name: "exit")
   internal static let info = ImageAsset(name: "info")

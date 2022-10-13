@@ -24,6 +24,8 @@ struct CorrespondenceView: View {
     @State var bottomSheetPosition: CorrespondenceBottomSheetPosition = .hidden
     @State private var keyboardHeight: CGFloat = 0
     @State private var sourceType: UIImagePickerController.SourceType = .camera
+    @State private var isShowingSend = false
+    @State private var textEditorWidth: CGFloat = 35
     
     var message: String = ""
     
@@ -234,74 +236,99 @@ struct CorrespondenceView: View {
             .frame(width: UIScreen.screenWidth, alignment: .leading)
     }
     
-    private func getMessageTextEditor() -> some View {
-        ZStack(alignment: .bottom) {
-            HStack{
-                VStack {
-                    if #available(iOS 16.0, *) {
-                        TextEditor(text: $viewModel.textMessage)
-                            .placeholder(when: viewModel.textMessage.isEmpty) {
-                                Text(L10n.CorrespondenceView.textMessage).foregroundColor(Asset.text.swiftUIColor)
-                                    .padding(.leading, 5)
-                            }
-                            .scrollContentBackground(.hidden)
-                    } else {
-                        TextEditor(text: $viewModel.textMessage)
-                            .placeholder(when: viewModel.textMessage.isEmpty) {
-                                Text(L10n.CorrespondenceView.textMessage).foregroundColor(Asset.text.swiftUIColor)
-                                    .padding(.leading, 5)
-                            }
+    fileprivate func getTextEditor() -> some View {
+        return TextEditor(text: $viewModel.textMessage)
+            .padding(.leading, 40)
+            .foregroundColor(Asset.text.swiftUIColor)
+            .multilineTextAlignment(.leading)
+            .frame(minHeight: 40, maxHeight: 150, alignment: .center)
+            .fixedSize(horizontal: false, vertical: true)
+            .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+            .onChange(of: viewModel.textMessage) { newValue in
+                if !newValue.isEmpty {
+                    withAnimation {
+                        isShowingSend = true
+                        textEditorWidth = 80
+                    }
+                } else {
+                    withAnimation {
+                        isShowingSend = false
+                        textEditorWidth = 35
                     }
                 }
-                .frame(minHeight: 40, maxHeight: 150, alignment: .leading)
-                .foregroundColor(Asset.text.swiftUIColor)
-                .accentColor(Asset.text.swiftUIColor)
-                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                .background(RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(Asset.dark1.swiftUIColor)
-                    .frame(width: UIScreen.screenWidth - 24))
-                .padding(.leading , 50)
-                .padding(.trailing , 50)
-                .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(.horizontal)
-            .background(RoundedRectangle(cornerRadius: 10)
-                .foregroundColor(Asset.dark1.swiftUIColor)
-                .frame(width: UIScreen.screenWidth - 24, height: 55))
-            
-            HStack(alignment: .bottom){
-                Button {
-                    bottomSheetPosition = .bottom
-                } label: {
-                    Asset.severicons.swiftUIImage
-                        .resizable()
-                        .frame(width: 24.0, height: 24.0)
-                }.padding(.leading, 12.0)
-                    .padding(.bottom, -5)
+            .placeholder(when: viewModel.textMessage.isEmpty) {
+                Text(L10n.CorrespondenceView.textMessage)
+                    .foregroundColor(Asset.text.swiftUIColor)
+                    .padding(.leading, 45)
+            }
+    }
+    
+    private func getMessageTextEditor() -> some View {
+        ZStack {
+            ZStack(alignment: .bottom) {
                 
-                Spacer()
-                Button {
-                    if !viewModel.textMessage.isEmpty || !viewModel.allFoto.isEmpty {
-                        if viewModel.chat == nil {
-                            viewModel.createChat(chatName: viewModel.contacts[0].name, usersId: viewModel.getUserEntityIds(contactId: viewModel.contacts[0].id))
+                HStack {
+                    VStack(alignment: .leading) {
+                        if #available(iOS 16.0, *) {
+                            getTextEditor()
+                                .scrollContentBackground(.hidden)
                         } else {
-                            if !viewModel.textMessage.isEmpty {
-                                viewModel.postTextMessage()
-                            }
-                            viewModel.postImageMessage()
+                            getTextEditor()
                         }
                     }
-                } label: {
-                    Asset.send.swiftUIImage
-                        .resizable()
-                        .frame(width: 24.0, height: 24.0)
-                        .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
-                }.padding(.trailing, 12.0)
-                    .padding(.bottom, -5)
+                    .frame(minHeight: 40, maxHeight: 150, alignment: .center)
+                    .foregroundColor(Asset.text.swiftUIColor)
+                    .accentColor(Asset.text.swiftUIColor)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                    .background(RoundedRectangle(cornerRadius: 10)
+                        .foregroundColor(Asset.dark1.swiftUIColor)
+                        .frame(width: UIScreen.screenWidth - textEditorWidth), alignment: .leading)
+                    .padding(.leading , 15)
+                    .padding(.trailing , 50)
+                    .fixedSize(horizontal: false, vertical: true)
+                }
+                
+                HStack(alignment: .bottom){
+                    Button {
+                        bottomSheetPosition = .bottom
+                    } label: {
+                        Asset.severicons.swiftUIImage
+                            .resizable()
+                            .frame(width: 24.0, height: 24.0)
+                    }.padding(.leading, 12.0)
+                        .padding(.bottom, -5)
+                    
+                    Spacer()
+                    
+                    if isShowingSend {
+                        Button {
+                            if !viewModel.textMessage.isEmpty || !viewModel.allFoto.isEmpty {
+                                if viewModel.chat == nil {
+                                    viewModel.createChat(chatName: viewModel.contacts[0].name, usersId: viewModel.getUserEntityIds(contactId: viewModel.contacts[0].id))
+                                } else {
+                                    if !viewModel.textMessage.isEmpty {
+                                        viewModel.postTextMessage()
+                                    }
+                                    viewModel.postImageMessage()
+                                }
+                            }
+                        } label: {
+                            Asset.sendMessageIc.swiftUIImage
+                                .resizable()
+                                .frame(width: 28.0, height: 28.0)
+                                .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
+                        }
+                        .padding(.trailing, 12.0)
+                        .padding(.bottom, -5)
+                    }
+                   
+                }
+                .padding(.vertical, 12)
+                .padding(.horizontal)
             }
-            .padding(.vertical, 12)
-            .padding(.horizontal)
         }
+        
     }
     
     private func getBottomSheet() -> some View {
