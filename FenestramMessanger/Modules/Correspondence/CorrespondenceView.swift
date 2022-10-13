@@ -314,10 +314,9 @@ struct CorrespondenceView: View {
                                 }
                             }
                         } label: {
-                            Asset.sendMessageIc.swiftUIImage
+                            (isColorThema == false ? Asset.sendMessageIc.swiftUIImage : Asset.sendMessageGreen.swiftUIImage)
                                 .resizable()
                                 .frame(width: 28.0, height: 28.0)
-                                .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                         }
                         .padding(.trailing, 12.0)
                         .padding(.bottom, -5)
