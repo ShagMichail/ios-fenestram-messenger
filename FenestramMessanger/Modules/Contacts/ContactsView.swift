@@ -59,7 +59,7 @@ struct ContactsView: View {
                     } else {
                         if viewModel.isAccessContactDenied {
                             getAccessDeniedView()
-                        } else if viewModel.registerContacts.count != 0 {
+                        } else if viewModel.registerContacts.count != 0 || viewModel.unregisterContacts.count != 0 {
                             getSearchView()
                             
                             Spacer().frame(height: 20.0)
