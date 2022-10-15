@@ -54,13 +54,21 @@ struct CorrespondenceNavigationView: View {
         }
     }
     
+    private func getPersonalChatAvatar() -> String {
+        if let filtUser = chat?.users?.filter({ $0.id != Settings.currentUser?.id }), let filtContact = filtUser.first {
+            return filtContact.avatar ?? ""
+        } else {
+            return contacts.first?.user?.avatar ?? ""
+        }
+    }
+    
     private func getTitleView() -> some View {
         NavigationLink {
             PageContactView(contacts: contacts, chat: chat).navigationBarHidden(true)
         } label: {
             HStack {
                 let baseUrlString = Settings.isDebug ? Constants.devNetworkUrlClear : Constants.prodNetworkURLClear
-                if let avatarString = (chat?.isGroup ?? false) ? chat?.avatar : contacts.first?.user?.avatar,
+                if let avatarString = (chat?.isGroup ?? false) ? chat?.avatar : getPersonalChatAvatar(),
                    let url = URL(string: baseUrlString + avatarString),
                    !avatarString.isEmpty {
                     KFImage(url)
@@ -80,7 +88,7 @@ struct CorrespondenceNavigationView: View {
                         .foregroundColor(Color.white)
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                     
-                    Text("В сети")
+                    Text((chat?.isGroup ?? false) ? "" : "В сети")
                         .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
                 }

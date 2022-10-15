@@ -117,7 +117,7 @@ struct PageContactView: View {
     
     private func getPhoto() -> some View {
         VStack {
-            if let avatarString = (viewModel.chat?.isGroup ?? false) ? viewModel.chat?.avatar : viewModel.contacts.first?.user?.avatar,
+            if let avatarString = (viewModel.chat?.isGroup ?? false) ? viewModel.chat?.avatar : viewModel.getPersonalChatAvatar(),
                let url = URL(string: baseUrlString + avatarString),
                !avatarString.isEmpty {
                 KFImage(url)
@@ -156,7 +156,7 @@ struct PageContactView: View {
                         .font(FontFamily.Poppins.medium.swiftUIFont(size: 14))
                         .foregroundColor(Asset.grey2.swiftUIColor)
                 } else {
-                    Text("@\(viewModel.contacts.first?.user?.nickname ?? " ")")
+                    Text("@\(viewModel.getContactNick())")
                         .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 18))
                 }

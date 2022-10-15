@@ -67,9 +67,7 @@ struct CorrespondenceView: View {
                         LoadingView()
                     } else {
                         viewModel.messagesWithTime.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
-                        
-                        Spacer()
-                        
+                                                
                         if viewModel.allFoto.count != 0 {
                             getPhotoMessage()
                         }
@@ -140,25 +138,10 @@ struct CorrespondenceView: View {
     private func getMessage() -> some View {
         ScrollViewReader { proxy in
             ScrollView() {
-                LazyVStack {
-                    if viewModel.isLoading && viewModel.page > 1 {
-                        HStack {
-                            Spacer()
-                            
-                            ProgressView()
-                            
-                            Spacer()
-                        }
-                        .id(-2)
-                    }
-                    
-                    ForEach(viewModel.messagesWithTime.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
-                        Text(viewModel.getSectionHeader(with: key))
-                            .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 12))
-                            .foregroundColor(Asset.grey1.swiftUIColor)
-                            .padding()
+                LazyVStack(spacing: 15) {
+                    ForEach(viewModel.messagesWithTime.sorted(by: { $0.key > $1.key }), id: \.key) { key, value in
                         
-                        ForEach(value, id: \.id) { message in
+                        ForEach(value.sorted(by: { $0.id > $1.id }), id: \.id) { message in
                             HStack(alignment: .bottom, spacing: 15) {
                                 MessageStyleView(chat: viewModel.chat,
                                                  contacts: viewModel.contacts,
@@ -168,30 +151,42 @@ struct CorrespondenceView: View {
                                     viewModel.selectedImage = Asset.photo.swiftUIImage
                                 })
                             }
+                            .rotationEffect(.radians(.pi))
                             .id(message.id)
                             .padding(.all, 15)
                             .onAppear {
                                 viewModel.loadMoreContent(currentItem: message)
                             }
+                            
+                            if value.first == message {
+                                Text(viewModel.getSectionHeader(with: key))
+                                    .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 12))
+                                    .foregroundColor(Asset.grey1.swiftUIColor)
+                                    .padding()
+                                    .rotationEffect(.radians(.pi))
+                            }
+                            
                         }
+                        
                     }
                 }
             }
+            .rotationEffect(.radians(.pi))
             .onChange(of: viewModel.messagesWithTime, perform: { newValue in
                 guard let key = newValue.keys.max(),
                       let lastMessageId = newValue[key]?.last?.id else { return }
-                
+
                 if lastMessageId != viewModel.lastMessageId {
                     viewModel.lastMessageId = lastMessageId
-                    proxy.scrollTo(lastMessageId, anchor: .bottom)
+                    proxy.scrollTo(lastMessageId)
                 } else if let currentMessageId = viewModel.currentMessageId {
-                    proxy.scrollTo(currentMessageId, anchor: .top)
+                    proxy.scrollTo(currentMessageId)
                 }
             })
             .onAppear {
                 guard let key = viewModel.messagesWithTime.keys.max(),
                       let lastMessage = viewModel.messagesWithTime[key]?.last else { return }
-                
+
                 proxy.scrollTo(lastMessage.id)
             }
         }
@@ -297,7 +292,7 @@ struct CorrespondenceView: View {
                             .resizable()
                             .frame(width: 24.0, height: 24.0)
                     }.padding(.leading, 12.0)
-                        .padding(.bottom, -5)
+                        .padding(.bottom, -4)
                     
                     Spacer()
                     
