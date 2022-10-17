@@ -19,8 +19,6 @@ struct ContactsView: View {
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @Environment(\.scenePhase) var scenePhase
     
-    //@Binding var showTabBar: Bool
-    
     @StateObject private var viewModel: ViewModel
     
     @State var correspondence = false
@@ -31,7 +29,6 @@ struct ContactsView: View {
     
     init(socketManager: SocketIOManager?) {
         _viewModel = StateObject(wrappedValue: ViewModel(socketManager: socketManager))
-        //_showTabBar = showTabBar
     }
     
     var border: some View {

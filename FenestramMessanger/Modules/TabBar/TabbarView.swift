@@ -54,7 +54,6 @@ struct TabbarView: View {
     
     @MainActor
     final class ViewModel: ObservableObject {
-        @Published var showTabBar: Bool = true
         
         private(set) var socketManager: SocketIOManager?
         
