@@ -62,12 +62,6 @@ struct SettingsView: View {
                 getDeleteAccountAlertView()
             }
         }
-        .introspectTabBarController { (UITabBarController) in
-            UITabBarController.tabBar.isHidden = true
-            uiTabarController = UITabBarController
-        }.onDisappear{
-            uiTabarController?.tabBar.isHidden = false
-        }
         .navigationBarHidden(true)
     }
     

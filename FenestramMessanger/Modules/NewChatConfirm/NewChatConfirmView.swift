@@ -19,14 +19,11 @@ struct NewChatConfirmView: View {
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
-    @Binding var showTabBar: Bool
-    
     let onNeedUpdateChatList: () -> ()
     
-    init(selectedContacts: [UserEntity], showTabBar: Binding<Bool>, isPopToChatListView: Binding<Bool>, onNeedUpdateChatList: @escaping () -> ()) {
+    init(selectedContacts: [UserEntity], isPopToChatListView: Binding<Bool>, onNeedUpdateChatList: @escaping () -> ()) {
         _viewModel = StateObject(wrappedValue: ViewModel(selectedContacts: selectedContacts))
         _isPopToChatListView = isPopToChatListView
-        _showTabBar = showTabBar
         self.onNeedUpdateChatList = onNeedUpdateChatList
     }
     
@@ -55,7 +52,6 @@ struct NewChatConfirmView: View {
                         Button {
                             viewModel.createChat(success: {
                                 onNeedUpdateChatList()
-                                self.showTabBar = true
                                 self.isPopToChatListView = false
                             })
                         } label: {
@@ -208,6 +204,6 @@ struct NewChatConfirmView: View {
 
 struct NewChatConfirmView_Previews: PreviewProvider {
     static var previews: some View {
-        NewChatConfirmView(selectedContacts: [], showTabBar: .constant(false), isPopToChatListView: .constant(true), onNeedUpdateChatList: {})
+        NewChatConfirmView(selectedContacts: [], isPopToChatListView: .constant(true), onNeedUpdateChatList: {})
     }
 }
