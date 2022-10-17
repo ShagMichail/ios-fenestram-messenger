@@ -19,7 +19,7 @@ struct ContactsView: View {
     @AppStorage ("isColorThema") var isColorThema: Bool?
     @Environment(\.scenePhase) var scenePhase
     
-    @Binding var showTabBar: Bool
+    //@Binding var showTabBar: Bool
     
     @StateObject private var viewModel: ViewModel
     
@@ -29,9 +29,9 @@ struct ContactsView: View {
     
     private let baseUrlString = Settings.isDebug ? Constants.devNetworkUrlClear : Constants.prodNetworkURLClear
     
-    init(socketManager: SocketIOManager?, showTabBar: Binding<Bool>) {
+    init(socketManager: SocketIOManager?) {
         _viewModel = StateObject(wrappedValue: ViewModel(socketManager: socketManager))
-        _showTabBar = showTabBar
+        //_showTabBar = showTabBar
     }
     
     var border: some View {
@@ -291,7 +291,7 @@ struct ContactsView: View {
         
         if isRegister {
             return AnyView(NavigationLink {
-                CorrespondenceView(contacts: [contact], chat: nil, socketManager: viewModel.socketManager, showTabBar: $showTabBar).navigationBarHidden(true)
+                CorrespondenceView(contacts: [contact], chat: nil, socketManager: viewModel.socketManager).navigationBarHidden(true)
             } label: {
                 contentView
             })
@@ -417,7 +417,7 @@ struct ContactsView: View {
                 Spacer().frame(width: 54.0)
                 
                 NavigationLink(isActive: $correspondence) {
-                    CorrespondenceView(contacts: selectedContact != nil ? [selectedContact!] : [], chat: nil, socketManager: viewModel.socketManager, showTabBar: $showTabBar)
+                    CorrespondenceView(contacts: selectedContact != nil ? [selectedContact!] : [], chat: nil, socketManager: viewModel.socketManager)
                 } label:{
                     Button {
                         bottomSheetPosition = .hidden
@@ -507,7 +507,7 @@ struct ContactsView: View {
 
 struct ContactsView_Previews: PreviewProvider {
     static var previews: some View {
-        ContactsView(socketManager: nil, showTabBar: .constant(true))
+        ContactsView(socketManager: nil)
     }
 }
 

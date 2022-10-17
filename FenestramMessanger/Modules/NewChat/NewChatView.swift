@@ -16,14 +16,11 @@ struct NewChatView: View {
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
-    @Binding var showTabBar: Bool
-    
     let onNeedUpdateChatList: () -> ()
     
-    init(isPopToChatListView: Binding<Bool>, showTabBar: Binding<Bool>, onNeedUpdateChatList: @escaping () -> ()) {
+    init(isPopToChatListView: Binding<Bool>, onNeedUpdateChatList: @escaping () -> ()) {
         _viewModel = StateObject(wrappedValue: ViewModel())
         _isPopToChatListView = isPopToChatListView
-        _showTabBar = showTabBar
         self.onNeedUpdateChatList = onNeedUpdateChatList
     }
     
@@ -59,7 +56,7 @@ struct NewChatView: View {
                         Spacer()
                         
                         NavigationLink {
-                            NewChatConfirmView(selectedContacts: viewModel.getSelectedContacts(), showTabBar: $showTabBar, isPopToChatListView: $isPopToChatListView, onNeedUpdateChatList: onNeedUpdateChatList)
+                            NewChatConfirmView(selectedContacts: viewModel.getSelectedContacts(), isPopToChatListView: $isPopToChatListView, onNeedUpdateChatList: onNeedUpdateChatList)
                         } label: {
                             if isColorThema == false {
                                 Asset.nextButtonBlueIcon.swiftUIImage
@@ -72,13 +69,6 @@ struct NewChatView: View {
                 .padding()
             }
         }
-        .onAppear {
-            showTabBar = false
-        }
-        .onBackSwipe {
-            showTabBar = true
-            presentationMode.wrappedValue.dismiss()
-        }
         .navigationBarHidden(true)
     }
     
@@ -88,7 +78,6 @@ struct NewChatView: View {
             
             HStack {
                 Button {
-                    showTabBar = true
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     HStack {
@@ -166,6 +155,6 @@ struct NewChatView: View {
 
 struct NewChatView_Previews: PreviewProvider {
     static var previews: some View {
-        NewChatView(isPopToChatListView: .constant(true), showTabBar: .constant(false), onNeedUpdateChatList: {})
+        NewChatView(isPopToChatListView: .constant(true), onNeedUpdateChatList: {})
     }
 }

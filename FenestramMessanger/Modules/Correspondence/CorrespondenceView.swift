@@ -33,8 +33,6 @@ struct CorrespondenceView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    @Binding var showTabBar: Bool
-    
     @StateObject private var viewModel: ViewModel
     
     private let bottomSheetOptions: [BottomSheet.Options] = [.noDragIndicator,
@@ -44,9 +42,8 @@ struct CorrespondenceView: View {
                                                              .background({ AnyView(Asset.dark1.swiftUIColor) }),
                                                              .cornerRadius(30)]
     
-    init(contacts: [ContactEntity], chat: ChatEntity?, socketManager: SocketIOManager?, showTabBar: Binding<Bool>) {
+    init(contacts: [ContactEntity], chat: ChatEntity?, socketManager: SocketIOManager?) {
         _viewModel = StateObject(wrappedValue: ViewModel(chat: chat, contacts: contacts, socketManager: socketManager))
-        _showTabBar = showTabBar
         UITextView.appearance().backgroundColor = .clear
     }
     
@@ -61,13 +58,15 @@ struct CorrespondenceView: View {
             
             VStack {
                 VStack {
-                    CorrespondenceNavigationView(contacts: viewModel.contacts, chat: viewModel.chat, showTabBar: $showTabBar)
+                    CorrespondenceNavigationView(contacts: viewModel.contacts, chat: viewModel.chat)
                     
                     if viewModel.isLoading && viewModel.page == 1 {
                         LoadingView()
                     } else {
                         viewModel.messagesWithTime.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
-                                                
+                                   
+                        Spacer()
+                        
                         if viewModel.allFoto.count != 0 {
                             getPhotoMessage()
                         }
@@ -109,15 +108,9 @@ struct CorrespondenceView: View {
             ImagePicker(image: $viewModel.chatImage,
                         isShown: $viewModel.showImagePicker,
                         sourceType: self.sourceType)}
-        .navigationBarHidden(true)
-        .onBackSwipe(perform: {
-            showTabBar = true
-            presentationMode.wrappedValue.dismiss()
-        }, isEnabled: !viewModel.isLoading)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
         .onTapGesture { UIApplication.shared.endEditing() }
-        .onAppear {
-            showTabBar = false
-        }
         /// Bottom sheet for attachment
         .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: bottomSheetOptions,
                      headerContent: { getBottomSheet()}, mainContent: {})
