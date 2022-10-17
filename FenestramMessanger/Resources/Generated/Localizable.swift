@@ -328,6 +328,8 @@ internal enum L10n {
     internal static let info = L10n.tr("Localizable", "settings_view.info")
     /// Настройки
     internal static let title = L10n.tr("Localizable", "settings_view.title")
+    /// Версия
+    internal static let version = L10n.tr("Localizable", "settings_view.version")
     internal enum DeleteAccountAlert {
       /// В случае удаления все ваши данные будут удалены навсегда!
       internal static let message = L10n.tr("Localizable", "settings_view.delete_account_alert.message")

@@ -67,6 +67,7 @@
 "settings_view.delete_account" = "Delete account";
 "settings_view.delete_account_alert.title" = "Are you sure you want to delete your account?";
 "settings_view.delete_account_alert.message" = "If deleted, all your data will be permanently deleted!";
+"settings_view.version" = "Version";
 
 // MARK: - ProfileView
 "profile_view.select_photo.title" = "Select Photo";

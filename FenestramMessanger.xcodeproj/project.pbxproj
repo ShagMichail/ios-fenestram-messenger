@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5752DAFF28FCB0DC00EC3AD4 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752DAFE28FCB0DC00EC3AD4 /* UINavigationController+Extensions.swift */; };
 		5752DB0128FCB26800EC3AD4 /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752DB0028FCB26800EC3AD4 /* TabbarView.swift */; };
+		5752DB0428FD7EEA00EC3AD4 /* VersionAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752DB0328FD7EEA00EC3AD4 /* VersionAppView.swift */; };
+		5752DB0728FD8D4700EC3AD4 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752DB0628FD8D4700EC3AD4 /* Bundle+Extension.swift */; };
 		57B6A98428A42D7C0051429F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57B6A98328A42D7C0051429F /* GoogleService-Info.plist */; };
 		6D3B8991ABEEC255BD8A2A57 /* Pods_FenestramMessanger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F33D57429665AA5A47D624DD /* Pods_FenestramMessanger.framework */; };
 		BD081B0128E312D300E3B48D /* splashscreen_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = BD081B0028E312D300E3B48D /* splashscreen_animation.json */; };
@@ -156,6 +158,8 @@
 		1734F72B5ABD583B612C09E0 /* Pods-FenestramMessanger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FenestramMessanger.debug.xcconfig"; path = "Target Support Files/Pods-FenestramMessanger/Pods-FenestramMessanger.debug.xcconfig"; sourceTree = "<group>"; };
 		5752DAFE28FCB0DC00EC3AD4 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		5752DB0028FCB26800EC3AD4 /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
+		5752DB0328FD7EEA00EC3AD4 /* VersionAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionAppView.swift; sourceTree = "<group>"; };
+		5752DB0628FD8D4700EC3AD4 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		57B6A98328A42D7C0051429F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BD081B0028E312D300E3B48D /* splashscreen_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splashscreen_animation.json; sourceTree = "<group>"; };
 		BD081B0728E3167800E3B48D /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
@@ -646,6 +650,7 @@
 				BD980FB6288170B20050F8B4 /* Publishers+Extensions.swift */,
 				BD980FB8288170CC0050F8B4 /* Notification+Extensions.swift */,
 				5752DAFE28FCB0DC00EC3AD4 /* UINavigationController+Extensions.swift */,
+				5752DB0628FD8D4700EC3AD4 /* Bundle+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -777,6 +782,7 @@
 			children = (
 				FC600B2428788E7F001CA2BD /* SettingsView.swift */,
 				FC600B2628788E87001CA2BD /* SettingsViewModel.swift */,
+				5752DB0328FD7EEA00EC3AD4 /* VersionAppView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1049,6 +1055,8 @@
 				FCEE88262874400700268971 /* CodeView.swift in Sources */,
 				BDDB5AE12872ECE2002BF418 /* MainViewModel.swift in Sources */,
 				BDE74BC4288030DE00F4A775 /* Fonts.swift in Sources */,
+				5752DB0728FD8D4700EC3AD4 /* Bundle+Extension.swift in Sources */,
+				5752DB0428FD7EEA00EC3AD4 /* VersionAppView.swift in Sources */,
 				FC7A57152891AE3A00ABF7BF /* ImagesView.swift in Sources */,
 				BDF1F22F28BE42FA000D8499 /* NewChatConfirmView.swift in Sources */,
 				FC600B2528788E7F001CA2BD /* SettingsView.swift in Sources */,

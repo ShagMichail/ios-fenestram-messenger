@@ -67,6 +67,7 @@
 "settings_view.delete_account" = "Удалить аккаунт";
 "settings_view.delete_account_alert.title" = "Вы уверены, что хотите удалить аккаунт?";
 "settings_view.delete_account_alert.message" = "В случае удаления все ваши данные будут удалены навсегда!";
+"settings_view.version" = "Версия";
 
 // MARK: - ProfileView
 "profile_view.select_photo.title" = "Выбрать фотографию";
