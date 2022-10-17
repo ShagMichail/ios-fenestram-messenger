@@ -83,9 +83,22 @@ extension PageContactView {
             }
          }
         
+        func getContactNick() -> String {
+            let user = chat?.users?.filter { $0.id != Settings.currentUser?.id }
+            return user?.first?.nickname ?? ""
+        }
+        
         func getChatWith(contact: ContactEntity) -> ChatEntity? {
             guard let val = individualProfileChat[contact] else { return nil }
             return val
+        }
+        
+        func getPersonalChatAvatar() -> String {
+            if let filtUser = chat?.users?.filter({ $0.id != Settings.currentUser?.id }), let filtContact = filtUser.first {
+                return filtContact.avatar ?? ""
+            } else {
+                return contacts.first?.user?.avatar ?? ""
+            }
         }
         
         func getChatWithUser(id: Int) {
@@ -100,6 +113,7 @@ extension PageContactView {
             })
             
         }
+        
         //MARK: - Auxiliary functions
         
         private func fillterFile() {
