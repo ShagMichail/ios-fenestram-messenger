@@ -382,7 +382,10 @@ extension CorrespondenceView {
                   let messageChatId = message.chatId,
                   chatId == messageChatId else { return }
             
-            allMessages.append(message)
+            if !allMessages.contains(where: { $0 == message }) {
+                allMessages.append(message)
+            }
+            
             processingData()
         }
         
