@@ -86,6 +86,17 @@ public class ChatService {
         }
     }
     
+    public static func deleteMessage(chatId: Int, messagesId: [Int], fromAll: Bool, completion: @escaping (Result<Bool, Error>) -> Void) {
+        let parameters: [String: Any] = [
+            "fromAll": fromAll,
+            "messages": messagesId
+        ]
+        
+        sendRequest(requestOptions: .deleteMessage(chatId: chatId, parameters: parameters)) { result in
+            completion(result)
+        }
+    }
+    
     public static func getMessages(chatId: Int, page: Int, limit: Int, completion: @escaping (Result<BaseResponseEntity<[MessageEntity]>, Error>) -> Void) {
         let queryParameters: [URLQueryItem] = [
             .init(name: "limit", value: limit.description),
