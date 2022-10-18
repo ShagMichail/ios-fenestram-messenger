@@ -41,10 +41,9 @@ struct SettingsView: View {
                 
                 getColorThemaSettings()
                 
-                // TODO: Ждем реализации дизайна экрана
-//                Spacer().frame(height: 40)
-//
-//                getInfoSettings()
+                Spacer().frame(height: 40)
+
+                getInfoSettings()
                 
                 Spacer().frame(height: 40)
                 
@@ -61,12 +60,6 @@ struct SettingsView: View {
             if viewModel.showDeleteAccountAlert {
                 getDeleteAccountAlertView()
             }
-        }
-        .introspectTabBarController { (UITabBarController) in
-            UITabBarController.tabBar.isHidden = true
-            uiTabarController = UITabBarController
-        }.onDisappear{
-            uiTabarController?.tabBar.isHidden = false
         }
         .navigationBarHidden(true)
     }
@@ -160,15 +153,17 @@ struct SettingsView: View {
     }
     
     private func getInfoSettings() -> some View {
-        HStack{
-            Asset.info.swiftUIImage
-                .resizable()
-                .frame(width: 22.0, height: 22.0)
-                .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
-            Text(L10n.SettingsView.info)
-                .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
-                .foregroundColor(Color.white)
-                .padding(.leading)
+        NavigationLink(destination: VersionAppView()) {
+            HStack{
+                Asset.info.swiftUIImage
+                    .resizable()
+                    .frame(width: 22.0, height: 22.0)
+                    .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
+                Text(L10n.SettingsView.info)
+                    .font(FontFamily.Poppins.bold.swiftUIFont(size: 16))
+                    .foregroundColor(Color.white)
+                    .padding(.leading)
+            }
         }
     }
     

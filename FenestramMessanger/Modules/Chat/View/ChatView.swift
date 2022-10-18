@@ -27,15 +27,15 @@ struct ChatView: View {
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
-    @Binding var showTabBar: Bool
-    
     @StateObject private var viewModel: ViewModel
     
     private let baseUrlString = Settings.isDebug ? Constants.devNetworkUrlClear : Constants.prodNetworkURLClear
     
-    init(socketManager: SocketIOManager?, showTabBar: Binding<Bool>) {
+    init(socketManager: SocketIOManager?) {
         _viewModel = StateObject(wrappedValue: ViewModel(socketManager: socketManager))
-        _showTabBar = showTabBar
+        let navBarAppearance = UINavigationBar.appearance()
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
     
     var border: some View {
@@ -50,70 +50,70 @@ struct ChatView: View {
     //MARK: - Body
     
     var body: some View {
-        NavigationView {
-            GeometryReader { geometry in
-                ZStack {
-                    Asset.background.swiftUIColor
-                        .ignoresSafeArea()
-                    
-                    NavigationLink(isActive: $viewModel.isShowNewChatView) {
-                        NewChatView(isPopToChatListView: $viewModel.isShowNewChatView, showTabBar: $showTabBar, onNeedUpdateChatList: {
-                            viewModel.reset()
-                        })
-                    } label: {
-                        EmptyView()
-                    }
+        GeometryReader { geometry in
+            ZStack {
+                Asset.background.swiftUIColor
+                    .ignoresSafeArea()
+                
+                NavigationLink(isActive: $viewModel.isShowNewChatView) {
+                    NewChatView(isPopToChatListView: $viewModel.isShowNewChatView, onNeedUpdateChatList: {
+                        viewModel.reset()
+                    })
+                } label: {
+                    EmptyView()
+                }
 
 
-                    VStack {
-                        getHeader()
-                        
-                        if !viewModel.chatList.isEmpty || !viewModel.searchText.isEmpty {
-                            getSearchView()
-                        }
-                        
-                        if viewModel.isLoading && viewModel.page == 1 {
-                            LoadingView()
-                        } else {
-                            viewModel.chatList.isEmpty ? AnyView(getEmptyView()) : AnyView(getList())
-                        }
+                VStack {
+                    
+                    getHeader()
+                    
+                    if !viewModel.chatList.isEmpty || !viewModel.searchText.isEmpty {
+                        getSearchView()
                     }
                     
-                    if let selectedImage = viewModel.selectedImage {
-                        ZStack {
-                            Color.black
-                                .opacity(0.3)
-                                .ignoresSafeArea()
-                                .onTapGesture {
-                                    self.viewModel.selectedImage = nil
-                                    self.viewModel.selectedImageURL = nil
-                                }
-                            
-                            if let url = viewModel.selectedImageURL {
-                                KFImage(url)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 200, height: 200)
-                                    .cornerRadius(20)
-                            } else {
-                                selectedImage
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 200, height: 200)
-                                    .cornerRadius(20)
+                    if viewModel.isLoading && viewModel.page == 1 {
+                        LoadingView()
+                    } else {
+                        viewModel.chatList.isEmpty ? AnyView(getEmptyView()) : AnyView(getList())
+                    }
+                }
+                
+                if let selectedImage = viewModel.selectedImage {
+                    ZStack {
+                        Color.black
+                            .opacity(0.3)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                self.viewModel.selectedImage = nil
+                                self.viewModel.selectedImageURL = nil
                             }
+                        
+                        if let url = viewModel.selectedImageURL {
+                            KFImage(url)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 200, height: 200)
+                                .cornerRadius(20)
+                        } else {
+                            selectedImage
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 200, height: 200)
+                                .cornerRadius(20)
                         }
                     }
-                    
-                    if viewModel.presentAlert {
-                        AlertView(show: $viewModel.presentAlert, text: viewModel.textAlert)
-                    }
                 }
-                .onTapGesture {
-                    UIApplication.shared.endEditing()
+                
+                if viewModel.presentAlert {
+                    AlertView(show: $viewModel.presentAlert, text: viewModel.textAlert)
                 }
-                .navigationBarHidden(true)
             }
+            .onTapGesture {
+                UIApplication.shared.endEditing()
+            }
+            .navigationTitle("hoolichat")
+            .foregroundColor(.white)
         }
     }
     
@@ -260,7 +260,7 @@ struct ChatView: View {
             }
             
             NavigationLink {
-                CorrespondenceView(contacts: viewModel.getContactsEntity(from: chat), chat: chat, socketManager: viewModel.socketManager, showTabBar: $showTabBar)
+                CorrespondenceView(contacts: viewModel.getContactsEntity(from: chat), chat: chat, socketManager: viewModel.socketManager)
                 
             } label: {
                 VStack(alignment: .leading) {
@@ -347,7 +347,7 @@ struct ChatView: View {
                 Spacer().frame(width: 54.0)
                 
                 NavigationLink(isActive: $correspondence) {
-                    CorrespondenceView(contacts: viewModel.getContactsEntity(from: chatUser), chat: chatUser, socketManager: viewModel.socketManager, showTabBar: $showTabBar)
+                    CorrespondenceView(contacts: viewModel.getContactsEntity(from: chatUser), chat: chatUser, socketManager: viewModel.socketManager)
                 } label:{
                     Button {
                         bottomSheetPosition = .hidden
@@ -474,6 +474,6 @@ struct ChatView: View {
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView(socketManager: nil, showTabBar: .constant(true))
+        ChatView(socketManager: nil)
     }
 }

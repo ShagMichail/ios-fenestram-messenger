@@ -67,6 +67,7 @@
 "settings_view.delete_account" = "Удалить аккаунт";
 "settings_view.delete_account_alert.title" = "Вы уверены, что хотите удалить аккаунт?";
 "settings_view.delete_account_alert.message" = "В случае удаления все ваши данные будут удалены навсегда!";
+"settings_view.version" = "Версия";
 
 // MARK: - ProfileView
 "profile_view.select_photo.title" = "Выбрать фотографию";
@@ -120,6 +121,11 @@
 "correspondence_view.toast.upload_image.error" = "Не удалось отправить изображения";
 "correspondence_view.toast.upload_image.progress" = "Идет отправка изображений...";
 "correspondence_view.message_view.failed_get_image" = "--не удалось получить изображение--";
+"correspondence_view.delete_for_everyone" = "Удалить у всех";
+"correspondence_view.delete_for_me" = "Удалить только у меня";
+"correspondence_view.alert_delete_message" = "Вы уверены, что хотите удалить сообщение?";
+"correspondence_view.copy" = "Скопировать";
+"correspondence_view.error_delete_message" = "Ошибка удаления сообщения";
 
 // MARK: - NewChatView
 "new_chat_view.title" = "Создание чата";

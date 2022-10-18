@@ -42,7 +42,7 @@ struct MainView: View {
                 
                 if viewModel.isSignIn {
                     if (isAlreadySetProfile ?? false) || !(Settings.currentUser?.isInfoEmpty ?? true) {
-                        MainTabView(socketManager: viewModel.socketManager)
+                        TabbarView(socketManager: viewModel.socketManager)
                             .navigationBarHidden(true)
                     } else {
                         AccountView()

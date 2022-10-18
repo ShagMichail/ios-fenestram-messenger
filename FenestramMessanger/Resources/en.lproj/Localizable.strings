@@ -67,6 +67,7 @@
 "settings_view.delete_account" = "Delete account";
 "settings_view.delete_account_alert.title" = "Are you sure you want to delete your account?";
 "settings_view.delete_account_alert.message" = "If deleted, all your data will be permanently deleted!";
+"settings_view.version" = "Version";
 
 // MARK: - ProfileView
 "profile_view.select_photo.title" = "Select Photo";
@@ -120,6 +121,11 @@
 "correspondence_view.toast.upload_image.error" = "Failed upload images";
 "correspondence_view.toast.upload_image.progress" = "Uploading images...";
 "correspondence_view.message_view.failed_get_image" = "--failed to get image--";
+"correspondence_view.delete_for_everyone" = "Delete for everyone";
+"correspondence_view.delete_for_me" = "Delete for me";
+"correspondence_view.alert_delete_message" = "Are you sure you want to delete the message?";
+"correspondence_view.copy" = "Copy";
+"correspondence_view.error_delete_message" = "Error deleting message";
 
 // MARK: - NewChatView
 "new_chat_view.title" = "New chat";

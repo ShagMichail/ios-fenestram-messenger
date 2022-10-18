@@ -19,10 +19,11 @@ final class SocketIOManager {
     private(set) var socket: SocketIOClient
     
     private var observers: [Weak<SocketIOManagerObserver>] = []
+    fileprivate let baseUrlString = Settings.isDebug ? Constants.devSocketUrl : Constants.prodSocketURL
     
     init(accessToken: String) {
         print("access token: ", accessToken)
-        self.manager = SocketManager(socketURL: URL(string: Constants.socketURL)!, config: [
+        self.manager = SocketManager(socketURL: URL(string: baseUrlString)!, config: [
             .log(true),
             .extraHeaders(["Authorization": "Bearer \(accessToken)"])
         ])
@@ -37,7 +38,7 @@ final class SocketIOManager {
     
     func changeAccessToken(accessToken: String) {
         print("access token: ", accessToken)
-        self.manager = SocketManager(socketURL: URL(string: Constants.socketURL)!, config: [
+        self.manager = SocketManager(socketURL: URL(string: baseUrlString)!, config: [
             .log(true),
             .extraHeaders(["Authorization": "Bearer \(accessToken)"])
         ])

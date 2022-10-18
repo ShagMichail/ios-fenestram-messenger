@@ -12,26 +12,23 @@ import Network
 import AlertToast
 import Kingfisher
 
-enum CorrespondenceBottomSheetPosition: CGFloat, CaseIterable {
-    case bottom = 220, hidden = 0
-}
-
 struct CorrespondenceView: View {
     
     
     //MARK: - Properties
     
     @State var bottomSheetPosition: CorrespondenceBottomSheetPosition = .hidden
+    @State var editBottomSheetPosition: EditingMessageBottomSheetPosition = .hidden
     @State private var keyboardHeight: CGFloat = 0
     @State private var sourceType: UIImagePickerController.SourceType = .camera
+    @State private var isShowingSend = false
+    @State private var textEditorWidth: CGFloat = 35
     
     var message: String = ""
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
-    @Binding var showTabBar: Bool
     
     @StateObject private var viewModel: ViewModel
     
@@ -42,9 +39,8 @@ struct CorrespondenceView: View {
                                                              .background({ AnyView(Asset.dark1.swiftUIColor) }),
                                                              .cornerRadius(30)]
     
-    init(contacts: [ContactEntity], chat: ChatEntity?, socketManager: SocketIOManager?, showTabBar: Binding<Bool>) {
+    init(contacts: [ContactEntity], chat: ChatEntity?, socketManager: SocketIOManager?) {
         _viewModel = StateObject(wrappedValue: ViewModel(chat: chat, contacts: contacts, socketManager: socketManager))
-        _showTabBar = showTabBar
         UITextView.appearance().backgroundColor = .clear
     }
     
@@ -59,13 +55,13 @@ struct CorrespondenceView: View {
             
             VStack {
                 VStack {
-                    CorrespondenceNavigationView(contacts: viewModel.contacts, chat: viewModel.chat, showTabBar: $showTabBar)
+                    CorrespondenceNavigationView(contacts: viewModel.contacts, chat: viewModel.chat)
                     
                     if viewModel.isLoading && viewModel.page == 1 {
                         LoadingView()
                     } else {
                         viewModel.messagesWithTime.isEmpty ? AnyView(getEmtyView()) : AnyView(getMessage())
-                        
+                                   
                         Spacer()
                         
                         if viewModel.allFoto.count != 0 {
@@ -104,23 +100,24 @@ struct CorrespondenceView: View {
                     }
                 }
             }
+            
+            if viewModel.presentAlert {
+                DeleteAlertView(show: $viewModel.presentAlert,
+                                actionForAll: $viewModel.deleteMessageForMeOrEveryone)
+            }
         }
         .sheet(isPresented: $viewModel.showImagePicker) {
             ImagePicker(image: $viewModel.chatImage,
                         isShown: $viewModel.showImagePicker,
                         sourceType: self.sourceType)}
-        .navigationBarHidden(true)
-        .onBackSwipe(perform: {
-            showTabBar = true
-            presentationMode.wrappedValue.dismiss()
-        }, isEnabled: !viewModel.isLoading)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
         .onTapGesture { UIApplication.shared.endEditing() }
-        .onAppear {
-            showTabBar = false
-        }
         /// Bottom sheet for attachment
         .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: bottomSheetOptions,
                      headerContent: { getBottomSheet()}, mainContent: {})
+        .bottomSheet(bottomSheetPosition: self.$editBottomSheetPosition, options: bottomSheetOptions,
+                     headerContent: { getEditSheet()}, mainContent: {})
         .toast(isPresenting: $viewModel.showUploadImageSuccessToast, duration: 1, tapToDismiss: true) {
             AlertToast(displayMode: .alert, type: .complete(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor), title: viewModel.successUploadImageMessage)
         }
@@ -130,6 +127,10 @@ struct CorrespondenceView: View {
         .toast(isPresenting: $viewModel.showUploadImageProgressToast, duration: 120, tapToDismiss: false) {
             AlertToast(displayMode: .alert, type: .loading, title: L10n.CorrespondenceView.Toast.UploadImage.progress)
         }
+        /// Default Errors
+        .toast(isPresenting: $viewModel.showAlertError, duration: 2, tapToDismiss: true) {
+            AlertToast(displayMode: .alert, type: .error(Asset.red.swiftUIColor), title: viewModel.showAlertErrorText)
+        }
     }
     
     
@@ -138,25 +139,10 @@ struct CorrespondenceView: View {
     private func getMessage() -> some View {
         ScrollViewReader { proxy in
             ScrollView() {
-                LazyVStack {
-                    if viewModel.isLoading && viewModel.page > 1 {
-                        HStack {
-                            Spacer()
-                            
-                            ProgressView()
-                            
-                            Spacer()
-                        }
-                        .id(-2)
-                    }
-                    
-                    ForEach(viewModel.messagesWithTime.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
-                        Text(viewModel.getSectionHeader(with: key))
-                            .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 12))
-                            .foregroundColor(Asset.grey1.swiftUIColor)
-                            .padding()
+                LazyVStack(spacing: 15) {
+                    ForEach(viewModel.messagesWithTime.sorted(by: { $0.key > $1.key }), id: \.key) { key, value in
                         
-                        ForEach(value, id: \.id) { message in
+                        ForEach(value.sorted(by: { $0.id > $1.id }), id: \.id) { message in
                             HStack(alignment: .bottom, spacing: 15) {
                                 MessageStyleView(chat: viewModel.chat,
                                                  contacts: viewModel.contacts,
@@ -165,31 +151,47 @@ struct CorrespondenceView: View {
                                     viewModel.selectedImageURL = url
                                     viewModel.selectedImage = Asset.photo.swiftUIImage
                                 })
+                                .onTapGesture {
+                                    viewModel.selectedMessage = message
+                                    self.editBottomSheetPosition = .bottom
+                                }
                             }
+                            .rotationEffect(.radians(.pi))
                             .id(message.id)
                             .padding(.all, 15)
                             .onAppear {
                                 viewModel.loadMoreContent(currentItem: message)
                             }
+                            
+                            if value.first == message {
+                                Text(viewModel.getSectionHeader(with: key))
+                                    .font(FontFamily.Poppins.semiBold.swiftUIFont(size: 12))
+                                    .foregroundColor(Asset.grey1.swiftUIColor)
+                                    .padding()
+                                    .rotationEffect(.radians(.pi))
+                            }
+                            
                         }
+                        
                     }
                 }
             }
+            .rotationEffect(.radians(.pi))
             .onChange(of: viewModel.messagesWithTime, perform: { newValue in
                 guard let key = newValue.keys.max(),
                       let lastMessageId = newValue[key]?.last?.id else { return }
-                
+
                 if lastMessageId != viewModel.lastMessageId {
                     viewModel.lastMessageId = lastMessageId
-                    proxy.scrollTo(lastMessageId, anchor: .bottom)
+                    proxy.scrollTo(lastMessageId)
                 } else if let currentMessageId = viewModel.currentMessageId {
-                    proxy.scrollTo(currentMessageId, anchor: .top)
+                    proxy.scrollTo(currentMessageId)
                 }
             })
             .onAppear {
                 guard let key = viewModel.messagesWithTime.keys.max(),
                       let lastMessage = viewModel.messagesWithTime[key]?.last else { return }
-                
+
                 proxy.scrollTo(lastMessage.id)
             }
         }
@@ -234,74 +236,98 @@ struct CorrespondenceView: View {
             .frame(width: UIScreen.screenWidth, alignment: .leading)
     }
     
-    private func getMessageTextEditor() -> some View {
-        ZStack(alignment: .bottom) {
-            HStack{
-                VStack {
-                    if #available(iOS 16.0, *) {
-                        TextEditor(text: $viewModel.textMessage)
-                            .placeholder(when: viewModel.textMessage.isEmpty) {
-                                Text(L10n.CorrespondenceView.textMessage).foregroundColor(Asset.text.swiftUIColor)
-                                    .padding(.leading, 5)
-                            }
-                            .scrollContentBackground(.hidden)
-                    } else {
-                        TextEditor(text: $viewModel.textMessage)
-                            .placeholder(when: viewModel.textMessage.isEmpty) {
-                                Text(L10n.CorrespondenceView.textMessage).foregroundColor(Asset.text.swiftUIColor)
-                                    .padding(.leading, 5)
-                            }
+    fileprivate func getTextEditor() -> some View {
+        return TextEditor(text: $viewModel.textMessage)
+            .padding(.leading, 40)
+            .foregroundColor(Asset.text.swiftUIColor)
+            .multilineTextAlignment(.leading)
+            .frame(minHeight: 40, maxHeight: 150, alignment: .center)
+            .fixedSize(horizontal: false, vertical: true)
+            .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+            .onChange(of: viewModel.textMessage) { newValue in
+                if !newValue.isEmpty {
+                    withAnimation {
+                        isShowingSend = true
+                        textEditorWidth = 80
+                    }
+                } else {
+                    withAnimation {
+                        isShowingSend = false
+                        textEditorWidth = 35
                     }
                 }
-                .frame(minHeight: 40, maxHeight: 150, alignment: .leading)
-                .foregroundColor(Asset.text.swiftUIColor)
-                .accentColor(Asset.text.swiftUIColor)
-                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                .background(RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(Asset.dark1.swiftUIColor)
-                    .frame(width: UIScreen.screenWidth - 24))
-                .padding(.leading , 50)
-                .padding(.trailing , 50)
-                .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(.horizontal)
-            .background(RoundedRectangle(cornerRadius: 10)
-                .foregroundColor(Asset.dark1.swiftUIColor)
-                .frame(width: UIScreen.screenWidth - 24, height: 55))
-            
-            HStack(alignment: .bottom){
-                Button {
-                    bottomSheetPosition = .bottom
-                } label: {
-                    Asset.severicons.swiftUIImage
-                        .resizable()
-                        .frame(width: 24.0, height: 24.0)
-                }.padding(.leading, 12.0)
-                    .padding(.bottom, -5)
+            .placeholder(when: viewModel.textMessage.isEmpty) {
+                Text(L10n.CorrespondenceView.textMessage)
+                    .foregroundColor(Asset.text.swiftUIColor)
+                    .padding(.leading, 45)
+            }
+    }
+    
+    private func getMessageTextEditor() -> some View {
+        ZStack {
+            ZStack(alignment: .bottom) {
                 
-                Spacer()
-                Button {
-                    if !viewModel.textMessage.isEmpty || !viewModel.allFoto.isEmpty {
-                        if viewModel.chat == nil {
-                            viewModel.createChat(chatName: viewModel.contacts[0].name, usersId: viewModel.getUserEntityIds(contactId: viewModel.contacts[0].id))
+                HStack {
+                    VStack(alignment: .leading) {
+                        if #available(iOS 16.0, *) {
+                            getTextEditor()
+                                .scrollContentBackground(.hidden)
                         } else {
-                            if !viewModel.textMessage.isEmpty {
-                                viewModel.postTextMessage()
-                            }
-                            viewModel.postImageMessage()
+                            getTextEditor()
                         }
                     }
-                } label: {
-                    Asset.send.swiftUIImage
-                        .resizable()
-                        .frame(width: 24.0, height: 24.0)
-                        .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
-                }.padding(.trailing, 12.0)
-                    .padding(.bottom, -5)
+                    .frame(minHeight: 40, maxHeight: 150, alignment: .center)
+                    .foregroundColor(Asset.text.swiftUIColor)
+                    .accentColor(Asset.text.swiftUIColor)
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                    .background(RoundedRectangle(cornerRadius: 10)
+                        .foregroundColor(Asset.dark1.swiftUIColor)
+                        .frame(width: UIScreen.screenWidth - textEditorWidth), alignment: .leading)
+                    .padding(.leading , 15)
+                    .padding(.trailing , 50)
+                    .fixedSize(horizontal: false, vertical: true)
+                }
+                
+                HStack(alignment: .bottom){
+                    Button {
+                        bottomSheetPosition = .bottom
+                    } label: {
+                        Asset.severicons.swiftUIImage
+                            .resizable()
+                            .frame(width: 24.0, height: 24.0)
+                    }.padding(.leading, 12.0)
+                        .padding(.bottom, -4)
+                    
+                    Spacer()
+                    
+                    if isShowingSend {
+                        Button {
+                            if !viewModel.textMessage.isEmpty || !viewModel.allFoto.isEmpty {
+                                if viewModel.chat == nil {
+                                    viewModel.createChat(chatName: viewModel.contacts[0].name, usersId: viewModel.getUserEntityIds(contactId: viewModel.contacts[0].id))
+                                } else {
+                                    if !viewModel.textMessage.isEmpty {
+                                        viewModel.postTextMessage()
+                                    }
+                                    viewModel.postImageMessage()
+                                }
+                            }
+                        } label: {
+                            (isColorThema == false ? Asset.sendMessageIc.swiftUIImage : Asset.sendMessageGreen.swiftUIImage)
+                                .resizable()
+                                .frame(width: 28.0, height: 28.0)
+                        }
+                        .padding(.trailing, 12.0)
+                        .padding(.bottom, -5)
+                    }
+                   
+                }
+                .padding(.vertical, 12)
+                .padding(.horizontal)
             }
-            .padding(.vertical, 12)
-            .padding(.horizontal)
         }
+        
     }
     
     private func getBottomSheet() -> some View {
@@ -351,6 +377,50 @@ struct CorrespondenceView: View {
         }
     }
     
+    private func getEditSheet() -> some View {
+        /// copy message
+        VStack(spacing: 10) {
+            Button {
+                viewModel.copyToClipBoard()
+                editBottomSheetPosition = .hidden
+            } label: {
+                HStack(spacing: 14) {
+                    Asset.copyIc.swiftUIImage
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                    Text(L10n.CorrespondenceView.copy)
+                        .font(FontFamily.Poppins.bold.swiftUIFont(size: 14))
+                }.frame(minWidth: 0, maxWidth: .infinity)
+            }
+            .padding()
+            .background(Asset.dark2.swiftUIColor)
+            .foregroundColor(Asset.grey1.swiftUIColor)
+            .cornerRadius(10)
+            
+            ///delete message
+            if viewModel.checkSelectedMessageIsMine() {
+                Button {
+                    viewModel.presentAlert = true
+                    editBottomSheetPosition = .hidden
+                } label: {
+                    HStack(spacing: 14) {
+                        Asset.trashIc.swiftUIImage
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                        Text(L10n.General.delete)
+                            .font(FontFamily.Poppins.bold.swiftUIFont(size: 14))
+                    }.frame(minWidth: 0, maxWidth: .infinity)
+                        
+                }
+                .padding()
+                .background(Asset.dark2.swiftUIColor)
+                .foregroundColor(Asset.grey1.swiftUIColor)
+                .cornerRadius(10)
+            }
+
+        }
+    }
+        
     private func buttonsViewProperty(image: ImageAsset) -> some View {
         ZStack{
             RoundedRectangle(cornerRadius: 30)

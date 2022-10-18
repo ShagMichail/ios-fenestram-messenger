@@ -21,13 +21,10 @@ struct ProfileView: View {
     
     @AppStorage ("isColorThema") var isColorThema: Bool?
     
-    @Binding var showTabBar: Bool
-    
     @StateObject private var viewModel: ViewModel
     
-    init(showTabBar: Binding<Bool>) {
+    init() {
         _viewModel = StateObject(wrappedValue: ViewModel())
-        _showTabBar = showTabBar
     }
     
     var border: some View {
@@ -406,6 +403,6 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(showTabBar: .constant(true))
+        ProfileView()
     }
 }
