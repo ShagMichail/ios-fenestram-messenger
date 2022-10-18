@@ -292,7 +292,7 @@ extension CorrespondenceView {
                     case .failure(let error):
                         print("error", error)
                         self?.showAlertError = true
-                        self?.showAlertErrorText = "Ошибка удаления сообщения"
+                        self?.showAlertErrorText = L10n.CorrespondenceView.errorDeleteMessage
                     }
                 }
             }

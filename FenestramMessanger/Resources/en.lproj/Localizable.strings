@@ -124,6 +124,7 @@
 "correspondence_view.delete_for_me" = "Delete for me";
 "correspondence_view.alert_delete_message" = "Are you sure you want to delete the message?";
 "correspondence_view.copy" = "Copy";
+"correspondence_view.error_delete_message" = "Error deleting message";
 
 // MARK: - NewChatView
 "new_chat_view.title" = "New chat";

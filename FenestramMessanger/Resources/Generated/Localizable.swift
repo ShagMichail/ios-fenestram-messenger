@@ -95,6 +95,8 @@ internal enum L10n {
     internal static let deleteForEveryone = L10n.tr("Localizable", "correspondence_view.delete_for_everyone")
     /// Удалить только у меня
     internal static let deleteForMe = L10n.tr("Localizable", "correspondence_view.delete_for_me")
+    /// Ошибка удаления сообщения
+    internal static let errorDeleteMessage = L10n.tr("Localizable", "correspondence_view.error_delete_message")
     /// Файл
     internal static let file = L10n.tr("Localizable", "correspondence_view.file")
     /// Фото

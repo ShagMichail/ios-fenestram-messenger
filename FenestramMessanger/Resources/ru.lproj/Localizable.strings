@@ -124,6 +124,7 @@
 "correspondence_view.delete_for_me" = "Удалить только у меня";
 "correspondence_view.alert_delete_message" = "Вы уверены, что хотите удалить сообщение?";
 "correspondence_view.copy" = "Скопировать";
+"correspondence_view.error_delete_message" = "Ошибка удаления сообщения";
 
 // MARK: - NewChatView
 "new_chat_view.title" = "Создание чата";
