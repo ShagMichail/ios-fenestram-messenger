@@ -16,6 +16,7 @@ public enum ChatRequestRouter: AbstractRequestRouter {
     case getMessages(chatId: Int, queryParameters: [URLQueryItem])
     case changeChatAvatar(chatId: Int, parameters: Parameters)
     case changeChatName(chatId: Int, parameters: Parameters)
+    case deleteMessage(chatId: Int, parameters: Parameters)
     
     var method: HTTPMethod {
         switch self {
@@ -25,6 +26,8 @@ public enum ChatRequestRouter: AbstractRequestRouter {
             return .post
         case .changeChatAvatar, .changeChatName:
             return .patch
+        case .deleteMessage:
+            return .delete
         }
     }
     
@@ -34,7 +37,7 @@ public enum ChatRequestRouter: AbstractRequestRouter {
             return "api/\(Constants.apiVersion)/chats"
         case .getChat(let chatId):
             return "api/\(Constants.apiVersion)/chats/\(chatId)"
-        case .postMessage(let chatId, _):
+        case .postMessage(let chatId, _), .deleteMessage(let chatId, _):
             return "api/\(Constants.apiVersion)/chats/message/\(chatId)"
         case .getMessages(let chatId, _):
             return "api/\(Constants.apiVersion)/chats/\(chatId)/messages"
@@ -73,7 +76,7 @@ public enum ChatRequestRouter: AbstractRequestRouter {
     public func asURLRequest() throws -> URLRequest {
         var urlRequest = URLRequest(url: fullUrl)
         switch self {
-        case .createChat(let parameters), .postMessage(_, let parameters), .changeChatAvatar(_, let parameters), .changeChatName(_, let parameters):
+        case .createChat(let parameters), .postMessage(_, let parameters), .changeChatAvatar(_, let parameters), .changeChatName(_, let parameters), .deleteMessage(_, let parameters):
             urlRequest = try CustomPatchEncding().encode(urlRequest, with: parameters)
         case .getChat:
             urlRequest = try URLEncoding.default.encode(urlRequest, with: nil)

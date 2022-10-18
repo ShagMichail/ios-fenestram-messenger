@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+enum CorrespondenceBottomSheetPosition: CGFloat, CaseIterable {
+    case bottom = 220, hidden = 0
+}
+
+enum EditingMessageBottomSheetPosition: CGFloat, CaseIterable {
+    case bottom = 220, hidden = 0
+}
 
 extension CorrespondenceView {
     @MainActor
@@ -37,6 +44,17 @@ extension CorrespondenceView {
         @Published var showUploadImageSuccessToast: Bool = false
         
         @Published var selectedImage: Image?
+        @Published var selectedMessage: MessageEntity?
+        
+        @Published var deleteMessageForMeOrEveryone: DeleteMessageFor = .me {
+            willSet {
+                deleteMessage(newValue)
+            }
+        }
+        
+        @Published var showAlertError: Bool = false
+        var showAlertErrorText: String = ""
+        
         var selectedImageURL: URL?
         
         let contacts: [ContactEntity]
@@ -254,6 +272,31 @@ extension CorrespondenceView {
             dateFormatter.string(from: date)
         }
         
+        private func deleteMessage(_ deleteForAll: DeleteMessageFor) {
+            if let selectMess = selectedMessage, let chatId = chat?.id {
+                
+                var fromAll: Bool = false
+                switch deleteForAll {
+                case .all:
+                    fromAll = true
+                case .me:
+                    fromAll = false
+                }
+                presentAlert = false
+
+                ChatService.deleteMessage(chatId: chatId, messagesId: [selectMess.id], fromAll: fromAll) { [weak self] result in
+                    switch result {
+                    case .success(_):
+                        self?.allMessages = self?.allMessages.filter { $0 != selectMess } ?? []
+                        self?.processingData()
+                    case .failure(let error):
+                        print("error", error)
+                        self?.showAlertError = true
+                        self?.showAlertErrorText = L10n.CorrespondenceView.errorDeleteMessage
+                    }
+                }
+            }
+        }
         
         //MARK: - Auxiliary functions
         
@@ -341,6 +384,17 @@ extension CorrespondenceView {
             
             allMessages.append(message)
             processingData()
+        }
+        
+        func copyToClipBoard() {
+            guard let selectedMessage = selectedMessage else { return }
+            UIPasteboard.general.string =   ""
+            UIPasteboard.general.string = selectedMessage.message
+        }
+        
+        func checkSelectedMessageIsMine() -> Bool {
+            guard let selectedMessage = selectedMessage else { return false }
+            return selectedMessage.fromUserId == Settings.currentUser?.id
         }
     }
 }

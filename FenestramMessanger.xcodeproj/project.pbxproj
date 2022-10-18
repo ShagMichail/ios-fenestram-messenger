@@ -11,6 +11,8 @@
 		5752DB0128FCB26800EC3AD4 /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752DB0028FCB26800EC3AD4 /* TabbarView.swift */; };
 		5752DB0428FD7EEA00EC3AD4 /* VersionAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752DB0328FD7EEA00EC3AD4 /* VersionAppView.swift */; };
 		5752DB0728FD8D4700EC3AD4 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752DB0628FD8D4700EC3AD4 /* Bundle+Extension.swift */; };
+		5752DB0928FDB6C800EC3AD4 /* DefaultAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752DB0828FDB6C800EC3AD4 /* DefaultAlertView.swift */; };
+		5752DB0C28FDBDB700EC3AD4 /* DeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752DB0B28FDBDB700EC3AD4 /* DeleteAlertView.swift */; };
 		57B6A98428A42D7C0051429F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57B6A98328A42D7C0051429F /* GoogleService-Info.plist */; };
 		6D3B8991ABEEC255BD8A2A57 /* Pods_FenestramMessanger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F33D57429665AA5A47D624DD /* Pods_FenestramMessanger.framework */; };
 		BD081B0128E312D300E3B48D /* splashscreen_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = BD081B0028E312D300E3B48D /* splashscreen_animation.json */; };
@@ -160,6 +162,8 @@
 		5752DB0028FCB26800EC3AD4 /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
 		5752DB0328FD7EEA00EC3AD4 /* VersionAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionAppView.swift; sourceTree = "<group>"; };
 		5752DB0628FD8D4700EC3AD4 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
+		5752DB0828FDB6C800EC3AD4 /* DefaultAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAlertView.swift; sourceTree = "<group>"; };
+		5752DB0B28FDBDB700EC3AD4 /* DeleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertView.swift; sourceTree = "<group>"; };
 		57B6A98328A42D7C0051429F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BD081B0028E312D300E3B48D /* splashscreen_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splashscreen_animation.json; sourceTree = "<group>"; };
 		BD081B0728E3167800E3B48D /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
@@ -320,6 +324,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5752DB0A28FDBDA600EC3AD4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FC1778D528774BA300B0D979 /* CorrespondenceView.swift */,
+				5752DB0B28FDBDB700EC3AD4 /* DeleteAlertView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		B6AD8D52C77BF63683AA7FB8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -428,6 +441,7 @@
 				FC305CC3289AE731001ED651 /* CustomTextField.swift */,
 				BD0D3AE028C8C333004096A1 /* MFMessageComposeView.swift */,
 				BD081B0728E3167800E3B48D /* LottieView.swift */,
+				5752DB0828FDB6C800EC3AD4 /* DefaultAlertView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -798,7 +812,7 @@
 		FCD3059E2886E66100491220 /* Correspondence */ = {
 			isa = PBXGroup;
 			children = (
-				FC1778D528774BA300B0D979 /* CorrespondenceView.swift */,
+				5752DB0A28FDBDA600EC3AD4 /* View */,
 				FCD3059F2886E68400491220 /* CorrespondenceViewModel.swift */,
 			);
 			path = Correspondence;
@@ -1047,6 +1061,8 @@
 				BDF1F22C28BE2BAB000D8499 /* NewChatViewModel.swift in Sources */,
 				BDE74B9B28801F8E00F4A775 /* Asset+Extensions.swift in Sources */,
 				FC3A2B5028917348006E0948 /* PhotoEntity.swift in Sources */,
+				5752DB0C28FDBDB700EC3AD4 /* DeleteAlertView.swift in Sources */,
+				5752DB0928FDB6C800EC3AD4 /* DefaultAlertView.swift in Sources */,
 				FC1EA8FF287F3CE10027107E /* SplashScreen.swift in Sources */,
 				FC177873287583BA00B0D979 /* ImagePicker.swift in Sources */,
 				FC305CC4289AE731001ED651 /* CustomTextField.swift in Sources */,

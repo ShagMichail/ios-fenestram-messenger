@@ -12,16 +12,13 @@ import Network
 import AlertToast
 import Kingfisher
 
-enum CorrespondenceBottomSheetPosition: CGFloat, CaseIterable {
-    case bottom = 220, hidden = 0
-}
-
 struct CorrespondenceView: View {
     
     
     //MARK: - Properties
     
     @State var bottomSheetPosition: CorrespondenceBottomSheetPosition = .hidden
+    @State var editBottomSheetPosition: EditingMessageBottomSheetPosition = .hidden
     @State private var keyboardHeight: CGFloat = 0
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     @State private var isShowingSend = false
@@ -103,6 +100,11 @@ struct CorrespondenceView: View {
                     }
                 }
             }
+            
+            if viewModel.presentAlert {
+                DeleteAlertView(show: $viewModel.presentAlert,
+                                actionForAll: $viewModel.deleteMessageForMeOrEveryone)
+            }
         }
         .sheet(isPresented: $viewModel.showImagePicker) {
             ImagePicker(image: $viewModel.chatImage,
@@ -114,6 +116,8 @@ struct CorrespondenceView: View {
         /// Bottom sheet for attachment
         .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition, options: bottomSheetOptions,
                      headerContent: { getBottomSheet()}, mainContent: {})
+        .bottomSheet(bottomSheetPosition: self.$editBottomSheetPosition, options: bottomSheetOptions,
+                     headerContent: { getEditSheet()}, mainContent: {})
         .toast(isPresenting: $viewModel.showUploadImageSuccessToast, duration: 1, tapToDismiss: true) {
             AlertToast(displayMode: .alert, type: .complete(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor), title: viewModel.successUploadImageMessage)
         }
@@ -122,6 +126,10 @@ struct CorrespondenceView: View {
         }
         .toast(isPresenting: $viewModel.showUploadImageProgressToast, duration: 120, tapToDismiss: false) {
             AlertToast(displayMode: .alert, type: .loading, title: L10n.CorrespondenceView.Toast.UploadImage.progress)
+        }
+        /// Default Errors
+        .toast(isPresenting: $viewModel.showAlertError, duration: 2, tapToDismiss: true) {
+            AlertToast(displayMode: .alert, type: .error(Asset.red.swiftUIColor), title: viewModel.showAlertErrorText)
         }
     }
     
@@ -143,6 +151,10 @@ struct CorrespondenceView: View {
                                     viewModel.selectedImageURL = url
                                     viewModel.selectedImage = Asset.photo.swiftUIImage
                                 })
+                                .onTapGesture {
+                                    viewModel.selectedMessage = message
+                                    self.editBottomSheetPosition = .bottom
+                                }
                             }
                             .rotationEffect(.radians(.pi))
                             .id(message.id)
@@ -365,6 +377,50 @@ struct CorrespondenceView: View {
         }
     }
     
+    private func getEditSheet() -> some View {
+        /// copy message
+        VStack(spacing: 10) {
+            Button {
+                viewModel.copyToClipBoard()
+                editBottomSheetPosition = .hidden
+            } label: {
+                HStack(spacing: 14) {
+                    Asset.copyIc.swiftUIImage
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                    Text(L10n.CorrespondenceView.copy)
+                        .font(FontFamily.Poppins.bold.swiftUIFont(size: 14))
+                }.frame(minWidth: 0, maxWidth: .infinity)
+            }
+            .padding()
+            .background(Asset.dark2.swiftUIColor)
+            .foregroundColor(Asset.grey1.swiftUIColor)
+            .cornerRadius(10)
+            
+            ///delete message
+            if viewModel.checkSelectedMessageIsMine() {
+                Button {
+                    viewModel.presentAlert = true
+                    editBottomSheetPosition = .hidden
+                } label: {
+                    HStack(spacing: 14) {
+                        Asset.trashIc.swiftUIImage
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                        Text(L10n.General.delete)
+                            .font(FontFamily.Poppins.bold.swiftUIFont(size: 14))
+                    }.frame(minWidth: 0, maxWidth: .infinity)
+                        
+                }
+                .padding()
+                .background(Asset.dark2.swiftUIColor)
+                .foregroundColor(Asset.grey1.swiftUIColor)
+                .cornerRadius(10)
+            }
+
+        }
+    }
+        
     private func buttonsViewProperty(image: ImageAsset) -> some View {
         ZStack{
             RoundedRectangle(cornerRadius: 30)

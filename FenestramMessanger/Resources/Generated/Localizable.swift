@@ -87,6 +87,16 @@ internal enum L10n {
   }
 
   internal enum CorrespondenceView {
+    /// Вы уверены, что хотите удалить сообщение?
+    internal static let alertDeleteMessage = L10n.tr("Localizable", "correspondence_view.alert_delete_message")
+    /// Скопировать
+    internal static let copy = L10n.tr("Localizable", "correspondence_view.copy")
+    /// Удалить у всех
+    internal static let deleteForEveryone = L10n.tr("Localizable", "correspondence_view.delete_for_everyone")
+    /// Удалить только у меня
+    internal static let deleteForMe = L10n.tr("Localizable", "correspondence_view.delete_for_me")
+    /// Ошибка удаления сообщения
+    internal static let errorDeleteMessage = L10n.tr("Localizable", "correspondence_view.error_delete_message")
     /// Файл
     internal static let file = L10n.tr("Localizable", "correspondence_view.file")
     /// Фото
