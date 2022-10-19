@@ -298,6 +298,22 @@ extension CorrespondenceView {
             }
         }
         
+        func editMessage() {
+            if let selectMess = selectedMessage, let chatId = chat?.id {
+                ChatService.editMessage(chatId: chatId, messagesId: selectMess.id, text: textMessage) { [weak self] result in
+                    switch result {
+                    case .success(_):
+                        self?.allMessages = self?.allMessages.filter { $0 != selectMess } ?? []
+                        self?.processingData()
+                    case .failure(let error):
+                        print("error", error)
+                        self?.showAlertError = true
+                        self?.showAlertErrorText = L10n.CorrespondenceView.errorDeleteMessage
+                    }
+                }
+            }
+        }
+        
         //MARK: - Auxiliary functions
         
         private func uploadFile(image: UIImage, completion: @escaping (String?, Error?) -> ()) {
@@ -398,6 +414,17 @@ extension CorrespondenceView {
         func checkSelectedMessageIsMine() -> Bool {
             guard let selectedMessage = selectedMessage else { return false }
             return selectedMessage.fromUserId == Settings.currentUser?.id
+        }
+        
+        func checkDeleteMessage() -> Bool {
+            /// проверка на возможность редактирования сообщения ( > 24 часов )
+            guard let selectedMessage = selectedMessage else { return false }
+            if let createdDate = selectedMessage.createdAt,
+               let dateDiff = Calendar.current.dateComponents([.hour], from: createdDate, to: Date()).hour {
+                return dateDiff < 24
+            } else {
+                return false
+            }
         }
     }
 }

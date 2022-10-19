@@ -97,6 +97,16 @@ public class ChatService {
         }
     }
     
+    public static func editMessage(chatId: Int, messagesId: Int, text: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        let parameters: [String: Any] = [
+            "text": text
+        ]
+        
+        sendRequest(requestOptions: .editMessage(chatId: chatId, messageId: messagesId, parameters: parameters)) { result in
+            completion(result)
+        }
+    }
+    
     public static func getMessages(chatId: Int, page: Int, limit: Int, completion: @escaping (Result<BaseResponseEntity<[MessageEntity]>, Error>) -> Void) {
         let queryParameters: [URLQueryItem] = [
             .init(name: "limit", value: limit.description),
