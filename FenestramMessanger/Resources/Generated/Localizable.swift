@@ -281,6 +281,8 @@ internal enum L10n {
   internal enum PageContactView {
     /// Чат
     internal static let chat = L10n.tr("Localizable", "page_contact_view.chat")
+    /// Профиль чата
+    internal static let chatProfile = L10n.tr("Localizable", "page_contact_view.chat_profile")
     /// файлов
     internal static let files = L10n.tr("Localizable", "page_contact_view.files")
     /// изображений
@@ -289,6 +291,8 @@ internal enum L10n {
     internal static let participants = L10n.tr("Localizable", "page_contact_view.participants")
     /// Участники чата
     internal static let participantsTitle = L10n.tr("Localizable", "page_contact_view.participants_title")
+    /// Профиль
+    internal static let profile = L10n.tr("Localizable", "page_contact_view.profile")
     ///  (вы)
     internal static let you = L10n.tr("Localizable", "page_contact_view.you")
   }

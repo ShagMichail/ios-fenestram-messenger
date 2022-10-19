@@ -43,32 +43,38 @@ struct PageContactView: View {
             Asset.dark1.swiftUIColor
                 .ignoresSafeArea()
             
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack {
-                    Spacer()
-                        .frame(height: 24)
-                    
-                    getNameAndPhoto()
-                    
-                    Spacer().frame(height: 30.0)
-                    
-                    getButtonPhoneVideo()
-                    
-                    if viewModel.chat?.isGroup ?? false {
+            VStack {
+                getHeaderView()
+                
+                Spacer()
+                
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack {
+                        Spacer()
+                            .frame(height: 24)
+                        
+                        getNameAndPhoto()
+                        
+                        Spacer().frame(height: 30.0)
+                        
+                        getButtonPhoneVideo()
+                        
+                        if viewModel.chat?.isGroup ?? false {
+                            Spacer().frame(height: 16.0)
+                            
+                            getParticipantsList()
+                        }
+                        
                         Spacer().frame(height: 16.0)
                         
-                        getParticipantsList()
+                        getListFiles()
+                        
+                        Spacer().frame(height: 16.0)
+                        
+                        getPhotoFiles()
                     }
-                    
-                    Spacer().frame(height: 16.0)
-                    
-                    getListFiles()
-                    
-                    Spacer().frame(height: 16.0)
-                    
-                    getPhotoFiles()
+                    .padding(.horizontal, 28)
                 }
-                .padding(.horizontal, 32)
             }
             
             if let selectedImage = viewModel.selectedImage {
@@ -101,9 +107,6 @@ struct PageContactView: View {
                      headerContent: {
             getHeaderBottomSheet()
         }) { }
-        .onBackSwipe {
-            presentationMode.wrappedValue.dismiss()
-        }
         .introspectTabBarController { (UITabBarController) in
             UITabBarController.tabBar.isHidden = true
             uiTabarController = UITabBarController
@@ -114,6 +117,28 @@ struct PageContactView: View {
     
     
     //MARK: - Views
+    
+    private func getHeaderView() -> some View {
+        ZStack(alignment: .leading) {
+            Asset.dark1.swiftUIColor
+                .ignoresSafeArea()
+            HStack {
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(Color.white)
+                    }
+                }
+                Text((viewModel.chat?.isGroup ?? false) ? L10n.PageContactView.chatProfile : L10n.PageContactView.profile)
+                    .font(FontFamily.Poppins.bold.swiftUIFont(size: 18))
+                    .foregroundColor(Color.white)
+            }
+        }
+        .padding(.horizontal, 12)
+        .frame(height: 40)
+    }
     
     private func getPhoto() -> some View {
         VStack {
