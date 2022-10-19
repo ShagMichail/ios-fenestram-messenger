@@ -37,20 +37,51 @@ struct CodeView: View {
             Asset.background.swiftUIColor
                 .ignoresSafeArea()
             
-            getBase()
-            
+            VStack(alignment: .leading) {
+                
+                getHeaderView()
+                
+                Spacer().frame(height: 20)
+                
+                getBase()
+                
+                Spacer()
+                
+            }
+            .padding(.horizontal, 24)
+    
             if viewModel.presentAlert {
                 AlertView(show: $viewModel.presentAlert, text: viewModel.textAlert)
             }
         }
+        .navigationBarHidden(true)
         .onTapGesture {
             UIApplication.shared.endEditing()
         }
-        .onBackSwipe(perform: { presentationMode.wrappedValue.dismiss() }, isEnabled: true)
+        
     }
     
     
     //MARK: - Views
+    
+    private func getHeaderView() -> some View {
+        ZStack(alignment: .leading) {
+            HStack {
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(Color.white)
+                    }
+                }
+            
+            }
+            .padding()
+        }
+        .frame(height: 50)
+
+    }
     
     private func getBase() -> some View {
         VStack(alignment: .center) {
