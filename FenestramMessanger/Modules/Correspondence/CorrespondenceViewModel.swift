@@ -416,7 +416,7 @@ extension CorrespondenceView {
             return selectedMessage.fromUserId == Settings.currentUser?.id
         }
         
-        func checkDeleteMessage() -> Bool {
+        func checkEditingMessage() -> Bool {
             /// проверка на возможность редактирования сообщения ( > 24 часов )
             guard let selectedMessage = selectedMessage else { return false }
             if let createdDate = selectedMessage.createdAt,

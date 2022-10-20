@@ -426,7 +426,7 @@ struct CorrespondenceView: View {
             // tap my message
             if viewModel.checkSelectedMessageIsMine() {
                 
-                if viewModel.checkDeleteMessage() {
+                if viewModel.checkEditingMessage() {
                     // edit message
                     Button {
                         //edit
