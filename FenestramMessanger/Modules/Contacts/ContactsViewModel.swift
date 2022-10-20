@@ -133,6 +133,10 @@ extension ContactsView {
         //MARK: - Auxiliary functions
         
         func filterContent() {
+            guard let currentUserPhone = Settings.currentUser?.phoneNumber else {
+                return
+            }
+            
             let lowercasedSearchText = searchText.lowercased()
             
             if searchText.count > 0 {
@@ -140,7 +144,7 @@ extension ContactsView {
                 var matchingUnregisterContacts: [ContactEntity] = []
                 
                 registerContacts.forEach { contact in
-                    if contact.name.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil || contact.phone.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil {
+                    if contact.name.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil || contact.phone.lowercased().range(of: lowercasedSearchText, options: .regularExpression) != nil, contact.phone != currentUserPhone {
                         matchingRegisterContacts.append(contact)
                     }
                 }

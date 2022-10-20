@@ -260,7 +260,7 @@ struct ContactsView: View {
                 .padding(.horizontal)
             }
             
-            Text(contact.name)
+            Text(contact.name.trimmingCharacters(in: .whitespaces).isEmpty ? contact.phone : contact.name)
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 16))
                 .foregroundColor(.white)
                 
