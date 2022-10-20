@@ -27,154 +27,130 @@ struct MessageStyleView: View {
         }
         
         if isCurrentUser {
-            return AnyView(VStack(alignment: .trailing) {
-                VStack {
-                    switch message.messageType {
-                    case .text:
-                        if #available(iOS 15.0, *) {
-                            Text(message.message)
-                                .textSelection(.enabled)
-                            
-                        } else {
-                            Text(message.message)
-                        }
-                    case .image:
-                        if let url = URL(string: baseUrlString + message.message) {
-                            KFImage(url)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 100, height: 100)
-                                .cornerRadius(8)
-                                .onTapGesture {
-                                    onClickImage(url)
-                                }
-                        } else {
-                            Text(L10n.CorrespondenceView.MessageView.failedGetImage)
-                        }
-                    case .system:
-                        EmptyView()
-                    }
-                }
-                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                .foregroundColor(.white)
-                .padding(10)
-                .background(isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor)
-                .cornerRadius(10)
-                .frame(maxWidth: .infinity, alignment: .trailing)
-                
-                Spacer().frame(height: 5)
-                
-                HStack {
-                    Text(getMessageTime(message.createdAt))
-                        .foregroundColor(Asset.message.swiftUIColor)
-                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
-                    
-                    Asset.send.swiftUIImage
-                        .resizable()
-                        .frame(width: 13.0, height: 13.0)
-                        .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
-                }
-            })
+            return AnyView(viewMyMessage())
         } else if chat?.isGroup ?? false {
-            return AnyView(HStack {
-                if let avatarString = message.fromUser?.avatar,
-                   let url = URL(string: baseUrlString + avatarString) {
-                    KFImage(url)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 32, height: 32)
-                        .clipShape(Circle())
-                        .onTapGesture {
-                            onClickImage(url)
-                        }
-                } else {
-                    Asset.photo.swiftUIImage
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 32, height: 32)
+            return AnyView(viewCorrespondMessage())
+        } else {
+            return AnyView(viewSingleImageOrMessageDate())
+        }
+    }
+    
+    
+    // MARK: - view
+    
+    private func viewMyMessage() -> some View {
+        VStack(alignment: .trailing) {
+            VStack {
+                switch message.messageType {
+                case .text:
+                    if #available(iOS 15.0, *) {
+                        Text(message.message)
+                            .textSelection(.disabled)
+                    } else {
+                        Text(message.message)
+                    }
+                case .image:
+                    if let url = URL(string: baseUrlString + message.message) {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 100, height: 100)
+                            .cornerRadius(8)
+                            .onTapGesture {
+                                onClickImage(url)
+                            }
+                    } else {
+                        Text(L10n.CorrespondenceView.MessageView.failedGetImage)
+                    }
+                case .system:
+                    EmptyView()
                 }
                 
+                if let isEdited = message.isEdited, isEdited {
+                    Text(L10n.CorrespondenceView.edited)
+                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 10))
+                        .foregroundColor(Asset.grey1.swiftUIColor)
+                        .padding(.leading)
+                }
+                
+            }
+            .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+            .foregroundColor(.white)
+            .padding(10)
+            .background(isColorThema == false ? Asset.blue3.swiftUIColor : Asset.green1.swiftUIColor)
+            .cornerRadius(10)
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            
+            Spacer().frame(height: 5)
+            
+            HStack {
+                Text(getMessageTime(message.createdAt))
+                    .foregroundColor(Asset.message.swiftUIColor)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
+                
+                Asset.send.swiftUIImage
+                    .resizable()
+                    .frame(width: 13.0, height: 13.0)
+                    .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
+            }
+        }
+    }
+    
+    private func viewCorrespondMessage() -> some View {
+        HStack {
+            if let avatarString = message.fromUser?.avatar,
+               let url = URL(string: baseUrlString + avatarString) {
+                KFImage(url)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 32, height: 32)
+                    .clipShape(Circle())
+                    .onTapGesture {
+                        onClickImage(url)
+                    }
+            } else {
+                Asset.photo.swiftUIImage
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 32, height: 32)
+            }
+            
+            VStack(alignment: .leading) {
                 VStack(alignment: .leading) {
-                    VStack(alignment: .leading) {
-                        Text(getUserName(user: message.fromUser))
-                            .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                            .foregroundColor(Asset.grey1.swiftUIColor)
-                        
-                        VStack {
-                            switch message.messageType {
-                            case .text:
-                                if #available(iOS 15.0, *) {
-                                    Text(message.message)
-                                        .textSelection(.enabled)
-                                    
-                                } else {
-                                    Text(message.message)
-                                }
-                            case .image:
-                                if let url = URL(string: baseUrlString + message.message) {
-                                    KFImage(url)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 100, height: 100)
-                                        .cornerRadius(8)
-                                        .onTapGesture {
-                                            onClickImage(url)
-                                        }
-                                } else {
-                                    Text(L10n.CorrespondenceView.MessageView.failedGetImage)
-                                }
-                            case .system:
-                                EmptyView()
-                            }
-                        }
+                    Text(getUserName(user: message.fromUser))
                         .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                        .foregroundColor(.white)
-                    }
-                    .padding(10)
-                    .background(Asset.tabBar.swiftUIColor)
-                    .cornerRadius(10)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                        .foregroundColor(Asset.grey1.swiftUIColor)
                     
-                    Spacer().frame(height: 5)
-                    
-                    HStack {
-                        Text(getMessageTime(message.createdAt))
-                            .foregroundColor(Asset.message.swiftUIColor)
-                        .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
-                    }
-                }
-            })
-        } else {
-            return AnyView(VStack(alignment: .leading) {
-                VStack {
-                    switch message.messageType {
-                    case .text:
-                        if #available(iOS 15.0, *) {
-                            Text(message.message)
-                                .textSelection(.enabled)
-                            
-                        } else {
-                            Text(message.message)
+                    VStack {
+                        switch message.messageType {
+                        case .text:
+                            if #available(iOS 15.0, *) {
+                                Text(message.message)
+                                    .textSelection(.enabled)
+                                
+                            } else {
+                                Text(message.message)
+                            }
+                        case .image:
+                            if let url = URL(string: baseUrlString + message.message) {
+                                KFImage(url)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 100, height: 100)
+                                    .cornerRadius(8)
+                                    .onTapGesture {
+                                        onClickImage(url)
+                                    }
+                            } else {
+                                Text(L10n.CorrespondenceView.MessageView.failedGetImage)
+                            }
+                        case .system:
+                            EmptyView()
                         }
-                    case .image:
-                        if let url = URL(string: baseUrlString + message.message) {
-                            KFImage(url)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 100, height: 100)
-                                .cornerRadius(8)
-                                .onTapGesture {
-                                    onClickImage(url)
-                                }
-                        } else {
-                            Text(L10n.CorrespondenceView.MessageView.failedGetImage)
-                        }
-                    case .system:
-                        EmptyView()
                     }
+                    .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+                    .foregroundColor(.white)
                 }
-                .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-                .foregroundColor(.white)
                 .padding(10)
                 .background(Asset.tabBar.swiftUIColor)
                 .cornerRadius(10)
@@ -187,9 +163,57 @@ struct MessageStyleView: View {
                         .foregroundColor(Asset.message.swiftUIColor)
                     .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
                 }
-            })
+            }
         }
     }
+    
+    private func viewSingleImageOrMessageDate() -> some View {
+        VStack(alignment: .leading) {
+            VStack {
+                switch message.messageType {
+                case .text:
+                    if #available(iOS 15.0, *) {
+                        Text(message.message)
+                            .textSelection(.enabled)
+                        
+                    } else {
+                        Text(message.message)
+                    }
+                case .image:
+                    if let url = URL(string: baseUrlString + message.message) {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 100, height: 100)
+                            .cornerRadius(8)
+                            .onTapGesture {
+                                onClickImage(url)
+                            }
+                    } else {
+                        Text(L10n.CorrespondenceView.MessageView.failedGetImage)
+                    }
+                case .system:
+                    EmptyView()
+                }
+            }
+            .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
+            .foregroundColor(.white)
+            .padding(10)
+            .background(Asset.tabBar.swiftUIColor)
+            .cornerRadius(10)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Spacer().frame(height: 5)
+            
+            HStack {
+                Text(getMessageTime(message.createdAt))
+                    .foregroundColor(Asset.message.swiftUIColor)
+                .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
+            }
+        }
+    }
+    
+    // MARK: - some methods
     
     private func getUserName(user: UserEntity?) -> String {
         guard let user = user else {

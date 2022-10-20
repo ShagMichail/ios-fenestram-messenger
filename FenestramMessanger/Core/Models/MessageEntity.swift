@@ -26,6 +26,7 @@ public struct MessageEntity: Codable, Identifiable, Equatable {
     public let messageType: MessageType
     public let createdAt: Date?
     public let fromUser: UserEntity?
+    public let isEdited: Bool?
     
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -34,6 +35,7 @@ public struct MessageEntity: Codable, Identifiable, Equatable {
         self.message = try values.decode(String.self, forKey: .message)
         self.messageType = try values.decode(MessageType.self, forKey: .messageType)
         self.fromUser = try? values.decode(UserEntity.self, forKey: .fromUser)
+        self.isEdited = try? values.decode(Bool.self, forKey: .isEdited)
         
         if let chatIdString = try? values.decode(String.self, forKey: .chatId) {
             self.chatId = Int(chatIdString)
@@ -57,5 +59,6 @@ public struct MessageEntity: Codable, Identifiable, Equatable {
         case messageType = "message_type"
         case createdAt = "created_at"
         case fromUser = "user"
+        case isEdited = "is_edited"
     }
 }

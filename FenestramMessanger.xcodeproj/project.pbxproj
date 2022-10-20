@@ -14,6 +14,7 @@
 		5752DB0928FDB6C800EC3AD4 /* DefaultAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752DB0828FDB6C800EC3AD4 /* DefaultAlertView.swift */; };
 		5752DB0C28FDBDB700EC3AD4 /* DeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752DB0B28FDBDB700EC3AD4 /* DeleteAlertView.swift */; };
 		57B6A98428A42D7C0051429F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57B6A98328A42D7C0051429F /* GoogleService-Info.plist */; };
+		57FDCFA7290069E6006C8B4E /* CorrespondenceViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDCFA6290069E6006C8B4E /* CorrespondenceViewExtension.swift */; };
 		6D3B8991ABEEC255BD8A2A57 /* Pods_FenestramMessanger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F33D57429665AA5A47D624DD /* Pods_FenestramMessanger.framework */; };
 		BD081B0128E312D300E3B48D /* splashscreen_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = BD081B0028E312D300E3B48D /* splashscreen_animation.json */; };
 		BD081B0628E3163200E3B48D /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = BD081B0528E3163200E3B48D /* Lottie */; };
@@ -165,6 +166,7 @@
 		5752DB0828FDB6C800EC3AD4 /* DefaultAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAlertView.swift; sourceTree = "<group>"; };
 		5752DB0B28FDBDB700EC3AD4 /* DeleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertView.swift; sourceTree = "<group>"; };
 		57B6A98328A42D7C0051429F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		57FDCFA6290069E6006C8B4E /* CorrespondenceViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrespondenceViewExtension.swift; sourceTree = "<group>"; };
 		BD081B0028E312D300E3B48D /* splashscreen_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splashscreen_animation.json; sourceTree = "<group>"; };
 		BD081B0728E3167800E3B48D /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		BD08ACD528B8CC88000F923D /* FenestramMessanger.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FenestramMessanger.entitlements; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				FC1778D528774BA300B0D979 /* CorrespondenceView.swift */,
+				57FDCFA6290069E6006C8B4E /* CorrespondenceViewExtension.swift */,
 				5752DB0B28FDBDB700EC3AD4 /* DeleteAlertView.swift */,
 			);
 			path = View;
@@ -1066,6 +1069,7 @@
 				FC1EA8FF287F3CE10027107E /* SplashScreen.swift in Sources */,
 				FC177873287583BA00B0D979 /* ImagePicker.swift in Sources */,
 				FC305CC4289AE731001ED651 /* CustomTextField.swift in Sources */,
+				57FDCFA7290069E6006C8B4E /* CorrespondenceViewExtension.swift in Sources */,
 				FC7A57172891AE5700ABF7BF /* ImagesNavigationView.swift in Sources */,
 				FC17787C2875913F00B0D979 /* PhoneViewModel.swift in Sources */,
 				FCEE88262874400700268971 /* CodeView.swift in Sources */,
