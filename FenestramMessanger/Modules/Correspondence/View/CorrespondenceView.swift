@@ -23,6 +23,7 @@ struct CorrespondenceView: View {
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     @State private var isShowingSend = false
     @State private var textEditorWidth: CGFloat = 35
+    @State internal var isMessageEditing = false
     
     var message: String = ""
     
@@ -30,7 +31,7 @@ struct CorrespondenceView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    @StateObject private var viewModel: ViewModel
+    @StateObject internal var viewModel: ViewModel
     
     private let bottomSheetOptions: [BottomSheet.Options] = [.noDragIndicator,
                                                              .allowContentDrag,
@@ -68,7 +69,13 @@ struct CorrespondenceView: View {
                             getPhotoMessage()
                         }
                         
-                        getMessageTextEditor()
+                        // MARK: text editor
+                        if isMessageEditing {
+                            getEditMessageView()
+                        } else {
+                            getMessageTextEditor()
+                        }
+                        
                     }
                 }
                 
@@ -136,6 +143,9 @@ struct CorrespondenceView: View {
     
     //MARK: - Views
     
+    
+    // MARK: - Message
+    
     private func getMessage() -> some View {
         ScrollViewReader { proxy in
             ScrollView() {
@@ -151,10 +161,15 @@ struct CorrespondenceView: View {
                                     viewModel.selectedImageURL = url
                                     viewModel.selectedImage = Asset.photo.swiftUIImage
                                 })
-                                .onTapGesture {
+                                .simultaneousGesture(LongPressGesture(minimumDuration: 0.2).onEnded({ _ in
+                                    /// light vibration on tap :)
+                                    let impactHeavy = UIImpactFeedbackGenerator(style: .rigid)
+                                    impactHeavy.impactOccurred()
+                                    
+                                    UIApplication.shared.endEditing()
                                     viewModel.selectedMessage = message
                                     self.editBottomSheetPosition = .bottom
-                                }
+                                }))
                             }
                             .rotationEffect(.radians(.pi))
                             .id(message.id)
@@ -197,6 +212,9 @@ struct CorrespondenceView: View {
         }
     }
     
+    
+    // MARK: - Empty
+    
     private func getEmtyView() -> some View {
         VStack {
             Asset.helloMessage.swiftUIImage
@@ -236,9 +254,13 @@ struct CorrespondenceView: View {
             .frame(width: UIScreen.screenWidth, alignment: .leading)
     }
     
-    fileprivate func getTextEditor() -> some View {
+    // MARK: - Text editor and send button
+    
+    internal func getTextEditor(_ isEditMode: Bool) -> some View {
+        var leadPadding: CGFloat = 12
+        isEditMode ? (leadPadding = 12) : (leadPadding = 40)
         return TextEditor(text: $viewModel.textMessage)
-            .padding(.leading, 40)
+            .padding(.leading, leadPadding)
             .foregroundColor(Asset.text.swiftUIColor)
             .multilineTextAlignment(.leading)
             .frame(minHeight: 40, maxHeight: 150, alignment: .center)
@@ -260,7 +282,7 @@ struct CorrespondenceView: View {
             .placeholder(when: viewModel.textMessage.isEmpty) {
                 Text(L10n.CorrespondenceView.textMessage)
                     .foregroundColor(Asset.text.swiftUIColor)
-                    .padding(.leading, 45)
+                    .padding(.leading, leadPadding + 5)
             }
     }
     
@@ -271,10 +293,10 @@ struct CorrespondenceView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         if #available(iOS 16.0, *) {
-                            getTextEditor()
+                            getTextEditor(false)
                                 .scrollContentBackground(.hidden)
                         } else {
-                            getTextEditor()
+                            getTextEditor(false)
                         }
                     }
                     .frame(minHeight: 40, maxHeight: 150, alignment: .center)
@@ -330,6 +352,8 @@ struct CorrespondenceView: View {
         
     }
     
+    // MARK: - Bottom sheets
+    
     private func getBottomSheet() -> some View {
         HStack {
             Spacer()
@@ -378,8 +402,10 @@ struct CorrespondenceView: View {
     }
     
     private func getEditSheet() -> some View {
-        /// copy message
+        
         VStack(spacing: 10) {
+            
+            // copy message
             Button {
                 viewModel.copyToClipBoard()
                 editBottomSheetPosition = .hidden
@@ -397,8 +423,36 @@ struct CorrespondenceView: View {
             .foregroundColor(Asset.grey1.swiftUIColor)
             .cornerRadius(10)
             
-            ///delete message
+            // tap my message
             if viewModel.checkSelectedMessageIsMine() {
+                
+                if viewModel.checkEditingMessage() {
+                    // edit message
+                    Button {
+                        //edit
+                        viewModel.textMessage = viewModel.selectedMessage?.message ?? ""
+                        withAnimation {
+                            editBottomSheetPosition = .hidden
+                            isMessageEditing = true
+                        }
+                        
+                    } label: {
+                        HStack(spacing: 14) {
+                            Asset.pencilIc.swiftUIImage
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                            Text(L10n.CorrespondenceView.editMessage)
+                                .font(FontFamily.Poppins.bold.swiftUIFont(size: 14))
+                        }.frame(minWidth: 0, maxWidth: .infinity)
+                            
+                    }
+                    .padding()
+                    .background(Asset.dark2.swiftUIColor)
+                    .foregroundColor(Asset.grey1.swiftUIColor)
+                    .cornerRadius(10)
+                }
+                
+                // delete message
                 Button {
                     viewModel.presentAlert = true
                     editBottomSheetPosition = .hidden
@@ -416,11 +470,14 @@ struct CorrespondenceView: View {
                 .background(Asset.dark2.swiftUIColor)
                 .foregroundColor(Asset.grey1.swiftUIColor)
                 .cornerRadius(10)
+
             }
 
         }
     }
         
+    // MARK: - Some methods
+    
     private func buttonsViewProperty(image: ImageAsset) -> some View {
         ZStack{
             RoundedRectangle(cornerRadius: 30)

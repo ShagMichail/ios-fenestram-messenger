@@ -95,6 +95,12 @@ internal enum L10n {
     internal static let deleteForEveryone = L10n.tr("Localizable", "correspondence_view.delete_for_everyone")
     /// Удалить только у меня
     internal static let deleteForMe = L10n.tr("Localizable", "correspondence_view.delete_for_me")
+    /// Редактировать сообщение
+    internal static let editMessage = L10n.tr("Localizable", "correspondence_view.edit_message")
+    /// изменено
+    internal static let edited = L10n.tr("Localizable", "correspondence_view.edited")
+    /// Редактирование сообщения
+    internal static let editingMessage = L10n.tr("Localizable", "correspondence_view.editing_message")
     /// Ошибка удаления сообщения
     internal static let errorDeleteMessage = L10n.tr("Localizable", "correspondence_view.error_delete_message")
     /// Файл
@@ -155,6 +161,8 @@ internal enum L10n {
     internal static let delete = L10n.tr("Localizable", "general.delete")
     /// Готово
     internal static let done = L10n.tr("Localizable", "general.done")
+    /// Изменить
+    internal static let edit = L10n.tr("Localizable", "general.edit")
     /// Произошла ошибка
     internal static let errorTitle = L10n.tr("Localizable", "general.error_title")
     /// Идет загрузка...
@@ -281,6 +289,8 @@ internal enum L10n {
   internal enum PageContactView {
     /// Чат
     internal static let chat = L10n.tr("Localizable", "page_contact_view.chat")
+    /// Профиль чата
+    internal static let chatProfile = L10n.tr("Localizable", "page_contact_view.chat_profile")
     /// файлов
     internal static let files = L10n.tr("Localizable", "page_contact_view.files")
     /// изображений
@@ -289,6 +299,8 @@ internal enum L10n {
     internal static let participants = L10n.tr("Localizable", "page_contact_view.participants")
     /// Участники чата
     internal static let participantsTitle = L10n.tr("Localizable", "page_contact_view.participants_title")
+    /// Профиль
+    internal static let profile = L10n.tr("Localizable", "page_contact_view.profile")
     ///  (вы)
     internal static let you = L10n.tr("Localizable", "page_contact_view.you")
   }

@@ -18,6 +18,7 @@
 "general.accept" = "Accept";
 "general.no_internet_connection" = "No internet connection";
 "general.delete" = "Delete";
+"general.edit" = "Edit";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "A list of your chats will be displayed here";
@@ -126,6 +127,9 @@
 "correspondence_view.alert_delete_message" = "Are you sure you want to delete the message?";
 "correspondence_view.copy" = "Copy";
 "correspondence_view.error_delete_message" = "Error deleting message";
+"correspondence_view.edit_message" = "Edit message";
+"correspondence_view.edit_message" = "Editing message";
+"correspondence_view.edited" = "edited";
 
 // MARK: - NewChatView
 "new_chat_view.title" = "New chat";
@@ -140,6 +144,8 @@
 "page_contact_view.participants" = "participants";
 "page_contact_view.participants_title" = "Chat participants";
 "page_contact_view.you" = " (you)";
+"page_contact_view.profile" = "Profile";
+"page_contact_view.chat_profile" = "Chat Profile";
 
 // MARK: - Error
 "error.user_does_not_exist" = "User doesn't exist";

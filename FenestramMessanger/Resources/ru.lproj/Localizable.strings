@@ -18,6 +18,7 @@
 "general.accept" = "Разрешить";
 "general.no_internet_connection" = "Нет соединения с интернетом";
 "general.delete" = "Удалить";
+"general.edit" = "Изменить";
 
 // MARK: - ChatView
 "chat_view.empty_text" = "Здесь будет отображаться список ваших чатов";
@@ -126,6 +127,9 @@
 "correspondence_view.alert_delete_message" = "Вы уверены, что хотите удалить сообщение?";
 "correspondence_view.copy" = "Скопировать";
 "correspondence_view.error_delete_message" = "Ошибка удаления сообщения";
+"correspondence_view.edit_message" = "Редактировать сообщение";
+"correspondence_view.editing_message" = "Редактирование сообщения";
+"correspondence_view.edited" = "изменено";
 
 // MARK: - NewChatView
 "new_chat_view.title" = "Создание чата";
@@ -140,6 +144,8 @@
 "page_contact_view.participants" = "участников";
 "page_contact_view.participants_title" = "Участники чата";
 "page_contact_view.you" = " (вы)";
+"page_contact_view.profile" = "Профиль";
+"page_contact_view.chat_profile" = "Профиль чата";
 
 // MARK: - Error
 "error.user_does_not_exist" = "Пользователь не существует";
