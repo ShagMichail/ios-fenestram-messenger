@@ -140,6 +140,8 @@
 "page_contact_view.participants" = "participants";
 "page_contact_view.participants_title" = "Chat participants";
 "page_contact_view.you" = " (you)";
+"page_contact_view.profile" = "Profile";
+"page_contact_view.chat_profile" = "Chat Profile";
 
 // MARK: - Error
 "error.user_does_not_exist" = "User doesn't exist";
