@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-public struct PhotoEntity: Identifiable {
+public struct PhotoEntity: Identifiable, Equatable {
     public let id: Int
     public let image: UIImage
 }

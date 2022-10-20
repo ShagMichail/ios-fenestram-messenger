@@ -13,6 +13,12 @@ public enum MessageType: String, Codable {
     case system = "system"
 }
 
+public enum MessageStatus {
+    case sending
+    case send
+    case error
+}
+
 public struct MessageResponse: Codable {
     public let message: MessageEntity
 }
@@ -27,6 +33,7 @@ public struct MessageEntity: Codable, Identifiable, Equatable {
     public let createdAt: Date?
     public let fromUser: UserEntity?
     public let isEdited: Bool?
+    public var messageStatus: MessageStatus = .send
     
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
