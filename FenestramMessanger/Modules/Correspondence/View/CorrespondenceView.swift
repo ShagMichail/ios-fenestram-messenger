@@ -21,7 +21,7 @@ struct CorrespondenceView: View {
     @State var editBottomSheetPosition: EditingMessageBottomSheetPosition = .hidden
     @State private var keyboardHeight: CGFloat = 0
     @State private var sourceType: UIImagePickerController.SourceType = .camera
-    @State private var isShowingSend = false
+    @State var isShowingSend = false
     @State private var textEditorWidth: CGFloat = 35
     @State internal var isMessageEditing = false
     
@@ -256,6 +256,20 @@ struct CorrespondenceView: View {
     
     // MARK: - Text editor and send button
     
+    fileprivate func checkEditorAndFotoCollection() {
+        if !viewModel.textMessage.isEmpty || !viewModel.allFoto.isEmpty {
+            withAnimation {
+                isShowingSend = true
+                textEditorWidth = 80
+            }
+        } else  {
+            withAnimation {
+                isShowingSend = false
+                textEditorWidth = 35
+            }
+        }
+    }
+    
     internal func getTextEditor(_ isEditMode: Bool) -> some View {
         var leadPadding: CGFloat = 12
         isEditMode ? (leadPadding = 12) : (leadPadding = 40)
@@ -266,19 +280,12 @@ struct CorrespondenceView: View {
             .frame(minHeight: 40, maxHeight: 150, alignment: .center)
             .fixedSize(horizontal: false, vertical: true)
             .font(FontFamily.Poppins.regular.swiftUIFont(size: 14))
-            .onChange(of: viewModel.textMessage) { newValue in
-                if !newValue.isEmpty {
-                    withAnimation {
-                        isShowingSend = true
-                        textEditorWidth = 80
-                    }
-                } else {
-                    withAnimation {
-                        isShowingSend = false
-                        textEditorWidth = 35
-                    }
-                }
+            .onChange(of: viewModel.textMessage) { _ in
+                checkEditorAndFotoCollection()
             }
+            .onChange(of: viewModel.allFoto, perform: { _ in
+                checkEditorAndFotoCollection()
+            })
             .placeholder(when: viewModel.textMessage.isEmpty) {
                 Text(L10n.CorrespondenceView.textMessage)
                     .foregroundColor(Asset.text.swiftUIColor)
@@ -313,6 +320,7 @@ struct CorrespondenceView: View {
                 
                 HStack(alignment: .bottom){
                     Button {
+                        UIApplication.shared.endEditing()
                         bottomSheetPosition = .bottom
                     } label: {
                         Asset.severicons.swiftUIImage
@@ -323,23 +331,22 @@ struct CorrespondenceView: View {
                     
                     Spacer()
                     
-                    if isShowingSend {
+                    if isShowingSend || viewModel.allFoto.count != 0 {
+                        // send message
                         Button {
-                            if !viewModel.textMessage.isEmpty || !viewModel.allFoto.isEmpty {
-                                if viewModel.chat == nil {
-                                    viewModel.createChat(chatName: viewModel.contacts[0].name, usersId: viewModel.getUserEntityIds(contactId: viewModel.contacts[0].id))
-                                } else {
-                                    if !viewModel.textMessage.isEmpty {
-                                        viewModel.postTextMessage()
-                                    }
-                                    viewModel.postImageMessage()
+                            viewModel.addNewTextMessage()
+                        } label: {
+                            ZStack {
+                                (isColorThema == false ? Asset.sendMessageIc.swiftUIImage : Asset.sendMessageGreen.swiftUIImage)
+                                    .resizable()
+                                    .frame(width: 28.0, height: 28.0)
+                                
+                                if viewModel.presentSendActivityIndicator {
+                                    ProgressView().foregroundColor(.black)
                                 }
                             }
-                        } label: {
-                            (isColorThema == false ? Asset.sendMessageIc.swiftUIImage : Asset.sendMessageGreen.swiftUIImage)
-                                .resizable()
-                                .frame(width: 28.0, height: 28.0)
                         }
+                        .disabled(viewModel.presentSendActivityIndicator)
                         .padding(.trailing, 12.0)
                         .padding(.bottom, -5)
                     }

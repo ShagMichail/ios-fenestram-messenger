@@ -12,7 +12,7 @@ enum CorrespondenceBottomSheetPosition: CGFloat, CaseIterable {
 }
 
 enum EditingMessageBottomSheetPosition: CGFloat, CaseIterable {
-    case bottom = 220, hidden = 0
+    case bottom = 240, hidden = 0
 }
 
 extension CorrespondenceView {
@@ -53,6 +53,7 @@ extension CorrespondenceView {
         }
         
         @Published var showAlertError: Bool = false
+        @Published var presentSendActivityIndicator = false
         var showAlertErrorText: String = ""
         
         var selectedImageURL: URL?
@@ -195,13 +196,27 @@ extension CorrespondenceView {
         
         func postTextMessage() {
             guard let chatId = chat?.id else { return }
-            
+            presentSendActivityIndicator = true
             ChatService.postMessage(chatId: chatId, messageType: .text, content: textMessage) { [weak self] result in
                 switch result {
                 case .success(_):
+                    self?.presentSendActivityIndicator = false
                     self?.textMessage = ""
                 case .failure( let error ):
                     print("\(error)")
+                }
+            }
+        }
+        
+        func addNewTextMessage() {
+            if !textMessage.isEmpty || !allFoto.isEmpty {
+                if chat == nil {
+                    createChat(chatName: contacts[0].name, usersId: getUserEntityIds(contactId: contacts[0].id))
+                } else {
+                    if !textMessage.isEmpty {
+                        postTextMessage()
+                    }
+                    postImageMessage()
                 }
             }
         }
@@ -359,6 +374,7 @@ extension CorrespondenceView {
         
         private func appendPhoto() {
             guard let foto = chatImage else { return }
+            
             allFoto.append(PhotoEntity(id: allFoto.endIndex, image: foto))
             chatImage = nil
         }

@@ -40,7 +40,7 @@ struct MessageStyleView: View {
     
     private func viewMyMessage() -> some View {
         VStack(alignment: .trailing) {
-            VStack {
+            VStack(alignment: .trailing) {
                 switch message.messageType {
                 case .text:
                     if #available(iOS 15.0, *) {
@@ -88,9 +88,9 @@ struct MessageStyleView: View {
                     .foregroundColor(Asset.message.swiftUIColor)
                 .font(FontFamily.Poppins.regular.swiftUIFont(size: 12))
                 
-                Asset.send.swiftUIImage
+                checkMessageStatus(message: message)
                     .resizable()
-                    .frame(width: 13.0, height: 13.0)
+                    .frame(width: 10.0, height: 10.0)
                     .foregroundColor((isColorThema == false ? Asset.blue1.swiftUIColor : Asset.green1.swiftUIColor))
             }
         }
@@ -238,5 +238,17 @@ struct MessageStyleView: View {
         let time = formatter.string(from: date)
         return time
     }
+    
+    private func checkMessageStatus(message: MessageEntity) -> Image {
+        switch message.messageStatus {
+        case .sending:
+            return Asset.messageSendingIc.swiftUIImage
+        case .send:
+            return Asset.messageSendIc.swiftUIImage
+        case .error:
+            return Asset.messageErrorSend.swiftUIImage
+        }
+    }
+    
 }
 
